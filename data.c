@@ -1,12 +1,4 @@
-//#include <stdio.h>
-//#include <string.h>
-//#include <time.h>
-//#include <stdlib.h>
-//#include <locale.h>
-
-//#include "data.h"
 #include "defs.h"
-//#include "protos.h"
 
 //#define NDEBUG
 //#include <assert.h>

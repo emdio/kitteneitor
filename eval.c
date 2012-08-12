@@ -1,15 +1,4 @@
-/*
- ****************************************************************************
- * Evaluation for current position - main "brain" function *
- * Lack: almost no knowlegde; material value + piece square tables *
- ****************************************************************************
- */
 #include <stdio.h>
-//#include <string.h>
-//#include <time.h>
-//#include <stdlib.h>
-//#include <locale.h>
-
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
@@ -17,7 +6,12 @@
 //#define NDEBUG
 //#include <assert.h>
 
-
+/*
+ ****************************************************************************
+ * Evaluation for current position - main "brain" function *
+ * Lack: almost no knowlegde; material value + piece square tables *
+ ****************************************************************************
+ */
 
 int Eval()
 {
