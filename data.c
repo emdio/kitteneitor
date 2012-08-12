@@ -1,14 +1,9 @@
 #include "defs.h"
 
-//#define NDEBUG
-//#include <assert.h>
-
-
-HISTO hist[6000]; /* Game length < 6000 */
-
 int side; /* Side to move, value = BLACK or WHITE */
 int computer_side;
 int max_depth; /* max depth to search */
+HISTO hist[6000]; /* Game length < 6000 */
 
 /* For castle rights we use a bitfield, like in TSCP
  *
@@ -23,7 +18,7 @@ int max_depth; /* max depth to search */
 int castle = 15; /* At start position all castle types ar available*/
 
 
-/* This mask is applied like this
+/* The next mask is applied like this
  *
  * castle &= castle_mask[from] & castle_mask[dest]
  *
