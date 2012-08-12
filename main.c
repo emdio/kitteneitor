@@ -171,16 +171,14 @@ void xboard()
 
 int main()
 {
+    /* It mainly calls ComputerThink(maxdepth) to the desired ply */
 
     setlocale(LC_ALL,"");
-
-    /* It mainly calls ComputerThink(maxdepth) to the desired ply */
 
     char s[256];
     int from;
     int dest;
     int i;
-    //int computer_side;
 
     startgame();
 
@@ -215,7 +213,7 @@ int main()
         }
 
         /* Get user input */
-        printf("sc> ");
+        printf("k> ");
         if (scanf("%s", s) == EOF) /* close program */
             return 0;
         if (!strcmp(s, "d"))
