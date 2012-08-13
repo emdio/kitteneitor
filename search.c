@@ -25,7 +25,6 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove)
     MOVE moveBuf[200]; /* List of movements */
     MOVE tmpMove;
 
-    // nodes++; /* visiting a node, count it */
     havemove = 0; /* is there a move available? */
     pBestMove->type_of_move = MOVE_TYPE_NONE;
 
@@ -147,7 +146,6 @@ MOVE ComputerThink(int depth)
 
     /* Reset some values before searching */
     ply = 0;
-//    unsigned long long nodes = 0;
     count_evaluations = 0;
     count_MakeMove = 0;
     countquiesCalls  = 0;
@@ -159,7 +157,6 @@ MOVE ComputerThink(int depth)
 
     /* Start timer */
     start = clock();
-//    assert(start != -1);
 
     /* Search now */
     score = Search(-MATE, MATE, depth, &m);

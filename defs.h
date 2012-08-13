@@ -57,13 +57,15 @@
 #define G8 6
 #define H8 7
 
+/* 64 bit integers */
+typedef unsigned long long U64;
+
 
 /* A move is defined by its origin and final squares, the castle rights and the kind of
  * move it's: normal, enpasant... */
 typedef struct {
     int from;
     int dest;
-//    int castle;
     int type_of_move;
 } MOVE;
 

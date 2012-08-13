@@ -19,7 +19,6 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
     move.from = from;
     move.dest = dest;
     move.type_of_move = type;
-//    move.castle = castle;
     pBuf[*pMCount] = move;
     *pMCount = *pMCount + 1;
 }
@@ -508,7 +507,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                 break;
 
             case KING:
-                ///* the column and rank checks are to make sure it is on the board*/
+                /* the column and rank checks are to make sure it is on the board*/
                 col = COL(i);
                 if (col && color[i - 1] == xside)
                     Gen_PushKing(i, i - 1, pBuf, &capscount); /* left */
@@ -784,9 +783,6 @@ int MakeMove(MOVE m)
             if (piece[i] == EPS_SQUARE)
             {
                 piece[i] = EMPTY;
-                /* this seems unnecesary, but otherwise a bug occurs:
-                 * after: a3 Nc6 d4 e6, white isn't allowed to play e4 */
-//                color[i] = EMPTY;
                 break;
             }
         }
@@ -795,7 +791,6 @@ int MakeMove(MOVE m)
             if (piece[i] == EPS_SQUARE)
             {
                 piece[i] = EMPTY;
-//				color[i] = EMPTY;
                 break;
             }
         }
@@ -938,12 +933,10 @@ void TakeBack()
         if (side == WHITE)
         {
             piece[hist[hdp-1].m.dest - 8] = EPS_SQUARE;
-//            color[hist[hdp-1].m.dest - 8] = EMPTY;
         }
         else if (side == BLACK)
         {
             piece[hist[hdp-1].m.dest + 8] = EPS_SQUARE;
-//            color[hist[hdp-1].m.dest + 8] = EMPTY;
         }
     }
 
@@ -973,7 +966,6 @@ void TakeBack()
             color[hist[hdp].m.dest + 8] = BLACK;
             /* The eps square */
             piece[hist[hdp].m.dest] = EPS_SQUARE;
-//            color[hist[hdp].m.dest] = EMPTY;
         }
         else
         {
@@ -982,7 +974,6 @@ void TakeBack()
             color[hist[hdp].m.dest - 8] = WHITE;
             /* The eps square */
             piece[hist[hdp].m.dest] = EPS_SQUARE;
-//            color[hist[hdp].m.dest] = EMPTY;
         }
     }
 

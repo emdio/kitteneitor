@@ -256,7 +256,7 @@ int main()
             double t = 0.0;
             /* Start timer */
             start = clock();
-            unsigned long long count = perft(max_depth);
+            U64 count = perft(max_depth);
             /* Stop timer */
             stop = clock();
             t = (double) (stop - start) / CLOCKS_PER_SEC;
