@@ -10,7 +10,7 @@
 
 /*
  ****************************************************************************
- * Search function - a typical alphabeta, main search function *
+ * Search function - a typical alphabeta + quiescent search, main search function *
  * Lack: no move ordering *
  ****************************************************************************
  */
@@ -27,7 +27,7 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove)
 
     // nodes++; /* visiting a node, count it */
     havemove = 0; /* is there a move available? */
-    pBestMove->type = MOVE_TYPE_NONE;
+    pBestMove->type_of_move = MOVE_TYPE_NONE;
 
     /* Generate and count all moves for current position */
     movecnt = GenMoves(side, moveBuf);

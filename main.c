@@ -43,7 +43,7 @@ void xboard()
             bestMove = ComputerThink(max_depth);
             MakeMove(bestMove);
             /* send move */
-            switch (bestMove.type)
+            switch (bestMove.type_of_move)
             {
             case MOVE_TYPE_PROMOTION_TO_QUEEN:
                 c = 'q';
@@ -143,19 +143,19 @@ void xboard()
                     switch (command[4])
                     {
                     case 'q':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_QUEEN;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
                         break;
                     case 'r':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_ROOK;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_ROOK;
                         break;
                     case 'b':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_BISHOP;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_BISHOP;
                         break;
                     case 'n':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_KNIGHT;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_KNIGHT;
                         break;
                     default:
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_QUEEN;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
                     }
                 }
                 if (!MakeMove(moveBuf[i]))
@@ -186,7 +186,7 @@ int main()
     MOVE moveBuf[200];
     int movecnt;
 
-    puts("Second Chess, by Emilio Diaz");
+    puts("Kitteneitor, by Emilio Diaz");
     puts(" Help");
     puts(" d: display board");
     puts(" MOVE: make a move (e.g. b1c3, a7a8q, e1g1)");
@@ -288,25 +288,25 @@ int main()
                     switch (s[4])
                     {
                     case 'q':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_QUEEN;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
                         break;
 
                     case 'r':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_ROOK;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_ROOK;
                         break;
 
                     case 'b':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_BISHOP;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_BISHOP;
                         break;
 
                     case 'n':
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_KNIGHT;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_KNIGHT;
                         break;
 
                     default:
                         puts(
                                 "promoting to a McGuffin..., I'll give you a queen");
-                        moveBuf[i].type = MOVE_TYPE_PROMOTION_TO_QUEEN;
+                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
                     }
                 }
                 if (!MakeMove(moveBuf[i]))

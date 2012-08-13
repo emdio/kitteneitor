@@ -25,8 +25,8 @@
 
 #define MATE 10000 /* equal value of King, losing King==mate */
 
-#define COL(pos) ((pos)&7)
-#define ROW(pos) (((unsigned)pos)>>3)
+#define COL(pos) (pos & 7)
+#define ROW(pos) (pos >> 3)
 
 /* For move generation */
 #define MOVE_TYPE_NONE 0
@@ -63,12 +63,13 @@
 typedef struct {
     int from;
     int dest;
-    int castle;
-    int type;
+//    int castle;
+    int type_of_move;
 } MOVE;
 
 /* For storing all moves of game */
 typedef struct {
     MOVE m;
+    int castle;
     int cap;
 } HISTO;

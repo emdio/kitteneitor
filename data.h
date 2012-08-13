@@ -1,3 +1,4 @@
+/* Just a copy of data.c */
 
 int castle;
 int castle_mask[64];

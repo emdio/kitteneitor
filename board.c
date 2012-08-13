@@ -18,8 +18,8 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
     MOVE move;
     move.from = from;
     move.dest = dest;
-    move.type = type;
-    move.castle = castle;
+    move.type_of_move = type;
+//    move.castle = castle;
     pBuf[*pMCount] = move;
     *pMCount = *pMCount + 1;
 }
@@ -536,12 +536,6 @@ int GenCaps(int current_side, MOVE * pBuf)
 }
 
 
-/*
- ****************************************************************************
- * Make and Take back a move, IsInCheck *
- ****************************************************************************
- */
-
 /* Check if current side is in check. Necesary in order to check legality of moves
  and check if castle is allowed */
 int IsInCheck(int current_side)
@@ -760,13 +754,15 @@ int MakeMove(MOVE m)
 
     hist[hdp].m = m;
     hist[hdp].cap = piece[m.dest]; /* store in history the piece of the dest square */
+    hist[hdp].castle = castle ;
+
     piece[m.dest] = piece[m.from]; /* dest piece is the one in the original square */
     color[m.dest] = color[m.from]; /* The dest square color is the one of the origin piece */
     piece[m.from] = EMPTY;/* The original square becomes empty */
     color[m.from] = EMPTY; /* The original color becomes empty */
 
     /* en pasant capture */
-    if (m.type == MOVE_TYPE_EPS)
+    if (m.type_of_move == MOVE_TYPE_EPS)
     {
         if (side == WHITE)
         {
@@ -781,7 +777,7 @@ int MakeMove(MOVE m)
     }
 
     /* Remove possible eps piece, remaining from former move */
-    if (hist[hdp-1].m.type == MOVE_TYPE_PAWN_TWO)
+    if (hist[hdp-1].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
         for (i = 16; i <= 23; i++)
         {
@@ -806,7 +802,7 @@ int MakeMove(MOVE m)
     }
 
     /* Add the eps square when a pawn moves two squares */
-    if (m.type == MOVE_TYPE_PAWN_TWO)
+    if (m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
         if (side == BLACK)
         {
@@ -821,10 +817,10 @@ int MakeMove(MOVE m)
     }
 
     /* Once the move is done we check either this is a promotion */
-    if (m.type >= MOVE_TYPE_PROMOTION_TO_QUEEN)
+    if (m.type_of_move >= MOVE_TYPE_PROMOTION_TO_QUEEN)
     {
         /* In this case we put in the destiny sq the chosen piece */
-        switch (m.type)
+        switch (m.type_of_move)
         {
         case MOVE_TYPE_PROMOTION_TO_QUEEN:
             piece[m.dest] = QUEEN;
@@ -848,7 +844,7 @@ int MakeMove(MOVE m)
         }
     }
 
-    if (m.type == MOVE_TYPE_CASTLE)
+    if (m.type_of_move == MOVE_TYPE_CASTLE)
     {
         if (m.dest == G1)
         {
@@ -895,6 +891,7 @@ int MakeMove(MOVE m)
     /* Update the castle rights */
     castle &= castle_mask[m.from] & castle_mask[m.dest];
 
+
     /* Checking if after making the move we're in check*/
     r = !IsInCheck(side);
 
@@ -916,7 +913,7 @@ void TakeBack()
     color[hist[hdp].m.from] = side;
 
     /* Update castle rights */
-    castle = hist[hdp].m.castle;
+    castle = hist[hdp].castle;
 
     /* Return the captured material */
     if (hist[hdp].cap != EMPTY && hist[hdp].cap != EPS_SQUARE)
@@ -929,14 +926,14 @@ void TakeBack()
     }
 
     /* Promotion */
-    if (hist[hdp].m.type >= MOVE_TYPE_PROMOTION_TO_QUEEN)
+    if (hist[hdp].m.type_of_move >= MOVE_TYPE_PROMOTION_TO_QUEEN)
     {
         piece[hist[hdp].m.from] = PAWN;
     }
 
     /* If pawn moved two squares in the former move, we have to restore
      * the eps square */
-    if (hist[hdp-1].m.type == MOVE_TYPE_PAWN_TWO)
+    if (hist[hdp-1].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
         if (side == WHITE)
         {
@@ -952,7 +949,7 @@ void TakeBack()
 
     /* To remove the eps square after unmaking a pawn
      * moving two squares*/
-    if (hist[hdp].m.type == MOVE_TYPE_PAWN_TWO)
+    if (hist[hdp].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
         if (side == WHITE)
         {
@@ -967,7 +964,7 @@ void TakeBack()
     }
 
     /* Unmaking an en pasant capture */
-    if (hist[hdp].m.type == MOVE_TYPE_EPS)
+    if (hist[hdp].m.type_of_move == MOVE_TYPE_EPS)
     {
         if (side == WHITE)
         {
@@ -990,7 +987,7 @@ void TakeBack()
     }
 
     /* Undo Castle: return rook to its original square */
-    if (hist[hdp].m.type == MOVE_TYPE_CASTLE)
+    if (hist[hdp].m.type_of_move == MOVE_TYPE_CASTLE)
     {
         /* Take the tower to its poriginal place */
         if (hist[hdp].m.dest == G1 && side == WHITE)
