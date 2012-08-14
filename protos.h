@@ -26,7 +26,7 @@ int Quiescent(int alpha, int beta);
 int Search(int alpha, int beta, int depth, MOVE * pBestMove);
 
 /* Utils */
-unsigned long long perft(int depth);
+U64 perft(int depth);
 void PrintBoard();
 
 

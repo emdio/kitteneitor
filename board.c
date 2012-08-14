@@ -13,7 +13,7 @@
  * Move generator *
  ****************************************************************************
  */
-void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
+void Gen_Push(int from, int dest, int type, MOVE *pBuf, int *pMCount)
 {
     MOVE move;
     move.from = from;
@@ -23,7 +23,7 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
     *pMCount = *pMCount + 1;
 }
 
-void Gen_PushNormal(int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushNormal(int from, int dest, MOVE *pBuf, int *pMCount)
 {
     Gen_Push(from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
 }
@@ -31,15 +31,15 @@ void Gen_PushNormal(int from, int dest, MOVE * pBuf, int *pMCount)
 /* Especial cases for Pawn */
 
 /* Pawn can promote */
-void Gen_PushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushPawn(int from, int dest, MOVE *pBuf, int *pMCount)
 {
-    /* The 7 and 56 are to limit pawns to the 2nd through 7th ranks, which
-     * means this isn't a promotion, i.e., a normal pawn move */
     if (piece[dest] == EPS_SQUARE)
     {
         Gen_Push(from, dest, MOVE_TYPE_EPS, pBuf, pMCount);
     }
-    else if (dest > 7 && dest < 56) /* this is just a normal move */
+    /* The 7 and 56 are to limit pawns to the 2nd through 7th ranks, which
+     * means this isn't a promotion, i.e., a normal pawn move */
+    else if (dest > 7 && dest < 56)
     {
         Gen_Push(from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
     }
@@ -52,14 +52,14 @@ void Gen_PushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
     }
 }
 
-/* When a pawn moves two squares then appears the possibility of the en passanta capture*/
-void Gen_PushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount)
+/* When a pawn moves two squares then appears the possibility of the en passant capture*/
+void Gen_PushPawnTwo(int from, int dest, MOVE *pBuf, int *pMCount)
 {
     Gen_Push(from, dest, MOVE_TYPE_PAWN_TWO, pBuf, pMCount);
 }
 
 /* Especial cases for King */
-void Gen_PushKing(int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushKing(int from, int dest, MOVE *pBuf, int *pMCount)
 {
     /* Is it a castle?*/
     if (from == E1 && (dest == G1 || dest == C1)) /* this is a white castle */
@@ -77,7 +77,7 @@ void Gen_PushKing(int from, int dest, MOVE * pBuf, int *pMCount)
 }
 
 /* Gen all moves of current_side to move and push them to pBuf, and return number of moves */
-int GenMoves(int current_side, MOVE * pBuf)
+int GenMoves(int current_side, MOVE *pBuf)
 {
     int i; /* Counter for the board squares */
     int k; /* Counter for cols */
@@ -333,7 +333,7 @@ int GenMoves(int current_side, MOVE * pBuf)
 
 /* Gen all captures of current_side to move and push them to pBuf, return number of moves
  * It's necesary at least ir order to use quiescent in the search */
-int GenCaps(int current_side, MOVE * pBuf)
+int GenCaps(int current_side, MOVE *pBuf)
 {
     int i; /* Counter for the board squares */
     int k; /* Counter for cols */
@@ -903,6 +903,8 @@ void TakeBack()
     side = (WHITE + BLACK) - side;
     hdp--;
     ply--;
+
+    /* Update piece moved and side to move */
     piece[hist[hdp].m.from] = piece[hist[hdp].m.dest];
     piece[hist[hdp].m.dest] = hist[hdp].cap;
     color[hist[hdp].m.from] = side;

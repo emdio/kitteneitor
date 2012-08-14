@@ -165,8 +165,8 @@ MOVE ComputerThink(int depth)
     stop = clock();
     t = (double) (stop - start) / CLOCKS_PER_SEC;
     knps = ((double)countquiesCalls / t) / 1000.;
-
-    double ratio_Qsearc_Capcalls = (double)countquiesCalls/(double)countCapCalls;
+    double ratio_Qsearc_Capcalls = 0;
+    ratio_Qsearc_Capcalls = (double)countquiesCalls/(double)countCapCalls;
 
     double decimal_score = ((double)score)/100.;
     if (side == BLACK)
@@ -176,7 +176,7 @@ MOVE ComputerThink(int depth)
 
     /* After searching, print results */
     printf(
-            "Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f, knps = %.2f\n countCapCalls = %'d\n countQSearch = %'d\n moves made = %'d\n ratio_Qsearc_Capcalls = %.2f\n",
+            "Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
             'a' + COL(m.from), 8 - ROW(m.from), 'a' + COL(m.dest), 8
             - ROW(m.dest), depth, decimal_score, t, knps, countCapCalls, countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
     return m;
