@@ -166,7 +166,7 @@ MOVE ComputerThink(int depth)
     t = (double) (stop - start) / CLOCKS_PER_SEC;
     knps = ((double)countquiesCalls / t) / 1000.;
     double ratio_Qsearc_Capcalls = 0;
-    ratio_Qsearc_Capcalls = (double)countquiesCalls/(double)countCapCalls;
+    ratio_Qsearc_Capcalls = (double)countCapCalls/(double)countquiesCalls;
 
     double decimal_score = ((double)score)/100.;
     if (side == BLACK)
