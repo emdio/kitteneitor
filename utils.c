@@ -76,7 +76,7 @@ U64 perft(int depth)
             continue;
         }
 
-        /* Just in case we want to count for checks */
+        /* Just in case we want to take count of checks */
 //        if (IsInCheck(side))
 //        {
 //            count_checks++;
