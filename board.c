@@ -753,7 +753,7 @@ int MakeMove(MOVE m)
 
     hist[hdp].m = m;
     hist[hdp].cap = piece[m.dest]; /* store in history the piece of the dest square */
-    hist[hdp].castle = castle ;
+    hist[hdp].castle = castle;
 
     piece[m.dest] = piece[m.from]; /* dest piece is the one in the original square */
     color[m.dest] = color[m.from]; /* The dest square color is the one of the origin piece */

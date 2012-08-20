@@ -5,6 +5,8 @@ int computer_side;
 int max_depth; /* max depth to search */
 HISTO hist[6000]; /* Game length < 6000 */
 
+char fenstring[256];
+
 /* For castle rights we use a bitfield, like in TSCP
  *
  * 0001 -> White can short castle

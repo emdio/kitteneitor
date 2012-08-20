@@ -15,6 +15,8 @@
 #define BLACK 1
 #define false 0
 
+char fenstring[256];
+
 /* The values of the pieces */
 #define VALUE_PAWN 100
 #define VALUE_KNIGHT 310

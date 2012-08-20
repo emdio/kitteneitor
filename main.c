@@ -171,6 +171,10 @@ void xboard()
 
 int main()
 {
+
+    char linea[256];
+    char args[4][64];
+
     /* It mainly calls ComputerThink(maxdepth) to the desired ply */
 
     setlocale(LC_ALL,"");
@@ -248,6 +252,21 @@ int main()
             scanf("%d", &max_depth);
             continue;
         }
+
+        if (!strcmp(s, "fen"))
+        {
+            strcpy(fenstring, "");
+
+            sscanf(linea, "fen %s %s %s %s", args[0], args[1], args[2], args[3]);
+
+            strcat(fenstring, args[0]);
+            strcat(fenstring, args[1]);
+            strcat(fenstring, args[2]);
+            strcat(fenstring, args[3]);
+
+            fen(fenstring);
+        }
+
         if (!strcmp(s, "perft"))
         {
             scanf("%d", &max_depth);

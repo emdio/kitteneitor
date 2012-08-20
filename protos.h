@@ -13,6 +13,8 @@ int GenMoves(int current_side, MOVE * pBuf);
 int MakeMove(MOVE m);
 void TakeBack();
 
+//__forceinline int col(int);
+
 /* Eval */
 int Eval();
 
