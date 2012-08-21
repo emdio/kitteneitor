@@ -209,7 +209,11 @@ int main()
         { /* Computer's turn */
             /* Find out the best move to react the current position */
             MOVE bestMove;
-            bestMove = ComputerThink(max_depth);
+            int depth;
+            for (depth=1; depth<=max_depth; depth++)
+            {
+                bestMove = ComputerThink(depth);
+            }
             MakeMove(bestMove);
             PrintBoard();
             printf("CASTLE: %d\n", castle);

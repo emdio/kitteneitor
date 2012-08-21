@@ -101,7 +101,6 @@ int Quiescent(int alpha, int beta)
     int capscnt;
     int stand_pat;
     int score;
-    MOVE cBuf[200];
 
     countquiesCalls++;
 
@@ -114,6 +113,7 @@ int Quiescent(int alpha, int beta)
 
     /* If we haven't got a cut off we generate the captures and
      * store them in cBuf */
+    MOVE cBuf[200];
     capscnt = GenCaps(side, cBuf);
 
     countCapCalls++;
@@ -175,9 +175,16 @@ MOVE ComputerThink(int depth)
     }
 
     /* After searching, print results */
-    printf(
+    if (depth == max_depth)
+        printf(
             "Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
             'a' + COL(m.from), 8 - ROW(m.from), 'a' + COL(m.dest), 8
             - ROW(m.dest), depth, decimal_score, t, knps, countCapCalls, countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
+    else
+        printf(
+                "Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
+                'a' + COL(m.from), 8 - ROW(m.from), 'a' + COL(m.dest), 8
+                - ROW(m.dest), depth, decimal_score);
+
     return m;
 }
