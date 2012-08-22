@@ -6,15 +6,16 @@
 //#define NDEBUG
 //#include <assert.h>
 
-//#define Col(pos) (pos & 7)
-//#define Rol(pos) (pos >> 3)
 
+
+/* This is usually defined by a macro like #define COL(pos) (pos & 7) */
 inline int Col(int square)
 {
     return square & 7;
 }
 
-inline int Rol(int square)
+/* This is usually defined by a macro like #define ROW(pos) (pos >> 3) */
+inline int Row(int square)
 {
     return square >> 3;
 }
@@ -107,7 +108,7 @@ int GenMoves(int current_side, MOVE *pBuf)
 
             case PAWN:
                 col = Col(i);
-                row = Rol(i);
+                row = Row(i);
                 if (current_side == BLACK)
                 {
                     if (color[i + 8] == EMPTY)
@@ -365,7 +366,7 @@ int GenCaps(int current_side, MOVE *pBuf)
 
             case PAWN:
                 col = Col(i);
-                row = Rol(i);
+                row = Row(i);
                 if (current_side == BLACK)
                 {
                     /* This isn't a capture, but it's necesary in order to
@@ -574,7 +575,7 @@ int IsAttacked(int current_side, int k)
     xside = (WHITE + BLACK) - current_side; /* opposite current_side, who may be attacking */
 
     /* Situation of the square*/
-    row = Rol(k);
+    row = Row(k);
     col = Col(k);
 
     /* Check Knight attack */
