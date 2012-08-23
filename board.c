@@ -8,7 +8,7 @@
 
 
 
-/* This is usually defined by a macro like #define COL(pos) (pos & 7) */
+/* This is usually defined by a macro like #define Col(pos) (pos & 7) */
 inline int Col(int square)
 {
     return square & 7;
