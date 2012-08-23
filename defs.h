@@ -27,8 +27,6 @@ char fenstring[256];
 
 #define MATE 10000 /* equal value of King, losing King==mate */
 
-#define COL(pos) (pos & 7)
-#define ROW(pos) (pos >> 3)
 
 /* For move generation */
 #define MOVE_TYPE_NONE 0

@@ -178,13 +178,13 @@ MOVE ComputerThink(int depth)
     if (depth == max_depth)
         printf(
             "Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
-            'a' + COL(m.from), 8 - ROW(m.from), 'a' + COL(m.dest), 8
-            - ROW(m.dest), depth, decimal_score, t, knps, countCapCalls, countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
+            'a' + Col(m.from), 8 - Row(m.from), 'a' + Col(m.dest), 8
+            - Row(m.dest), depth, decimal_score, t, knps, countCapCalls, countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
     else
         printf(
                 "Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
-                'a' + COL(m.from), 8 - ROW(m.from), 'a' + COL(m.dest), 8
-                - ROW(m.dest), depth, decimal_score);
+                'a' + Col(m.from), 8 - Row(m.from), 'a' + Col(m.dest), 8
+                - Row(m.dest), depth, decimal_score);
 
     return m;
 }

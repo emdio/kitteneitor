@@ -59,9 +59,9 @@ void xboard()
                 break;
             default:
                 c = ' ';
-                printf("move %c%d%c%d%c\n", 'a' + COL(bestMove.from), 8
-                        - ROW(bestMove.from), 'a' + COL(bestMove.dest), 8
-                        - ROW(bestMove.dest), c);
+                printf("move %c%d%c%d%c\n", 'a' + Col(bestMove.from), 8
+                        - Row(bestMove.from), 'a' + Col(bestMove.dest), 8
+                        - Row(bestMove.dest), c);
             }
             continue;
         }
