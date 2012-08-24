@@ -16,39 +16,39 @@
 void
 PrintBoard ()
 {
-  char pieceName[] = "PNBRQKpnbrqk";
-  int i;
-  for (i = 0; i < 64; i++)
+    char pieceName[] = "PNBRQKpnbrqk";
+    int i;
+    for (i = 0; i < 64; i++)
     {
-      if ((i & 7) == 0)
-	{
-	  printf ("   +---+---+---+---+---+---+---+---+\n");
-	  if (i <= 56)
-	    {
-	      printf (" %d |", 8 - (((unsigned) i) >> 3));
-	    }
-	}
+        if ((i & 7) == 0)
+        {
+            printf ("   +---+---+---+---+---+---+---+---+\n");
+            if (i <= 56)
+            {
+                printf (" %d |", 8 - (((unsigned) i) >> 3));
+            }
+        }
 
-      if (piece[i] == EMPTY && ((((unsigned) i) >> 3) % 2 == 0 && i % 2 == 0))
-	printf ("   |");
-      else if (piece[i] == EMPTY
-	       && ((((unsigned) i) >> 3) % 2 != 0 && i % 2 != 0))
-	printf ("   |");
-      else if (piece[i] == EMPTY)
-	printf (" · |");
-      else if (piece[i] == EPS_SQUARE)
-	printf (" * |");
-      else
-	{
-	  if (color[i] == WHITE)
-	    printf (" %c |", pieceName[piece[i]]);
-	  else
-	    printf ("<%c>|", pieceName[piece[i] + 6]);
-	}
-      if ((i & 7) == 7)
-	printf ("\n");
+        if (piece[i] == EMPTY && ((((unsigned) i) >> 3) % 2 == 0 && i % 2 == 0))
+            printf ("   |");
+        else if (piece[i] == EMPTY
+                 && ((((unsigned) i) >> 3) % 2 != 0 && i % 2 != 0))
+            printf ("   |");
+        else if (piece[i] == EMPTY)
+            printf (" · |");
+        else if (piece[i] == EPS_SQUARE)
+            printf (" * |");
+        else
+        {
+            if (color[i] == WHITE)
+                printf (" %c |", pieceName[piece[i]]);
+            else
+                printf ("<%c>|", pieceName[piece[i] + 6]);
+        }
+        if ((i & 7) == 7)
+            printf ("\n");
     }
-  printf
+    printf
     ("   +---+---+---+---+---+---+---+---+\n     a   b   c   d   e   f   g   h\n");
 }
 
@@ -58,48 +58,48 @@ PrintBoard ()
 U64
 perft (int depth)
 {
-  int i;
-  int movecnt;			/* The number of available moves */
-  U64 nodes = 0;
+    int i;
+    int movecnt;			/* The number of available moves */
+    U64 nodes = 0;
 
-  if (!depth)
-    return 1;
+    if (!depth)
+        return 1;
 
-  MOVE moveBuf[200];		/* List of movements */
+    MOVE moveBuf[200];		/* List of movements */
 
-  /* Generate and count all moves for current position */
-  movecnt = GenMoves (side, moveBuf);
+    /* Generate and count all moves for current position */
+    movecnt = GenMoves (side, moveBuf);
 
-  /* Once we have all the moves available, we loop through them */
-  for (i = 0; i < movecnt; ++i)
+    /* Once we have all the moves available, we loop through them */
+    for (i = 0; i < movecnt; ++i)
     {
-      /* Not a legal move? Then we unmake it and continue to the next one in the list */
-      if (!MakeMove (moveBuf[i]))
-	{
-	  TakeBack ();
-	  continue;
-	}
+        /* Not a legal move? Then we unmake it and continue to the next one in the list */
+        if (!MakeMove (moveBuf[i]))
+        {
+            TakeBack ();
+            continue;
+        }
 
-      /* Just in case we want to take count of checks */
+        /* Just in case we want to take count of checks */
 //        if (IsInCheck(side))
 //        {
 //            count_checks++;
 //        }
 
-      /* This 'if' takes us to the deep of the position */
-      nodes += perft (depth - 1);
-      TakeBack ();
+        /* This 'if' takes us to the deep of the position */
+        nodes += perft (depth - 1);
+        TakeBack ();
     }
 
-  return nodes;
+    return nodes;
 }
 
 /*recibimos una posición en formato FEN del GUI cuando editamos y la configuramos para que la entienda el motor*/
 void
 fen (char *string)
 {
-  puts ("Loading fen...");
-  printf ("El input: %s\n", string);
+    puts ("Loading fen...");
+    printf ("El input: %s\n", string);
 //    char c;
 //    int sq=0, i=0, j=0;
 //    /*tipo de pieza según la letra que recibimos, ejemplo B es bishop (nosotros la tenemos definida con el número 2*/
@@ -168,13 +168,13 @@ fen (char *string)
 //        }
 
 
-  /*printf("enroque: %d\n", enroque);
-     printf("tb1: %d\n", tb1);
-     printf("tb2: %d\n", tb2);
-     printf("tn1: %d\n", tn1);
-     printf("tn2: %d\n", tn2); */
+    /*printf("enroque: %d\n", enroque);
+       printf("tb1: %d\n", tb1);
+       printf("tb2: %d\n", tb2);
+       printf("tn1: %d\n", tn1);
+       printf("tn2: %d\n", tn2); */
 
-  /*máscaras para los enroques */
+    /*máscaras para los enroques */
 //    enroque_mascara[rb] = 12;
 //    enroque_mascara[rn] = 3;
 //    enroque_mascara[tb2] = 13;
@@ -182,7 +182,7 @@ fen (char *string)
 //    enroque_mascara[tn2] = 7;
 //    enroque_mascara[tn1] = 11;
 
-  /*Flag de al paso */
+    /*Flag de al paso */
 //    c = string[i++];
 //    if (c>='a' && c<='h') {
 //        alpaso = (c - 'a');
@@ -193,7 +193,7 @@ fen (char *string)
 //    else alpaso = -1;
 
 
-  /*no comprobamos en el fen la regla de 50 movimientos o el número de jugadas, la ponemos directamente a 0 */
+    /*no comprobamos en el fen la regla de 50 movimientos o el número de jugadas, la ponemos directamente a 0 */
 //    regla50 = 0;              /*inicamos la regla de los 50 movimientos*/
 //    njugadas = 0;             /*ponemos a 0 el contador de jugadas*/
 
