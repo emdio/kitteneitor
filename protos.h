@@ -12,6 +12,9 @@ int GenCaps(int current_side, MOVE * pBuf);
 int GenMoves(int current_side, MOVE * pBuf);
 int MakeMove(MOVE m);
 void TakeBack();
+int Col (int square);
+int Row (int square);
+void MoveOrder(int from, int movecount, MOVE *moveBuf);
 
 //__forceinline int col(int);
 

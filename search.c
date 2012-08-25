@@ -33,10 +33,19 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
 
+    countSearchCalls++;
+
+
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
     {
+        /********************************************************************
+        * Here must be called OrderMove, so we have the moves are ordered before
+        picking one up from the list*
+        ********************************************************************/
+
+        MoveOrder(i, movecnt, moveBuf);
 
         if (!MakeMove (moveBuf[i]))
         {
@@ -122,6 +131,8 @@ Quiescent (int alpha, int beta)
 
     for (i = 0; i < capscnt; ++i)
     {
+//        MoveOrder(i, capscnt, cBuf);
+
         if (!MakeMove (cBuf[i]))
         {
             /* If the current move isn't legal, we take it back
@@ -139,6 +150,32 @@ Quiescent (int alpha, int beta)
     return alpha;
 }
 
+void MoveOrder(int init, int movecount, MOVE *moveBuf)
+{
+    int i;
+    int aux;
+    int Max;
+    MOVE Tmp;
+
+    Max = moveBuf[init].grade;
+    aux = init;
+
+    for(i = (init + 1); i < movecount; i++)
+    {
+        if (moveBuf[i].grade > Max)
+        {
+            Max = moveBuf[i].grade;
+            aux = i;
+        }
+    }
+    if (Max != moveBuf[init].grade)
+    {
+        Tmp = moveBuf[init];
+        moveBuf[init] = moveBuf[aux];
+        moveBuf[aux] = Tmp;
+    }
+}
+
 MOVE
 ComputerThink (int depth)
 {
@@ -153,6 +190,7 @@ ComputerThink (int depth)
     count_MakeMove = 0;
     countquiesCalls = 0;
     countCapCalls = 0;
+    countSearchCalls = 0;
 
     clock_t start;
     clock_t stop;

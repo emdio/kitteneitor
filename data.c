@@ -56,6 +56,7 @@ int count_checks;
 U64 count_MakeMove;
 U64 countquiesCalls;
 U64 countCapCalls;
+U64 countSearchCalls;
 
 /* The values of the pieces in centipawns */
 int value_piece[6] =

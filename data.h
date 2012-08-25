@@ -10,6 +10,7 @@ int count_checks;
 U64 count_MakeMove;
 U64 countquiesCalls;
 U64 countCapCalls;
+U64 countSearchCalls;
 int value_piece[6];
 HISTO hist[6000];
 int piece[64];

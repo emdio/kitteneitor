@@ -35,6 +35,35 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     move.from = from;
     move.dest = dest;
     move.type_of_move = type;
+
+    /* Now we assign the value to 'grade' */
+    move.grade = 0;
+
+
+    if (dest != EMPTY)
+    {
+        if (from == PAWN && dest != PAWN)
+        {
+            move.grade += 200;
+        }
+        else if ( from != PAWN && dest == PAWN)
+        {
+            move.grade -= 20;
+        }
+        else if ((from == BISHOP || from == KNIGHT) && (dest == QUEEN || dest == ROOK))
+        {
+            move.grade += 100;
+        }
+        else if (from == ROOK && (dest != QUEEN || dest != ROOK))
+        {
+            move.grade -= 100;
+        }
+        else if (from == QUEEN && dest != QUEEN)
+        {
+            move.grade -= 200;
+        }
+    }
+
     pBuf[*pMCount] = move;
     *pMCount = *pMCount + 1;
 }

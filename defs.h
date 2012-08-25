@@ -67,6 +67,7 @@ typedef struct {
     int from;
     int dest;
     int type_of_move;
+    int grade;  /* Used to sort the moves */
 } MOVE;
 
 /* For storing all moves of game */
