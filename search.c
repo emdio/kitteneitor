@@ -131,7 +131,7 @@ Quiescent (int alpha, int beta)
 
     for (i = 0; i < capscnt; ++i)
     {
-//        MoveOrder(i, capscnt, cBuf);
+        MoveOrder(i, capscnt, cBuf);
 
         if (!MakeMove (cBuf[i]))
         {
