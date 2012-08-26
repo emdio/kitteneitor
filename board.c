@@ -67,7 +67,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade -= 200;
         }
         /* I don't understand whybthe next line instead of all the block above
- makes the performance a bit worse*/
+        makes the performance a bit worse*/
 //        move.grade += 2*(value_piece[piece[dest]] - value_piece[piece[from]]);
     }
     else /* Are we placing a piece in a square deffended by a pawn? */
