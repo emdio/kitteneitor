@@ -43,6 +43,68 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     to the top of the table)*/
     move.grade = 0;
 
+    /* Are we moving to a better/worse piece square? */
+    if (color[from] == WHITE)
+    {
+        switch (piece[from])
+        {
+        case PAWN:
+            move.grade += (pst_pawn[dest] - pst_pawn[from]);
+            break;
+        case KNIGHT:
+            move.grade += (pst_knight[dest] - pst_knight[from]);
+            break;
+        case BISHOP:
+            move.grade += (pst_bishop[dest] - pst_bishop[from]);
+            break;
+        case ROOK:
+            move.grade += (pst_rook[dest] - pst_rook[from]);
+            break;
+        case KING:
+            move.grade += (pst_king[dest] - pst_king[from]);
+            break;
+        }
+    }
+    else if (color[from] == BLACK)
+    {
+        switch (piece[from])
+        {
+        case PAWN:
+            move.grade += (pst_pawn[flip[dest]] - pst_pawn[flip[from]]);
+            break;
+        case KNIGHT:
+            move.grade += (pst_knight[flip[dest]] - pst_knight[flip[from]]);
+            break;
+        case BISHOP:
+            move.grade += (pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
+            break;
+        case ROOK:
+            move.grade += (pst_rook[flip[dest]] - pst_rook[flip[from]]);
+            break;
+        case KING:
+            move.grade += (pst_king[flip[dest]] - pst_king[flip[from]]);
+            break;
+        }
+    }
+
+
+
+    /* Is a piece being attacked by a pawn? */
+    if (color[from] == WHITE)
+    {
+        if (piece[from - 7] == PAWN && color[from - 7] == BLACK)
+            move.grade += (800 + value_piece[piece[from]]);
+        if (piece[from - 9] == PAWN && color[from - 9] == BLACK)
+            move.grade += (800 + value_piece[piece[from]]);
+    }
+    else
+    {
+        if (piece[from + 7] == PAWN && color[from + 7] == WHITE)
+            move.grade += (800 + value_piece[piece[from]]);
+        if (piece[from + 9] == PAWN && color[from + 9] == WHITE)
+            move.grade += (800 + value_piece[piece[from]]);
+    }
+
     /* Is it a capture? In that case we penalize bad ones */
     if (color[dest] != EMPTY)
     {
@@ -66,27 +128,24 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         {
             move.grade -= 200;
         }
-        /* I don't understand whybthe next line instead of all the block above
-        makes the performance a bit worse*/
-//        move.grade += 2*(value_piece[piece[dest]] - value_piece[piece[from]]);
     }
     else /* Are we placing a piece in a square deffended by a pawn? */
     {
+        if (color[from] == WHITE)
         {
-            if (color[from] == WHITE)
-            {
-                if (piece[dest - 7] == PAWN && color[dest - 7] == BLACK)
-                    move.grade -= (800 + value_piece[piece[from]]);
-                if (piece[dest - 9] == PAWN && color[dest - 9] == BLACK)
-                    move.grade -= (800 + value_piece[piece[from]]);
-            }
-            else
-            {
-                if (piece[dest + 7] == PAWN && color[dest + 7] == WHITE)
-                    move.grade -= (800 + value_piece[piece[from]]);
-                if (piece[dest + 9] == PAWN && color[dest + 9] == WHITE)
-                    move.grade -= (800 + value_piece[piece[from]]);
-            }
+            if (piece[dest - 7] == PAWN && color[dest - 7] == BLACK)
+                move.grade -= (800 + value_piece[piece[from]]);
+            if (piece[dest - 9] == PAWN && color[dest - 9] == BLACK)
+                move.grade -= (800 + value_piece[piece[from]]);
+
+        }
+        else
+        {
+            if (piece[dest + 7] == PAWN && color[dest + 7] == WHITE)
+                move.grade -= (800 + value_piece[piece[from]]);
+            if (piece[dest + 9] == PAWN && color[dest + 9] == WHITE)
+                move.grade -= (800 + value_piece[piece[from]]);
+
         }
     }
 
