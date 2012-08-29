@@ -22,6 +22,12 @@ Row (int square)
     return square >> 3;
 }
 
+/* Just returns the color of the opponent */
+inline int
+Opponent(int color)
+{
+    return (1 - (color));
+}
 
 /*
  ****************************************************************************
@@ -481,7 +487,7 @@ GenCaps (int current_side, MOVE * pBuf)
     int col;
     int capscount;		/* Counter for the posible captures */
     int xside;
-    xside = (WHITE + BLACK) - current_side;
+    xside = Opponent(current_side);
     capscount = 0;
 
     for (i = 0; i < 64; i++)	/* Scan all board */
@@ -700,7 +706,7 @@ IsAttacked (int current_side, int k)
     int row;			/* Row where the square is placed */
     int col;			/* Col where the square is placed */
     int xside;
-    xside = (WHITE + BLACK) - current_side;	/* opposite current_side, who may be attacking */
+    xside = Opponent(current_side);	/* opposite current_side, who may be attacking */
 
     /* Situation of the square */
     row = Row (k);
