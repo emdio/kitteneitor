@@ -66,6 +66,9 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         case ROOK:
             move.grade += (pst_rook[dest] - pst_rook[from]);
             break;
+        case QUEEN:
+            move.grade += (pst_queen[dest] - pst_queen[from]);
+            break;
         case KING:
             move.grade += (pst_king[dest] - pst_king[from]);
             break;
@@ -86,6 +89,9 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             break;
         case ROOK:
             move.grade += (pst_rook[flip[dest]] - pst_rook[flip[from]]);
+            break;
+        case QUEEN:
+            move.grade += (pst_queen[flip[dest]] - pst_queen[flip[from]]);
             break;
         case KING:
             move.grade += (pst_king[flip[dest]] - pst_king[flip[from]]);
