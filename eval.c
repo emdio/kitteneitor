@@ -50,6 +50,9 @@ Eval ()
             case ROOK:
                 score += pst_rook[i];
                 break;
+            case QUEEN:
+                score += pst_queen[i];
+                break;
             case KING:
                 score += pst_king[i];
                 break;
@@ -74,6 +77,9 @@ Eval ()
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
+                break;
+            case QUEEN:
+                score -= pst_queen[flip[i]];
                 break;
             case KING:
                 score -= pst_king[flip[i]];

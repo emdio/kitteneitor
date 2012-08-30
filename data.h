@@ -22,5 +22,6 @@ int pst_pawn[64];
 int pst_knight[64];
 int pst_bishop[64];
 int pst_rook[64];
+int pst_queen[64];
 int pst_king[64];
 int flip[64];
