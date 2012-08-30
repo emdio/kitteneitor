@@ -218,7 +218,7 @@ ComputerThink (int depth)
     /* After searching, print results */
     if (depth == max_depth)
         printf
-        ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
+        ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
          'a' + Col (m.from), 8 - Row (m.from), 'a' + Col (m.dest),
          8 - Row (m.dest), depth, decimal_score, t, knps, countCapCalls,
          countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
