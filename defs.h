@@ -15,6 +15,9 @@
 #define BLACK 1
 #define false 0
 
+#define UP -8
+#define DOWN 8
+
 char fenstring[256];
 
 /* The values of the pieces */

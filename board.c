@@ -29,6 +29,31 @@ Opponent(int color)
     return (1 - (color));
 }
 
+/* White sign is +1, Black sign is -1 */
+inline int
+Sign(int color)
+{
+    return (1 - (color * 2));
+}
+
+/* UP is -8, DOWN is +8: Ahead returns the 'forward' direction for color */
+inline int Ahead(int color)
+{
+    return (Sign(color) * UP);
+}
+
+/* Behind returns the 'backward' direction for color */
+inline int Behind(int color)
+{
+    return (Sign(color) * DOWN);
+}
+
+/* Returns 1 if sq is protected by a pawn of color color */
+int IsSqProtectedByAPawn(sq, color)
+{
+
+}
+
 /*
  ****************************************************************************
  * Move generator *
@@ -134,11 +159,11 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         }
         if (piece[from] == ROOK && (piece[dest] != QUEEN || piece[dest] != ROOK))
         {
-            move.grade -= 100;
+            move.grade += value_piece[piece[dest]];
         }
         if (piece[from] == QUEEN && piece[dest] != QUEEN)
         {
-            move.grade -= 200;
+            move.grade += value_piece[piece[dest]];
         }
     }
     else /* Are we placing a piece in a square deffended by a pawn? */
