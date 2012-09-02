@@ -36,7 +36,7 @@ PrintBoard ()
             printf ("   |");
         else if (piece[i] == EMPTY)
             printf (" · |");
-        else if (piece[i] == EPS_SQUARE)
+        else if (piece[i] == EPS_SQ)
             printf (" * |");
         else
         {

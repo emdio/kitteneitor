@@ -26,7 +26,7 @@ Row (int square)
 inline int
 Opponent(int color)
 {
-    return (1 - (color));
+    return (!(color));
 }
 
 /* White sign is +1, Black sign is -1 */
@@ -48,8 +48,8 @@ inline int Behind(int color)
     return (Sign(color) * DOWN);
 }
 
-/* Returns 1 if sq is protected by a pawn of color color */
-int IsSqProtectedByAPawn(sq, color)
+/* Returns 1 if sq is protected by a pawn of color */
+int IsSqProtectedByAPawn(int sq, int color)
 {
 
 }
@@ -203,7 +203,7 @@ Gen_PushNormal (int from, int dest, MOVE * pBuf, int *pMCount)
 void
 Gen_PushPawn (int from, int dest, MOVE * pBuf, int *pMCount)
 {
-    if (piece[dest] == EPS_SQUARE)
+    if (piece[dest] == EPS_SQ)
     {
         Gen_Push (from, dest, MOVE_TYPE_EPS, pBuf, pMCount);
     }
@@ -286,10 +286,10 @@ GenMoves (int current_side, MOVE * pBuf)
                         /* Pawn captures and can be a promotion */
                         Gen_PushPawn (i, i + 9, pBuf, &movecount);
                     /* For en passant capture */
-                    if (col && piece[i + 7] == EPS_SQUARE)
+                    if (col && piece[i + 7] == EPS_SQ)
                         /* Pawn captures and it can be a promotion */
                         Gen_PushPawn (i, i + 7, pBuf, &movecount);
-                    if (col < 7 && piece[i + 9] == EPS_SQUARE)
+                    if (col < 7 && piece[i + 9] == EPS_SQ)
                         /* Pawn captures and can be a promotion */
                         Gen_PushPawn (i, i + 9, pBuf, &movecount);
                 }
@@ -307,9 +307,9 @@ GenMoves (int current_side, MOVE * pBuf)
                     if (col < 7 && color[i - 7] == BLACK)
                         Gen_PushPawn (i, i - 7, pBuf, &movecount);
                     /* For en passant capture */
-                    if (col && piece[i - 9] == EPS_SQUARE)
+                    if (col && piece[i - 9] == EPS_SQ)
                         Gen_PushPawn (i, i - 9, pBuf, &movecount);
-                    if (col < 7 && piece[i - 7] == EPS_SQUARE)
+                    if (col < 7 && piece[i - 7] == EPS_SQ)
                         Gen_PushPawn (i, i - 7, pBuf, &movecount);
                 }
                 break;
@@ -545,10 +545,10 @@ GenCaps (int current_side, MOVE * pBuf)
                         /* Pawn captures and can be a promotion */
                         Gen_PushPawn (i, i + 9, pBuf, &capscount);
                     /* For en passant capture */
-                    if (col && piece[i + 7] == EPS_SQUARE)
+                    if (col && piece[i + 7] == EPS_SQ)
                         /* Pawn captures and it can be a promotion */
                         Gen_PushPawn (i, i + 7, pBuf, &capscount);
-                    if (col < 7 && piece[i + 9] == EPS_SQUARE)
+                    if (col < 7 && piece[i + 9] == EPS_SQ)
                         /* Pawn captures and can be a promotion */
                         Gen_PushPawn (i, i + 9, pBuf, &capscount);
                 }
@@ -564,9 +564,9 @@ GenCaps (int current_side, MOVE * pBuf)
                     if (col < 7 && color[i - 7] == BLACK)
                         Gen_PushPawn (i, i - 7, pBuf, &capscount);
                     /* For en passant capture */
-                    if (col && piece[i - 9] == EPS_SQUARE)
+                    if (col && piece[i - 9] == EPS_SQ)
                         Gen_PushPawn (i, i - 9, pBuf, &capscount);
-                    if (col < 7 && piece[i - 7] == EPS_SQUARE)
+                    if (col < 7 && piece[i - 7] == EPS_SQ)
                         Gen_PushPawn (i, i - 7, pBuf, &capscount);
                 }
                 break;
@@ -769,12 +769,12 @@ IsAttacked (int current_side, int k)
         if (color[y] == xside && (piece[y] == KING || piece[y] == QUEEN
                                   || piece[y] == ROOK))
             return 1;
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y += 8; y < 64; y += 8)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y] == ROOK))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
             }
     }
@@ -786,12 +786,12 @@ IsAttacked (int current_side, int k)
         if (color[y] == xside && (piece[y] == KING || piece[y] == QUEEN
                                   || piece[y] == ROOK))
             return 1;
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y--; y >= h; y--)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y] == ROOK))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
             }
     }
@@ -803,12 +803,12 @@ IsAttacked (int current_side, int k)
         if (color[y] == xside && (piece[y] == KING || piece[y] == QUEEN
                                   || piece[y] == ROOK))
             return 1;
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y++; y <= h; y++)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y] == ROOK))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
             }
     }
@@ -819,12 +819,12 @@ IsAttacked (int current_side, int k)
         if (color[y] == xside && (piece[y] == KING || piece[y] == QUEEN
                                   || piece[y] == ROOK))
             return 1;
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y -= 8; y >= 0; y -= 8)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y] == ROOK))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
             }
     }
@@ -840,13 +840,13 @@ IsAttacked (int current_side, int k)
             if (current_side == BLACK && piece[y] == PAWN)
                 return 1;
         }
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y += 9; y < 64 && Col (y) != 0; y += 9)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
             }
     }
@@ -861,13 +861,13 @@ IsAttacked (int current_side, int k)
             if (current_side == BLACK && piece[y] == PAWN)
                 return 1;
         }
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y += 7; y < 64 && Col (y) != 7; y += 7)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
 
             }
@@ -883,13 +883,13 @@ IsAttacked (int current_side, int k)
             if (current_side == WHITE && piece[y] == PAWN)
                 return 1;
         }
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y -= 9; y >= 0 && Col (y) != 7; y -= 9)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
 
             }
@@ -905,13 +905,13 @@ IsAttacked (int current_side, int k)
             if (current_side == WHITE && piece[y] == PAWN)
                 return 1;
         }
-        if (piece[y] == EMPTY || piece[y] == EPS_SQUARE)
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
             for (y -= 7; y >= 0 && Col (y) != 0; y -= 7)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
                     return 1;
-                if (piece[y] != EMPTY && piece[y] != EPS_SQUARE)
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
                     break;
             }
     }
@@ -955,7 +955,7 @@ MakeMove (MOVE m)
     {
         for (i = 16; i <= 23; i++)
         {
-            if (piece[i] == EPS_SQUARE)
+            if (piece[i] == EPS_SQ)
             {
                 piece[i] = EMPTY;
                 break;
@@ -963,7 +963,7 @@ MakeMove (MOVE m)
         }
         for (i = 40; i <= 47; i++)
         {
-            if (piece[i] == EPS_SQUARE)
+            if (piece[i] == EPS_SQ)
             {
                 piece[i] = EMPTY;
                 break;
@@ -976,12 +976,12 @@ MakeMove (MOVE m)
     {
         if (side == BLACK)
         {
-            piece[m.from + 8] = EPS_SQUARE;
+            piece[m.from + 8] = EPS_SQ;
             color[m.from + 8] = EMPTY;
         }
         else if (side == WHITE)
         {
-            piece[m.from - 8] = EPS_SQUARE;
+            piece[m.from - 8] = EPS_SQ;
             color[m.from - 8] = EMPTY;
         }
     }
@@ -1089,7 +1089,7 @@ TakeBack ()
     castle = hist[hdp].castle;
 
     /* Return the captured material */
-    if (hist[hdp].cap != EMPTY && hist[hdp].cap != EPS_SQUARE)
+    if (hist[hdp].cap != EMPTY && hist[hdp].cap != EPS_SQ)
     {
         color[hist[hdp].m.dest] = (WHITE + BLACK) - side;
     }
@@ -1110,11 +1110,11 @@ TakeBack ()
     {
         if (side == WHITE)
         {
-            piece[hist[hdp - 1].m.dest - 8] = EPS_SQUARE;
+            piece[hist[hdp - 1].m.dest - 8] = EPS_SQ;
         }
         else if (side == BLACK)
         {
-            piece[hist[hdp - 1].m.dest + 8] = EPS_SQUARE;
+            piece[hist[hdp - 1].m.dest + 8] = EPS_SQ;
         }
     }
 
@@ -1143,7 +1143,7 @@ TakeBack ()
             piece[hist[hdp].m.dest + 8] = PAWN;
             color[hist[hdp].m.dest + 8] = BLACK;
             /* The eps square */
-            piece[hist[hdp].m.dest] = EPS_SQUARE;
+            piece[hist[hdp].m.dest] = EPS_SQ;
         }
         else
         {
@@ -1151,7 +1151,7 @@ TakeBack ()
             piece[hist[hdp].m.dest - 8] = PAWN;
             color[hist[hdp].m.dest - 8] = WHITE;
             /* The eps square */
-            piece[hist[hdp].m.dest] = EPS_SQUARE;
+            piece[hist[hdp].m.dest] = EPS_SQ;
         }
     }
 

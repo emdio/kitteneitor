@@ -3,20 +3,20 @@
  * Some definitions *
  ****************************************************************************
  */
-#define PAWN 0
-#define KNIGHT 1
-#define BISHOP 2
-#define ROOK 3
-#define QUEEN 4
-#define KING 5
-#define EPS_SQUARE 6
-#define EMPTY 7
-#define WHITE 0
-#define BLACK 1
-#define false 0
+#define PAWN    0
+#define KNIGHT  1
+#define BISHOP  2
+#define ROOK    3
+#define QUEEN   4
+#define KING    5
+#define EPS_SQ  6
+#define EMPTY   7
+#define WHITE   0
+#define BLACK   1
+#define false   0
 
-#define UP -8
-#define DOWN 8
+#define UP     -8
+#define DOWN    8
 
 char fenstring[256];
 
