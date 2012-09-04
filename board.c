@@ -124,8 +124,6 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         }
     }
 
-
-
     /* Is a piece being attacked by a pawn? */
     if (color[from] == WHITE)
     {
@@ -187,6 +185,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     }
 
 
+    /* Once we're done with grading the moves we fill the rest of the fileds */
     pBuf[*pMCount] = move;
     *pMCount = *pMCount + 1;
 }
