@@ -1,0 +1,12 @@
+-Kitteneitor is a chess engine derived from secondchess https://github.com/pocopito/secondchess
+-Unlike secondchess its aim is not to be pedagogial but just a fun project
+-Acknowledgments:
+ -Pham Hong Nguyen, author of firstchess
+ -Ron Murawski for his generosity
+ -Pedro Castro, author of danasah
+ -The authors of http://chessprogramming.wikispaces.com/
+ -Tom Kerrigan for TSCP
+ -Bruce Moreland for his site
+ -The people who post on talkchess.com
+ -Jonatan Pettersson, author of mediocre chess
+ -Many more...
