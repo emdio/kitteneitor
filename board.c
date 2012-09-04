@@ -74,28 +74,32 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     to the top of the table)*/
     move.grade = 0;
 
+
+    /* Just to make tests with the difference */
+    int mult = 1;
+
     /* Are we moving to a better/worse piece square? */
     if (color[from] == WHITE)
     {
         switch (piece[from])
         {
         case PAWN:
-            move.grade += (pst_pawn[dest] - pst_pawn[from]);
+            move.grade += mult*(pst_pawn[dest] - pst_pawn[from]);
             break;
         case KNIGHT:
-            move.grade += (pst_knight[dest] - pst_knight[from]);
+            move.grade += mult*(pst_knight[dest] - pst_knight[from]);
             break;
         case BISHOP:
-            move.grade += (pst_bishop[dest] - pst_bishop[from]);
+            move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
             break;
         case ROOK:
-            move.grade += (pst_rook[dest] - pst_rook[from]);
+            move.grade += mult*(pst_rook[dest] - pst_rook[from]);
             break;
         case QUEEN:
-            move.grade += (pst_queen[dest] - pst_queen[from]);
+            move.grade += mult*(pst_queen[dest] - pst_queen[from]);
             break;
         case KING:
-            move.grade += (pst_king[dest] - pst_king[from]);
+            move.grade += mult*(pst_king[dest] - pst_king[from]);
             break;
         }
     }
@@ -104,22 +108,22 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         switch (piece[from])
         {
         case PAWN:
-            move.grade += (pst_pawn[flip[dest]] - pst_pawn[flip[from]]);
+            move.grade += mult*(pst_pawn[flip[dest]] - pst_pawn[flip[from]]);
             break;
         case KNIGHT:
-            move.grade += (pst_knight[flip[dest]] - pst_knight[flip[from]]);
+            move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
             break;
         case BISHOP:
-            move.grade += (pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
+            move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
             break;
         case ROOK:
-            move.grade += (pst_rook[flip[dest]] - pst_rook[flip[from]]);
+            move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
             break;
         case QUEEN:
-            move.grade += (pst_queen[flip[dest]] - pst_queen[flip[from]]);
+            move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
             break;
         case KING:
-            move.grade += (pst_king[flip[dest]] - pst_king[flip[from]]);
+            move.grade += mult*(pst_king[flip[dest]] - pst_king[flip[from]]);
             break;
         }
     }
@@ -128,16 +132,16 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     if (color[from] == WHITE)
     {
         if (piece[from - 7] == PAWN && color[from - 7] == BLACK)
-            move.grade += (800 + value_piece[piece[from]]);
+            move.grade += (value_piece[piece[from]]);
         if (piece[from - 9] == PAWN && color[from - 9] == BLACK)
-            move.grade += (800 + value_piece[piece[from]]);
+            move.grade += (value_piece[piece[from]]);
     }
     else
     {
         if (piece[from + 7] == PAWN && color[from + 7] == WHITE)
-            move.grade += (800 + value_piece[piece[from]]);
+            move.grade += (value_piece[piece[from]]);
         if (piece[from + 9] == PAWN && color[from + 9] == WHITE)
-            move.grade += (800 + value_piece[piece[from]]);
+            move.grade += (value_piece[piece[from]]);
     }
 
     /* Is it a capture? In that case we penalize bad ones */
@@ -145,23 +149,23 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     {
         if (piece[from] == PAWN && piece[dest] != PAWN)
         {
-            move.grade += (200 + value_piece[piece[dest]]);
+            move.grade += (value_piece[piece[dest]]);
         }
-        if ( piece[from] != PAWN && piece[dest] == PAWN)
+        else if ( piece[from] != PAWN && piece[dest] == PAWN)
         {
-            move.grade -= (60 + value_piece[piece[from]]);
+            move.grade -= (value_piece[piece[from]]);
         }
-        if ((piece[from] == BISHOP || piece[from] == KNIGHT) && (piece[dest] == QUEEN || piece[dest] == ROOK))
+        else if ((piece[from] == BISHOP || piece[from] == KNIGHT) && (piece[dest] == QUEEN || piece[dest] == ROOK))
         {
-            move.grade += (100 + value_piece[piece[dest]]);
+            move.grade += (value_piece[piece[dest]] - value_piece[piece[from]]);
         }
-        if (piece[from] == ROOK && (piece[dest] != QUEEN || piece[dest] != ROOK))
+        else if (piece[from] == ROOK && (piece[dest] != QUEEN || piece[dest] != ROOK))
         {
-            move.grade += value_piece[piece[dest]];
+            move.grade += value_piece[dest] - value_piece[piece[ROOK]];
         }
-        if (piece[from] == QUEEN && piece[dest] != QUEEN)
+        else if (piece[from] == QUEEN && piece[dest] != QUEEN)
         {
-            move.grade += value_piece[piece[dest]];
+            move.grade += value_piece[QUEEN] - value_piece[piece[dest]];
         }
     }
     else /* Are we placing a piece in a square deffended by a pawn? */
@@ -169,17 +173,17 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         if (color[from] == WHITE)
         {
             if (piece[dest - 7] == PAWN && color[dest - 7] == BLACK)
-                move.grade -= (800 + value_piece[piece[from]]);
+                move.grade -= (value_piece[piece[from]]);
             else if (piece[dest - 9] == PAWN && color[dest - 9] == BLACK)
-                move.grade -= (800 + value_piece[piece[from]]);
+                move.grade -= (value_piece[piece[from]]);
 
         }
         else
         {
             if (piece[dest + 7] == PAWN && color[dest + 7] == WHITE)
-                move.grade -= (800 + value_piece[piece[from]]);
+                move.grade -= (value_piece[piece[from]]);
             else if (piece[dest + 9] == PAWN && color[dest + 9] == WHITE)
-                move.grade -= (800 + value_piece[piece[from]]);
+                move.grade -= (value_piece[piece[from]]);
 
         }
     }
