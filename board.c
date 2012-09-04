@@ -170,7 +170,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         {
             if (piece[dest - 7] == PAWN && color[dest - 7] == BLACK)
                 move.grade -= (800 + value_piece[piece[from]]);
-            if (piece[dest - 9] == PAWN && color[dest - 9] == BLACK)
+            else if (piece[dest - 9] == PAWN && color[dest - 9] == BLACK)
                 move.grade -= (800 + value_piece[piece[from]]);
 
         }
@@ -178,7 +178,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         {
             if (piece[dest + 7] == PAWN && color[dest + 7] == WHITE)
                 move.grade -= (800 + value_piece[piece[from]]);
-            if (piece[dest + 9] == PAWN && color[dest + 9] == WHITE)
+            else if (piece[dest + 9] == PAWN && color[dest + 9] == WHITE)
                 move.grade -= (800 + value_piece[piece[from]]);
 
         }
