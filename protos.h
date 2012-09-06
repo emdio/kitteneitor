@@ -21,6 +21,7 @@ void MoveOrder(int from, int movecount, MOVE *moveBuf);
 
 /* Eval */
 int Eval();
+int endGame();
 
 /* Main */
 void startgame();

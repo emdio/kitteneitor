@@ -13,6 +13,9 @@
  ****************************************************************************
  */
 
+/* To store the material of each side */
+int piece_mat[2];
+
 int
 Eval ()
 {
@@ -24,6 +27,17 @@ Eval ()
 
     /* The score of the position */
     int score = 0;
+
+    /* First pass around the board */
+    piece_mat[WHITE] = 0;
+    piece_mat[BLACK] = 0;
+    for (i = 0; i < 64; ++i)
+    {
+        if (color[i] == EMPTY)
+            continue;
+        else if (piece[i] != KING)
+            piece_mat[color[i]] += value_piece[piece[i]];
+    }
 
     /* Check all the squares searching for the pieces */
     for (i = 0; i < 64; i++)
@@ -54,7 +68,10 @@ Eval ()
                 score += pst_queen[i];
                 break;
             case KING:
-                score += pst_king[i];
+                if (endGame())
+                    score += pst_king_endgame[i];
+                else
+                    score += pst_king_midgame[i];
                 break;
             }
         }
@@ -82,7 +99,10 @@ Eval ()
                 score -= pst_queen[flip[i]];
                 break;
             case KING:
-                score -= pst_king[flip[i]];
+                if (endGame())
+                    score -= pst_king_endgame[flip[i]];
+                else
+                    score -= pst_king_midgame[flip[i]];
                 break;
             }
         }
@@ -92,4 +112,13 @@ Eval ()
     if (side == WHITE)
         return score;
     return -score;
+}
+
+/* Are we in the endgame? */
+int endGame()
+{
+    int allMaterial = piece_mat[WHITE] + piece_mat[BLACK];
+    if (allMaterial < 2600)
+        return 1;
+    return 0;
 }

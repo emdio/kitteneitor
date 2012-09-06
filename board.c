@@ -99,7 +99,10 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade += mult*(pst_queen[dest] - pst_queen[from]);
             break;
         case KING:
-            move.grade += mult*(pst_king[dest] - pst_king[from]);
+            if (endGame())
+                move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
+            else
+                move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
             break;
         }
     }
@@ -123,7 +126,10 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
             break;
         case KING:
-            move.grade += mult*(pst_king[flip[dest]] - pst_king[flip[from]]);
+            if (endGame())
+                move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
+            else
+                move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
             break;
         }
     }
