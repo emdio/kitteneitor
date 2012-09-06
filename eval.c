@@ -35,7 +35,7 @@ Eval ()
     {
         if (color[i] == EMPTY)
             continue;
-        else if (piece[i] != KING)
+        else
             piece_mat[color[i]] += value_piece[piece[i]];
     }
 
@@ -115,10 +115,10 @@ Eval ()
 }
 
 /* Are we in the endgame? */
-int endGame()
+inline int endGame()
 {
     int allMaterial = piece_mat[WHITE] + piece_mat[BLACK];
-    if (allMaterial < 2600)
+    if (allMaterial < 22600)
         return 1;
     return 0;
 }
