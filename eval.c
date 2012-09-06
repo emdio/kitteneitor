@@ -36,18 +36,20 @@ Eval ()
         if (color[i] == EMPTY)
             continue;
         else
+            /* Just counting the wood on the board */
             piece_mat[color[i]] += value_piece[piece[i]];
     }
+
+    /* After counting the material we update the score */
+    score = piece_mat[WHITE] - piece_mat[BLACK];
 
     /* Check all the squares searching for the pieces */
     for (i = 0; i < 64; i++)
     {
+        if (color[i] == EMPTY)
+            continue;
         if (color[i] == WHITE)
         {
-            /* In the current square, add the material
-             * value of the piece */
-            score += value_piece[piece[i]];
-
             /* Now we add to the evaluation the value of the
              * piece square tables */
             switch (piece[i])
@@ -77,10 +79,8 @@ Eval ()
         }
         /* Now the evaluation for black: note the change of
            the sign in the score */
-        else if (color[i] == BLACK)
+        else
         {
-            score -= value_piece[piece[i]];
-
             switch (piece[i])
             {
             case PAWN:
