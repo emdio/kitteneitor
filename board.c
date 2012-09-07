@@ -29,7 +29,7 @@ Opponent(int color)
     return (!(color));
 }
 
-/* White sign is +1, Black sign is -1 */
+/* Sign returns 1 fot White and -1 for Black */
 inline int
 Sign(int color)
 {
@@ -48,10 +48,15 @@ inline int Behind(int color)
     return (Sign(color) * DOWN);
 }
 
-/* Returns 1 if sq is protected by a pawn of color */
-int IsSqProtectedByAPawn(int sq, int color)
+/* Returns 1 if sq is protected by a pawn of color side */
+inline int IsSqProtectedByAPawn(int sq, int side)
 {
+    if ( piece[sq + Ahead(Opponent(side)) + 1] == PAWN &&  color[sq + Ahead(Opponent(side)) + 1] == side )
+        return 1;
+    else if ( piece[sq + Ahead(Opponent(side)) - 1] == PAWN && color[sq + Ahead(Opponent(side)) - 1] == side )
+        return 1;
 
+    return 0;
 }
 
 /*
@@ -157,21 +162,13 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         {
             move.grade += (value_piece[piece[dest]]);
         }
-        else if ( piece[from] != PAWN && piece[dest] == PAWN)
+        else if ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
         {
             move.grade -= (value_piece[piece[from]]);
         }
-        else if ((piece[from] == BISHOP || piece[from] == KNIGHT) && (piece[dest] == QUEEN || piece[dest] == ROOK))
+        else
         {
-            move.grade += (value_piece[piece[dest]] - value_piece[piece[from]]);
-        }
-        else if (piece[from] == ROOK && (piece[dest] != QUEEN || piece[dest] != ROOK))
-        {
-            move.grade += value_piece[dest] - value_piece[piece[ROOK]];
-        }
-        else if (piece[from] == QUEEN && piece[dest] != QUEEN)
-        {
-            move.grade += value_piece[QUEEN] - value_piece[piece[dest]];
+             move.grade += (value_piece[piece[dest]]);
         }
     }
     else /* Are we placing a piece in a square deffended by a pawn? */

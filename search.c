@@ -132,6 +132,11 @@ Quiescent (int alpha, int beta)
     for (i = 0; i < capscnt; ++i)
     {
         MoveOrder(i, capscnt, cBuf);
+    }
+
+    for (i = 0; i < capscnt; ++i)
+    {
+        MoveOrder(i, capscnt, cBuf);
 
         if (!MakeMove (cBuf[i]))
         {
@@ -205,7 +210,7 @@ ComputerThink (int depth)
     /* Stop timer */
     stop = clock ();
     t = (double) (stop - start) / CLOCKS_PER_SEC;
-    knps = ((double) countquiesCalls / t) / 1000.;
+    knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
     double ratio_Qsearc_Capcalls = 0;
     ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
 
