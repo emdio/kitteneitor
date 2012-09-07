@@ -190,7 +190,7 @@ main ()
 
     startgame ();
 
-    max_depth = 5;		/* max depth to search */
+    max_depth = 6;		/* max depth to search */
     MOVE moveBuf[200];
     int movecnt;
 
