@@ -145,29 +145,25 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
 
     /* Is a piece being attacked by a pawn? */
     if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
-        move.grade += (value_piece[piece[from]]);
-//    if (color[from] == WHITE)
-//    {
-//        if (piece[from - 7] == PAWN && color[from - 7] == BLACK)
-//            move.grade += (value_piece[piece[from]]);
-//        if (piece[from - 9] == PAWN && color[from - 9] == BLACK)
-//            move.grade += (value_piece[piece[from]]);
-//    }
-//    else
-//    {
-//        if (piece[from + 7] == PAWN && color[from + 7] == WHITE)
-//            move.grade += (value_piece[piece[from]]);
-//        if (piece[from + 9] == PAWN && color[from + 9] == WHITE)
-//            move.grade += (value_piece[piece[from]]);
-//    }
+        move.grade += 15*(value_piece[piece[from]]);
 
     /* Is it a capture? In that case we penalize bad ones */
     if (color[dest] != EMPTY)
     {
-        /* Captures by a pawn always are good */
-        if (piece[from] == PAWN && piece[dest] != PAWN)
+        /* If we're taking the queen we place it up */
+        if (piece[dest] == QUEEN )
         {
-            move.grade += (value_piece[piece[dest]]);
+            move.grade += 30*(value_piece[QUEEN]);
+        }
+        /* If we're taking a pawn protected by a pawn it's a bad idea */
+        if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
+        {
+            move.grade -= 30*(value_piece[piece[from]]);
+        }
+        /* Captures by a pawn always are good */
+        if (piece[from] == PAWN )
+        {
+            move.grade += 20*(value_piece[piece[dest]]);
         }
         /* Is the captured piece protected by a pawn? */
         else if ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
@@ -182,7 +178,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     else /* Are we placing a piece in a square deffended by a pawn? */
     {
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-            move.grade -= (value_piece[piece[from]]);
+            move.grade -= 10*(value_piece[piece[from]]);
     }
 
 
