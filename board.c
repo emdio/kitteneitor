@@ -158,7 +158,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* If we're taking a pawn protected by a pawn it's a bad idea */
         if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
         {
-            move.grade -= 30*(value_piece[piece[from]]);
+            move.grade -= (value_piece[piece[from]]);
         }
         /* Captures by a pawn always are good */
         if (piece[from] == PAWN )
