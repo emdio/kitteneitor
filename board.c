@@ -150,21 +150,24 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     /* Is it a capture? In that case we penalize bad ones */
     if (color[dest] != EMPTY)
     {
-        /* If we're taking the queen we place it up */
-        if (piece[dest] == QUEEN )
+        /* We just prefer captures that win material */
+        if ( value_piece[piece[from]] < value_piece[piece[dest]] + 50 )
         {
-            move.grade += 30*(value_piece[QUEEN]);
+            move.grade += 30*(value_piece[dest]);
         }
+
+        /* Captures by a pawn always are good */
+        if (piece[from] == PAWN )
+        {
+            move.grade += 30*(value_piece[piece[dest]]);
+        }
+
         /* If we're taking a pawn protected by a pawn it's a bad idea */
         if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
         {
             move.grade -= (value_piece[piece[from]]);
         }
-        /* Captures by a pawn always are good */
-        if (piece[from] == PAWN )
-        {
-            move.grade += 20*(value_piece[piece[dest]]);
-        }
+
         /* Is the captured piece protected by a pawn? */
         else if ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
         {
@@ -175,8 +178,10 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
              move.grade += (value_piece[piece[dest]]);
         }
     }
-    else /* Are we placing a piece in a square deffended by a pawn? */
+    /* So it isn't a capture */
+    else
     {
+        /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
             move.grade -= 10*(value_piece[piece[from]]);
     }

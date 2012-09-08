@@ -108,10 +108,12 @@ Eval ()
         }
     }
 
-    /* Finally we return the score, taking into account the side to move */
+    /* Finally we return the score, taking into account the side to move
+        We add an extra plus 10 because in the same position the side to
+        move has some extra advantage*/
     if (side == WHITE)
-        return score;
-    return -score;
+        return score + 10;
+    return -score - 10;
 }
 
 /* Are we in the endgame? */
