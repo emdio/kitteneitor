@@ -144,20 +144,22 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     }
 
     /* Is a piece being attacked by a pawn? */
-    if (color[from] == WHITE)
-    {
-        if (piece[from - 7] == PAWN && color[from - 7] == BLACK)
-            move.grade += (value_piece[piece[from]]);
-        if (piece[from - 9] == PAWN && color[from - 9] == BLACK)
-            move.grade += (value_piece[piece[from]]);
-    }
-    else
-    {
-        if (piece[from + 7] == PAWN && color[from + 7] == WHITE)
-            move.grade += (value_piece[piece[from]]);
-        if (piece[from + 9] == PAWN && color[from + 9] == WHITE)
-            move.grade += (value_piece[piece[from]]);
-    }
+    if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
+        move.grade += (value_piece[piece[from]]);
+//    if (color[from] == WHITE)
+//    {
+//        if (piece[from - 7] == PAWN && color[from - 7] == BLACK)
+//            move.grade += (value_piece[piece[from]]);
+//        if (piece[from - 9] == PAWN && color[from - 9] == BLACK)
+//            move.grade += (value_piece[piece[from]]);
+//    }
+//    else
+//    {
+//        if (piece[from + 7] == PAWN && color[from + 7] == WHITE)
+//            move.grade += (value_piece[piece[from]]);
+//        if (piece[from + 9] == PAWN && color[from + 9] == WHITE)
+//            move.grade += (value_piece[piece[from]]);
+//    }
 
     /* Is it a capture? In that case we penalize bad ones */
     if (color[dest] != EMPTY)
