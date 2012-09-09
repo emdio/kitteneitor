@@ -143,11 +143,11 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         }
     }
 
-    /* Is a piece being attacked by a pawn? */
+    /* Is a piece being attacked by a pawn? Then we probably should move it */
     if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
         move.grade += 15*(value_piece[piece[from]]);
 
-    /* Is it a capture? In that case we penalize bad ones */
+    /* Is it a capture? */
     if (color[dest] != EMPTY)
     {
         /* We just prefer captures that win material */
@@ -155,6 +155,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         {
             move.grade += 30*(value_piece[dest]);
         }
+
 
         /* Captures by a pawn always are good */
         if (piece[from] == PAWN )
@@ -183,11 +184,11 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     {
         /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-            move.grade -= 10*(value_piece[piece[from]]);
+            move.grade -= (value_piece[piece[from]]);
     }
 
 
-    /* Once we're done with grading the moves we fill the rest of the fileds */
+    /* Once we're done with grading the moves we fill the rest of the fields */
     pBuf[*pMCount] = move;
     *pMCount = *pMCount + 1;
 }
