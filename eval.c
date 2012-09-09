@@ -16,7 +16,7 @@
 /* To store the material of each side */
 int piece_mat[2];
 
-/* Arrays for scaing mobility values */
+/* Arrays for scaling mobility values */
 int mov_knight[9] = {
   -10, -4, 2, 8, 14, 18, 22, 24, 25
 };
@@ -104,11 +104,11 @@ Eval ()
                 break;
             case KNIGHT:
                 score -= pst_knight[i];
-//                score -= mov_knight[KnightMobility(i)];
+                score -= mov_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score -= pst_bishop[i];
-//                score -= mov_bishop[BishopMobility(i)];
+                score -= mov_bishop[BishopMobility(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
