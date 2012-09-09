@@ -28,6 +28,9 @@ Eval ()
     /* The score of the position */
     int score = 0;
 
+    /* Mobility */
+    int Mob = 0;
+
     /* First pass around the board */
     piece_mat[WHITE] = 0;
     piece_mat[BLACK] = 0;
@@ -62,6 +65,7 @@ Eval ()
                 break;
             case BISHOP:
                 score += pst_bishop[i];
+                score += BishopMobility(i);
                 break;
             case ROOK:
                 score += pst_rook[i];
@@ -91,6 +95,7 @@ Eval ()
                 break;
             case BISHOP:
                 score -= pst_bishop[flip[i]];
+                score -= BishopMobility(i);
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
@@ -123,4 +128,22 @@ inline int endGame()
     if (allMaterial < 22600)
         return 1;
     return 0;
+}
+
+/* Mobility */
+int BishopMobility(int sq)
+{
+    int l;
+    int m = 0;
+
+    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
+        m++;
+    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] == EMPTY); l-=7)
+        m++;
+    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] == EMPTY); l+=7)
+        m++;
+    for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
+        m++;
+
+    return m;
 }
