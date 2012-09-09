@@ -16,6 +16,17 @@
 /* To store the material of each side */
 int piece_mat[2];
 
+/* Arrays for scaing mobility values */
+int mov_knight[9] = {
+  -10, -4, 2, 8, 14, 18, 22, 24, 25
+};
+
+int mov_bishop[16] = {
+  -20, -10, 0, 10, 20, 30, 38, 44, 48, 52, 54, 57, 58, 59, 60, 60
+};
+
+
+/* The evaluation function */
 int
 Eval ()
 {
@@ -62,10 +73,11 @@ Eval ()
                 break;
             case KNIGHT:
                 score += pst_knight[i];
+                score += mov_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score += pst_bishop[i];
-                score += BishopMobility(i);
+                score += mov_bishop[BishopMobility(i)];
                 break;
             case ROOK:
                 score += pst_rook[i];
@@ -91,11 +103,12 @@ Eval ()
                 score -= pst_pawn[flip[i]];
                 break;
             case KNIGHT:
-                score -= pst_knight[flip[i]];
+                score -= pst_knight[i];
+//                score -= mov_knight[KnightMobility(i)];
                 break;
             case BISHOP:
-                score -= pst_bishop[flip[i]];
-                score -= BishopMobility(i);
+                score -= pst_bishop[i];
+//                score -= mov_bishop[BishopMobility(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
@@ -144,6 +157,34 @@ int BishopMobility(int sq)
         m++;
     for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
         m++;
+
+    return m;
+}
+
+int KnightMobility(int sq)
+{
+    int l;
+    int m = 0;
+
+    l = sq - 17;
+    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    l = sq - 15;
+    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+
+    l = sq - 10;
+    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    l = sq - 6;
+    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+
+    l = sq + 6;
+    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    l = sq + 10;
+    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+
+    l = sq + 15;
+    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    l = sq + 17;
+    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
 
     return m;
 }
