@@ -103,11 +103,11 @@ Eval ()
                 score -= pst_pawn[flip[i]];
                 break;
             case KNIGHT:
-                score -= pst_knight[i];
+                score -= pst_knight[flip[i]];
                 score -= mov_knight[KnightMobility(i)];
                 break;
             case BISHOP:
-                score -= pst_bishop[i];
+                score -= pst_bishop[flip[i]];
                 score -= mov_bishop[BishopMobility(i)];
                 break;
             case ROOK:

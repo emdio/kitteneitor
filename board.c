@@ -153,30 +153,20 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* We just prefer captures that win material */
         if ( value_piece[piece[from]] < value_piece[piece[dest]] + 50 )
         {
-            move.grade += 30*(value_piece[dest]);
+            move.grade += 30*(value_piece[dest]) - piece[from];
         }
 
 
         /* Captures by a pawn always are good */
-        if (piece[from] == PAWN )
+        if (piece[from] == PAWN && piece[dest])
         {
             move.grade += 30*(value_piece[piece[dest]]);
         }
 
-        /* If we're taking a pawn protected by a pawn it's a bad idea */
+//        /* If we're taking a pawn protected by a pawn it's a bad idea */
         if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
         {
             move.grade -= (value_piece[piece[from]]);
-        }
-
-        /* Is the captured piece protected by a pawn? */
-        else if ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-        {
-            move.grade -= (value_piece[piece[from]]);
-        }
-        else
-        {
-             move.grade += (value_piece[piece[dest]]);
         }
     }
     /* So it isn't a capture */
