@@ -13,16 +13,19 @@
  ****************************************************************************
  */
 
+/* Bonus and malus */
+#define	ROOK_OPEN_COL		30
+
 /* To store the material of each side */
 int piece_mat[2];
 
 /* Arrays for scaling mobility values */
-int mov_knight[9] = {
+int mob_knight[9] = {
   -10, -4, 2, 8, 14, 18, 22, 24, 25
 };
 
-int mov_bishop[16] = {
-  -20, -10, 0, 10, 20, 30, 38, 44, 48, 52, 54, 57, 58, 59, 60, 60
+int mob_bishop[16] = {
+  -15, -10, 0, 8, 16, 20, 28, 32, 36, 40, 44, 48, 52, 55, 57, 60
 };
 
 
@@ -73,14 +76,16 @@ Eval ()
                 break;
             case KNIGHT:
                 score += pst_knight[i];
-                score += mov_knight[KnightMobility(i)];
+                score += mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score += pst_bishop[i];
-                score += mov_bishop[BishopMobility(i)];
+                score += mob_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score += pst_rook[i];
+                if (OpenColRook(i))
+                    score += ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score += pst_queen[i];
@@ -104,14 +109,16 @@ Eval ()
                 break;
             case KNIGHT:
                 score -= pst_knight[flip[i]];
-                score -= mov_knight[KnightMobility(i)];
+                score -= mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score -= pst_bishop[flip[i]];
-                score -= mov_bishop[BishopMobility(i)];
+                score -= mob_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
+                if (OpenColRook(i))
+                    score -= ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
@@ -147,36 +154,44 @@ inline int endGame()
 int BishopMobility(int sq)
 {
     int l;
-    int mob = 0;  /* The squares free */
-    int range = 0;  /* The squares till reach a pawn no matter its color */
+    int mob = 0;
 
     for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
         mob++;
-    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] != PAWN); l-=9)
-        range++;
-
+    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
+        mob++;
     for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] == EMPTY); l-=7)
         mob++;
-    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] != PAWN); l-=7)
-        range++;
-
     for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] == EMPTY); l+=7)
         mob++;
-    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] != PAWN); l+=7)
-        range++;
-
     for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
         mob++;
+
+    return mob;
+}
+
+/* The squares till reach a pawn no matter its color */
+int BishopRange(int sq)
+{
+    int l;
+    int range = 0;
+
+    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] != PAWN); l-=9)
+        range++;
+    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] != PAWN); l-=7)
+        range++;
+    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] != PAWN); l+=7)
+        range++;
     for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] != PAWN); l+=9)
         range++;
 
-    return mob;
+    return range;
 }
 
 int KnightMobility(int sq)
 {
     int l;
-    int mon = 0;
+    int mob = 0;
 
     l = sq - 17;
     if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
@@ -200,3 +215,39 @@ int KnightMobility(int sq)
 
     return mob;
 }
+
+int MobilityRook(int sq)
+{
+    int l;
+    int mob = 0;
+
+    for (l = sq-8; ((l >= 0) && piece[l] == EMPTY); l-=8)
+        mob++;
+    for (l = sq-1; ((Row(l) == Row(sq)) && piece[l] == EMPTY); l-=1)
+        mob++;
+    for (l = sq+8; ((l <= 63) && piece[l] == EMPTY); l+=8)
+        mob++;
+    for (l = sq+1; ((Row(l) == Row(sq)) && piece[l] == EMPTY); l+=1)
+        mob++;
+
+    return mob;
+}
+
+/* Returns 1 if rook is on an open column */
+int OpenColRook(int sq)
+{
+    int l;
+    int mob = 0;
+
+    for (l = sq-8; ((l >= 0) && piece[l] != PAWN); l-=8)
+        mob++;
+    for (l = sq+8; ((l <= 63) && piece[l] != PAWN); l+=8)
+        mob++;
+
+    /* If it can reach 7 squares without finding a pawn the
+    the rook is on an open column*/
+    if (mob == 7)
+        return 1;
+    return 0;
+}
+
