@@ -147,44 +147,56 @@ inline int endGame()
 int BishopMobility(int sq)
 {
     int l;
-    int m = 0;
+    int mob = 0;  /* The squares free */
+    int range = 0;  /* The squares till reach a pawn no matter its color */
 
     for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
-        m++;
-    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] == EMPTY); l-=7)
-        m++;
-    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] == EMPTY); l+=7)
-        m++;
-    for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
-        m++;
+        mob++;
+    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] != PAWN); l-=9)
+        range++;
 
-    return m;
+    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] == EMPTY); l-=7)
+        mob++;
+    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] != PAWN); l-=7)
+        range++;
+
+    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] == EMPTY); l+=7)
+        mob++;
+    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] != PAWN); l+=7)
+        range++;
+
+    for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
+        mob++;
+    for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] != PAWN); l+=9)
+        range++;
+
+    return mob;
 }
 
 int KnightMobility(int sq)
 {
     int l;
-    int m = 0;
+    int mon = 0;
 
     l = sq - 17;
-    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
     l = sq - 15;
-    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
 
     l = sq - 10;
-    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
     l = sq - 6;
-    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
 
     l = sq + 6;
-    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
     l = sq + 10;
-    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
 
     l = sq + 15;
-    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) m++;
+    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
     l = sq + 17;
-    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) m++;
+    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
 
-    return m;
+    return mob;
 }
