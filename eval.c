@@ -251,3 +251,4 @@ int OpenColRook(int sq)
     return 0;
 }
 
+
