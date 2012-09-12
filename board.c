@@ -147,28 +147,38 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
         move.grade += 15*(value_piece[piece[from]]);
 
+
     /* Is it a capture? */
-    if (color[dest] != EMPTY)
+    if ((color[dest] != EMPTY))
     {
-        /* We just prefer captures that win material */
-        if ( value_piece[piece[from]] < value_piece[piece[dest]] + 50 )
-        {
-            move.grade += 30*(value_piece[dest]) - piece[from];
-        }
-
-
-        /* Captures by a pawn always are good */
-        if (piece[from] == PAWN)
-        {
-            move.grade += 30*(value_piece[piece[dest]]);
-        }
-
-        /* If we're taking a pawn protected by a pawn it's a bad idea */
-        if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
-        {
-            move.grade -= (value_piece[piece[from]]);
-        }
+        /*malas capturas por detrás*/
+        if (badCapture(move))
+            move.grade = -10000 + (piece[dest]*100) - (piece[from]);
+        /*ordenamos por MVV/LVA*/
+        else
+            move.grade = 3000000 + (piece[dest]*100) - (piece[from]);
     }
+//    if (color[dest] != EMPTY)
+//    {
+//        /* We just prefer captures that win material */
+//        if ( value_piece[piece[from]] < value_piece[piece[dest]] + 50 )
+//        {
+//            move.grade += 30*(value_piece[dest]) - piece[from];
+//        }
+
+
+//        /* Captures by a pawn always are good */
+//        if (piece[from] == PAWN)
+//        {
+//            move.grade += 30*(value_piece[piece[dest]]);
+//        }
+
+//        /* If we're taking a pawn protected by a pawn it's a bad idea */
+//        if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
+//        {
+//            move.grade -= (value_piece[piece[from]]);
+//        }
+//    }
     /* So it isn't a capture */
     else
     {
@@ -1180,4 +1190,42 @@ TakeBack ()
             color[D8] = EMPTY;
         }
     }
+}
+
+/*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
+sustituye de momento a SEE (static exchange evaluator)*/
+int badCapture(MOVE mcmov) {
+
+//    int recapture_pawn = 0;
+
+    /*Capturas "de igual a igual o de menos a más" (también AxC) son buenas por definición*/
+    if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
+        return 0;
+
+    /*Comprobamos si el oponente puede recapturar con un PAWN*/
+//    if (color[mcmov.from] == WHITE)
+//    {
+//        if (mcmov.dest - 9 >= 0 && Col(mcmov.dest) != 0 && piece[mcmov.dest - 9] == PAWN && color[mcmov.dest - 9] == BLACK)
+            if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
+//            recapture_pawn = 1;
+            return 1;
+/*        else if (mcmov.dest - 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 7] == PAWN && color[mcmov.dest - 7] == BLACK)
+//            recapture_pawn = 1;
+            return 1*/;
+//    }
+//    else
+//    {
+//        if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
+////        if (mcmov.dest + 7 < 64 && Col(mcmov.dest) != 0 && piece[mcmov.dest + 7] == PAWN && color[mcmov.dest + 7] == WHITE)
+////            recapture_pawn = 1;
+//            return 1;
+//        else if (mcmov.dest + 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 9] == PAWN && color[mcmov.dest + 9] == WHITE)
+//            recapture_pawn = 1;
+//            return 1;
+//    }
+
+//    if (recapture_pawn)
+//        return 1;*/
+
+    return 0;
 }
