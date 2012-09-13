@@ -63,6 +63,61 @@ inline int IsSqProtectedByAPawn(int sq, int side)
     return 0;
 }
 
+/*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
+sustituye de momento a SEE (static exchange evaluator)*/
+int badCapture(MOVE mcmov) {
+
+    /* Captures by pawn never are bad */
+    if (piece[mcmov.from] == PAWN)
+        return 0;
+
+    /* Capturing equal or more material is never bad */
+    if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
+        return 0;
+
+    /* We're capturing a piece with less value than ours, so we want to
+    know either it is protected by a pawn? */
+    if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
+        return 1;
+
+    /* Is the piece protected by a bishop? */
+    if (color[mcmov.from] == WHITE) {
+            if (mcmov.dest - 9 >= 0 && Col(mcmov.dest) != 0 && piece[mcmov.dest - 9] == BISHOP && color[mcmov.dest - 9] == BLACK)
+                return 1;
+            else if (mcmov.dest - 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 7] == BISHOP && color[mcmov.dest - 7] == BLACK)
+                return 1;
+            else if (mcmov.dest + 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 7] == BISHOP && color[mcmov.dest + 7] == BLACK)
+                return 1;
+            else if (mcmov.dest + 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 7] == BISHOP && color[mcmov.dest + 7] == BLACK)
+                return 1;
+        }
+        else {
+            if (mcmov.dest + 7 < 64 && Col(mcmov.dest) != 0 && piece[mcmov.dest + 7] == BISHOP && color[mcmov.dest + 7] == WHITE)
+                return 1;
+            else if (mcmov.dest + 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 9] == BISHOP && color[mcmov.dest + 9] == WHITE)
+                return 1;
+            else if (mcmov.dest - 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 9] == BISHOP && color[mcmov.dest - 9] == WHITE)
+                return 1;
+            else if (mcmov.dest - 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 9] == BISHOP && color[mcmov.dest - 9] == WHITE)
+                return 1;
+        }
+
+    /* Is the piece protected by a knight? */
+//            if (mcmov.dest + 17 >= 0 &&
+//                Col(mcmov.dest) != 7 &&
+//                piece[mcmov.dest + 17] == KNIGHT &&
+//                color[mcmov.dest + 17] != side)
+//                return 1;
+//            else if (mcmov.dest + 15 >= 0 &&
+//                     Col(mcmov.dest) > 1 &&
+//                     Row(mcmov.dest) < 7 &&
+//                     piece[mcmov.dest + 15] == KNIGHT &&
+//                     color[mcmov.dest + 15] != side)
+//                return 1;
+
+    return 0;
+}
+
 /*
  ****************************************************************************
  * Move generator *
@@ -143,10 +198,6 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         }
     }
 
-    /* Is a piece being attacked by a pawn? Then we probably should move it */
-    if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
-        move.grade += 15*(value_piece[piece[from]]);
-
 
     /* Is it a capture? */
     if ((color[dest] != EMPTY))
@@ -185,6 +236,9 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
             move.grade -= (value_piece[piece[from]]);
+        /* Is a piece being attacked by a pawn? Then we probably should move it */
+        if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
+            move.grade += 15*(value_piece[piece[from]]);
     }
 
 
@@ -1192,40 +1246,3 @@ TakeBack ()
     }
 }
 
-/*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
-sustituye de momento a SEE (static exchange evaluator)*/
-int badCapture(MOVE mcmov) {
-
-//    int recapture_pawn = 0;
-
-    /*Capturas "de igual a igual o de menos a más" (también AxC) son buenas por definición*/
-    if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
-        return 0;
-
-    /*Comprobamos si el oponente puede recapturar con un PAWN*/
-//    if (color[mcmov.from] == WHITE)
-//    {
-//        if (mcmov.dest - 9 >= 0 && Col(mcmov.dest) != 0 && piece[mcmov.dest - 9] == PAWN && color[mcmov.dest - 9] == BLACK)
-            if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
-//            recapture_pawn = 1;
-            return 1;
-/*        else if (mcmov.dest - 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 7] == PAWN && color[mcmov.dest - 7] == BLACK)
-//            recapture_pawn = 1;
-            return 1*/;
-//    }
-//    else
-//    {
-//        if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
-////        if (mcmov.dest + 7 < 64 && Col(mcmov.dest) != 0 && piece[mcmov.dest + 7] == PAWN && color[mcmov.dest + 7] == WHITE)
-////            recapture_pawn = 1;
-//            return 1;
-//        else if (mcmov.dest + 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 9] == PAWN && color[mcmov.dest + 9] == WHITE)
-//            recapture_pawn = 1;
-//            return 1;
-//    }
-
-//    if (recapture_pawn)
-//        return 1;*/
-
-    return 0;
-}
