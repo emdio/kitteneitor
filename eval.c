@@ -28,7 +28,6 @@ int mob_bishop[16] = {
   -15, -10, 0, 8, 16, 20, 28, 32, 36, 40, 44, 48, 52, 55, 57, 60
 };
 
-
 /* The evaluation function */
 int
 Eval ()

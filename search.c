@@ -113,6 +113,11 @@ Quiescent (int alpha, int beta)
     int stand_pat;
     int score;
 
+    MOVE tmpMove;
+
+    if (IsInCheck(side))
+        return Search (alpha, beta, 1, &tmpMove);
+
     countquiesCalls++;
 
     /* First we just try the evaluation function */
