@@ -58,20 +58,35 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
         /* If we've reached this far, then we have a move available */
         havemove = 1;
 
-        /* This 'if' takes us to the deep of the position, the leaf nodes */
-        if (depth - 1 > 0)
-        {
-            value = -Search (-beta, -alpha, depth - 1, &tmpMove);
-        }
-        /* If no depth left (leaf node), we evalute the position
-           and apply the alpha-beta search.
-           In the case of existing a quiescent function, it should be
-           called here instead of Eval() */
-        else
+//        /* This 'if' takes us to the deep of the position, the leaf nodes */
+//        if (depth - 1 > 0)
+//        {
+//            value = -Search (-beta, -alpha, depth - 1, &tmpMove);
+//        }
+//        /* If no depth left (leaf node), we evalute the position
+//           and apply the alpha-beta search.
+//           In the case of existing a quiescent function, it should be
+//           called here instead of Eval() */
+//        else
+//        {
+//            value = -Quiescent (-beta, -alpha);
+//            // value = -Eval();
+//        }
+
+
+
+        if (depth <= 1)
         {
             value = -Quiescent (-beta, -alpha);
-            // value = -Eval();
         }
+        else
+        {
+//            if (IsInCheck(side))
+//                    depth++;
+            value = -Search (-beta, -alpha, depth - 1, &tmpMove);
+        }
+
+
 
         /* We've evaluated the position, so we return to the previous position in such a way
            that when we take the next move from moveBuf everything is in order */
@@ -114,7 +129,7 @@ Quiescent (int alpha, int beta)
     int score;
 
     MOVE tmpMove;
-
+    /* If in check make a 1 depth search */
     if (IsInCheck(side))
         return Search (alpha, beta, 1, &tmpMove);
 

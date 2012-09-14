@@ -67,6 +67,13 @@ inline int IsSqProtectedByAPawn(int sq, int side)
 sustituye de momento a SEE (static exchange evaluator)*/
 int badCapture(MOVE mcmov) {
 
+    int y;
+    int i;
+
+    int pawn_protected = 0;
+    int bishop_protected = 0;
+    int knight_protected = 0;
+
     /* Captures by pawn never are bad */
     if (piece[mcmov.from] == PAWN)
         return 0;
@@ -78,43 +85,84 @@ int badCapture(MOVE mcmov) {
     /* We're capturing a piece with less value than ours, so we want to
     know either it is protected by a pawn? */
     if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
-        return 1;
+        pawn_protected = 1;
 
-    /* Is the piece protected by a bishop? */
-    if (color[mcmov.from] == WHITE) {
-            if (mcmov.dest - 9 >= 0 && Col(mcmov.dest) != 0 && piece[mcmov.dest - 9] == BISHOP && color[mcmov.dest - 9] == BLACK)
-                return 1;
-            else if (mcmov.dest - 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 7] == BISHOP && color[mcmov.dest - 7] == BLACK)
-                return 1;
-            else if (mcmov.dest + 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 7] == BISHOP && color[mcmov.dest + 7] == BLACK)
-                return 1;
-            else if (mcmov.dest + 7 >= 0 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 7] == BISHOP && color[mcmov.dest + 7] == BLACK)
-                return 1;
-        }
-        else {
-            if (mcmov.dest + 7 < 64 && Col(mcmov.dest) != 0 && piece[mcmov.dest + 7] == BISHOP && color[mcmov.dest + 7] == WHITE)
-                return 1;
-            else if (mcmov.dest + 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest + 9] == BISHOP && color[mcmov.dest + 9] == WHITE)
-                return 1;
-            else if (mcmov.dest - 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 9] == BISHOP && color[mcmov.dest - 9] == WHITE)
-                return 1;
-            else if (mcmov.dest - 9 < 64 && Col(mcmov.dest) != 7 && piece[mcmov.dest - 9] == BISHOP && color[mcmov.dest - 9] == WHITE)
-                return 1;
-        }
 
-    /* Is the piece protected by a knight? */
-//            if (mcmov.dest + 17 >= 0 &&
-//                Col(mcmov.dest) != 7 &&
-//                piece[mcmov.dest + 17] == KNIGHT &&
-//                color[mcmov.dest + 17] != side)
-//                return 1;
-//            else if (mcmov.dest + 15 >= 0 &&
-//                     Col(mcmov.dest) > 1 &&
-//                     Row(mcmov.dest) < 7 &&
-//                     piece[mcmov.dest + 15] == KNIGHT &&
-//                     color[mcmov.dest + 15] != side)
-//                return 1;
+//    /**********************************************/
+//    /* Is the piece protected by a knight? */
+//    int col = Col (mcmov.dest);
+//    y = mcmov.dest - 6;
+//    if (y >= 0 && col < 6 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest - 10;
+//    if (y >= 0 && col > 1 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest - 15;
+//    if (y >= 0 && col < 7 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest - 17;
+//    if (y >= 0 && col > 0 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest + 6;
+//    if (y < 64 && col > 1 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest + 10;
+//    if (y < 64 && col < 6 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest + 15;
+//    if (y < 64 && col > 0 && color[y] == Opponent(side))
+//        knight_protected = 1;
+//    y = mcmov.dest + 17;
+//    if (y < 64 && col < 7 && color[y] == Opponent(side))
+//        knight_protected = 1;
 
+
+//    /**********************************************/
+//    /* Is the piece protected by a bishop? */
+//    for (y = mcmov.dest - 9; y >= 0 && Col (y) != 7; y -= 9)
+//    {   /* go left up */
+//        if (color[y] != EMPTY)
+//        {
+//            if (color[y] != side)
+//                bishop_protected = 1;
+//        }
+//    }
+//    for (y = mcmov.dest - 7; y >= 0 && Col (y) != 0; y -= 7)
+//    {   /* go right up */
+//        if (color[y] != EMPTY)
+//        {
+//            if (color[y] != side)
+//                bishop_protected = 1;
+//        }
+//    }
+//    for (y = mcmov.dest + 9; y < 64 && Col (y) != 0; y += 9)
+//    {   /* go right down */
+//        if (color[y] != EMPTY)
+//        {
+//            if (color[y] != side)
+//                bishop_protected = 1;
+//        }
+//    }
+//    for (y = mcmov.dest + 7; y < 64 && Col (y) != 7; y += 7)
+//    {   /* go left down */
+//        if (color[y] != EMPTY)
+//        {
+//            if (color[y] != side)
+//                bishop_protected = 1;
+//        }
+//    }
+
+
+    /* Analyze the results */
+    if (pawn_protected)
+       return 1;
+//    if (knight_protected)
+//        return 2;
+//    if (bishop_protected)
+//        return 3;
+
+
+    /* If we have reached this far then it isn't a bad capture */
     return 0;
 }
 
