@@ -41,6 +41,8 @@ int blackBishops;
 int blackRooks;
 int blackQueens;
 
+
+
 /* The evaluation function */
 int
 Eval ()
@@ -218,8 +220,8 @@ Eval ()
         We add an extra plus 10 because in the same position the side to
         move has some extra advantage*/
     if (side == WHITE)
-        return score + 10;
-    return -score - 10;
+        return score + ff + 10;
+    return -score - ff - 10;
 }
 
 /* Are we in the endgame? */
@@ -341,6 +343,23 @@ int NoMaterial()
     if (piecesOnBoard == 0)
         return 1;
     return 0;
+}
+
+/* The fun factor: the main idea is to encourage interesting positions:
+    -Queens on the board
+    -Not too much pawns*/
+int funFactor()
+{
+    int ff;
+
+    /* We like queens on the board */
+    if (whiteQueens >= 1 || blackQueens >= 1) ff += 0;
+    /* Too many pawns on the board aren't that funny */
+    if (whitePawns + blackPawns < 12) ff += 5;
+    /* No queens at all? That doesn't rule */
+    if (whiteQueens == 0 && blackQueens == 0) ff -= 10;
+
+    return ff;
 }
 
 
