@@ -15,9 +15,10 @@
 
 /* Bonus and malus */
 #define	ROOK_OPEN_COL		30
+#define PAIR_BISHOPS        20
 
 /* To store the material of each side */
-int piece_mat[2];
+//int piece_mat[2];
 
 /* Arrays for scaling mobility values */
 int mob_knight[9] = {
@@ -28,10 +29,34 @@ int mob_bishop[16] = {
   -15, -10, 0, 8, 16, 20, 28, 32, 36, 40, 44, 48, 52, 55, 57, 60
 };
 
+/* To count the material */
+int whitePawns;
+int whiteKnights;
+int whiteBishops;
+int whiteRooks;
+int whiteQueens;
+int blackPawns;
+int blackKnights;
+int blackBishops;
+int blackRooks;
+int blackQueens;
+
 /* The evaluation function */
 int
 Eval ()
 {
+    /* Set some values to 0 */
+    whitePawns = 0;
+    whiteKnights = 0;
+    whiteBishops = 0;
+    whiteRooks = 0;
+    whiteQueens = 0;
+    blackPawns = 0;
+    blackKnights = 0;
+    blackBishops = 0;
+    blackRooks = 0;
+    blackQueens = 0;
+
 
     count_evaluations++;
 
@@ -41,23 +66,80 @@ Eval ()
     /* The score of the position */
     int score = 0;
 
-    /* Mobility */
-    int Mob = 0;
-
-    /* First pass around the board */
-    piece_mat[WHITE] = 0;
-    piece_mat[BLACK] = 0;
     for (i = 0; i < 64; ++i)
     {
-        if (color[i] == EMPTY)
-            continue;
-        else
+//        if (color[i] == EMPTY)
+//            continue;
+//        else
+//        {
             /* Just counting the wood on the board */
-            piece_mat[color[i]] += value_piece[piece[i]];
-    }
+//            piece_mat[color[i]] += value_piece[piece[i]];
+        if (color[i] == WHITE)
+            {
+                switch(piece[i])
+                {
+                case PAWN:
+                    whitePawns++;
+                    break;
+                case KNIGHT:
+                    whiteKnights++;
+                    break;
+                case BISHOP:
+                    whiteBishops++;
+                    break;
+                case ROOK:
+                    whiteRooks++;
+                    break;
+                case QUEEN:
+                    whiteQueens++;
+                    break;
+                }
+            }
+        else if (color[i] == BLACK)
+            {
+                switch(piece[i])
+                {
+                case PAWN:
+                    blackPawns++;
+                    break;
+                case KNIGHT:
+                    blackKnights++;
+                    break;
+                case BISHOP:
+                    blackBishops++;
+                    break;
+                case ROOK:
+                    blackRooks++;
+                    break;
+                case QUEEN:
+                    blackQueens++;
+                    break;
+                }
+            }
+        }
+
 
     /* After counting the material we update the score */
-    score = piece_mat[WHITE] - piece_mat[BLACK];
+//    score = piece_mat[WHITE] - piece_mat[BLACK];
+    score = whitePawns * value_piece[PAWN] +
+            whiteKnights * value_piece[KNIGHT] +
+            whiteBishops * value_piece[BISHOP] +
+            whiteRooks * value_piece[ROOK] +
+            whiteQueens * value_piece[QUEEN] -
+            blackPawns * value_piece[PAWN] -
+            blackKnights * value_piece[KNIGHT] -
+            blackBishops * value_piece[BISHOP] -
+            blackRooks * value_piece[ROOK] -
+            blackQueens * value_piece[QUEEN];
+
+    /* Is there enough material to keep on playing? */
+    if (NoMaterial()) return 0;
+
+    /* Anyone has the pair of bishops? */
+    if (whiteBishops==2 && blackBishops!=2)
+        score += PAIR_BISHOPS;
+    else if (blackBishops==2 && whiteBishops!=2)
+        score -= PAIR_BISHOPS;
 
     /* Check all the squares searching for the pieces */
     for (i = 0; i < 64; i++)
@@ -143,8 +225,9 @@ Eval ()
 /* Are we in the endgame? */
 inline int endGame()
 {
-    int allMaterial = piece_mat[WHITE] + piece_mat[BLACK];
-    if (allMaterial < 22600)
+    if (whiteQueens==0 || blackQueens==0)
+        return 1;
+    if (whitePawns + blackPawns < 8)
         return 1;
     return 0;
 }
@@ -243,9 +326,19 @@ int OpenColRook(int sq)
     for (l = sq+8; ((l <= 63) && piece[l] != PAWN); l+=8)
         mob++;
 
-    /* If it can reach 7 squares without finding a pawn the
+    /* If it can reach 7 squares without finding a pawn then
     the rook is on an open column*/
     if (mob == 7)
+        return 1;
+    return 0;
+}
+
+/* Returns 1 if no enough material on the board */
+int NoMaterial()
+{
+    int piecesOnBoard = whitePawns + whiteKnights + whiteBishops + whiteRooks + whiteQueens +
+                        blackPawns + blackKnights + blackBishops + blackRooks + blackQueens;
+    if (piecesOnBoard == 0)
         return 1;
     return 0;
 }
