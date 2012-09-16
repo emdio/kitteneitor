@@ -150,10 +150,10 @@ Quiescent (int alpha, int beta)
 
     countCapCalls++;
 
-    for (i = 0; i < capscnt; ++i)
-    {
-        MoveOrder(i, capscnt, cBuf);
-    }
+//    for (i = 0; i < capscnt; ++i)
+//    {
+//        MoveOrder(i, capscnt, cBuf);
+//    }
 
     for (i = 0; i < capscnt; ++i)
     {
