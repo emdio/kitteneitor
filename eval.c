@@ -48,6 +48,8 @@ int
 Eval ()
 {
     /* Set some values to 0 */
+    int ff = 0;
+
     whitePawns = 0;
     whiteKnights = 0;
     whiteBishops = 0;
@@ -219,9 +221,12 @@ Eval ()
     /* Finally we return the score, taking into account the side to move
         We add an extra plus 10 because in the same position the side to
         move has some extra advantage*/
+
+    ff = funFactor();
+//    printf("ff=%d\n", ff);
     if (side == WHITE)
-        return score + ff + 10;
-    return -score - ff - 10;
+        return (score + ff + 10);
+    return (-score - ff - 10);
 }
 
 /* Are we in the endgame? */
@@ -350,16 +355,19 @@ int NoMaterial()
     -Not too much pawns*/
 int funFactor()
 {
-    int ff;
+    int funfa = 0;
 
     /* We like queens on the board */
-    if (whiteQueens >= 1 || blackQueens >= 1) ff += 0;
+    if (whiteQueens >= 1 || blackQueens >= 1)
+        funfa += 10;
     /* Too many pawns on the board aren't that funny */
-    if (whitePawns + blackPawns < 12) ff += 5;
+    if (whitePawns + blackPawns < 12)
+        funfa += 5;
     /* No queens at all? That doesn't rule */
-    if (whiteQueens == 0 && blackQueens == 0) ff -= 10;
+    if (whiteQueens == 0 && blackQueens == 0)
+        funfa -= 10;
 
-    return ff;
+    return funfa;
 }
 
 

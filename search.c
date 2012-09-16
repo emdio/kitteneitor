@@ -81,6 +81,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
         }
         else
         {
+            /* Esto genera un core dump */
 //            if (IsInCheck(side))
 //                    depth++;
             value = -Search (-beta, -alpha, depth - 1, &tmpMove);
@@ -128,12 +129,12 @@ Quiescent (int alpha, int beta)
     int stand_pat;
     int score;
 
+    countquiesCalls++;
+
     MOVE tmpMove;
     /* If in check make a 1 depth search */
     if (IsInCheck(side))
         return Search (alpha, beta, 1, &tmpMove);
-
-    countquiesCalls++;
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();
