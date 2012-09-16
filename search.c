@@ -36,6 +36,23 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     countSearchCalls++;
 
 
+    /****************************/
+    /* Copied from magic engine */
+//    if (Eval() + VALUE_QUEEN <= alpha &&
+//            depth >= 3)
+//            depth--;
+
+    /* I have to double check the meaning of this code */
+    if (Eval() >= beta &&
+        alpha <= beta - 1) {
+        depth--;
+    }
+    /* Copied from magic engine till here */
+    /****************************/
+
+
+
+
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
