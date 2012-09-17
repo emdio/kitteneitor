@@ -343,10 +343,13 @@ int OpenColRook(int sq)
 /* Returns 1 if no enough material on the board */
 int NoMaterial()
 {
-    int piecesOnBoard = whitePawns + whiteKnights + whiteBishops + whiteRooks + whiteQueens +
-                        blackPawns + blackKnights + blackBishops + blackRooks + blackQueens;
-    if (piecesOnBoard == 0)
-        return 1;
+
+    if (whitePawns == 0 && blackPawns == 0)
+        if (whiteRooks == 0 && blackRooks == 0)
+            if (whiteQueens == 0 && blackQueens == 0)
+                if (whiteBishops <= 1 && blackBishops <= 1)
+                    if (whiteKnights <= 1 && blackKnights <= 1)
+                        return 1;
     return 0;
 }
 

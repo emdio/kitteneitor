@@ -45,7 +45,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     /* I have to double check the meaning of this code */
     if (Eval() >= beta &&
         alpha <= beta - 1) {
-        depth--;
+        depth-=2;
     }
     /* Copied from magic engine till here */
     /****************************/
