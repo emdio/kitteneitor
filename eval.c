@@ -343,7 +343,6 @@ int OpenColRook(int sq)
 /* Returns 1 if no enough material on the board */
 int NoMaterial()
 {
-
     if (whitePawns == 0 && blackPawns == 0)
         if (whiteRooks == 0 && blackRooks == 0)
             if (whiteQueens == 0 && blackQueens == 0)
