@@ -47,7 +47,8 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
 
     /* I have to double check the meaning of this code */
     if (Eval() >= beta &&
-        alpha <= beta - 1) {
+        alpha <= beta - 1)
+    {
         depth-=2;
     }
     /* Copied from magic engine till here */
@@ -62,17 +63,14 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
     {
-        /********************************************************************
-        * Here must be called OrderMove, so we have the moves are ordered before
-        picking one up from the list*
-        ********************************************************************/
-
+        /* Here must be called OrderMove, so we have the moves are ordered before
+        picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
 
+        /* If the current move isn't legal, we take it back
+         * and take the next move in the list */
         if (!MakeMove (moveBuf[i]))
         {
-            /* If the current move isn't legal, we take it back
-             * and take the next move in the list */
             TakeBack ();
             continue;
         }
