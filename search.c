@@ -18,6 +18,8 @@
 int
 Search (int alpha, int beta, int depth, MOVE * pBestMove)
 {
+    
+    /* Vars deffinition */
     int i;
     int value;			/* To store the evaluation */
     int havemove;		/* Either we have or not a legal move available */
@@ -29,11 +31,11 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     havemove = 0;		/* is there a move available? */
     
     pBestMove->type_of_move = MOVE_TYPE_NONE;
+    
 
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
-
     countSearchCalls++;
 
 
@@ -79,19 +81,16 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
         havemove = 1;
 
 
+        /* If we're in a leaf node we call quiescent search in 
+         * order to avoid the horizon effect */
         if (depth <= 1)
         {
             value = -Quiescent (-beta, -alpha);
         }
         else
         {
-            /* Esto genera un core dump */
-//            if (IsInCheck(side))
-//                    depth++;
             value = -Search (-beta, -alpha, depth - 1, &tmpMove);
         }
-
-
 
         /* We've evaluated the position, so we return to the previous position in such a way
            that when we take the next move from moveBuf everything is in order */
