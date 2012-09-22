@@ -148,14 +148,9 @@ Quiescent (int alpha, int beta)
      * store them in cBuf */
     MOVE cBuf[200];
     capscnt = GenCaps (side, cBuf);
-
     countCapCalls++;
 
-//    for (i = 0; i < capscnt; ++i)
-//    {
-//        MoveOrder(i, capscnt, cBuf);
-//    }
-
+    /* Now the alpha-beta search in quiescent */
     for (i = 0; i < capscnt; ++i)
     {
         MoveOrder(i, capscnt, cBuf);
