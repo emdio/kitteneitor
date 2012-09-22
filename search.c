@@ -127,6 +127,9 @@ Search (int alpha, int beta, int depth)
            called here instead of Eval() */
         else
         {
+            /* If we're in check maybe we want to search deeper */
+            if (IsInCheck(side))
+                ++depth;
             value = -Quiescent (-beta, -alpha);
 //            value = -Eval();
         }
