@@ -30,7 +30,6 @@ xboard ()
 {
     char line[256], command[256], c;
     int from, dest, i;
-//    MOVE moveBuf[200], bestMove;
     MOVE moveBuf[200];
     int movecnt;
 
@@ -44,7 +43,6 @@ xboard ()
         if (side == computer_side)
         {   /* computer's turn */
             /* Find out the best move to react the current position */
-//            bestMove = ComputerThink (max_depth);
             ComputerThink (max_depth);
             MakeMove (bestMove);
             /* send move */

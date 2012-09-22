@@ -8,12 +8,10 @@
 //#define NDEBUG
 //#include <assert.h>
 
-//MOVE
 void
 ComputerThink (int depth)
 {
     /* It returns the move the computer makes */
-//    MOVE m;
     int score;
     double knps;
 
@@ -33,7 +31,6 @@ ComputerThink (int depth)
     start = clock ();
 
     /* Search now */
-//    score = Search (-MATE, MATE, depth, &m);
     score = Search (-MATE, MATE, depth);
 
     /* Stop timer */
@@ -60,8 +57,6 @@ ComputerThink (int depth)
         printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
                 'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                 - Row (bestMove.dest), depth, decimal_score);
-
-//    return m;
 }
 
 /*
@@ -71,8 +66,6 @@ ComputerThink (int depth)
  ****************************************************************************
  */
 
-
-//Search (int alpha, int beta, int depth, MOVE * pBestMove)
 int
 Search (int alpha, int beta, int depth)
 {
@@ -88,12 +81,16 @@ Search (int alpha, int beta, int depth)
 
     havemove = 0;		/* is there a move available? */
     
-//    pBestMove->type_of_move = MOVE_TYPE_NONE;
+    
     
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
     countSearchCalls++;
+    
+    /* If we're in check maybe we want to search deeper */
+    if (IsInCheck(side))
+        ++depth;
 
 
     /* Once we have all the moves available, we loop through the posible
@@ -127,11 +124,8 @@ Search (int alpha, int beta, int depth)
            called here instead of Eval() */
         else
         {
-            /* If we're in check maybe we want to search deeper */
-            if (IsInCheck(side))
-                ++depth;
             value = -Quiescent (-beta, -alpha);
-//            value = -Eval();
+            //value = -Eval();
         }
 
         /* We've evaluated the position, so we return to the previous position in such a way
@@ -148,7 +142,6 @@ Search (int alpha, int beta, int depth)
             }
             alpha = value;
             /* So far, current move is the best reaction for current position */
-//            *pBestMove = moveBuf[i];
             auxMove = moveBuf[i];
             
         }
@@ -179,11 +172,6 @@ Quiescent (int alpha, int beta)
     int score;
 
     countquiesCalls++;
-
-    MOVE tmpMove;
-    /* If in check make a 1 depth search */
-//    if (IsInCheck(side))
-//        return Search (alpha, beta, 1, &tmpMove);
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();
