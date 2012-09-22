@@ -20,13 +20,14 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
 {
     int i;
     int value;			/* To store the evaluation */
-    int havemove;			/* Either we have or not a legal move available */
-    int movecnt;			/* The number of available moves */
+    int havemove;		/* Either we have or not a legal move available */
+    int movecnt;		/* The number of available moves */
 
     MOVE moveBuf[200];		/* List of movements */
     MOVE tmpMove;
 
-    havemove = 0;			/* is there a move available? */
+    havemove = 0;		/* is there a move available? */
+    
     pBestMove->type_of_move = MOVE_TYPE_NONE;
 
     /* Generate and count all moves for current position */
@@ -49,8 +50,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     }
     /* Copied from magic engine till here */
     /****************************/
-
-
+    
+    /* If we're in check we'll want to seardh deeper */
+    if (IsInCheck(side))
+        depth++;
 
 
     /* Once we have all the moves available, we loop through the posible
@@ -74,22 +77,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
 
         /* If we've reached this far, then we have a move available */
         havemove = 1;
-
-//        /* This 'if' takes us to the deep of the position, the leaf nodes */
-//        if (depth - 1 > 0)
-//        {
-//            value = -Search (-beta, -alpha, depth - 1, &tmpMove);
-//        }
-//        /* If no depth left (leaf node), we evalute the position
-//           and apply the alpha-beta search.
-//           In the case of existing a quiescent function, it should be
-//           called here instead of Eval() */
-//        else
-//        {
-//            value = -Quiescent (-beta, -alpha);
-//            // value = -Eval();
-//        }
-
 
 
         if (depth <= 1)
