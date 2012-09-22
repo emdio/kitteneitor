@@ -1170,7 +1170,8 @@ MakeMove (MOVE m)
     r = !IsInCheck (side);
 
     /* After making move, give turn to opponent */
-    side = (WHITE + BLACK) - side;
+//    side = (WHITE + BLACK) - side;
+    side = Opponent(side);
 
     return r;
 }

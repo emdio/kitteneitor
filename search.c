@@ -8,6 +8,62 @@
 //#define NDEBUG
 //#include <assert.h>
 
+//MOVE
+void
+ComputerThink (int depth)
+{
+    /* It returns the move the computer makes */
+//    MOVE m;
+    int score;
+    double knps;
+
+    /* Reset some values before searching */
+    ply = 0;
+    count_evaluations = 0;
+    count_MakeMove = 0;
+    countquiesCalls = 0;
+    countCapCalls = 0;
+    countSearchCalls = 0;
+
+    clock_t start;
+    clock_t stop;
+    double t = 0.0;
+
+    /* Start timer */
+    start = clock ();
+
+    /* Search now */
+//    score = Search (-MATE, MATE, depth, &m);
+    score = Search (-MATE, MATE, depth);
+
+    /* Stop timer */
+    stop = clock ();
+    t = (double) (stop - start) / CLOCKS_PER_SEC;
+    knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
+    double ratio_Qsearc_Capcalls = 0;
+    ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
+
+    double decimal_score = ((double) score) / 100.;
+    if (side == BLACK)
+    {
+        decimal_score = -decimal_score;
+    }
+
+    /* After searching, print results */
+    if (depth == max_depth)
+        printf
+        ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
+         'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
+         8 - Row (bestMove.dest), depth, decimal_score, t, knps, countCapCalls,
+         countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
+    else
+        printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
+                'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
+                - Row (bestMove.dest), depth, decimal_score);
+
+//    return m;
+}
+
 /*
  ****************************************************************************
  * Search function - a typical alphabeta + quiescent search, main search function *
@@ -15,8 +71,10 @@
  ****************************************************************************
  */
 
+
+//Search (int alpha, int beta, int depth, MOVE * pBestMove)
 int
-Search (int alpha, int beta, int depth, MOVE * pBestMove)
+Search (int alpha, int beta, int depth)
 {
     
     /* Vars deffinition */
@@ -26,37 +84,16 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     int movecnt;		/* The number of available moves */
 
     MOVE moveBuf[200];		/* List of movements */
-    MOVE tmpMove;
+    MOVE auxMove;
 
     havemove = 0;		/* is there a move available? */
     
-    pBestMove->type_of_move = MOVE_TYPE_NONE;
+//    pBestMove->type_of_move = MOVE_TYPE_NONE;
     
-
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
     countSearchCalls++;
-
-
-    /****************************/
-    /* Copied from magic engine */
-//    if (Eval() + VALUE_QUEEN <= alpha &&
-//            depth >= 3)
-//            depth--;
-
-    /* I have to double check the meaning of this code */
-    if (Eval() >= beta &&
-        alpha <= beta - 1)
-    {
-        depth-=2;
-    }
-    /* Copied from magic engine till here */
-    /****************************/
-    
-    /* If we're in check we'll want to seardh deeper */
-    if (IsInCheck(side))
-        depth++;
 
 
     /* Once we have all the moves available, we loop through the posible
@@ -78,16 +115,20 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
         /* If we've reached this far, then we have a move available */
         havemove = 1;
 
-
         /* If we're in a leaf node we call quiescent search in 
          * order to avoid the horizon effect */
-        if (depth <= 1)
+        if (depth - 1 > 0)
         {
-            value = -Quiescent (-beta, -alpha);
+            value = -Search (-beta, -alpha, depth - 1);
         }
+        /* If no depth left (leaf node), we evalute the position
+           and apply the alpha-beta search.
+           In the case of existing a quiescent function, it should be
+           called here instead of Eval() */
         else
         {
-            value = -Search (-beta, -alpha, depth - 1, &tmpMove);
+            value = -Quiescent (-beta, -alpha);
+//            value = -Eval();
         }
 
         /* We've evaluated the position, so we return to the previous position in such a way
@@ -104,9 +145,13 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             }
             alpha = value;
             /* So far, current move is the best reaction for current position */
-            *pBestMove = moveBuf[i];
+//            *pBestMove = moveBuf[i];
+            auxMove = moveBuf[i];
+            
         }
     }
+    
+    bestMove = auxMove;
 
     /* Once we've checked all the moves, if we have no legal moves,
      * then that's checkmate or stalemate */
@@ -134,8 +179,8 @@ Quiescent (int alpha, int beta)
 
     MOVE tmpMove;
     /* If in check make a 1 depth search */
-    if (IsInCheck(side))
-        return Search (alpha, beta, 1, &tmpMove);
+//    if (IsInCheck(side))
+//        return Search (alpha, beta, 1, &tmpMove);
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();
@@ -196,58 +241,4 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
         moveBuf[init] = moveBuf[aux];
         moveBuf[aux] = Tmp;
     }
-}
-
-MOVE
-ComputerThink (int depth)
-{
-    /* It returns the move the computer makes */
-    MOVE m;
-    int score;
-    double knps;
-
-    /* Reset some values before searching */
-    ply = 0;
-    count_evaluations = 0;
-    count_MakeMove = 0;
-    countquiesCalls = 0;
-    countCapCalls = 0;
-    countSearchCalls = 0;
-
-    clock_t start;
-    clock_t stop;
-    double t = 0.0;
-
-    /* Start timer */
-    start = clock ();
-
-    /* Search now */
-    score = Search (-MATE, MATE, depth, &m);
-
-    /* Stop timer */
-    stop = clock ();
-    t = (double) (stop - start) / CLOCKS_PER_SEC;
-    knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
-    double ratio_Qsearc_Capcalls = 0;
-    ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
-
-    double decimal_score = ((double) score) / 100.;
-    if (side == BLACK)
-    {
-        decimal_score = -decimal_score;
-    }
-
-    /* After searching, print results */
-    if (depth == max_depth)
-        printf
-        ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
-         'a' + Col (m.from), 8 - Row (m.from), 'a' + Col (m.dest),
-         8 - Row (m.dest), depth, decimal_score, t, knps, countCapCalls,
-         countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
-    else
-        printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
-                'a' + Col (m.from), 8 - Row (m.from), 'a' + Col (m.dest), 8
-                - Row (m.dest), depth, decimal_score);
-
-    return m;
 }

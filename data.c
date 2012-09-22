@@ -1,4 +1,7 @@
 #include "defs.h"
+#include "data.h"
+
+MOVE bestMove;
 
 int side;			/* Side to move, value = BLACK or WHITE */
 int computer_side;

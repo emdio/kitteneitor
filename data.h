@@ -1,5 +1,7 @@
 /* Just a copy of data.c */
 
+MOVE bestMove;
+
 int castle;
 int castle_mask[64];
 int hdp;
