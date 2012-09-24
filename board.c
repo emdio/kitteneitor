@@ -74,10 +74,6 @@ int badCapture(MOVE mcmov) {
     int bishop_protected = 0;
     int knight_protected = 0;
 
-    /* Captures by pawn never are bad */
-    if (piece[mcmov.from] == PAWN)
-        return 0;
-
     /* Capturing equal or more material is never bad */
     if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
         return 0;
