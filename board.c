@@ -77,6 +77,10 @@ int badCapture(MOVE mcmov) {
     /* Capturing equal or more material is never bad */
     if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
         return 0;
+    
+    if (!IsSqProtectedByAPawn(mcmov.dest, Opponent(side)) && 
+        value_piece[piece[mcmov.dest]] > value_piece[PAWN])
+        return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
     know either it is protected by a pawn? */
@@ -216,7 +220,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
 
 
     /* Just to make tests with the difference */
-    int mult = 1;
+    int mult = 100;
 
     /* Are we moving to a better/worse piece square? */
     if (color[from] == WHITE)
@@ -283,6 +287,9 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade = -10000 + (piece[dest]*100) - (piece[from]);
         /*ordenamos por MVV/LVA*/
         else
+            /* These are "good" captures, but we aren't taking into account factors
+             * such as if the captured piece is protected by a pawn: base on this
+             * kind of checkings we can give different levels of "goodness"? */
             move.grade = 3000000 + (piece[dest]*100) - (piece[from]);
     }
 //    if (color[dest] != EMPTY)
@@ -311,7 +318,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     {
         /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-            move.grade -= (value_piece[piece[from]]);
+            move.grade -= 15*(value_piece[piece[from]]);
         /* Is a piece being attacked by a pawn? Then we probably should move it */
         if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
             move.grade += 15*(value_piece[piece[from]]);
