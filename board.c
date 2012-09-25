@@ -84,67 +84,87 @@ int badCapture(MOVE mcmov) {
         pawn_protected = 1;
 
 
-/**********************************************/
-/* Is the piece protected by a knight? */
-int col = Col (mcmov.dest);
-y = mcmov.dest - 6;
-if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest - 10;
-if (y >= 0 && col > 1 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest - 15;
-if (y >= 0 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest - 17;
-if (y >= 0 && col > 0 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest + 6;
-if (y < 64 && col > 1 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest + 10;
-if (y < 64 && col < 6 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest + 15;
-if (y < 64 && col > 0 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
-y = mcmov.dest + 17;
-if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
-    knight_protected = 1;
+    /**********************************************/
+    /* Is the piece protected by a knight? */
+    int col = Col (mcmov.dest);
+    y = mcmov.dest - 6;
+    if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest - 10;
+    if (y >= 0 && col > 1 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest - 15;
+    if (y >= 0 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest - 17;
+    if (y >= 0 && col > 0 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest + 6;
+    if (y < 64 && col > 1 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest + 10;
+    if (y < 64 && col < 6 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest + 15;
+    if (y < 64 && col > 0 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
+    y = mcmov.dest + 17;
+    if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
+        knight_protected = 1;
 
 
     /**********************************************/
     /* Is the piece protected by a bishop? */
-    for (y = mcmov.dest - 9; y >= 0 && piece[y] == BISHOP && Col (y) != 7; y -= 9)
+    for (y = mcmov.dest - 9; y >= 0 && Col (y) != 7; y -= 9)
     {   /* go left up */
         if (color[y] != EMPTY)
         {
-            if (color[y] != side)
-                bishop_protected = 1;
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    bishop_protected = 1;
+                }
+            }
         }
     }
-    for (y = mcmov.dest - 7; y >= 0 && piece[y] == BISHOP && Col (y) != 0; y -= 7)
+    for (y = mcmov.dest - 7; y >= 0 && Col (y) != 0; y -= 7)
     {   /* go right up */
         if (color[y] != EMPTY)
         {
-            if (color[y] != side)
-                bishop_protected = 1;
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    bishop_protected = 1;
+                }
+            }
         }
     }
-    for (y = mcmov.dest + 9; y < 64 && piece[y] == BISHOP && Col (y) != 0; y += 9)
+    for (y = mcmov.dest + 9; y < 64 && Col (y) != 0; y += 9)
     {   /* go right down */
         if (color[y] != EMPTY)
         {
-            if (color[y] != side)
-                bishop_protected = 1;
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    bishop_protected = 1;
+                }
+            }
         }
     }
-    for (y = mcmov.dest + 7; y < 64 && piece[y] == BISHOP && Col (y) != 7; y += 7)
+    for (y = mcmov.dest + 7; y < 64 && Col (y) != 7; y += 7)
     {   /* go left down */
         if (color[y] != EMPTY)
         {
-            if (color[y] != side)
-                bishop_protected = 1;
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    bishop_protected = 1;
+                }
+            }
         }
     }
 
@@ -152,9 +172,9 @@ if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
     /* Analyze the results */
     if (pawn_protected)
        return 1;
-    if (knight_protected)
+    if (knight_protected && piece[mcmov.from] == QUEEN)
         return 1;
-    if (bishop_protected)
+    if (bishop_protected && piece[mcmov.from] == QUEEN)
         return 1;
 
 
