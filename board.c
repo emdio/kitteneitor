@@ -81,7 +81,7 @@ int badCapture(MOVE mcmov) {
     /* We're capturing a piece with less value than ours, so we want to
     know either it is protected by a pawn? */
     if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
-        pawn_protected = 1;
+        return 1;
 
 
     /**********************************************/
@@ -172,10 +172,22 @@ int badCapture(MOVE mcmov) {
     /* Analyze the results */
     if (pawn_protected)
        return 1;
+    
     if (knight_protected && piece[mcmov.from] == QUEEN)
         return 1;
     if (bishop_protected && piece[mcmov.from] == QUEEN)
         return 1;
+    
+    if (knight_protected && bishop_protected)
+        return 1;
+    
+    if (knight_protected || bishop_protected)
+        return 1;
+    
+//    if (knight_protected && piece[mcmov.from] == ROOK)
+//        return 1;
+//    if (bishop_protected && piece[mcmov.from] == ROOK)
+//        return 1;
 
 
     /* If we have reached this far then it isn't a bad capture */
