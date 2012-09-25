@@ -322,6 +322,8 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* Is a piece being attacked by a pawn? Then we probably should move it */
         if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
             move.grade += 15*(value_piece[piece[from]]);
+        /* TODO: is a queen attacked by a bishop or knight etc? */
+        /* TODO: is a queen placed on a sq attacked by a bishop or knight etc? */
     }
 
 
