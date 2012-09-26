@@ -203,8 +203,11 @@ Quiescent (int alpha, int beta)
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < capscnt; ++i)
     {
+        /* If it's a bad capture we don't need to go on (tx to Pedro) */
+        if (badCapture(cBuf[i])) continue; 
+        
         MoveOrder(i, capscnt, cBuf);
-
+        
         if (!MakeMove (cBuf[i]))
         {
             /* If the current move isn't legal, we take it back
