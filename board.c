@@ -69,28 +69,28 @@ int IsProtectedByAKnight(int sq, int side)
     int y;
     int col = Col (sq);
     y = sq - 6;
-    if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y >= 0 && col < 6 && color[y] == side)
         return 1;
     y = sq - 10;
-    if (y >= 0 && col > 1 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y >= 0 && col > 1 && color[y] == side)
         return 1;
     y = sq - 15;
-    if (y >= 0 && col < 7 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y >= 0 && col < 7 && color[y] == side)
         return 1;
     y = sq - 17;
-    if (y >= 0 && col > 0 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y >= 0 && col > 0 && color[y] == side)
         return 1;
     y = sq + 6;
-    if (y < 64 && col > 1 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y < 64 && col > 1 && color[y] == side)
         return 1;
     y = sq + 10;
-    if (y < 64 && col < 6 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y < 64 && col < 6 && color[y] == side)
         return 1;
     y = sq + 15;
-    if (y < 64 && col > 0 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y < 64 && col > 0 && color[y] == side)
         return 1;
     y = sq + 17;
-    if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == (side))
+    if (piece[y] == KNIGHT && y < 64 && col < 7 && color[y] == side)
         return 1;
     return 0;
 }
@@ -103,7 +103,7 @@ int IsProtectedByABishop(int sq, int side)
     {   /* go left up */
         if (color[y] != EMPTY)
         {
-            if (color[y] == Opponent(side))
+            if (color[y] == side)
             {
                 if (piece[y] == BISHOP)
                 {
@@ -116,7 +116,7 @@ int IsProtectedByABishop(int sq, int side)
     {   /* go right up */
         if (color[y] != EMPTY)
         {
-            if (color[y] == Opponent(side))
+            if (color[y] == side)
             {
                 if (piece[y] == BISHOP)
                 {
@@ -129,7 +129,7 @@ int IsProtectedByABishop(int sq, int side)
     {   /* go right down */
         if (color[y] != EMPTY)
         {
-            if (color[y] == Opponent(side))
+            if (color[y] == side)
             {
                 if (piece[y] == BISHOP)
                 {
@@ -142,7 +142,7 @@ int IsProtectedByABishop(int sq, int side)
     {   /* go left down */
         if (color[y] != EMPTY)
         {
-            if (color[y] == Opponent(side))
+            if (color[y] == side)
             {
                 if (piece[y] == BISHOP)
                 {
@@ -151,6 +151,8 @@ int IsProtectedByABishop(int sq, int side)
             }
         }
     }
+    
+    return 0;
 }
 
 /*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
@@ -168,13 +170,13 @@ int BadCapture(MOVE mcmov) {
     if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
         return 0;
     
-    if (!IsSqProtectedByAPawn(mcmov.dest, Opponent(side)) && 
+    if (!IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) && 
         value_piece[piece[mcmov.dest]] > value_piece[PAWN])
         return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
     know either it is protected by a pawn? */
-    if (IsSqProtectedByAPawn(mcmov.dest, Opponent(side)))
+    if ( IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) )
         return 1;
 
 
