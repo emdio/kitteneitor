@@ -63,6 +63,7 @@ inline int IsSqProtectedByAPawn(int sq, int side)
     return 0;
 }
 
+/* IsProtectedByAKnight returns 1 if square sq is protected by a knight of color side */
 int IsProtectedByAKnight(int sq, int side)
 {
     int y;
@@ -92,6 +93,64 @@ int IsProtectedByAKnight(int sq, int side)
     if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == (side))
         return 1;
     return 0;
+}
+
+/* IsProtectedByABishop returns 1 if square sq is protected by a bishop of color side */
+int IsProtectedByABishop(int sq, int side)
+{
+    int y;
+    for (y = sq - 9; y >= 0 && Col (y) != 7; y -= 9)
+    {   /* go left up */
+        if (color[y] != EMPTY)
+        {
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    for (y = sq - 7; y >= 0 && Col (y) != 0; y -= 7)
+    {   /* go right up */
+        if (color[y] != EMPTY)
+        {
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    for (y = sq + 9; y < 64 && Col (y) != 0; y += 9)
+    {   /* go right down */
+        if (color[y] != EMPTY)
+        {
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    for (y = sq + 7; y < 64 && Col (y) != 7; y += 7)
+    {   /* go left down */
+        if (color[y] != EMPTY)
+        {
+            if (color[y] == Opponent(side))
+            {
+                if (piece[y] == BISHOP)
+                {
+                    return 1;
+                }
+            }
+        }
+    }
 }
 
 /*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
@@ -127,58 +186,8 @@ int BadCapture(MOVE mcmov) {
 
     /**********************************************/
     /* Is the piece protected by a bishop? */
-    for (y = mcmov.dest - 9; y >= 0 && Col (y) != 7; y -= 9)
-    {   /* go left up */
-        if (color[y] != EMPTY)
-        {
-            if (color[y] == Opponent(side))
-            {
-                if (piece[y] == BISHOP)
-                {
-                    bishop_protected = 1;
-                }
-            }
-        }
-    }
-    for (y = mcmov.dest - 7; y >= 0 && Col (y) != 0; y -= 7)
-    {   /* go right up */
-        if (color[y] != EMPTY)
-        {
-            if (color[y] == Opponent(side))
-            {
-                if (piece[y] == BISHOP)
-                {
-                    bishop_protected = 1;
-                }
-            }
-        }
-    }
-    for (y = mcmov.dest + 9; y < 64 && Col (y) != 0; y += 9)
-    {   /* go right down */
-        if (color[y] != EMPTY)
-        {
-            if (color[y] == Opponent(side))
-            {
-                if (piece[y] == BISHOP)
-                {
-                    bishop_protected = 1;
-                }
-            }
-        }
-    }
-    for (y = mcmov.dest + 7; y < 64 && Col (y) != 7; y += 7)
-    {   /* go left down */
-        if (color[y] != EMPTY)
-        {
-            if (color[y] == Opponent(side))
-            {
-                if (piece[y] == BISHOP)
-                {
-                    bishop_protected = 1;
-                }
-            }
-        }
-    }
+    if ( IsProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
+        bishop_protected = 1;
 
 
     /* Analyze the results */
