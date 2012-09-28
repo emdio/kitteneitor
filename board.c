@@ -63,9 +63,40 @@ inline int IsSqProtectedByAPawn(int sq, int side)
     return 0;
 }
 
+int IsProtectedByAKnight(int sq, int side)
+{
+    int y;
+    int col = Col (sq);
+    y = sq - 6;
+    if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq - 10;
+    if (y >= 0 && col > 1 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq - 15;
+    if (y >= 0 && col < 7 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq - 17;
+    if (y >= 0 && col > 0 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq + 6;
+    if (y < 64 && col > 1 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq + 10;
+    if (y < 64 && col < 6 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq + 15;
+    if (y < 64 && col > 0 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    y = sq + 17;
+    if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == (side))
+        return 1;
+    return 0;
+}
+
 /*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
 sustituye de momento a SEE (static exchange evaluator)*/
-int badCapture(MOVE mcmov) {
+int BadCapture(MOVE mcmov) {
 
     int y;
     int i;
@@ -90,30 +121,7 @@ int badCapture(MOVE mcmov) {
 
     /**********************************************/
     /* Is the piece protected by a knight? */
-    int col = Col (mcmov.dest);
-    y = mcmov.dest - 6;
-    if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest - 10;
-    if (y >= 0 && col > 1 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest - 15;
-    if (y >= 0 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest - 17;
-    if (y >= 0 && col > 0 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest + 6;
-    if (y < 64 && col > 1 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest + 10;
-    if (y < 64 && col < 6 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest + 15;
-    if (y < 64 && col > 0 && piece[y] == KNIGHT && color[y] == Opponent(side))
-        knight_protected = 1;
-    y = mcmov.dest + 17;
-    if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == Opponent(side))
+    if ( IsProtectedByAKnight(mcmov.dest, color[mcmov.dest]) )
         knight_protected = 1;
 
 
@@ -283,7 +291,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     if ((color[dest] != EMPTY))
     {
         /*malas capturas por detrás*/
-        if (badCapture(move))
+        if (BadCapture(move))
             move.grade = -10000 + (piece[dest]*100) - (piece[from]);
         /*ordenamos por MVV/LVA*/
         else
