@@ -167,8 +167,11 @@ int BadCapture(MOVE mcmov) {
     if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
         return 0;
     
+    /* If the captured piece isn't protected by a pawn and its value
+     * is bigger than a pawn, then it isn't a bad capture */
     if (!IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) && 
-        value_piece[piece[mcmov.dest]] > value_piece[PAWN])
+        value_piece[piece[mcmov.dest]] > value_piece[PAWN] &&
+        value_piece[piece[mcmov.from]] < value_piece[ROOK] )
         return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
