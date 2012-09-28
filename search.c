@@ -93,18 +93,18 @@ Search (int alpha, int beta, int depth)
         ++depth;
     
     /* Taken from magic engine code */
-//    if (Eval() >= beta && 
-//	alpha <= beta - 1)
-//    {
-//        if (depth >=6)
-//        {
-//            depth--;
-//        }
-//        else
-//        {
-//            depth -= 2;
-//        }
-//    }
+    if (Eval() >= beta && 
+	alpha <= beta - 1)
+    {
+        if (depth >=6)
+        {
+            depth--;
+        }
+        else
+        {
+            depth -= 2;
+        }
+    }
     
     
     /* Once we have all the moves available, we loop through the posible
@@ -206,10 +206,10 @@ Quiescent (int alpha, int beta)
 //        /* If it's a bad capture we don't need to go on (tx to Pedro) */
 //        if (BadCapture(cBuf[i])) continue; 
         
-        MoveOrder(i, capscnt, cBuf);
-        
         /* If it's a bad capture we don't need to go on (tx to Pedro) */
         if (BadCapture(cBuf[i])) continue; 
+        
+        MoveOrder(i, capscnt, cBuf);
         
         if (!MakeMove (cBuf[i]))
         {

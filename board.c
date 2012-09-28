@@ -159,9 +159,6 @@ int IsProtectedByABishop(int sq, int side)
 sustituye de momento a SEE (static exchange evaluator)*/
 int BadCapture(MOVE mcmov) {
 
-    int y;
-    int i;
-
     int pawn_protected = 0;
     int bishop_protected = 0;
     int knight_protected = 0;
@@ -304,34 +301,25 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /*malas capturas por detrás*/
         if (BadCapture(move))
             move.grade = -10000 + (piece[dest]*100) - (piece[from]);
+
         /*ordenamos por MVV/LVA*/
         else
+        {
             /* These are "good" captures, but we aren't taking into account factors
              * such as if the captured piece is protected by a pawn: base on this
              * kind of checkings we can give different levels of "goodness"? */
             move.grade = 3000000 + (piece[dest]*100) - (piece[from]);
+            /* It isn't a bad capture, but if the captured piece is not protected
+             * by a pawn we give it an extra push */
+            if (!IsSqProtectedByAPawn(dest, Opponent(side)))
+            {
+                move.grade += 100;
+                /* And if the capturing piece is a pawn we give another extra push */
+                if (piece[from] == PAWN)
+                    move.grade += 100;
+            }
+        }
     }
-//    if (color[dest] != EMPTY)
-//    {
-//        /* We just prefer captures that win material */
-//        if ( value_piece[piece[from]] < value_piece[piece[dest]] + 50 )
-//        {
-//            move.grade += 30*(value_piece[dest]) - piece[from];
-//        }
-
-
-//        /* Captures by a pawn always are good */
-//        if (piece[from] == PAWN)
-//        {
-//            move.grade += 30*(value_piece[piece[dest]]);
-//        }
-
-//        /* If we're taking a pawn protected by a pawn it's a bad idea */
-//        if (piece[dest] == PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])))
-//        {
-//            move.grade -= (value_piece[piece[from]]);
-//        }
-//    }
     /* So it isn't a capture */
     else
     {
@@ -341,8 +329,37 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* Is a piece being attacked by a pawn? Then we probably should move it */
         if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
             move.grade += 15*(value_piece[piece[from]]);
-        /* TODO: is a queen attacked by a bishop or knight etc? */
-        /* TODO: is a queen placed on a sq attacked by a bishop or knight etc? */
+        /* Are we placing a Queen in a square protected by a piece? */
+        /* Is a queen attacked by a piece? */
+        if ( piece[from] == QUEEN )
+        {
+            if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
+                move.grade -= 15*(value_piece[piece[from]]);
+            if (IsProtectedByABishop(dest, Opponent(color[from])) )
+                move.grade -= 15*(value_piece[piece[from]]);
+            if (IsProtectedByAKnight(from, Opponent(color[from])) )
+                move.grade += 15*(value_piece[piece[from]]);
+            if ( IsProtectedByABishop(from, Opponent(color[from])) )
+                move.grade += 15*(value_piece[piece[from]]);
+        }
+        
+//        if ( piece[from] == ROOK )
+//        {
+//            if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
+//                move.grade -= 15*(value_piece[piece[from]]);
+//            if (IsProtectedByABishop(dest, Opponent(color[from])) )
+//                move.grade -= 15*(value_piece[piece[from]]);
+//            if (IsProtectedByAKnight(from, Opponent(color[from])) )
+//                move.grade += 15*(value_piece[piece[from]]);
+//            if ( IsProtectedByABishop(from, Opponent(color[from])) )
+//                move.grade += 15*(value_piece[piece[from]]);
+//        }
+        
+        /* Just penalizing moving the king with no reason */
+//        if ( piece[from] == KING )
+//        {
+//            move.grade -= 100;
+//        }
     }
 
 
