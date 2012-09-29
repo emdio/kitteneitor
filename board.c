@@ -299,11 +299,13 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
 
 
     /* Is it a capture? */
-    if ((color[dest] != EMPTY))
+//    if ( (color[dest] == Opponent(color[from])) )
+//    if ( color[from] == Opponent(color[dest]) )
+    if ( color[dest] != EMPTY )
     {
         /*malas capturas por detrás*/
         if (BadCapture(move))
-            move.grade = -10000 + (piece[dest]*100) - (piece[from]);
+            move.grade = -10000000 + value_piece[piece[dest]] - value_piece[piece[from]];
 
         /*ordenamos por MVV/LVA*/
         else
@@ -311,16 +313,16 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             /* These are "good" captures, but we aren't taking into account factors
              * such as if the captured piece is protected by a pawn: base on this
              * kind of checkings we can give different levels of "goodness"? */
-            move.grade = 3000000 + (piece[dest]*100) - (piece[from]);
+            move.grade = 3000000 + value_piece[piece[dest]] - value_piece[piece[from]];
             /* It isn't a bad capture, but if the captured piece is not protected
              * by a pawn we give it an extra push */
-            if (!IsSqProtectedByAPawn(dest, Opponent(side)))
-            {
-                move.grade += 100;
-                /* And if the capturing piece is a pawn we give another extra push */
-                if (piece[from] == PAWN)
-                    move.grade += 100;
-            }
+//            if (!IsSqProtectedByAPawn(dest, Opponent(side)))
+//            {
+//                move.grade += 100;
+//                /* And if the capturing piece is a pawn we give another extra push */
+//                if (piece[from] == PAWN)
+//                    move.grade += 100;
+//            }
         }
     }
     /* So it isn't a capture */
@@ -328,35 +330,35 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     {
         /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-            move.grade -= 15*(value_piece[piece[from]]);
+            move.grade -= (value_piece[piece[from]]);
         /* Is a piece being attacked by a pawn? Then we probably should move it */
         if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
-            move.grade += 15*(value_piece[piece[from]]);
+            move.grade += (value_piece[piece[from]]);
         /* Are we placing a Queen in a square protected by a piece? */
         /* Is a queen attacked by a piece? */
         if ( piece[from] == QUEEN )
         {
             if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
-                move.grade -= 15*(value_piece[piece[from]]);
+                move.grade -= (value_piece[piece[from]]);
             if (IsProtectedByABishop(dest, Opponent(color[from])) )
-                move.grade -= 15*(value_piece[piece[from]]);
+                move.grade -= (value_piece[piece[from]]);
             if (IsProtectedByAKnight(from, Opponent(color[from])) )
-                move.grade += 15*(value_piece[piece[from]]);
+                move.grade += (value_piece[piece[from]]);
             if ( IsProtectedByABishop(from, Opponent(color[from])) )
-                move.grade += 15*(value_piece[piece[from]]);
+                move.grade += (value_piece[piece[from]]);
         }
         
-//        if ( piece[from] == ROOK )
-//        {
-//            if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
-//                move.grade -= 15*(value_piece[piece[from]]);
-//            if (IsProtectedByABishop(dest, Opponent(color[from])) )
-//                move.grade -= 15*(value_piece[piece[from]]);
-//            if (IsProtectedByAKnight(from, Opponent(color[from])) )
-//                move.grade += 15*(value_piece[piece[from]]);
-//            if ( IsProtectedByABishop(from, Opponent(color[from])) )
-//                move.grade += 15*(value_piece[piece[from]]);
-//        }
+        if ( piece[from] == ROOK )
+        {
+            if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
+                move.grade -= (value_piece[piece[from]]);
+            if (IsProtectedByABishop(dest, Opponent(color[from])) )
+                move.grade -= (value_piece[piece[from]]);
+            if (IsProtectedByAKnight(from, Opponent(color[from])) )
+                move.grade += (value_piece[piece[from]]);
+            if ( IsProtectedByABishop(from, Opponent(color[from])) )
+                move.grade += (value_piece[piece[from]]);
+        }
         
         /* Just penalizing moving the king with no reason */
 //        if ( piece[from] == KING )

@@ -203,11 +203,10 @@ Quiescent (int alpha, int beta)
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < capscnt; ++i)
     {
-//        /* If it's a bad capture we don't need to go on (tx to Pedro) */
-//        if (BadCapture(cBuf[i])) continue; 
-        
         /* If it's a bad capture we don't need to go on (tx to Pedro) */
-        if (BadCapture(cBuf[i])) continue; 
+//        if (BadCapture(cBuf[i])) continue;
+        
+        if ( cBuf[i].grade < 0 ) continue;
         
         MoveOrder(i, capscnt, cBuf);
         
