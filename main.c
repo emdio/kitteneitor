@@ -28,149 +28,174 @@ startgame ()
 void
 xboard ()
 {
-    char line[256], command[256], c;
-    int from, dest, i;
-    MOVE moveBuf[200];
-    int movecnt;
+  char line[256], command[256], c;
+  int from, dest, i;
+  MOVE moveBuf[200];
+  int movecnt;
+  //int illegal_king = 0;
 
-    printf ("\n");
+  printf ("\n");
 
-    startgame ();
+  startgame ();
 
-    for (;;)
+  for (;;)
     {
-        fflush (stdout);
-        if (side == computer_side)
-        {   /* computer's turn */
-            /* Find out the best move to react the current position */
-            ComputerThink (max_depth);
-            MakeMove (bestMove);
-            /* send move */
-            switch (bestMove.type_of_move)
-            {
-            case MOVE_TYPE_PROMOTION_TO_QUEEN:
-                c = 'q';
-                break;
-            case MOVE_TYPE_PROMOTION_TO_ROOK:
-                c = 'r';
-                break;
-            case MOVE_TYPE_PROMOTION_TO_BISHOP:
-                c = 'b';
-                break;
-            case MOVE_TYPE_PROMOTION_TO_KNIGHT:
-                c = 'n';
-                break;
-            default:
-                c = ' ';
-                printf ("move %c%d%c%d%c\n", 'a' + Col (bestMove.from), 8
-                        - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
-                        - Row (bestMove.dest), c);
-            }
-            continue;
-        }
+      fflush (stdout);
+      if (side == computer_side)
+	{			/* computer's turn */
+	  /* Find out the best move to react the current position */
+	  ComputerThink (max_depth);
+	  MakeMove (bestMove);
+	  /* send move */
+	  switch (bestMove.type_of_move)
+	    {
+	    case MOVE_TYPE_PROMOTION_TO_QUEEN:
+	      c = 'q';
+	      break;
+	    case MOVE_TYPE_PROMOTION_TO_ROOK:
+	      c = 'r';
+	      break;
+	    case MOVE_TYPE_PROMOTION_TO_BISHOP:
+	      c = 'b';
+	      break;
+	    case MOVE_TYPE_PROMOTION_TO_KNIGHT:
+	      c = 'n';
+	      break;
+	    default:
+	      c = ' ';
+	    }
+	  printf ("move %c%d%c%d%c\n", 'a' + Col (bestMove.from), 8
+		      - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
+		      - Row (bestMove.dest), c);
+	  continue;
+	}
 
-        if (!fgets (line, 256, stdin))
-            return;
-        if (line[0] == '\n')
-            continue;
-        sscanf (line, "%s", command);
-        if (!strcmp (command, "xboard"))
-        {
-            continue;
-        }
-        if (!strcmp (command, "new"))
-        {
-            startgame ();
-            continue;
-        }
-        if (!strcmp (command, "quit"))
-        {
-            return;
-        }
-        if (!strcmp (command, "force"))
-        {
-            computer_side = EMPTY;
-            continue;
-        }
-        if (!strcmp (command, "white"))
-        {
-            side = WHITE;
-            computer_side = BLACK;
-            continue;
-        }
-        if (!strcmp (command, "black"))
-        {
-            side = BLACK;
-            computer_side = WHITE;
-            continue;
-        }
-        if (!strcmp (command, "sd"))
-        {
-            sscanf (line, "sd %d", &max_depth);
-            continue;
-        }
-        if (!strcmp (command, "go"))
-        {
-            computer_side = side;
-            continue;
-        }
-        if (!strcmp (command, "undo"))
-        {
-            if (hdp == 0)
-                continue;
-            TakeBack ();
-            continue;
-        }
-        if (!strcmp (command, "remove"))
-        {
-            if (hdp <= 1)
-                continue;
-            TakeBack ();
-            TakeBack ();
-            continue;
-        }
+      if (!fgets (line, 256, stdin))
+	return;
+      if (line[0] == '\n')
+	continue;
+      sscanf (line, "%s", command);
+      if (!strcmp (command, "xboard"))
+	{
+	  continue;
+	}
+      if (!strcmp (command, "new"))
+	{
+	  startgame ();
+	  continue;
+	}
+      if (!strcmp (command, "quit"))
+	{
+	  return;
+	}
+      if (!strcmp (command, "force"))
+	{
+	  computer_side = EMPTY;
+	  continue;
+	}
+      if (!strcmp (command, "white"))
+	{
+	  side = WHITE;
+	  computer_side = BLACK;
+	  continue;
+	}
+      if (!strcmp (command, "black"))
+	{
+	  side = BLACK;
+	  computer_side = WHITE;
+	  continue;
+	}
+      if (!strcmp (command, "sd"))
+	{
+	  sscanf (line, "sd %d", &max_depth);
+	  continue;
+	}
+      if (!strcmp (command, "go"))
+	{
+	  computer_side = side;
+	  continue;
+	}
+      if (!strcmp (command, "undo"))
+	{
+	  if (hdp == 0)
+	    continue;
+	  TakeBack ();
+	  continue;
+	}
+      if (!strcmp (command, "remove"))
+	{
+	  if (hdp <= 1)
+	    continue;
+	  TakeBack ();
+	  TakeBack ();
+	  continue;
+	}
 
-        /* maybe the user entered a move? */
-        from = command[0] - 'a';
-        from += 8 * (8 - (command[1] - '0'));
-        dest = command[2] - 'a';
-        dest += 8 * (8 - (command[3] - '0'));
-        ply = 0;
-        movecnt = GenMoves (side, moveBuf);
-        /* loop through the moves to see if it's legal */
-        for (i = 0; i < movecnt; i++)
-            if (moveBuf[i].from == from && moveBuf[i].dest == dest)
-            {
-                if (piece[from] == PAWN && (dest < 8 || dest > 55))
-                {   /* Promotion move? */
-                    switch (command[4])
-                    {
-                    case 'q':
-                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
-                        break;
-                    case 'r':
-                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_ROOK;
-                        break;
-                    case 'b':
-                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_BISHOP;
-                        break;
-                    case 'n':
-                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_KNIGHT;
-                        break;
-                    default:
-                        moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
-                    }
-                }
-                if (!MakeMove (moveBuf[i]))
-                {
-                    TakeBack ();
-                    printf ("Illegal move.\n");
-                }
-                break;
+      /* maybe the user entered a move? */
+      
+	  /* is a move? */
+	  if (command[0] < 'a' || command[0] > 'h' ||
+		  command[1] < '0' || command[1] > '9' ||
+		  command[2] < 'a' || command[2] > 'h' ||
+		  command[3] < '0' || command[3] > '9') 
+	  {
+	   	printf("Error (unknown command): %s\n", command); /*no move, unknown command */
+		continue;
+	  }
+      
+      from = command[0] - 'a';
+      from += 8 * (8 - (command[1] - '0'));
+      dest = command[2] - 'a';
+      dest += 8 * (8 - (command[3] - '0'));
+      ply = 0;
+      movecnt = GenMoves (side, moveBuf);
 
-            }
-    }
+      /* loop through the moves to see if it's legal */
+      for (i = 0; i < movecnt; ++i) {
+		if (moveBuf[i].from == from && moveBuf[i].dest == dest)
+	  	{
+			if (piece[from] == PAWN && (dest < 8 || dest > 55)) 
+			{
+				if (command[4] != 'q' && command[4] != 'r' && command[4] != 'b' && command[4] != 'n')
+				{
+					printf ("Illegal move. Bad letter for promo\n");
+					goto continuar;
+				}
+				switch (command[4])
+				{
+					case 'q':
+						moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
+						break;
+					case 'r':
+						moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_ROOK;
+						break;
+					case 'b':
+						moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_BISHOP;
+						break;
+					case 'n':
+						moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_KNIGHT;
+						break;						
+				}
+			}
+		
+	    	if (MakeMove (moveBuf[i]))
+	    	{
+				goto continuar;	/* legal move */
+			}
+			else {
+				printf ("Illegal move. King is in check\n");
+				goto continuar;
+			}	
+		}
+	  }
+      printf ("Illegal move.\n");  /* illegal move */
+      
+continuar:
+	  continue;
+	}
 }
+
+
 
 int
 main ()
@@ -212,7 +237,7 @@ main ()
         if (side == computer_side)
         {   /* Computer's turn */
             /* Find out the best move to react the current position */
-//            MOVE bestMove; 
+//            MOVE bestMove;
             int depth;
             for (depth = 1; depth <= max_depth; depth++)
             {
@@ -220,7 +245,7 @@ main ()
                 ComputerThink (depth);
             }
             MakeMove (bestMove);
-            
+
             PrintBoard ();
             printf ("CASTLE: %d\n", castle);
             continue;

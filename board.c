@@ -151,7 +151,7 @@ int IsProtectedByABishop(int sq, int side)
             }
         }
     }
-    
+
     return 0;
 }
 
@@ -166,12 +166,12 @@ int BadCapture(MOVE mcmov) {
     /* Capturing equal or more material is never bad */
     if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
         return 0;
-    
+
     /* If the captured piece isn't protected by a pawn and its value
      * is bigger than a pawn, then it isn't a bad capture */
-    if (!IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) && 
-        value_piece[piece[mcmov.dest]] > value_piece[PAWN] &&
-        value_piece[piece[mcmov.from]] < value_piece[ROOK] )
+    if (!IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) &&
+            value_piece[piece[mcmov.dest]] > value_piece[PAWN] &&
+            value_piece[piece[mcmov.from]] < value_piece[ROOK] )
         return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
@@ -194,19 +194,19 @@ int BadCapture(MOVE mcmov) {
 
     /* Analyze the results */
     if (pawn_protected)
-       return 1;
-    
+        return 1;
+
     if (knight_protected && piece[mcmov.from] == QUEEN)
         return 1;
     if (bishop_protected && piece[mcmov.from] == QUEEN)
         return 1;
-    
+
     if (knight_protected && bishop_protected)
         return 1;
-    
+
     if (knight_protected || bishop_protected)
         return 1;
-    
+
 //    if (knight_protected && piece[mcmov.from] == ROOK)
 //        return 1;
 //    if (bishop_protected && piece[mcmov.from] == ROOK)
@@ -347,7 +347,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             if ( IsProtectedByABishop(from, Opponent(color[from])) )
                 move.grade += (value_piece[piece[from]]);
         }
-        
+
         if ( piece[from] == ROOK )
         {
             if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
@@ -359,7 +359,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             if ( IsProtectedByABishop(from, Opponent(color[from])) )
                 move.grade += (value_piece[piece[from]]);
         }
-        
+
         /* Just penalizing moving the king with no reason */
 //        if ( piece[from] == KING )
 //        {

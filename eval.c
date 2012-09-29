@@ -22,11 +22,11 @@
 
 /* Arrays for scaling mobility values */
 int mob_knight[9] = {
-  -10, -4, 2, 8, 14, 18, 22, 24, 25
+    -10, -4, 2, 8, 14, 18, 22, 24, 25
 };
 
 int mob_bishop[16] = {
-  -15, -10, 0, 8, 16, 20, 28, 32, 36, 40, 44, 48, 52, 55, 57, 60
+    -15, -10, 0, 8, 16, 20, 28, 32, 36, 40, 44, 48, 52, 55, 57, 60
 };
 
 /* To count the material */
@@ -76,51 +76,51 @@ Eval ()
 //            continue;
 //        else
 //        {
-            /* Just counting the wood on the board */
+        /* Just counting the wood on the board */
 //            piece_mat[color[i]] += value_piece[piece[i]];
         if (color[i] == WHITE)
+        {
+            switch(piece[i])
             {
-                switch(piece[i])
-                {
-                case PAWN:
-                    whitePawns++;
-                    break;
-                case KNIGHT:
-                    whiteKnights++;
-                    break;
-                case BISHOP:
-                    whiteBishops++;
-                    break;
-                case ROOK:
-                    whiteRooks++;
-                    break;
-                case QUEEN:
-                    whiteQueens++;
-                    break;
-                }
-            }
-        else if (color[i] == BLACK)
-            {
-                switch(piece[i])
-                {
-                case PAWN:
-                    blackPawns++;
-                    break;
-                case KNIGHT:
-                    blackKnights++;
-                    break;
-                case BISHOP:
-                    blackBishops++;
-                    break;
-                case ROOK:
-                    blackRooks++;
-                    break;
-                case QUEEN:
-                    blackQueens++;
-                    break;
-                }
+            case PAWN:
+                whitePawns++;
+                break;
+            case KNIGHT:
+                whiteKnights++;
+                break;
+            case BISHOP:
+                whiteBishops++;
+                break;
+            case ROOK:
+                whiteRooks++;
+                break;
+            case QUEEN:
+                whiteQueens++;
+                break;
             }
         }
+        else if (color[i] == BLACK)
+        {
+            switch(piece[i])
+            {
+            case PAWN:
+                blackPawns++;
+                break;
+            case KNIGHT:
+                blackKnights++;
+                break;
+            case BISHOP:
+                blackBishops++;
+                break;
+            case ROOK:
+                blackRooks++;
+                break;
+            case QUEEN:
+                blackQueens++;
+                break;
+            }
+        }
+    }
 
 
     /* After counting the material we update the score */

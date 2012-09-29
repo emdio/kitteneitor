@@ -69,7 +69,7 @@ ComputerThink (int depth)
 int
 Search (int alpha, int beta, int depth)
 {
-    
+
     /* Vars deffinition */
     int i;
     int value;			/* To store the evaluation */
@@ -80,20 +80,20 @@ Search (int alpha, int beta, int depth)
     MOVE auxMove;
 
     havemove = 0;		/* is there a move available? */
-    
-    
-    
+
+
+
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
     countSearchCalls++;
-    
+
     /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
         ++depth;
-    
+
     /* Taken from magic engine code */
-//    if (Eval() >= beta && 
+//    if (Eval() >= beta &&
 //	alpha <= beta - 1)
 //    {
 //        if (depth >=6)
@@ -105,8 +105,8 @@ Search (int alpha, int beta, int depth)
 //            depth -= 2;
 //        }
 //    }
-    
-    
+
+
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
@@ -126,7 +126,7 @@ Search (int alpha, int beta, int depth)
         /* If we've reached this far, then we have a move available */
         havemove = 1;
 
-        /* If we're in a leaf node we call quiescent search in 
+        /* If we're in a leaf node we call quiescent search in
          * order to avoid the horizon effect */
         if (depth - 1 > 0)
         {
@@ -157,10 +157,10 @@ Search (int alpha, int beta, int depth)
             alpha = value;
             /* So far, current move is the best reaction for current position */
             auxMove = moveBuf[i];
-            
+
         }
     }
-    
+
     bestMove = auxMove;
 
     /* Once we've checked all the moves, if we have no legal moves,
@@ -205,11 +205,11 @@ Quiescent (int alpha, int beta)
     {
         /* If it's a bad capture we don't need to go on (tx to Pedro) */
 //        if (BadCapture(cBuf[i])) continue;
-        
+
         if ( cBuf[i].grade < 0 ) continue;
-        
+
         MoveOrder(i, capscnt, cBuf);
-        
+
         if (!MakeMove (cBuf[i]))
         {
             /* If the current move isn't legal, we take it back
