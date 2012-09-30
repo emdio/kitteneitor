@@ -51,13 +51,12 @@ inline int Behind(int color)
 /* IsSqProtectedByAPawn returns 1 if sq is protected by a pawn of color side */
 inline int IsSqProtectedByAPawn(int sq, int side)
 {
-//    if ( piece[sq + Ahead(Opponent(side)) + 1] == PAWN &&  color[sq + Ahead(Opponent(side)) + 1] == side )
-//        return 1;
-//    else if ( piece[sq + Ahead(Opponent(side)) - 1] == PAWN && color[sq + Ahead(Opponent(side)) - 1] == side )
-//        return 1;
-    if ( piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
+    /* We need to check the columm because in col 1 and 8 sq can only be attacked
+     * from one side */
+    int col = Col(sq);
+    if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
         return 1;
-    else if ( piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
+    else if ( col != 0 && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
         return 1;
 
     return 0;
