@@ -63,7 +63,7 @@ inline int IsSqProtectedByAPawn(int sq, int side)
 }
 
 /* IsProtectedByAKnight returns 1 if square sq is protected by a knight of color side */
-int IsProtectedByAKnight(int sq, int side)
+int IsSqProtectedByAKnight(int sq, int side)
 {
     int y;
     int col = Col (sq);
@@ -95,7 +95,7 @@ int IsProtectedByAKnight(int sq, int side)
 }
 
 /* IsProtectedByABishop returns 1 if square sq is protected by a bishop of color side */
-int IsProtectedByABishop(int sq, int side)
+int IsSqProtectedByABishop(int sq, int side)
 {
     int y;
     for (y = sq - 9; y >= 0 && Col (y) != 7; y -= 9)
@@ -181,13 +181,13 @@ int BadCapture(MOVE mcmov) {
 
     /**********************************************/
     /* Is the piece protected by a knight? */
-    if ( IsProtectedByAKnight(mcmov.dest, color[mcmov.dest]) )
+    if ( IsSqProtectedByAKnight(mcmov.dest, color[mcmov.dest]) )
         knight_protected = 1;
 
 
     /**********************************************/
     /* Is the piece protected by a bishop? */
-    if ( IsProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
+    if ( IsSqProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
         bishop_protected = 1;
 
 
@@ -337,25 +337,25 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* Is a queen attacked by a piece? */
         if ( piece[from] == QUEEN )
         {
-            if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
+            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
                 move.grade -= (value_piece[piece[from]]);
-            if (IsProtectedByABishop(dest, Opponent(color[from])) )
+            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
                 move.grade -= (value_piece[piece[from]]);
-            if (IsProtectedByAKnight(from, Opponent(color[from])) )
+            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
                 move.grade += (value_piece[piece[from]]);
-            if ( IsProtectedByABishop(from, Opponent(color[from])) )
+            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
                 move.grade += (value_piece[piece[from]]);
         }
 
         if ( piece[from] == ROOK )
         {
-            if ( IsProtectedByAKnight(dest, Opponent(color[from])) )
+            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
                 move.grade -= (value_piece[piece[from]]);
-            if (IsProtectedByABishop(dest, Opponent(color[from])) )
+            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
                 move.grade -= (value_piece[piece[from]]);
-            if (IsProtectedByAKnight(from, Opponent(color[from])) )
+            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
                 move.grade += (value_piece[piece[from]]);
-            if ( IsProtectedByABishop(from, Opponent(color[from])) )
+            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
                 move.grade += (value_piece[piece[from]]);
         }
 
