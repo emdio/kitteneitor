@@ -223,7 +223,6 @@ Eval ()
         move has some extra advantage*/
 
     ff = funFactor();
-    ff = 0;
 //    printf("ff=%d\n", ff);
     if (side == WHITE)
         return (score + ff + 10);

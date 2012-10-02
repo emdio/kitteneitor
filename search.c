@@ -96,6 +96,7 @@ Search (int alpha, int beta, int depth)
 //    if (Eval() >= beta &&
 //	alpha <= beta - 1)
 //    {
+//        depth--;
 //        if (depth >=6)
 //        {
 //            depth--;
