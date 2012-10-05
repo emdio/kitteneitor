@@ -4,6 +4,11 @@
 #include "data.h"
 #include "protos.h"
 
+#include <sys/time.h>
+#include <string.h>
+struct timeval tv;
+struct timezone tz;
+
 //#define NDEBUG
 //#include <assert.h>
 
@@ -92,6 +97,17 @@ perft (int depth)
     }
 
     return nodes;
+}
+
+/*get_ms() nos indica la hora actual en milisegundos desde el 1 de enero de 1970*/
+int get_ms()
+{
+#ifndef WINDOWS
+	gettimeofday (&tv, &tz);
+	return(tv.tv_sec * 1000 + (tv.tv_usec / 1000));
+#else
+    return GetTickCount();
+#endif
 }
 
 /*recibimos una posición en formato FEN del GUI cuando editamos y la configuramos para que la entienda el motor*/

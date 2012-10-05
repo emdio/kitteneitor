@@ -2,6 +2,9 @@
 
 MOVE bestMove;
 
+int max_time;
+int total_time;
+
 int castle;
 int castle_mask[64];
 int hdp;

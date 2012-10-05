@@ -38,6 +38,7 @@ xboard ()
 
   startgame ();
 
+  /* Waiting a command from the GUI */
   for (;;)
     {
       fflush (stdout);
@@ -115,6 +116,13 @@ xboard ()
 	  computer_side = side;
 	  continue;
 	}
+      /* Tomado de Danasah recibimos del GUI el tiempo que nos queda */
+      if (!strcmp(command, "time"))
+      {
+          sscanf(line, "time %d", &max_time);
+          /*pasamos a milisegundos que es como trabajamos internamente*/
+          total_time = max_time *= 10;
+      }
       if (!strcmp (command, "undo"))
 	{
 	  if (hdp == 0)
