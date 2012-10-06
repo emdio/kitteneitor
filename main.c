@@ -116,13 +116,17 @@ xboard ()
 	  computer_side = side;
 	  continue;
 	}
-      /* Tomado de Danasah recibimos del GUI el tiempo que nos queda */
+      /* Tomado de TSCP recibimos del GUI el tiempo que nos queda */
       if (!strcmp(command, "time"))
-      {
-          sscanf(line, "time %d", &max_time);
+        {
+          sscanf (line, "time %d", &max_time);
           /*pasamos a milisegundos que es como trabajamos internamente*/
-          total_time = max_time *= 10;
-      }
+          max_time *= 10;
+          max_time /= 30;
+          max_time -= 300;
+    //          total_time = max_time;
+          max_depth = 32;
+        }
       if (!strcmp (command, "undo"))
 	{
 	  if (hdp == 0)
@@ -223,7 +227,7 @@ main ()
 
     startgame ();
 
-    max_depth = 6;		/* max depth to search */
+    max_depth = 5;		/* max depth to search */
     MOVE moveBuf[200];
     int movecnt;
 

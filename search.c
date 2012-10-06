@@ -14,6 +14,10 @@ ComputerThink (int depth)
     /* It returns the move the computer makes */
     int score;
     double knps;
+    
+    /* Time management */
+    int start_time = get_ms();
+    stop_time = start_time + max_time;
 
     /* Reset some values before searching */
     ply = 0;
@@ -82,11 +86,15 @@ Search (int alpha, int beta, int depth)
     havemove = 0;		/* is there a move available? */
 
 
-
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
     countSearchCalls++;
+    
+    /* Do some housekeeping every 1024 nodes */
+    if ((countSearchCalls & 1023) == 0)
+        if (checkup() == 1)
+            return 0;
 
     /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
@@ -187,6 +195,11 @@ Quiescent (int alpha, int beta)
     int score;
 
     countquiesCalls++;
+    
+    /* Do some housekeeping every 1024 nodes */
+    if ((countquiesCalls & 1023) == 0)
+        if (checkup() == 1)
+            return 0;
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();
@@ -252,4 +265,18 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
         moveBuf[init] = moveBuf[aux];
         moveBuf[aux] = Tmp;
     }
+}
+
+/* checkup() is called once in a while during the search. */
+int checkup(int stop_time)
+{
+    int stop_search = 0;
+	/* is the engine's time up? if so, longjmp back to the
+	   beginning of think() */
+	if (get_ms() >= stop_time) {
+		stop_search = 1;
+//		longjmp(env, 0);
+	}
+        
+        return stop_search;
 }

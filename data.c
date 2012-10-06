@@ -69,7 +69,8 @@ int value_piece[6] =
 
 
 /* Board representation */
-int max_time;
+int max_time = 0;
+int stop_time = 0;
 int total_time = 0;
 
 /* Piece in each square */
