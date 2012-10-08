@@ -124,9 +124,14 @@ xboard ()
           max_time *= 10;
           max_time /= 30;
           max_time -= 300;
-    //          total_time = max_time;
+              total_time = max_time;
           max_depth = 32;
+          continue;
         }
+      if (!strcmp(command, "otim"))
+      {
+          continue;
+      }
       if (!strcmp (command, "undo"))
 	{
 	  if (hdp == 0)
