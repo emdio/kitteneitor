@@ -368,7 +368,10 @@ int funFactor()
     /* No queens at all? That doesn't rule */
     if (whiteQueens == 0 && blackQueens == 0)
         funfa -= 10;
-
+    /* Encouraging the exchange (I hope) */
+    if (whiteRooks != blackRooks)
+        funfa += 10;
+    
     return funfa;
 }
 
