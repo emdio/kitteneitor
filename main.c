@@ -117,17 +117,17 @@ xboard ()
 	  continue;
 	}
       /* Tomado de TSCP recibimos del GUI el tiempo que nos queda */
-      if (!strcmp(command, "time"))
-        {
-          sscanf (line, "time %d", &max_time);
-          /*pasamos a milisegundos que es como trabajamos internamente*/
-          max_time *= 10;
-          max_time /= 30;
-          max_time -= 300;
-              total_time = max_time;
-          max_depth = 32;
-          continue;
-        }
+//      if (!strcmp(command, "time"))
+//        {
+//          sscanf (line, "time %d", &max_time);
+//          /*pasamos a milisegundos que es como trabajamos internamente*/
+//          max_time *= 10;
+//          max_time /= 30;
+//          max_time -= 300;
+//              total_time = max_time;
+//          max_depth = 32;
+//          continue;
+//        }
       if (!strcmp(command, "otim"))
       {
           continue;
@@ -297,6 +297,7 @@ main ()
         if (!strcmp (s, "pass"))
         {
             side = (WHITE + BLACK) - side;
+            computer_side = (WHITE + BLACK) - side;
             continue;
         }
         if (!strcmp (s, "sd"))
