@@ -92,13 +92,13 @@ Search (int alpha, int beta, int depth)
     countSearchCalls++;
     
     /* Do some housekeeping every 1024 nodes */
-    if ((countSearchCalls % 0xCCC) == 0)
-    {
-        if (checkup(stop_time) == 1)
-        {
-            return 0;
-        }
-    }
+//    if ((countSearchCalls % 0xCCC) == 0)
+//    {
+//        if (checkup(stop_time) == 1)
+//        {
+//            return 0;
+//        }
+//    }
     
             
 
@@ -154,7 +154,7 @@ Search (int alpha, int beta, int depth)
         else
         {
             value = -Quiescent (-beta, -alpha);
-            //value = -Eval();
+//            value = -Eval();
         }
 
         /* We've evaluated the position, so we return to the previous position in such a way
@@ -203,13 +203,13 @@ Quiescent (int alpha, int beta)
     countquiesCalls++;
     
     /* Do some housekeeping every 1024 nodes */
-    if ((countquiesCalls % 0xCCC) == 0)
-    {
-        if (checkup(stop_time) == 1)
-        {
-            return 0;
-        }
-    }
+//    if ((countquiesCalls % 0xCCC) == 0)
+//    {
+//        if (checkup(stop_time) == 1)
+//        {
+//            return 0;
+//        }
+//    }
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();

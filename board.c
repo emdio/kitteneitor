@@ -68,28 +68,28 @@ int IsSqProtectedByAKnight(int sq, int side)
     int y;
     int col = Col (sq);
     y = sq - 6;
-    if (piece[y] == KNIGHT && y >= 0 && col < 6 && color[y] == side)
+    if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq - 10;
-    if (piece[y] == KNIGHT && y >= 0 && col > 1 && color[y] == side)
+    if (y >= 0 && col > 1 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq - 15;
-    if (piece[y] == KNIGHT && y >= 0 && col < 7 && color[y] == side)
+    if (y >= 0 && col < 7 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq - 17;
-    if (piece[y] == KNIGHT && y >= 0 && col > 0 && color[y] == side)
+    if (y >= 0 && col > 0 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq + 6;
-    if (piece[y] == KNIGHT && y < 64 && col > 1 && color[y] == side)
+    if (y < 64 && col > 1 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq + 10;
-    if (piece[y] == KNIGHT && y < 64 && col < 6 && color[y] == side)
+    if (y < 64 && col < 6 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq + 15;
-    if (piece[y] == KNIGHT && y < 64 && col > 0 && color[y] == side)
+    if (y < 64 && col > 0 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     y = sq + 17;
-    if (piece[y] == KNIGHT && y < 64 && col < 7 && color[y] == side)
+    if (y < 64 && col < 7 && piece[y] == KNIGHT && color[y] == side)
         return 1;
     return 0;
 }
@@ -1103,7 +1103,6 @@ int
 MakeMove (MOVE m)
 {
     int r;
-    int i;
 
     count_MakeMove++;
 
@@ -1134,6 +1133,7 @@ MakeMove (MOVE m)
     /* Remove possible eps piece, remaining from former move */
     if (hist[hdp - 1].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
+        int i;
         for (i = 16; i <= 23; i++)
         {
             if (piece[i] == EPS_SQ)
