@@ -367,9 +367,14 @@ int funFactor()
         funfa += 5;
     /* No queens at all? That doesn't rule */
     if (whiteQueens == 0 && blackQueens == 0)
-        funfa -= 10;
+        funfa -= 20;
     /* Encouraging the exchange (I hope) */
     if (whiteRooks != blackRooks)
+        funfa += 10; 
+    /* Unbalanced material is welcome */
+    if (whiteQueens != blackQueens)
+        funfa += 10;
+    if ( (whiteBishops + whiteKnights) != (blackBishops + blackKnights) )
         funfa += 10;
     
     return funfa;
