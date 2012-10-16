@@ -352,9 +352,10 @@ int NoMaterial()
     return 0;
 }
 
-/* The fun factor: the main idea is to encourage interesting positions:
-    -Queens on the board
-    -Not too much pawns
+/*
+ *  The fun factor: the main idea is to encourage interesting positions:
+ *  -Queens on the board
+ *  -Not too much pawns, to give place to open positions
  *  -Unbalanced material
  */
 int funFactor()
