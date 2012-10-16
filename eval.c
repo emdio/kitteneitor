@@ -354,7 +354,9 @@ int NoMaterial()
 
 /* The fun factor: the main idea is to encourage interesting positions:
     -Queens on the board
-    -Not too much pawns*/
+    -Not too much pawns
+ *  -Unbalanced material
+ */
 int funFactor()
 {
     int funfa = 0;
