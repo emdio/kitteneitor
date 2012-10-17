@@ -26,7 +26,10 @@ int mob_knight[9] = {
 };
 
 int mob_bishop[16] = {
-    -15, -10, 0, 8, 16, 20, 28, 32, 36, 40, 44, 48, 52, 55, 57, 60
+    -5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
+};
+int range_bishop[16] = {
+    -6, -3, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
 };
 
 /* To count the material */
@@ -165,7 +168,8 @@ Eval ()
                 break;
             case BISHOP:
                 score += pst_bishop[i];
-                score += mob_bishop[BishopRange(i)];
+                score += mob_bishop[BishopMobility(i)];
+                score += range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score += pst_rook[i];
@@ -198,7 +202,8 @@ Eval ()
                 break;
             case BISHOP:
                 score -= pst_bishop[flip[i]];
-                score -= mob_bishop[BishopRange(i)];
+                score -= mob_bishop[BishopMobility(i)];
+                score -= range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
