@@ -239,7 +239,8 @@ inline int endGame()
     return 0;
 }
 
-/* Mobility */
+/* Mobility of the bishop: number of empty squares a bishop can reach 
+ * from its actual position */
 int BishopMobility(int sq)
 {
     int l;
@@ -259,7 +260,7 @@ int BishopMobility(int sq)
     return mob;
 }
 
-/* The squares till reach a pawn no matter its color */
+/* Range of the bishop: The squares till reach a pawn no matter its color */
 int BishopRange(int sq)
 {
     int l;
