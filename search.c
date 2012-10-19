@@ -129,6 +129,11 @@ Search (int alpha, int beta, int depth)
         /* Here must be called OrderMove, so we have the moves are ordered before
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
+        
+        /* This a test similiar to what is done in qsearch, but the
+         * result is really bad. Maybe it makes sense if the move
+         * ordering is improvedor seting alower threshold */
+        if (moveBuf[i].grade < 0) continue;
 
         /* If the current move isn't legal, we take it back
          * and take the next move in the list */
