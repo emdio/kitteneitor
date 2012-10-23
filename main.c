@@ -16,13 +16,14 @@ startgame ()
     int i;
     for (i = 0; i < 64; ++i)
     {
-        piece[i] = piece[i];
-        color[i] = color[i];
+        piece[i] = init_piece[i];
+        color[i] = init_color[i];
     }
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
     hdp = 0;
+    castle = 15;
 }
 
 void
@@ -232,7 +233,7 @@ main ()
 
     startgame ();
 
-    max_depth = 5;		/* max depth to search */
+    max_depth = 6;		/* max depth to search */
     MOVE moveBuf[200];
     int movecnt;
 

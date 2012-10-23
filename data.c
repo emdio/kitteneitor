@@ -69,12 +69,14 @@ int value_piece[6] =
 
 
 /* Board representation */
+int color[64];
+int piece[64];
 int max_time = 0;
 int stop_time = 0;
 int total_time = 0;
 
 /* Piece in each square */
-int piece[64] = {
+int init_piece[64] = {
     ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
     PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
     EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
@@ -86,7 +88,7 @@ int piece[64] = {
 };
 
 /* Color of each square */
-int color[64] = {
+int init_color[64] = {
     BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
     BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
     EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,

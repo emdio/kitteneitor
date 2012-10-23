@@ -21,6 +21,8 @@ int value_piece[6];
 HISTO hist[6000];
 int piece[64];
 int color[64];
+int init_color[64];
+int init_piece[64];
 int side;
 int computer_side;
 int max_depth;
