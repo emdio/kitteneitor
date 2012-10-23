@@ -1,5 +1,6 @@
 #include "defs.h"
 #include "data.h"
+#include <time.h>
 
 MOVE bestMove;
 
@@ -71,9 +72,10 @@ int value_piece[6] =
 /* Board representation */
 int color[64];
 int piece[64];
-int max_time = 0;
-int stop_time = 0;
-int total_time = 0;
+clock_t max_time = 0;
+clock_t stop_time = 0;
+clock_t total_time = 0;
+int must_stop = 0;
 
 /* Piece in each square */
 int init_piece[64] = {

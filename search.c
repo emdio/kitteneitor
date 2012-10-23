@@ -9,58 +9,74 @@
 //#include <assert.h>
 
 void
-ComputerThink (int depth)
+ComputerThink (int m_depth)
 {
     /* It returns the move the computer makes */
-    int score;
+    int score, i;
     double knps;
-    
+
     /* Time management */
-    int start_time = get_ms();
+//    int start_time = get_ms();
+    clock_t start_time = clock();
     stop_time = start_time + max_time;
 
-    /* Reset some values before searching */
-    ply = 0;
-    count_evaluations = 0;
-    count_MakeMove = 0;
-    countquiesCalls = 0;
-    countCapCalls = 0;
-    countSearchCalls = 0;
-
-    clock_t start;
-    clock_t stop;
-    double t = 0.0;
-
-    /* Start timer */
-    start = clock ();
-
-    /* Search now */
-    score = Search (-MATE, MATE, depth);
-
-    /* Stop timer */
-    stop = clock ();
-    t = (double) (stop - start) / CLOCKS_PER_SEC;
-    knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
-    double ratio_Qsearc_Capcalls = 0;
-    ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
-
-    double decimal_score = ((double) score) / 100.;
-    if (side == BLACK)
+    for (i = 1; i <= m_depth; ++i)
     {
-        decimal_score = -decimal_score;
-    }
+        /* Reset some values before searching */
+        ply = 0;
+        count_evaluations = 0;
+        count_MakeMove = 0;
+        countquiesCalls = 0;
+        countCapCalls = 0;
+        countSearchCalls = 0;
 
-    /* After searching, print results */
-    if (depth == max_depth)
-        printf
-        ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
-         'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
-         8 - Row (bestMove.dest), depth, decimal_score, t, knps, countCapCalls,
-         countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
-    else
-        printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
-                'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
-                - Row (bestMove.dest), depth, decimal_score);
+        clock_t start;
+        clock_t stop;
+        double t = 0.0;
+
+        /* Start timer */
+        start = clock ();
+
+        /* Search now! */
+        score = Search (-MATE, MATE, i);
+
+        /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
+           Tomado de Darky */
+//    if (must_stop)
+//    {
+//        fflush(stdout);  /* Limpiamos la salida estandar */
+//        break;
+//    }
+
+        /* Stop timer */
+        stop = clock ();
+        t = (double) (stop - start) / CLOCKS_PER_SEC;
+        knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
+        double ratio_Qsearc_Capcalls = 0;
+        ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
+
+        double decimal_score = ((double) score) / 100.;
+        if (side == BLACK)
+        {
+            decimal_score = -decimal_score;
+        }
+
+        /* After searching, print results */
+        if (i == m_depth)
+        {
+            printf
+            ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
+             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
+             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
+             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
+        }
+        else
+        {
+            printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
+                    'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
+                    - Row (bestMove.dest), i, decimal_score);
+        }
+    }
 }
 
 /*
@@ -90,17 +106,17 @@ Search (int alpha, int beta, int depth)
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
     countSearchCalls++;
-    
+
     /* Do some housekeeping every 1024 nodes */
-//    if ((countSearchCalls % 0xCCC) == 0)
-//    {
-//        if (checkup(stop_time) == 1)
-//        {
-//            return 0;
-//        }
-//    }
-    
-            
+    if ((countSearchCalls & 1023) == 0)
+    {
+        if (checkup(stop_time) == 1)
+        {
+            return 0;
+        }
+    }
+
+
 
     /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
@@ -129,7 +145,7 @@ Search (int alpha, int beta, int depth)
         /* Here must be called OrderMove, so we have the moves are ordered before
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
-        
+
         /* This a test similiar to what is done in qsearch, but the
          * result is really bad. Maybe it makes sense if the move
          * ordering is improvedor seting alower threshold */
@@ -206,15 +222,15 @@ Quiescent (int alpha, int beta)
     int score;
 
     countquiesCalls++;
-    
+
     /* Do some housekeeping every 1024 nodes */
-//    if ((countquiesCalls % 0xCCC) == 0)
-//    {
-//        if (checkup(stop_time) == 1)
-//        {
-//            return 0;
-//        }
-//    }
+    if ((countquiesCalls & 1023) == 0)
+    {
+        if (checkup(stop_time) == 1)
+        {
+            return 0;
+        }
+    }
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();
@@ -285,13 +301,15 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
 /* checkup() is called once in a while during the search. */
 int checkup(int stoping_time)
 {
-    int must_stop = 0;
-	/* is the engine's time up? if so, longjmp back to the
-	   beginning of think() */
-	if (get_ms() >= stoping_time) {
-		must_stop = 1;
+    must_stop = 0;
+    /* is the engine's time up? if so, longjmp back to the
+       beginning of think() */
+//	if (get_ms() >= stoping_time)
+    if (clock() >= stoping_time)
+    {
+        must_stop = 1;
 //		longjmp(env, 0);
-	}
-        
-        return must_stop;
+    }
+
+    return must_stop;
 }
