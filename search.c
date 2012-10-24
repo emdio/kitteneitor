@@ -16,8 +16,8 @@ ComputerThink (int m_depth)
     double knps;
 
     /* Time management */
-//    int start_time = get_ms();
-    clock_t start_time = clock();
+    int start_time = get_ms();
+//    clock_t start_time = clock();
     stop_time = start_time + max_time;
 
     for (i = 1; i <= m_depth; ++i)
@@ -42,11 +42,11 @@ ComputerThink (int m_depth)
 
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
-//    if (must_stop)
-//    {
-//        fflush(stdout);  /* Limpiamos la salida estandar */
-//        break;
-//    }
+        if (must_stop)
+        {
+            fflush(stdout);  /* Limpiamos la salida estandar */
+            break;
+        }
 
         /* Stop timer */
         stop = clock ();
@@ -304,8 +304,8 @@ int checkup(int stoping_time)
     must_stop = 0;
     /* is the engine's time up? if so, longjmp back to the
        beginning of think() */
-//	if (get_ms() >= stoping_time)
-    if (clock() >= stoping_time)
+    if (get_ms() >= stoping_time)
+//    if (clock() >= stoping_time)
     {
         must_stop = 1;
 //		longjmp(env, 0);
