@@ -20,6 +20,8 @@ ComputerThink (int m_depth)
 //    clock_t start_time = clock();
     stop_time = start_time + max_time;
 
+    printf ("max_time = %d\n", max_time);
+
     for (i = 1; i <= m_depth; ++i)
     {
         /* Reset some values before searching */
@@ -44,6 +46,7 @@ ComputerThink (int m_depth)
            Tomado de Darky */
         if (must_stop)
         {
+            must_stop = 0;
             fflush(stdout);  /* Limpiamos la salida estandar */
             break;
         }
@@ -76,6 +79,7 @@ ComputerThink (int m_depth)
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), i, decimal_score);
         }
+//        fflush(stdout);
     }
 }
 
@@ -112,6 +116,7 @@ Search (int alpha, int beta, int depth)
     {
         if (checkup(stop_time) == 1)
         {
+//            printf ("max_time search = %d\n", max_time);
             return 0;
         }
     }
@@ -228,6 +233,7 @@ Quiescent (int alpha, int beta)
     {
         if (checkup(stop_time) == 1)
         {
+//            printf ("max_time qsearch= %d\n", max_time);
             return 0;
         }
     }
