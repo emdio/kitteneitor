@@ -116,12 +116,13 @@ Search (int alpha, int beta, int depth)
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
-        if (checkup(stop_time) == 1)
-        {
-//            printf ("max_time search = %d\n", max_time);
-            return 0;
-        }
+        checkup(stop_time);
     }
+    if (must_stop)
+    {
+        return 0;
+    }
+
 
 
 
@@ -231,14 +232,15 @@ Quiescent (int alpha, int beta)
     countquiesCalls++;
     nodes++;
 
+
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
-        if (checkup(stop_time) == 1)
-        {
-//            printf ("max_time qsearch= %d\n", max_time);
-            return 0;
-        }
+        checkup(stop_time);
+    }
+    if (must_stop)
+    {
+        return 0;
     }
 
     /* First we just try the evaluation function */
@@ -308,7 +310,7 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
 }
 
 /* checkup() is called once in a while during the search. */
-int checkup(int stoping_time)
+void checkup(int stoping_time)
 {
     must_stop = 0;
     /* is the engine's time up? if so, longjmp back to the
@@ -320,5 +322,5 @@ int checkup(int stoping_time)
 //		longjmp(env, 0);
     }
 
-    return must_stop;
+//    return must_stop;
 }

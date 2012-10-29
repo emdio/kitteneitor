@@ -37,6 +37,7 @@ int Search(int alpha, int beta, int depth);
 /* Utils */
 U64 perft(int depth);
 void PrintBoard();
+void checkup(int time_to_stop);
 
 
 

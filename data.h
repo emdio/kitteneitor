@@ -3,9 +3,9 @@
 
 MOVE bestMove;
 
-clock_t max_time;
-clock_t total_time;
-clock_t stop_time;
+int max_time;
+int total_time;
+int stop_time;
 int must_stop;
 
 int castle;
