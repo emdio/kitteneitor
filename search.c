@@ -31,6 +31,7 @@ ComputerThink (int m_depth)
         countquiesCalls = 0;
         countCapCalls = 0;
         countSearchCalls = 0;
+        nodes = 0;
 
         clock_t start;
         clock_t stop;
@@ -109,10 +110,11 @@ Search (int alpha, int beta, int depth)
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
 //    assert (movecnt < 201);
+    nodes++;
     countSearchCalls++;
 
     /* Do some housekeeping every 1024 nodes */
-    if ((countSearchCalls & 1023) == 0)
+    if ((nodes & 1023) == 0)
     {
         if (checkup(stop_time) == 1)
         {
@@ -227,9 +229,10 @@ Quiescent (int alpha, int beta)
     int score;
 
     countquiesCalls++;
+    nodes++;
 
     /* Do some housekeeping every 1024 nodes */
-    if ((countquiesCalls & 1023) == 0)
+    if ((nodes & 1023) == 0)
     {
         if (checkup(stop_time) == 1)
         {
