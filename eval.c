@@ -227,7 +227,8 @@ Eval ()
         We add an extra plus 10 because in the same position the side to
         move has some extra advantage*/
 
-    ff = funFactor();
+//    ff = funFactor();
+    ff = 0;
 //    printf("ff=%d\n", ff);
     if (side == WHITE)
         return (score + ff + 10);
