@@ -55,7 +55,7 @@ ComputerThink (int m_depth)
         /* Stop timer */
         stop = clock ();
         t = (double) (stop - start) / CLOCKS_PER_SEC;
-        knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
+        knps = ((double) (nodes) / t) / 1000.;
         double ratio_Qsearc_Capcalls = 0;
         ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
 
@@ -80,7 +80,7 @@ ComputerThink (int m_depth)
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), i, decimal_score);
         }
-//        fflush(stdout);
+        fflush(stdout);  /* Limpiamos la salida estandar */
     }
 }
 
