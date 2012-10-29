@@ -14,8 +14,8 @@
  */
 
 /* Bonus and malus */
-#define	ROOK_OPEN_COL		30
-#define PAIR_BISHOPS        20
+#define	ROOK_OPEN_COL		25
+#define PAIR_BISHOPS        15
 
 /* To store the material of each side */
 //int piece_mat[2];
