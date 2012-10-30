@@ -104,6 +104,9 @@ Search (int alpha, int beta, int depth)
     MOVE moveBuf[200];		/* List of movements */
     MOVE auxMove;
     
+    auxMove.type_of_move = MOVE_TYPE_NONE;
+    bestMove.type_of_move = MOVE_TYPE_NONE;
+    
     nodes++;
     countSearchCalls++;
 
