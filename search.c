@@ -107,12 +107,6 @@ Search (int alpha, int beta, int depth)
     havemove = 0;		/* is there a move available? */
 
 
-    /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
-//    assert (movecnt < 201);
-    nodes++;
-    countSearchCalls++;
-
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
@@ -123,7 +117,11 @@ Search (int alpha, int beta, int depth)
         return 0;
     }
 
-
+    /* Generate and count all moves for current position */
+    movecnt = GenMoves (side, moveBuf);
+//    assert (movecnt < 201);
+    nodes++;
+    countSearchCalls++;
 
 
     /* If we're in check maybe we want to search deeper */
