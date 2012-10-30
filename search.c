@@ -55,7 +55,7 @@ ComputerThink (int m_depth)
         /* Stop timer */
         stop = clock ();
         t = (double) (stop - start) / CLOCKS_PER_SEC;
-        knps = ((double) (nodes) / t) / 1000.;
+        knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
         double ratio_Qsearc_Capcalls = 0;
         ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
 
@@ -80,7 +80,7 @@ ComputerThink (int m_depth)
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), i, decimal_score);
         }
-        fflush(stdout);  /* Limpiamos la salida estandar */
+//        fflush(stdout);
     }
 }
 
@@ -103,28 +103,26 @@ Search (int alpha, int beta, int depth)
 
     MOVE moveBuf[200];		/* List of movements */
     MOVE auxMove;
-    
-    auxMove.type_of_move = MOVE_TYPE_NONE;
-    bestMove.type_of_move = MOVE_TYPE_NONE;
-    
+
+    havemove = 0;		/* is there a move available? */
+
+
+    /* Generate and count all moves for current position */
+    movecnt = GenMoves (side, moveBuf);
+//    assert (movecnt < 201);
     nodes++;
     countSearchCalls++;
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
-        checkup(stop_time);
+        if (checkup(stop_time) == 1)
+        {
+//            printf ("max_time search = %d\n", max_time);
+            return 0;
+        }
     }
-    if (must_stop)
-    {
-        return 0;
-    }
-    
-    havemove = 0;		/* is there a move available? */
 
-    /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
-//    assert (movecnt < 201);
 
 
     /* If we're in check maybe we want to search deeper */
@@ -233,15 +231,14 @@ Quiescent (int alpha, int beta)
     countquiesCalls++;
     nodes++;
 
-
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
-        checkup(stop_time);
-    }
-    if (must_stop)
-    {
-        return 0;
+        if (checkup(stop_time) == 1)
+        {
+//            printf ("max_time qsearch= %d\n", max_time);
+            return 0;
+        }
     }
 
     /* First we just try the evaluation function */
@@ -311,7 +308,7 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
 }
 
 /* checkup() is called once in a while during the search. */
-void checkup(int stoping_time)
+int checkup(int stoping_time)
 {
     must_stop = 0;
     /* is the engine's time up? if so, longjmp back to the
@@ -323,5 +320,5 @@ void checkup(int stoping_time)
 //		longjmp(env, 0);
     }
 
-//    return must_stop;
+    return must_stop;
 }
