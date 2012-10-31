@@ -37,12 +37,6 @@ ComputerThink (int m_depth)
         clock_t stop;
         double t = 0.0;
 
-        /* Start timer */
-        start = clock ();
-
-        /* Search now! */
-        score = Search (-MATE, MATE, i);
-
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
         if (must_stop)
@@ -51,6 +45,14 @@ ComputerThink (int m_depth)
             fflush(stdout);  /* Limpiamos la salida estandar */
             break;
         }
+
+        /* Start timer */
+        start = clock ();
+
+        /* Search now! */
+        score = Search (-MATE, MATE, i);
+
+
 
         /* Stop timer */
         stop = clock ();
