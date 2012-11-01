@@ -143,7 +143,7 @@ xboard ()
             max_time -= 300;
             total_time = max_time;
             if (total_time < 3000)
-                max_depth = 4;
+                max_depth = 6;
             else
                 max_depth = 32;
             continue;
