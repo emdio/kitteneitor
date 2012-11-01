@@ -95,6 +95,22 @@ xboard ()
             computer_side = EMPTY;
             continue;
         }
+        /*si recibimos un resultado de un juego el motor debe parar*/
+        if (!strcmp(command, "result"))
+        {
+            computer_side = EMPTY;
+            continue;
+        }
+        if (!strcmp(command, "?")) {
+            computer_side = EMPTY;
+            continue;
+        }
+        if (!strcmp(command, ".")) {
+            continue;
+        }
+        if (!strcmp(command, "exit")) {
+            continue;
+        }
         if (!strcmp (command, "white"))
         {
             side = WHITE;
