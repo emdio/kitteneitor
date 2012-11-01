@@ -140,9 +140,12 @@ xboard ()
             /*pasamos a milisegundos que es como trabajamos internamente*/
             max_time *= 10;
             max_time /= 30;
-//          max_time -= 300;
+            max_time -= 300;
             total_time = max_time;
-            max_depth = 32;
+            if (total_time < 3000)
+                max_depth = 4;
+            else
+                max_depth = 32;
             continue;
         }
         if (!strcmp(command, "otim"))
