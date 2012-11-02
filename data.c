@@ -75,7 +75,7 @@ int piece[64];
 clock_t max_time = 9999999;
 clock_t stop_time;
 clock_t total_time;
-int must_stop = 0;
+int must_stop;
 
 /* Piece in each square */
 int init_piece[64] = {
