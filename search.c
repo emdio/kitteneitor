@@ -132,19 +132,19 @@ Search (int alpha, int beta, int depth)
         ++depth;
 
     /* Taken from magic engine code */
-//    if (Eval() >= beta &&
-//	alpha <= beta - 1)
-//    {
-//        depth--;
-//        if (depth >=6)
-//        {
-//            depth--;
-//        }
-//        else
-//        {
-//            depth -= 2;
-//        }
-//    }
+    if (Eval() >= beta &&
+    alpha <= beta - 1)
+    {
+        depth--;
+        if (depth >=6)
+        {
+            depth--;
+        }
+        else
+        {
+            depth -= 2;
+        }
+    }
 
 
     /* Once we have all the moves available, we loop through the posible
