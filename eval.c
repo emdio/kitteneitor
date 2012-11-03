@@ -17,10 +17,11 @@
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
 
-/* To store the material of each side */
-//int piece_mat[2];
-
 /* Arrays for scaling mobility values */
+int mob_rook[16] = {
+    -10, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
+};
+
 int mob_knight[9] = {
     -10, -4, 2, 8, 14, 18, 22, 24, 25
 };
@@ -173,6 +174,7 @@ Eval ()
                 break;
             case ROOK:
                 score += pst_rook[i];
+                score += mob_rook[RookMobility(i)];
                 if (OpenColRook(i))
                     score += ROOK_OPEN_COL;
                 break;
@@ -207,6 +209,7 @@ Eval ()
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
+                score -= mob_rook[RookMobility(i)];
                 if (OpenColRook(i))
                     score -= ROOK_OPEN_COL;
                 break;
@@ -312,7 +315,7 @@ int KnightMobility(int sq)
     return mob;
 }
 
-int MobilityRook(int sq)
+int RookMobility(int sq)
 {
     int l;
     int mob = 0;
