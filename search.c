@@ -136,14 +136,14 @@ Search (int alpha, int beta, int depth)
     alpha <= beta - 1)
     {
         depth--;
-        if (depth >=6)
-        {
-            depth--;
-        }
-        else
-        {
-            depth -= 2;
-        }
+//        if (depth >=6)
+//        {
+//            depth--;
+//        }
+//        else
+//        {
+//            depth -= 2;
+//        }
     }
 
 
