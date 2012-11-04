@@ -121,7 +121,7 @@ Search (int alpha, int beta, int depth)
         if (checkup(stop_time) == 1)
         {
 //            printf ("max_time search = %d\n", max_time);
-            return 0;
+            return Eval();
         }
     }
 
@@ -239,7 +239,7 @@ Quiescent (int alpha, int beta)
         if (checkup(stop_time) == 1)
         {
 //            printf ("max_time qsearch= %d\n", max_time);
-            return 0;
+            return Eval();
         }
     }
 
