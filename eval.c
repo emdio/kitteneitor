@@ -231,11 +231,11 @@ Eval ()
         move has some extra advantage*/
 
 //    ff = funFactor();
-    ff = 0;
+//    ff = 0;
 //    printf("ff=%d\n", ff);
     if (side == WHITE)
-        return (score + ff + 10);
-    return (-score - ff - 10);
+        return (score + 10);
+    return (-score - 10);
 }
 
 /* Are we in the endgame? */
