@@ -108,15 +108,6 @@ Search (int alpha, int beta, int depth)
 
     havemove = 0;		/* is there a move available? */
 
-    /* Do some housekeeping every 1024 nodes */
-    if ((nodes & 1023) == 0)
-    {
-        if (checkup(stop_time) == 1)
-        {
-//            printf ("max_time search = %d\n", max_time);
-            return Eval();
-        }
-    }
 
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
@@ -124,24 +115,37 @@ Search (int alpha, int beta, int depth)
     nodes++;
     countSearchCalls++;
 
+    /* Do some housekeeping every 1024 nodes */
+    if ((nodes & 1023) == 0)
+    {
+        if (checkup(stop_time) == 1)
+        {
+//            printf ("max_time search = %d\n", max_time);
+            //bestMove = auxMove;
+            return Eval();
+        }
+    }
+
+
+
     /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
         ++depth;
 
     /* Taken from magic engine code */
-//    if (Eval() >= beta &&
-//    alpha <= beta - 1)
-//    {
-//        depth--;
-////        if (depth >=6)
-////        {
-////            depth--;
-////        }
-////        else
-////        {
-////            depth -= 2;
-////        }
-//    }
+    if (Eval() >= beta &&
+    alpha <= beta - 1)
+    {
+        depth--;
+        if (depth >=6)
+        {
+            depth--;
+        }
+        else
+        {
+            depth -= 2;
+        }
+    }
 
 
     /* Once we have all the moves available, we loop through the posible
@@ -236,7 +240,7 @@ Quiescent (int alpha, int beta)
         if (checkup(stop_time) == 1)
         {
 //            printf ("max_time qsearch= %d\n", max_time);
-            return Eval();
+            return 0;
         }
     }
 
