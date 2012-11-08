@@ -203,11 +203,11 @@ Search (int alpha, int beta, int depth)
             alpha = value;
             /* So far, current move is the best reaction for current position */
             auxMove = moveBuf[i];
-
         }
+        bestMove = auxMove;
     }
 
-    bestMove = auxMove;
+//    bestMove = auxMove;
 
     /* Once we've checked all the moves, if we have no legal moves,
      * then that's checkmate or stalemate */
