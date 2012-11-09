@@ -245,15 +245,15 @@ Quiescent (int alpha, int beta)
         alpha = stand_pat;
 
     /* Do some housekeeping every 1024 nodes */
-    if ((nodes & 1023) == 0)
-    {
-        if (checkup(stop_time) == 1)
-        {
-//            printf ("max_time qsearch= %d\n", max_time);
-//            return 0;
-            return stand_pat;
-        }
-    }
+//    if ((nodes & 1023) == 0)
+//    {
+//        if (checkup(stop_time) == 1)
+//        {
+////            printf ("max_time qsearch= %d\n", max_time);
+////            return 0;
+//            return stand_pat;
+//        }
+//    }
 
     /* If we haven't got a cut off we generate the captures and
      * store them in cBuf */
