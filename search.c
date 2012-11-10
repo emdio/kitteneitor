@@ -37,6 +37,7 @@ ComputerThink (int m_depth)
         clock_t stop;
         double t = 0.0;
 
+
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
         if (must_stop)
@@ -120,11 +121,13 @@ Search (int alpha, int beta, int depth)
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
-        if (checkup(stop_time) == 1)
+//        if (checkup(stop_time) == 1)
+        checkup(stop_time);
         {
-//            printf ("max_time search = %d\n", max_time);
-            //bestMove = auxMove;
-            return Eval();
+            if (must_stop)
+//            printf ("max_time qsearch= %d\n", max_time);
+            return 0;
+//            return stand_pat;
         }
     }
 
@@ -206,10 +209,10 @@ Search (int alpha, int beta, int depth)
             /* So far, current move is the best reaction for current position */
             auxMove = moveBuf[i];
         }
-        bestMove = auxMove;
+//        bestMove = auxMove;
     }
 
-//    bestMove = auxMove;
+    bestMove = auxMove;
 
     /* Once we've checked all the moves, if we have no legal moves,
      * then that's checkmate or stalemate */
@@ -245,15 +248,17 @@ Quiescent (int alpha, int beta)
         alpha = stand_pat;
 
     /* Do some housekeeping every 1024 nodes */
-//    if ((nodes & 1023) == 0)
-//    {
+    if ((nodes & 1023) == 0)
+    {
 //        if (checkup(stop_time) == 1)
-//        {
-////            printf ("max_time qsearch= %d\n", max_time);
-////            return 0;
+        checkup(stop_time);
+        {
+            if (must_stop)
+//            printf ("max_time qsearch= %d\n", max_time);
+            return 0;
 //            return stand_pat;
-//        }
-//    }
+        }
+    }
 
     /* If we haven't got a cut off we generate the captures and
      * store them in cBuf */
@@ -267,7 +272,7 @@ Quiescent (int alpha, int beta)
         /* If it's a bad capture we don't need to go on (tx to Pedro) */
 //        if (BadCapture(cBuf[i])) continue;
 
-        if ( cBuf[i].grade < 0 ) continue;
+//        if ( cBuf[i].grade < 0 ) continue;
 
         MoveOrder(i, capscnt, cBuf);
 
@@ -315,7 +320,7 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
 }
 
 /* checkup() is called once in a while during the search. */
-int checkup(int stoping_time)
+void checkup(int stoping_time)
 {
     must_stop = 0;
     /* is the engine's time up? if so, longjmp back to the
@@ -327,5 +332,5 @@ int checkup(int stoping_time)
 //		longjmp(env, 0);
     }
 
-    return must_stop;
+//    return must_stop;
 }
