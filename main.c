@@ -69,6 +69,8 @@ xboard ()
             printf ("move %c%d%c%d%c\n", 'a' + Col (bestMove.from), 8
                     - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), c);
+
+            fflush(stdout);
             continue;
         }
 

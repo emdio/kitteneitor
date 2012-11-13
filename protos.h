@@ -33,6 +33,7 @@ void ComputerThink(int depth);
 int Quiescent(int alpha, int beta);
 //int Search(int alpha, int beta, int depth, MOVE * pBestMove);
 int Search(int alpha, int beta, int depth);
+void checkup(int stoping_time);
 
 /* Utils */
 U64 perft(int depth);

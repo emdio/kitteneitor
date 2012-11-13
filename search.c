@@ -83,7 +83,7 @@ ComputerThink (int m_depth)
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), i, decimal_score);
         }
-//        fflush(stdout);
+        fflush(stdout);
     }
 }
 
@@ -108,6 +108,7 @@ Search (int alpha, int beta, int depth)
     MOVE auxMove;
 
     auxMove.type_of_move = MOVE_TYPE_NONE;
+    bestMove.type_of_move = MOVE_TYPE_NONE;
 
     havemove = 0;		/* is there a move available? */
 
