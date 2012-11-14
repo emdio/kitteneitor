@@ -133,8 +133,8 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     movecnt = GenMoves (side, moveBuf);
 
     /* If we're in check maybe we want to search deeper */
-//    if (IsInCheck(side))
-//        ++depth;
+    if (IsInCheck(side))
+        ++depth;
 
 
     /* Once we have all the moves available, we loop through the posible
@@ -251,7 +251,7 @@ Quiescent (int alpha, int beta)
     for (i = 0; i < capscnt; ++i)
     {
         /* If it's a bad capture we don't need to go on (tx to Pedro) */
-//        if (BadCapture(cBuf[i])) continue;
+        if (BadCapture(cBuf[i])) continue;
 
 //        if ( cBuf[i].grade < 0 ) continue;
 
