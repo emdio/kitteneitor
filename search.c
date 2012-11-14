@@ -8,10 +8,12 @@
 //#define NDEBUG
 //#include <assert.h>
 
-void
+MOVE
 ComputerThink (int m_depth)
 {
     /* It returns the move the computer makes */
+    MOVE m;
+    MOVE bestMove;
     int score, i;
     double knps;
 
@@ -20,7 +22,7 @@ ComputerThink (int m_depth)
 //    clock_t start_time = clock();
     stop_time = start_time + max_time;
 
-    printf ("max_time = %d\n", max_time);
+//    printf ("max_time = %d\n", max_time);
 
     for (i = 1; i <= m_depth; ++i)
     {
@@ -38,6 +40,12 @@ ComputerThink (int m_depth)
         double t = 0.0;
 
 
+        /* Start timer */
+        start = clock ();
+
+        /* Search now! */
+        score = Search (-MATE, MATE, i, &m);
+
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
         if (must_stop)
@@ -46,14 +54,6 @@ ComputerThink (int m_depth)
             fflush(stdout);  /* Limpiamos la salida estandar */
             break;
         }
-
-        /* Start timer */
-        start = clock ();
-
-        /* Search now! */
-        score = Search (-MATE, MATE, i);
-
-
 
         /* Stop timer */
         stop = clock ();
@@ -68,11 +68,13 @@ ComputerThink (int m_depth)
             decimal_score = -decimal_score;
         }
 
+        bestMove = m;
+
         /* After searching, print results */
         if (i == m_depth)
         {
             printf
-            ("Search result: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
+            ("Search result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
              'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
              8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
              countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
@@ -83,8 +85,10 @@ ComputerThink (int m_depth)
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), i, decimal_score);
         }
-        fflush(stdout);
+//        fflush(stdout);
+
     }
+    return bestMove;
 }
 
 /*
@@ -95,7 +99,7 @@ ComputerThink (int m_depth)
  */
 
 int
-Search (int alpha, int beta, int depth)
+Search (int alpha, int beta, int depth, MOVE * pBestMove)
 {
 
     /* Vars deffinition */
@@ -104,54 +108,33 @@ Search (int alpha, int beta, int depth)
     int havemove;		/* Either we have or not a legal move available */
     int movecnt;		/* The number of available moves */
 
-    MOVE moveBuf[200];		/* List of movements */
-    MOVE auxMove;
+    MOVE moveBuf[200];  /* List of movements */
+    MOVE tmpMove;
 
-    auxMove.type_of_move = MOVE_TYPE_NONE;
-    bestMove.type_of_move = MOVE_TYPE_NONE;
-
-    havemove = 0;		/* is there a move available? */
-
-
-    /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
-//    assert (movecnt < 201);
     nodes++;
     countSearchCalls++;
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
     {
-//        if (checkup(stop_time) == 1)
         checkup(stop_time);
         {
             if (must_stop)
 //            printf ("max_time qsearch= %d\n", max_time);
             return 0;
-//            return stand_pat;
         }
     }
 
+    havemove = 0;		/* is there a move available? */
+    pBestMove->type_of_move = MOVE_TYPE_NONE;
 
+
+    /* Generate and count all moves for current position */
+    movecnt = GenMoves (side, moveBuf);
 
     /* If we're in check maybe we want to search deeper */
-    if (IsInCheck(side))
-        ++depth;
-
-    /* Taken from magic engine code */
-//    if (Eval() >= beta &&
-//    alpha <= beta - 1)
-//    {
-//        depth--;
-//        if (depth >=6)
-//        {
-//            depth--;
-//        }
-//        else
-//        {
-//            depth -= 2;
-//        }
-//    }
+//    if (IsInCheck(side))
+//        ++depth;
 
 
     /* Once we have all the moves available, we loop through the posible
@@ -182,7 +165,7 @@ Search (int alpha, int beta, int depth)
          * order to avoid the horizon effect */
         if (depth - 1 > 0)
         {
-            value = -Search (-beta, -alpha, depth - 1);
+            value = -Search(-beta, -alpha, depth - 1, &tmpMove);
         }
         /* If no depth left (leaf node), we evalute the position
            and apply the alpha-beta search.
@@ -208,12 +191,10 @@ Search (int alpha, int beta, int depth)
             }
             alpha = value;
             /* So far, current move is the best reaction for current position */
-            auxMove = moveBuf[i];
+            *pBestMove = moveBuf[i];
         }
-//        bestMove = auxMove;
     }
 
-    bestMove = auxMove;
 
     /* Once we've checked all the moves, if we have no legal moves,
      * then that's checkmate or stalemate */
@@ -240,6 +221,17 @@ Quiescent (int alpha, int beta)
     countquiesCalls++;
     nodes++;
 
+    /* Do some housekeeping every 1024 nodes */
+    if ((nodes & 1023) == 0)
+    {
+        checkup(stop_time);
+        {
+            if (must_stop)
+//            printf ("max_time qsearch= %d\n", max_time);
+            return 0;
+        }
+    }
+
 
     /* First we just try the evaluation function */
     stand_pat = Eval ();
@@ -248,18 +240,6 @@ Quiescent (int alpha, int beta)
     if (alpha < stand_pat)
         alpha = stand_pat;
 
-    /* Do some housekeeping every 1024 nodes */
-    if ((nodes & 1023) == 0)
-    {
-//        if (checkup(stop_time) == 1)
-        checkup(stop_time);
-        {
-            if (must_stop)
-//            printf ("max_time qsearch= %d\n", max_time);
-            return 0;
-//            return stand_pat;
-        }
-    }
 
     /* If we haven't got a cut off we generate the captures and
      * store them in cBuf */

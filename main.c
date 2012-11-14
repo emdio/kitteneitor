@@ -32,6 +32,7 @@ xboard ()
     char line[256], command[256], c;
     int from, dest, i;
     MOVE moveBuf[200];
+    MOVE theBest;
     int movecnt;
     //int illegal_king = 0;
 
@@ -43,13 +44,14 @@ xboard ()
     for (;;)
     {
         fflush (stdout);
+//        setbuf(stdout, NULL);
         if (side == computer_side)
         {   /* computer's turn */
             /* Find out the best move to react the current position */
-            ComputerThink (max_depth);
-            MakeMove (bestMove);
+            theBest = ComputerThink (max_depth);
+            MakeMove (theBest);
             /* send move */
-            switch (bestMove.type_of_move)
+            switch (theBest.type_of_move)
             {
             case MOVE_TYPE_PROMOTION_TO_QUEEN:
                 c = 'q';
@@ -66,11 +68,12 @@ xboard ()
             default:
                 c = ' ';
             }
-            printf ("move %c%d%c%d%c\n", 'a' + Col (bestMove.from), 8
-                    - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
-                    - Row (bestMove.dest), c);
+            printf ("move %c%d%c%d%c\n", 'a' + Col (theBest.from), 8
+                    - Row (theBest.from), 'a' + Col (theBest.dest), 8
+                    - Row (theBest.dest), c);
 
             fflush(stdout);
+//            setbuf(stdout, NULL);
             continue;
         }
 
@@ -256,6 +259,7 @@ main ()
 
     max_depth = 6;		/* max depth to search */
     MOVE moveBuf[200];
+    MOVE theBest;
     int movecnt;
 
     puts ("Kitteneitor, by Emilio Diaz");
@@ -275,15 +279,35 @@ main ()
     {
         if (side == computer_side)
         {   /* Computer's turn */
-            /* Find out the best move to react the current position */
-//            MOVE bestMove;
-//            int depth;
-//            for (depth = 1; depth <= max_depth; depth++)
-//            {
-//                bestMove = ComputerThink (depth);
-            ComputerThink (max_depth);
-//            }
-            MakeMove (bestMove);
+
+            theBest = ComputerThink (max_depth);
+
+            MakeMove (theBest);
+
+            /* Se manda el movimiento sin enter para verificar coronacion */
+            printf("move %c%d%c%d",
+                   'a' + Col(theBest.from),
+                   8 - Row(theBest.from),
+                   'a' + Col(theBest.dest),
+                   8 - Row(theBest.dest));
+            /* Verificar si es coronacion para poner la nueva pieza */
+            switch (bestMove.type_of_move)
+            {
+               case MOVE_TYPE_PROMOTION_TO_QUEEN:
+                  printf("q\n");
+                  break;
+               case MOVE_TYPE_PROMOTION_TO_ROOK:
+                  printf("r\n");
+                  break;
+               case MOVE_TYPE_PROMOTION_TO_BISHOP:
+                  printf("b\n");
+                  break;
+               case MOVE_TYPE_PROMOTION_TO_KNIGHT:
+                  printf("n\n");
+                  break;
+               default:
+                  printf("\n"); /* no es coronacion enviamos el move con enter */
+            }   /* end switch */
 
             PrintBoard ();
             printf ("CASTLE: %d\n", castle);

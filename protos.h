@@ -28,21 +28,11 @@ void startgame();
 void xboard();
 
 /* Search */
-//MOVE ComputerThink(int depth);
-void ComputerThink(int depth);
+MOVE ComputerThink(int depth);
 int Quiescent(int alpha, int beta);
-//int Search(int alpha, int beta, int depth, MOVE * pBestMove);
-int Search(int alpha, int beta, int depth);
+int Search(int alpha, int beta, int depth, MOVE * pBestMove);
 void checkup(int stoping_time);
 
 /* Utils */
 U64 perft(int depth);
 void PrintBoard();
-
-
-
-
-
-
-
-

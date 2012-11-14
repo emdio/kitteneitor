@@ -2,7 +2,7 @@
 #include "data.h"
 #include <time.h>
 
-MOVE bestMove;
+//MOVE bestMove;
 
 int side;			/* Side to move, value = BLACK or WHITE */
 int computer_side;
