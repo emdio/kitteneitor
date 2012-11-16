@@ -116,14 +116,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
-    {
         checkup(stop_time);
-        {
-            if (must_stop)
-//            printf ("max_time qsearch= %d\n", max_time);
-            return 0;
-        }
-    }
+    if (must_stop)
+        return 0;
+
 
     havemove = 0;		/* is there a move available? */
     pBestMove->type_of_move = MOVE_TYPE_NONE;
@@ -223,14 +219,9 @@ Quiescent (int alpha, int beta)
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
-    {
         checkup(stop_time);
-        {
-            if (must_stop)
-//            printf ("max_time qsearch= %d\n", max_time);
-            return 0;
-        }
-    }
+    if (must_stop)
+        return 0;
 
 
     /* First we just try the evaluation function */
