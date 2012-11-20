@@ -202,6 +202,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             return 0;
     }
 
+    /* 3 vecez la misma posicion */
+    if (reps() >= 2)
+        return 0;
+
     /* Finally we return alpha, the score value */
     return alpha;
 }

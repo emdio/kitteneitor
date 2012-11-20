@@ -63,6 +63,14 @@ char fenstring[256];
 /* 64 bit integers */
 typedef unsigned long long U64;
 
+/* Estructura para triple repeticion */
+typedef struct tag_REPET {
+   int key;
+   int piece[2][6][64];
+   int side;
+   int ep[64];
+} HASH;
+
 
 /* A move is defined by its origin and final squares, the castle rights and the kind of
  * move it's: normal, enpasant... */
@@ -78,4 +86,20 @@ typedef struct {
     MOVE m;
     int castle;
     int cap;
+    int hash;
 } HISTO;
+
+///*  Historial de movimientos en el juego permite el retroceso
+//    para reintegrar la posicion previa */
+//typedef struct tag_HIST {
+//    MOVE     m;
+//    int      cap;
+//    int      castle;
+//    int      enpasant;
+//    int      fifty;
+//    int      hash;
+//}   HIST;
+
+
+/* Triple repeticion */
+HASH hash;

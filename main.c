@@ -144,7 +144,7 @@ xboard ()
             sscanf (line, "time %d", &max_time);
             /*pasamos a milisegundos que es como trabajamos internamente*/
             max_time *= 10;
-            max_time /= 30;
+            max_time /= 10;
             max_time -= 300;
             total_time = max_time;
 //            if (total_time < 3000)
@@ -437,4 +437,62 @@ main ()
             }
         PrintBoard ();
     }
+}
+
+
+/*************************************************************************************
+        Funciones para detectar repeticion de movimientos
+**************************************************************************************/
+
+/* Generador de numeros aleatorios */
+int random32()
+{
+    int i, r = 0;
+
+    for (i = 0; i < 32; ++i)
+        r ^= rand() << i;
+    return r;
+}
+
+/* Se llenan las variables con numeros aleatorios */
+void hash_rnd_init()
+{
+    int i, j, k;
+
+    srand(0);
+    for (i = 0; i < 2; ++i)
+        for (j = 0; j < 6; ++j)
+            for (k = 0; k < 64; ++k)
+                hash.piece[i][j][k] = random32();
+    hash.side = random32();
+    for (i = 0; i < 64; ++i)
+        hash.ep[i] = random32();
+}
+
+/* Se obtiene el hash de la posicion actual */
+void hash_key_position()
+{
+    int i;
+
+    hash.key = 0;
+    for (i = 0; i < 64; ++i)
+        if (color[i] != EMPTY)
+            hash.key ^= hash.piece[color[i]][piece[i]][i];
+    if (side == BLACK)
+        hash.key ^= hash.side;
+//    if (enpasant != -1)
+//        hash.key ^= hash.ep[enpasant];
+}
+
+/* Devuelve el numero de vecez que la posicion se ha repetido */
+int reps()
+{
+    int i;
+    int r = 1;
+
+//    for (i = hdp - 2; i >= (hdp - fifty); i-=2)
+    for (i = hdp - 2; i >= (hdp); i-=2)
+        if (hist[i].hash == hash.key)
+            ++r;
+    return r;
 }
