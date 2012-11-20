@@ -3,7 +3,7 @@
 -Acknowledgments:
  -Pham Hong Nguyen, author of firstchess
  -Ron Murawski for his generosity
- -Pedro Castro, author of danasah
+ -Pedro Castro, author of the engine Danasah, and for the creation of Kitteneitor's logo
  -The authors of http://chessprogramming.wikispaces.com/
  -Tom Kerrigan for TSCP
  -Bruce Moreland for his site
