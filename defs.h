@@ -60,6 +60,9 @@ char fenstring[256];
 #define G8 6
 #define H8 7
 
+/* Contador para la regla de los 50 movimientos */
+extern int fifty;
+
 /* 64 bit integers */
 typedef unsigned long long U64;
 
@@ -87,6 +90,7 @@ typedef struct {
     int castle;
     int cap;
     int hash;
+    int fifty;
 } HISTO;
 
 ///*  Historial de movimientos en el juego permite el retroceso

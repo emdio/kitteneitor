@@ -37,3 +37,5 @@ int pst_queen[64];
 int pst_king_midgame[64];
 int pst_king_endgame[64];
 int flip[64];
+/* Contador para la regla de los 50 movimientos */
+int fifty;

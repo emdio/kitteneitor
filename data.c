@@ -4,6 +4,9 @@
 
 //MOVE bestMove;
 
+/* Contador para la regla de los 50 movimientos */
+int fifty;
+
 int side;			/* Side to move, value = BLACK or WHITE */
 int computer_side;
 int max_depth;			/* max depth to search */

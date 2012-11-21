@@ -24,6 +24,8 @@ startgame ()
     computer_side = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 15;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
 }
 
 void
@@ -255,6 +257,7 @@ main ()
     int dest;
     int i;
 
+    hash_rnd_init();
     startgame ();
 
     max_depth = 6;		/* max depth to search */
@@ -490,8 +493,7 @@ int reps()
     int i;
     int r = 1;
 
-//    for (i = hdp - 2; i >= (hdp - fifty); i-=2)
-    for (i = hdp - 2; i >= (hdp); i-=2)
+    for (i = hdp - 2; i >= (hdp - fifty); i-=2)
         if (hist[i].hash == hash.key)
             ++r;
     return r;

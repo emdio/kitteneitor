@@ -206,6 +206,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     if (reps() >= 2)
         return 0;
 
+    if (fifty >= 100) /* 50 jugadas o mas */
+        return 0;
+
+
     /* Finally we return alpha, the score value */
     return alpha;
 }

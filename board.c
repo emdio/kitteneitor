@@ -1109,6 +1109,8 @@ MakeMove (MOVE m)
     hist[hdp].m = m;
     hist[hdp].cap = piece[m.dest];	/* store in history the piece of the dest square */
     hist[hdp].castle = castle;
+    hist[hdp].fifty = fifty;
+    hist[hdp].hash = hash.key;       /* Guardamos la posicion actial en hashkey */
 
     piece[m.dest] = piece[m.from];	/* dest piece is the one in the original square */
     color[m.dest] = color[m.from];	/* The dest square color is the one of the origin piece */
@@ -1242,6 +1244,11 @@ MakeMove (MOVE m)
     /* Update the castle rights */
     castle &= castle_mask[m.from] & castle_mask[m.dest];
 
+    /* Actualizamos la cuenta de la regla de 50 movimientos */
+    if ( (piece[m.from] == PAWN) || color[m.from] == Opponent(color[m.dest]) )
+       fifty = 0;
+    else
+       fifty++;
 
     /* Checking if after making the move we're in check */
     r = !IsInCheck (side);
@@ -1249,6 +1256,9 @@ MakeMove (MOVE m)
     /* After making move, give turn to opponent */
 //    side = (WHITE + BLACK) - side;
     side = Opponent(side);
+
+    /* Obtenemos la hash.key de la posicion actual */
+    hash_key_position();
 
     return r;
 }
@@ -1370,5 +1380,11 @@ TakeBack ()
             color[D8] = EMPTY;
         }
     }
+
+    /* Ponemos la cuenta de 50 movimientos que llevabamos. */
+    fifty = hist[hdp].fifty;
+
+    /* Recuperamos la posicion anterior en zobrist key */
+    hash.key = hist[hdp].hash;
 }
 
