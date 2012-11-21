@@ -1245,7 +1245,7 @@ MakeMove (MOVE m)
     castle &= castle_mask[m.from] & castle_mask[m.dest];
 
     /* Actualizamos la cuenta de la regla de 50 movimientos */
-    if ( (piece[m.from] == PAWN) || color[m.from] == Opponent(color[m.dest]) )
+    if ( (piece[m.from] == PAWN) || color[m.from] == Opponent(color[m.from]) )
        fifty = 0;
     else
        fifty++;
