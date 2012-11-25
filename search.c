@@ -132,6 +132,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     if (IsInCheck(side))
         ++depth;
 
+//    /* If the opponent is in check maybe we want to search deeper */
+//    if (IsInCheck(Opponent(side)))
+//        ++depth;
+
 
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */

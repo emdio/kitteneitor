@@ -39,7 +39,8 @@ xboard ()
     //int illegal_king = 0;
 
     printf ("\n");
-
+//    hash_key_position(); /* hash de la posicion inicial */
+//    hash_rnd_init();
     startgame ();
 
     /* Waiting a command from the GUI */
@@ -450,11 +451,11 @@ main ()
 /* Generador de numeros aleatorios */
 int random32()
 {
-    int i, r = 0;
+    int i, rnd = 0;
 
     for (i = 0; i < 32; ++i)
-        r ^= rand() << i;
-    return r;
+        rnd ^= rand() << i;
+    return rnd;
 }
 
 /* Se llenan las variables con numeros aleatorios */

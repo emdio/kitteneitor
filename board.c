@@ -1245,7 +1245,7 @@ MakeMove (MOVE m)
     castle &= castle_mask[m.from] & castle_mask[m.dest];
 
     /* Actualizamos la cuenta de la regla de 50 movimientos */
-    if ( (piece[m.from] == PAWN) || color[m.from] == Opponent(color[m.from]) )
+    if ((piece[m.dest] == PAWN) || (hist[hdp].cap != EMPTY))
        fifty = 0;
     else
        fifty++;
@@ -1268,7 +1268,8 @@ void
 TakeBack ()
 {
 
-    side = (WHITE + BLACK) - side;
+//    side = (WHITE + BLACK) - side;
+    side = Opponent(side);
     hdp--;
     ply--;
 

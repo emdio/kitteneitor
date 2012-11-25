@@ -230,12 +230,21 @@ Eval ()
         We add an extra plus 10 because in the same position the side to
         move has some extra advantage*/
 
-//    ff = funFactor();
+    ff = funFactor();
 //    ff = 0;
 //    printf("ff=%d\n", ff);
-    if (side == WHITE)
-        return (score + 10);
-    return (-score - 10);
+    if (side == computer_side)
+    {
+        if (side == WHITE)
+            return (score + ff + 10);
+        return (-score - ff - 10);
+    }
+    else
+    {
+        if (side == WHITE)
+            return (score + 10);
+        return (-score - 10);
+    }
 }
 
 /* Are we in the endgame? */
@@ -378,17 +387,20 @@ int funFactor()
     /* Too many pawns on the board aren't that funny */
     if (whitePawns + blackPawns < 12)
         funfa += 5;
+    /* Too many many pawns on the board aren't that funny */
+    if (whitePawns + blackPawns == 16)
+        funfa -= 10;
     /* No queens at all? That doesn't rule */
     if (whiteQueens == 0 && blackQueens == 0)
-        funfa -= 20;
-    /* Encouraging the exchange (I hope) */
-    if (whiteRooks != blackRooks)
-        funfa += 10; 
-    /* Unbalanced material is welcome */
-    if (whiteQueens != blackQueens)
-        funfa += 10;
-    if ( (whiteBishops + whiteKnights) != (blackBishops + blackKnights) )
-        funfa += 10;
+        funfa -= 10;
+//    /* Encouraging the exchange (I hope) */
+//    if (whiteRooks != blackRooks)
+//        funfa += 5;
+//    /* Unbalanced material is welcome */
+//    if (whiteQueens != blackQueens)
+//        funfa += 5;
+//    if ( (whiteBishops + whiteKnights) != (blackBishops + blackKnights) )
+//        funfa += 5;
     
     return funfa;
 }
