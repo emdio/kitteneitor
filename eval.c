@@ -161,7 +161,10 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
-                score += pst_pawn[i];
+                if (endGame())
+                    score += pst_pawn_endgame[i];
+                else
+                    score += pst_pawn_midgame[i];
                 break;
             case KNIGHT:
                 score += pst_knight[i];
@@ -196,7 +199,10 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
-                score -= pst_pawn[flip[i]];
+                if (endGame())
+                    score -= pst_pawn_endgame[flip[i]];
+                else
+                    score -= pst_pawn_midgame[flip[i]];
                 break;
             case KNIGHT:
                 score -= pst_knight[flip[i]];

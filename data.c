@@ -134,7 +134,7 @@ int init_color[64] = {
  * depending on the very square where it's placed. Vg, a knight in d4 will
  * be given an extra +15, whilst a knight in a1 will be penalized with -40.
  * This simple idea allows the engine to make more sensible moves */
-int pst_pawn[64] = {
+int pst_pawn_midgame[64] = {
       0,  0,  0,  0,  0,  0,  0,  0,
       8, 12, 15, 18, 18, 15, 12,  8,
       7,  9, 10, 16, 16, 10,  9,  7,
@@ -142,6 +142,17 @@ int pst_pawn[64] = {
       5,  6,  7,  8,  8,  7,  6,  5,
       4,  5,  5,  6,  6,  5,  5,  4,
       3,  3,  3,-21,-21,  3,  3,  3,
+      0,  0,  0,  0,  0,  0,  0,  0
+};
+
+int pst_pawn_endgame[64] = {
+      0,  0,  0,  0,  0,  0,  0,  0,
+     25, 25, 25, 25, 25, 25, 25, 25,
+     20, 20, 20, 20, 20, 20, 20, 20,
+     10, 10, 10, 10, 10, 10, 10, 10,
+      0,  0,  0,  0,  0,  0,  0,  0,
+     -5, -5, -5, -5, -5, -5, -5, -5,
+    -10,-10,-10,-21,-21,-10,-10,-10,
       0,  0,  0,  0,  0,  0,  0,  0
 };
 

@@ -246,7 +246,10 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         switch (piece[from])
         {
         case PAWN:
-            move.grade += mult*(pst_pawn[dest] - pst_pawn[from]);
+            if (endGame())
+                move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
+            else
+                move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
             break;
         case KNIGHT:
             move.grade += mult*(pst_knight[dest] - pst_knight[from]);
@@ -273,7 +276,10 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
         switch (piece[from])
         {
         case PAWN:
-            move.grade += mult*(pst_pawn[flip[dest]] - pst_pawn[flip[from]]);
+            if (endGame())
+                move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
+            else
+                move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
             break;
         case KNIGHT:
             move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
