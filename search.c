@@ -21,6 +21,7 @@ ComputerThink (int m_depth)
     int start_time = get_ms();
 //    clock_t start_time = clock();
     stop_time = start_time + max_time;
+    half_time = start_time + 0.5 * max_time;
 
 //    printf ("max_time = %d\n", max_time);
 
@@ -39,12 +40,15 @@ ComputerThink (int m_depth)
         clock_t stop;
         double t = 0.0;
 
-
         /* Start timer */
         start = clock ();
 
         /* Search now! */
         score = Search (-MATE, MATE, i, &m);
+
+        /* If we've searched for a certain percentage of the avaialble time it
+        doesn't make sense to start a new ply, so we call it a day */
+        checkup(half_time);
 
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
@@ -54,6 +58,7 @@ ComputerThink (int m_depth)
             fflush(stdout);  /* Limpiamos la salida estandar */
             break;
         }
+
 
         /* Stop timer */
         stop = clock ();
@@ -304,7 +309,7 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
 }
 
 /* checkup() is called once in a while during the search. */
-void checkup(int stoping_time)
+void checkup(clock_t stoping_time)
 {
     must_stop = 0;
     /* is the engine's time up? if so, longjmp back to the
@@ -318,3 +323,18 @@ void checkup(int stoping_time)
 
 //    return must_stop;
 }
+
+/* checkup() is called once in a while during the search. */
+int checkupHalfTime(int stoping_time)
+{
+    /* is the engine's time up? if so, longjmp back to the
+       beginning of think() */
+    stoping_time = (stoping_time / 2);
+    if (get_ms() >= stoping_time)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+

@@ -6,6 +6,7 @@ MOVE bestMove;
 clock_t max_time;
 clock_t total_time;
 clock_t stop_time;
+clock_t half_time;
 int must_stop;
 
 int castle;

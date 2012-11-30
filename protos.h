@@ -31,7 +31,8 @@ void xboard();
 MOVE ComputerThink(int depth);
 int Quiescent(int alpha, int beta);
 int Search(int alpha, int beta, int depth, MOVE * pBestMove);
-void checkup(int stoping_time);
+void checkup(clock_t stoping_time);
+int checkupHalfTime(int stoping_time);
 
 /* Utils */
 U64 perft(int depth);

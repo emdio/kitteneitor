@@ -77,6 +77,7 @@ int color[64];
 int piece[64];
 clock_t max_time = 9999999;
 clock_t stop_time;
+clock_t half_time;
 clock_t total_time;
 int must_stop;
 
