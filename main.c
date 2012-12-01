@@ -150,6 +150,7 @@ xboard ()
             max_time /= 10;
             max_time -= 300;
             total_time = max_time;
+
 //            if (total_time < 3000)
 //                max_depth = 6;
 //            else
@@ -494,7 +495,7 @@ int reps()
     int i;
     int r = 1;
 
-    for (i = hdp - 2; i >= (hdp - fifty); i-=2)
+    for (i = hdp - fifty; i < hdp; ++i)
         if (hist[i].hash == hash.key)
             ++r;
     return r;
