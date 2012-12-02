@@ -52,8 +52,11 @@ int
 Eval ()
 {
     /* Set some values to 0 */
+
+    /* The fun factor */
     int ff = 0;
 
+    /* The vars for counting the material */
     whitePawns = 0;
     whiteKnights = 0;
     whiteBishops = 0;
@@ -397,16 +400,16 @@ int funFactor()
     if (whitePawns + blackPawns == 16)
         funfa -= 10;
     /* No queens at all? That doesn't rule */
-    if (whiteQueens == 0 && blackQueens == 0)
-        funfa -= 10;
-//    /* Encouraging the exchange (I hope) */
-//    if (whiteRooks != blackRooks)
-//        funfa += 5;
-//    /* Unbalanced material is welcome */
-//    if (whiteQueens != blackQueens)
-//        funfa += 5;
-//    if ( (whiteBishops + whiteKnights) != (blackBishops + blackKnights) )
-//        funfa += 5;
+//    if (whiteQueens == 0 && blackQueens == 0)
+//        funfa -= 10;
+    /* Encouraging the exchange (I hope) */
+    if (whiteRooks != blackRooks)
+        funfa += 10;
+    /* Unbalanced material is welcome */
+    if (whiteQueens != blackQueens)
+        funfa += 10;
+    if ( (whiteBishops + whiteKnights) != (blackBishops + blackKnights) )
+        funfa += 10;
     
     return funfa;
 }

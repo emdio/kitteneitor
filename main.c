@@ -495,7 +495,7 @@ int reps()
     int i;
     int r = 1;
 
-    for (i = hdp - fifty; i < hdp; ++i)
+    for (i = hdp - fifty; i < hdp; i+=2)
         if (hist[i].hash == hash.key)
             ++r;
     return r;

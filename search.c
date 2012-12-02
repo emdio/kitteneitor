@@ -211,6 +211,9 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             return 0;
     }
 
+    if (reps() >= 2)
+        printf ("reps: %d \n", reps());
+
     /* 3 vecez la misma posicion */
     if (reps() >= 2)
         return 0;
