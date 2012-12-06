@@ -135,7 +135,7 @@ Eval ()
                 blackQueens++;
                 break;
             case KING:
-                posWhiteKing = i;
+                posBlackKing = i;
                 break;
             }
         }
