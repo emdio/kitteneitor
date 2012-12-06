@@ -110,6 +110,9 @@ Eval ()
             case QUEEN:
                 whiteQueens++;
                 break;
+            case KING:
+                posWhiteKing = i;
+                break;
             }
         }
         else if (color[i] == BLACK)
@@ -130,6 +133,9 @@ Eval ()
                 break;
             case QUEEN:
                 blackQueens++;
+                break;
+            case KING:
+                posWhiteKing = i;
                 break;
             }
         }
