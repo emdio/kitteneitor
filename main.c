@@ -20,6 +20,8 @@ startgame ()
         color[i] = init_color[i];
     }
 
+    setDistToKing();
+
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
     hdp = 0;
@@ -506,12 +508,14 @@ void setDistToKing()
 {
     int i, j;
 
-    /* basic distance table used to generate separate tables for pieces */
+    int dist_bonus[64][64];
+
+    /* Basic distance table used to generate separate tables for pieces */
     for (i = 0; i < 64; ++i)
     {
        for (j = 0; j < 64; ++j)
        {
-          dist_bonus[i][j] = 14 - ( abs( COL(i) - COL(j) ) + abs( ROW(i) - ROW(j) ) );
+          dist_bonus[i][j] = 14 - ( abs( Col(i) - Col(j) ) + abs( Row(i) - Row(j) ) );
 
           qk_dist[i][j]  = (dist_bonus[i][j] * 5) / 2;
           rk_dist[i][j]  =  dist_bonus[i][j] / 2;

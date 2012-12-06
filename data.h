@@ -40,9 +40,9 @@ int pst_king_midgame[64];
 int pst_king_endgame[64];
 int flip[64];
 /* The king distance vars */
-int qk_dist[][];
-int rk_dist[][];
-int nk_dist[][];
-int bk_dist[][];
+int qk_dist[64][64];
+int rk_dist[64][64];
+int nk_dist[64][64];
+int bk_dist[64][64];
 /* Contador para la regla de los 50 movimientos */
 int fifty;
