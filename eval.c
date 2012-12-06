@@ -33,6 +33,12 @@ int range_bishop[16] = {
     -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
 };
 
+/* Kings' safety */
+int posWhiteKing;
+int whiteKingSafety;
+int posBlackKing;
+int whiteKingSafety;
+
 /* To count the material */
 int whitePawns;
 int whiteKnights;
@@ -171,21 +177,25 @@ Eval ()
                 break;
             case KNIGHT:
                 score += pst_knight[i];
+                score += nk_dist[i][posBlackKing];
                 score += mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score += pst_bishop[i];
+                score += bk_dist[i][posBlackKing];
                 score += mob_bishop[BishopMobility(i)];
                 score += range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score += pst_rook[i];
+                score += rk_dist[i][posBlackKing];
                 score += mob_rook[RookMobility(i)];
                 if (OpenColRook(i))
                     score += ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score += pst_queen[i];
+                score += qk_dist[i][posBlackKing];
                 break;
             case KING:
                 if (endGame())
@@ -209,21 +219,25 @@ Eval ()
                 break;
             case KNIGHT:
                 score -= pst_knight[flip[i]];
+                score -= nk_dist[i][posWhiteKing];
                 score -= mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score -= pst_bishop[flip[i]];
+                score -= bk_dist[i][posWhiteKing];
                 score -= mob_bishop[BishopMobility(i)];
                 score -= range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
+                score -= rk_dist[i][posWhiteKing];
                 score -= mob_rook[RookMobility(i)];
                 if (OpenColRook(i))
                     score -= ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
+                score -= qk_dist[i][posWhiteKing];
                 break;
             case KING:
                 if (endGame())

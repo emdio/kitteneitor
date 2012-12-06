@@ -211,8 +211,12 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             return 0;
     }
 
-    if (reps() >= 2)
-        printf ("reps: %d \n", reps());
+//    for (i = 0; i < hdp; ++i)
+//        printf("hash %d: %d-%d\n", i, hist[i].hash, hash.key);
+//        if (hist[i].hash == hash.key)
+
+//    if (reps() > 2)
+//        printf ("reps: %d \n", reps());
 
     /* 3 vecez la misma posicion */
     if (reps() >= 2)

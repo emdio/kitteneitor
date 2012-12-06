@@ -489,7 +489,7 @@ void hash_key_position()
 //        hash.key ^= hash.ep[enpasant];
 }
 
-/* Devuelve el numero de vecez que la posicion se ha repetido */
+/* Devuelve el numero de veces que la posicion se ha repetido */
 int reps()
 {
     int i;
@@ -499,4 +499,24 @@ int reps()
         if (hist[i].hash == hash.key)
             ++r;
     return r;
+}
+
+/* Initializes the table of distances between squares */
+void setDistToKing()
+{
+    int i, j;
+
+    /* basic distance table used to generate separate tables for pieces */
+    for (i = 0; i < 64; ++i)
+    {
+       for (j = 0; j < 64; ++j)
+       {
+          dist_bonus[i][j] = 14 - ( abs( COL(i) - COL(j) ) + abs( ROW(i) - ROW(j) ) );
+
+          qk_dist[i][j]  = (dist_bonus[i][j] * 5) / 2;
+          rk_dist[i][j]  =  dist_bonus[i][j] / 2;
+          nk_dist[i][j]  =  dist_bonus[i][j];
+          bk_dist[i][j]  = dist_bonus[i][j] / 2;
+       }
+    }
 }
