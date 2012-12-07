@@ -34,22 +34,22 @@ int range_bishop[16] = {
 };
 
 /* Kings' safety */
-int posWhiteKing;
-int whiteKingSafety;
-int posBlackKing;
-int whiteKingSafety;
+int posWhiteKing = 0;
+int whiteKingSafety = 0;
+int posBlackKing = 0;
+int blackKingSafety = 0;
 
 /* To count the material */
-int whitePawns;
-int whiteKnights;
-int whiteBishops;
-int whiteRooks;
-int whiteQueens;
-int blackPawns;
-int blackKnights;
-int blackBishops;
-int blackRooks;
-int blackQueens;
+int whitePawns = 0;
+int whiteKnights = 0;
+int whiteBishops = 0;
+int whiteRooks = 0;
+int whiteQueens = 0;
+int blackPawns = 0;
+int blackKnights = 0;
+int blackBishops = 0;
+int blackRooks = 0;
+int blackQueens = 0;
 
 
 
@@ -58,6 +58,10 @@ int
 Eval ()
 {
     /* Set some values to 0 */
+
+    /* Pawn's info */
+    int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
     /* The fun factor */
     int ff = 0;
@@ -97,6 +101,7 @@ Eval ()
             {
             case PAWN:
                 whitePawns++;
+                whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
                 break;
             case KNIGHT:
                 whiteKnights++;
@@ -121,6 +126,7 @@ Eval ()
             {
             case PAWN:
                 blackPawns++;
+                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
                 break;
             case KNIGHT:
                 blackKnights++;
@@ -140,6 +146,13 @@ Eval ()
             }
         }
     }
+
+//    i = 0;
+//    for (i=0; i<8; ++i)
+//    {
+//        printf("white pawn %d: %d\n",i,  whitePawnsInfo[i]);
+//        printf("black pawn %d: %d\n",i,  blackPawnsInfo[i]);
+//    }
 
 
     /* After counting the material we update the score */
