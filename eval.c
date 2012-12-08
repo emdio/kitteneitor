@@ -52,6 +52,10 @@ int blackRooks = 0;
 int blackQueens = 0;
 
 
+/* Pawn's info */
+int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
 
 /* The evaluation function */
 int
@@ -59,9 +63,7 @@ Eval ()
 {
     /* Set some values to 0 */
 
-    /* Pawn's info */
-    int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-    int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
 
     /* The fun factor */
     int ff = 0;
@@ -216,11 +218,10 @@ Eval ()
                 score += pst_rook[i];
                 score += rk_dist[i][posBlackKing];
                 /* Is it on an open col? */
-                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
+//                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
+                if (isOnAnOpenCol(i))
                     score += ROOK_OPEN_COL;
                 score += mob_rook[RookMobility(i)];
-//                if (OpenColRook(i))
-//                    score += ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score += pst_queen[i];
@@ -262,10 +263,9 @@ Eval ()
                 score -= rk_dist[i][posWhiteKing];
                 score -= mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
-                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
+                if (isOnAnOpenCol(i))
+//                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
                     score -= ROOK_OPEN_COL;
-//                if (OpenColRook(i))
-//                    score -= ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
@@ -308,6 +308,14 @@ inline int endGame()
     if (whiteQueens==0 || blackQueens==0)
         return 1;
     if (whitePawns + blackPawns < 8)
+        return 1;
+    return 0;
+}
+
+/* Returns 0 if it is on an open col */
+inline int isOnAnOpenCol(int i)
+{
+    if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
         return 1;
     return 0;
 }
@@ -396,24 +404,6 @@ int RookMobility(int sq)
     return mob;
 }
 
-/* Returns 1 if rook is on an open column */
-int OpenColRook(int sq)
-{
-    int l;
-    int mob = 0;
-
-    for (l = sq-8; ((l >= 0) && piece[l] != PAWN); l-=8)
-        mob++;
-    for (l = sq+8; ((l <= 63) && piece[l] != PAWN); l+=8)
-        mob++;
-
-    /* If it can reach 7 squares without finding a pawn then
-    the rook is on an open column*/
-    if (mob == 7)
-        return 1;
-    return 0;
-}
-
 /* Returns 1 if no enough material on the board */
 int NoMaterial()
 {
@@ -425,6 +415,8 @@ int NoMaterial()
                         return 1;
     return 0;
 }
+
+
 
 /*
  *  The fun factor: the main idea is to encourage interesting positions:
