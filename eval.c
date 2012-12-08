@@ -147,12 +147,19 @@ Eval ()
         }
     }
 
-//    i = 0;
+//    puts ("\nBlack pawns");
 //    for (i=0; i<8; ++i)
 //    {
-//        printf("white pawn %d: %d\n",i,  whitePawnsInfo[i]);
-//        printf("black pawn %d: %d\n",i,  blackPawnsInfo[i]);
+//        printf("%4d", blackPawnsInfo[i]);
 //    }
+//    puts("");
+
+//    puts ("White pawns");
+//    for (i=0; i<8; ++i)
+//    {
+//        printf("%4d", whitePawnsInfo[i]);
+//    }
+//    puts("");
 
 
     /* After counting the material we update the score */
@@ -208,9 +215,12 @@ Eval ()
             case ROOK:
                 score += pst_rook[i];
                 score += rk_dist[i][posBlackKing];
-                score += mob_rook[RookMobility(i)];
-                if (OpenColRook(i))
+                /* Is it on an open col? */
+                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
                     score += ROOK_OPEN_COL;
+                score += mob_rook[RookMobility(i)];
+//                if (OpenColRook(i))
+//                    score += ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score += pst_queen[i];
@@ -251,8 +261,11 @@ Eval ()
                 score -= pst_rook[flip[i]];
                 score -= rk_dist[i][posWhiteKing];
                 score -= mob_rook[RookMobility(i)];
-                if (OpenColRook(i))
+                /* Is it on an open col? */
+                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
                     score -= ROOK_OPEN_COL;
+//                if (OpenColRook(i))
+//                    score -= ROOK_OPEN_COL;
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
