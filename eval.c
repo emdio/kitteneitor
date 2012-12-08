@@ -312,10 +312,10 @@ inline int endGame()
     return 0;
 }
 
-/* Returns 0 if it is on an open col */
-inline int isOnAnOpenCol(int i)
+/* Returns 0 if it sq is on an open col */
+inline int isOnAnOpenCol(int sq)
 {
-    if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
+    if (whitePawnsInfo[Col(sq)] == 0 && blackPawnsInfo[Col(sq)] == 0)
         return 1;
     return 0;
 }
