@@ -16,6 +16,7 @@
 /* Bonus and malus */
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
+#define PASSED_PAWN_BONUS   630
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -61,7 +62,16 @@ int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 int
 Eval ()
 {
+    /* A traditional counter */
+    int i;
+
     /* Set some values to 0 */
+    /* Pawn's info */
+    for (i=0; i<8; ++i)
+    {
+        whitePawnsInfo[i] = 0;
+        blackPawnsInfo[i] = 0;
+    }
 
 
 
@@ -83,8 +93,6 @@ Eval ()
 
     count_evaluations++;
 
-    /* A counter for the board squares */
-    int i;
 
     /* The score of the position */
     int score = 0;
@@ -149,19 +157,19 @@ Eval ()
         }
     }
 
-//    puts ("\nBlack pawns");
-//    for (i=0; i<8; ++i)
-//    {
-//        printf("%4d", blackPawnsInfo[i]);
-//    }
-//    puts("");
+    puts ("\nBlack pawns");
+    for (i=0; i<8; ++i)
+    {
+        printf("%4d", blackPawnsInfo[i]);
+    }
+    puts("");
 
-//    puts ("White pawns");
-//    for (i=0; i<8; ++i)
-//    {
-//        printf("%4d", whitePawnsInfo[i]);
-//    }
-//    puts("");
+    puts ("White pawns");
+    for (i=0; i<8; ++i)
+    {
+        printf("%4d", whitePawnsInfo[i]);
+    }
+    puts("");
 
 
     /* After counting the material we update the score */
@@ -198,6 +206,8 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
+                if (isPassedPawn(i, WHITE))
+                    score += PASSED_PAWN_BONUS;
                 if (endGame())
                     score += pst_pawn_endgame[i];
                 else
@@ -242,6 +252,8 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
+                if (isPassedPawn(i, BLACK))
+                    score -= PASSED_PAWN_BONUS;
                 if (endGame())
                     score -= pst_pawn_endgame[flip[i]];
                 else
@@ -300,6 +312,62 @@ Eval ()
             return (score + 10);
         return (-score - 10);
     }
+}
+
+/* Returns 1 if the pawn of color color in square sq is passed */
+int isPassedPawn(sq, color)
+{
+    if (color == WHITE)
+    {
+        /* Special case, pawn in A row */
+        if (Col(sq) == 0)
+        {
+            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq+1)]) )
+                return 1;
+        }
+        /* Special case, pawn in H row */
+        else if (Col(sq) == 7)
+        {
+            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq-1)]) )
+                return 1;
+        }
+        else
+        {
+            if ( (whitePawnsInfo[Col(sq)] >= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)-1]) &&
+                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)+1]) )
+                return 1;
+        }
+//        return 0;
+    }
+    else if (color == BLACK)
+    {
+        /* Special case, pawn in A row */
+        if (Col(sq) == 0)
+        {
+            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq+1)] <= blackPawnsInfo[Col(sq)]) )
+                return 1;
+        }
+        /* Special case, pawn in H row */
+        else if (Col(sq) == 7)
+        {
+            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq-1)] <= blackPawnsInfo[Col(sq)]) )
+                return 1;
+        }
+        else
+        {
+            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq-1)] <= blackPawnsInfo[Col(sq)]) &&
+                 (whitePawnsInfo[Col(sq+1)] <= blackPawnsInfo[Col(sq)]))
+                return 1;
+        }
+//        return 0;
+    }
+    return 0;
 }
 
 /* Are we in the endgame? */
