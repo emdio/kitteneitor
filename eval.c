@@ -16,7 +16,7 @@
 /* Bonus and malus */
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
-#define PASSED_PAWN_BONUS   630
+#define PASSED_PAWN_BONUS   30
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -157,19 +157,19 @@ Eval ()
         }
     }
 
-    puts ("\nBlack pawns");
-    for (i=0; i<8; ++i)
-    {
-        printf("%4d", blackPawnsInfo[i]);
-    }
-    puts("");
+//    printf("\nBlack pawns: ");
+//    for (i=0; i<8; ++i)
+//    {
+//        printf("%4d", blackPawnsInfo[i]);
+//    }
+//    puts("");
 
-    puts ("White pawns");
-    for (i=0; i<8; ++i)
-    {
-        printf("%4d", whitePawnsInfo[i]);
-    }
-    puts("");
+//    printf ("White pawns: ");
+//    for (i=0; i<8; ++i)
+//    {
+//        printf("%4d", whitePawnsInfo[i]);
+//    }
+//    puts("");
 
 
     /* After counting the material we update the score */
@@ -228,7 +228,6 @@ Eval ()
                 score += pst_rook[i];
                 score += rk_dist[i][posBlackKing];
                 /* Is it on an open col? */
-//                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
                 if (isOnAnOpenCol(i))
                     score += ROOK_OPEN_COL;
                 score += mob_rook[RookMobility(i)];
@@ -276,7 +275,6 @@ Eval ()
                 score -= mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
-//                if (whitePawnsInfo[Col(i)] == 0 && blackPawnsInfo[Col(i)] == 0)
                     score -= ROOK_OPEN_COL;
                 break;
             case QUEEN:
@@ -322,22 +320,22 @@ int isPassedPawn(sq, color)
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
         {
-            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq+1)]) )
+            if ( (1<<Row(sq) <= blackPawnsInfo[Col(sq)]) &&
+                 (1<<Row(sq) <= blackPawnsInfo[Col(sq+1)]) )
                 return 1;
         }
         /* Special case, pawn in H row */
         else if (Col(sq) == 7)
         {
-            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq-1)]) )
+            if ( (1<<Row(sq) <= blackPawnsInfo[Col(sq)]) &&
+                 (1<<Row(sq) <= blackPawnsInfo[Col(sq-1)]) )
                 return 1;
         }
         else
         {
-            if ( (whitePawnsInfo[Col(sq)] >= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)-1]) &&
-                 (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)+1]) )
+            if ( (1<<Row(sq) >= blackPawnsInfo[Col(sq)]) &&
+                 (1<<Row(sq) <= blackPawnsInfo[Col(sq)-1]) &&
+                 (1<<Row(sq) <= blackPawnsInfo[Col(sq)+1]) )
                 return 1;
         }
 //        return 0;
@@ -347,22 +345,22 @@ int isPassedPawn(sq, color)
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
         {
-            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq+1)] <= blackPawnsInfo[Col(sq)]) )
+            if ( (whitePawnsInfo[Col(sq)] <= 1<<Row(sq)) &&
+                 (whitePawnsInfo[Col(sq+1)] <= 1<<Row(sq)) )
                 return 1;
         }
         /* Special case, pawn in H row */
         else if (Col(sq) == 7)
         {
-            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq-1)] <= blackPawnsInfo[Col(sq)]) )
+            if ( (whitePawnsInfo[Col(sq)] <= 1<<Row(sq)) &&
+                 (whitePawnsInfo[Col(sq-1)] <= 1<<Row(sq)) )
                 return 1;
         }
         else
         {
-            if ( (whitePawnsInfo[Col(sq)] <= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq-1)] <= blackPawnsInfo[Col(sq)]) &&
-                 (whitePawnsInfo[Col(sq+1)] <= blackPawnsInfo[Col(sq)]))
+            if ( (whitePawnsInfo[Col(sq)] <= 1<<Row(sq)) &&
+                 (whitePawnsInfo[Col(sq-1)] <= 1<<Row(sq)) &&
+                 (whitePawnsInfo[Col(sq+1)] <= 1<<Row(sq)))
                 return 1;
         }
 //        return 0;
