@@ -16,7 +16,7 @@
 /* Bonus and malus */
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
-#define PASSED_PAWN_BONUS   30
+#define PASSED_PAWN_BONUS   35
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -157,19 +157,19 @@ Eval ()
         }
     }
 
-//    printf("\nBlack pawns: ");
-//    for (i=0; i<8; ++i)
-//    {
-//        printf("%4d", blackPawnsInfo[i]);
-//    }
-//    puts("");
+    printf("\nBlack pawns: ");
+    for (i=0; i<8; ++i)
+    {
+        printf("%4d", blackPawnsInfo[i]);
+    }
+    puts("");
 
-//    printf ("White pawns: ");
-//    for (i=0; i<8; ++i)
-//    {
-//        printf("%4d", whitePawnsInfo[i]);
-//    }
-//    puts("");
+    printf ("White pawns: ");
+    for (i=0; i<8; ++i)
+    {
+        printf("%4d", whitePawnsInfo[i]);
+    }
+    puts("");
 
 
     /* After counting the material we update the score */
@@ -206,7 +206,7 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
-                if (isPassedPawn(i, WHITE))
+                if (isPassedPawnWhite(i))
                     score += PASSED_PAWN_BONUS;
                 if (endGame())
                     score += pst_pawn_endgame[i];
@@ -251,7 +251,7 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
-                if (isPassedPawn(i, BLACK))
+                if (isPassedPawnBlack(i))
                     score -= PASSED_PAWN_BONUS;
                 if (endGame())
                     score -= pst_pawn_endgame[flip[i]];
@@ -313,9 +313,7 @@ Eval ()
 }
 
 /* Returns 1 if the pawn of color color in square sq is passed */
-int isPassedPawn(sq, color)
-{
-    if (color == WHITE)
+int isPassedPawnWhite(int sq)
     {
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
@@ -333,14 +331,19 @@ int isPassedPawn(sq, color)
         }
         else
         {
-            if ( (1<<Row(sq) >= blackPawnsInfo[Col(sq)]) &&
-                 (1<<Row(sq) <= blackPawnsInfo[Col(sq)-1]) &&
-                 (1<<Row(sq) <= blackPawnsInfo[Col(sq)+1]) )
+//            printf("1<<Row %d\n", 1<<Row(sq));
+//            printf("blackPawnsInfo[Col(sq)] %d\n", blackPawnsInfo[Col(sq)]);
+//            printf("blackPawnsInfo[Col(sq)-1] %d\n", blackPawnsInfo[Col(sq)-1]);
+//            printf("blackPawnsInfo[Col(sq)+1] %d\n", blackPawnsInfo[Col(sq)+1]);
+            if ( blackPawnsInfo[Col(sq)] == 0 &&
+                 (1<<Row(sq)) <= blackPawnsInfo[Col(sq)-1] &&
+                 (1<<Row(sq)) <= blackPawnsInfo[Col(sq)+1] )
                 return 1;
         }
-//        return 0;
+        return 0;
     }
-    else if (color == BLACK)
+
+int isPassedPawnBlack(int sq)
     {
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
@@ -358,15 +361,14 @@ int isPassedPawn(sq, color)
         }
         else
         {
-            if ( (whitePawnsInfo[Col(sq)] <= 1<<Row(sq)) &&
+            if ( whitePawnsInfo[Col(sq)] == 0 &&
                  (whitePawnsInfo[Col(sq-1)] <= 1<<Row(sq)) &&
-                 (whitePawnsInfo[Col(sq+1)] <= 1<<Row(sq)))
+                 (whitePawnsInfo[Col(sq+1)] <= 1<<Row(sq)) )
                 return 1;
         }
-//        return 0;
+        return 0;
     }
-    return 0;
-}
+
 
 /* Are we in the endgame? */
 inline int endGame()
