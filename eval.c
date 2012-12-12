@@ -157,19 +157,19 @@ Eval ()
         }
     }
 
-    printf("\nBlack pawns: ");
-    for (i=0; i<8; ++i)
-    {
-        printf("%4d", blackPawnsInfo[i]);
-    }
-    puts("");
+//    printf("\nBlack pawns: ");
+//    for (i=0; i<8; ++i)
+//    {
+//        printf("%4d", blackPawnsInfo[i]);
+//    }
+//    puts("");
 
-    printf ("White pawns: ");
-    for (i=0; i<8; ++i)
-    {
-        printf("%4d", whitePawnsInfo[i]);
-    }
-    puts("");
+//    printf ("White pawns: ");
+//    for (i=0; i<8; ++i)
+//    {
+//        printf("%4d", whitePawnsInfo[i]);
+//    }
+//    puts("");
 
 
     /* After counting the material we update the score */
