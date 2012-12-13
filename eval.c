@@ -376,21 +376,22 @@ int whiteKingSafety(int sq)
     /* Semiopen cols by the oponent */
     if (blackPawnsInfo[Col(sq)] == 0) safety -= 5;
 
-    /* Pawns shield */
+    /* King on A col */
     if (Col(sq) == 0)
     {
         /* Open cols close to the king */
-        if (isOnAnOpenCol(sq-8)) safety -= 20;
-        if (isOnAnOpenCol(sq-9)) safety -= 15;
+        if (isOnAnOpenCol(sq)) safety -= 20;
+        if (isOnAnOpenCol(sq+1)) safety -= 15;
         /* Pawns shield */
         if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
         if (whitePawnsInfo[Col(sq+1) == 0]) safety -= 10;
     }
+    /* King on H col */
     else if (Col(sq) == 7)
     {
         /* Open cols close to the king */
-        if (isOnAnOpenCol(sq-8)) safety -= 20;
-        if (isOnAnOpenCol(sq-7)) safety -= 15;
+        if (isOnAnOpenCol(sq)) safety -= 20;
+        if (isOnAnOpenCol(sq-1)) safety -= 15;
         /* Pawns shield */
         if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
         if (whitePawnsInfo[Col(sq-1) == 0]) safety -= 10;
@@ -398,9 +399,9 @@ int whiteKingSafety(int sq)
     else
     {
         /* Open cols close to the king */
-        if (isOnAnOpenCol(sq-8)) safety -= 20;
-        if (isOnAnOpenCol(sq-7)) safety -= 15;
-        if (isOnAnOpenCol(sq-9)) safety -= 15;
+        if (isOnAnOpenCol(sq)) safety -= 20;
+        if (isOnAnOpenCol(sq-1)) safety -= 15;
+        if (isOnAnOpenCol(sq+1)) safety -= 15;
         /* Pawns shield */
         if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
         if (whitePawnsInfo[Col(sq-1) == 0]) safety -= 10;
@@ -415,16 +416,41 @@ int blackKingSafety(int sq)
 {
     int safety = 0;
 
-    /* Open cols close to the king */
-    if (isOnAnOpenCol(sq+8)) safety -= 20;
-    if (isOnAnOpenCol(sq+7)) safety -= 10;
-    if (isOnAnOpenCol(sq+9)) safety -= 10;
-
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[Col(sq)] == 0) safety -= 5;
 
-    /* Pawns shield */
-    /* TODO */
+    /* King on A col */
+    if (Col(sq) == 0)
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(sq)) safety -= 20;
+        if (isOnAnOpenCol(sq+1)) safety -= 15;
+        /* Pawns shield */
+        if (blackPawnsInfo[Col(sq) == 0]) safety -= 15;
+        if (blackPawnsInfo[Col(sq+1) == 0]) safety -= 10;
+    }
+    /* King on H col */
+    else if (Col(sq) == 7)
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(sq)) safety -= 20;
+        if (isOnAnOpenCol(sq-1)) safety -= 15;
+        /* Pawns shield */
+        if (blackPawnsInfo[Col(sq) == 0]) safety -= 15;
+        if (blackPawnsInfo[Col(sq-1) == 0]) safety -= 10;
+    }
+    else
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(sq)) safety -= 20;
+        if (isOnAnOpenCol(sq+1)) safety -= 15;
+        if (isOnAnOpenCol(sq-1)) safety -= 15;
+        /* Pawns shield */
+        if (blackPawnsInfo[Col(sq) == 0]) safety -= 15;
+        if (blackPawnsInfo[Col(sq-1) == 0]) safety -= 10;
+        if (blackPawnsInfo[Col(sq+1) == 0]) safety -= 10;
+
+    }
 
     return safety;
 }
