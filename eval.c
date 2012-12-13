@@ -36,9 +36,7 @@ int range_bishop[16] = {
 
 /* Kings' safety */
 int posWhiteKing = 0;
-int whiteKingSafety = 0;
 int posBlackKing = 0;
-int blackKingSafety = 0;
 
 /* To count the material */
 int whitePawns = 0;
@@ -240,6 +238,7 @@ Eval ()
                 if (endGame())
                     score += pst_king_endgame[i];
                 else
+                    score += whiteKingSafety(i);
                     score += pst_king_midgame[i];
                 break;
             }
@@ -285,6 +284,7 @@ Eval ()
                 if (endGame())
                     score -= pst_king_endgame[flip[i]];
                 else
+                    score -= blackKingSafety(i);
                     score -= pst_king_midgame[flip[i]];
                 break;
             }
@@ -318,14 +318,14 @@ int isPassedPawnWhite(int sq)
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
         {
-            if ( (1<<Row(sq) <= blackPawnsInfo[Col(sq)]) &&
+            if ( blackPawnsInfo[Col(sq)] == 0 &&
                  (1<<Row(sq) <= blackPawnsInfo[Col(sq+1)]) )
                 return 1;
         }
         /* Special case, pawn in H row */
         else if (Col(sq) == 7)
         {
-            if ( (1<<Row(sq) <= blackPawnsInfo[Col(sq)]) &&
+            if ( blackPawnsInfo[Col(sq)] == 0 &&
                  (1<<Row(sq) <= blackPawnsInfo[Col(sq-1)]) )
                 return 1;
         }
@@ -348,14 +348,14 @@ int isPassedPawnBlack(int sq)
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
         {
-            if ( (whitePawnsInfo[Col(sq)] <= 1<<Row(sq)) &&
+            if ( whitePawnsInfo[Col(sq)] == 0 &&
                  (whitePawnsInfo[Col(sq+1)] <= 1<<Row(sq)) )
                 return 1;
         }
         /* Special case, pawn in H row */
         else if (Col(sq) == 7)
         {
-            if ( (whitePawnsInfo[Col(sq)] <= 1<<Row(sq)) &&
+            if ( whitePawnsInfo[Col(sq)] == 0 &&
                  (whitePawnsInfo[Col(sq-1)] <= 1<<Row(sq)) )
                 return 1;
         }
@@ -369,6 +369,65 @@ int isPassedPawnBlack(int sq)
         return 0;
     }
 
+int whiteKingSafety(int sq)
+{
+    int safety = 0;
+
+    /* Semiopen cols by the oponent */
+    if (blackPawnsInfo[Col(sq)] == 0) safety -= 5;
+
+    /* Pawns shield */
+    if (Col(sq) == 0)
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(sq-8)) safety -= 20;
+        if (isOnAnOpenCol(sq-9)) safety -= 15;
+        /* Pawns shield */
+        if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
+        if (whitePawnsInfo[Col(sq+1) == 0]) safety -= 10;
+    }
+    else if (Col(sq) == 7)
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(sq-8)) safety -= 20;
+        if (isOnAnOpenCol(sq-7)) safety -= 15;
+        /* Pawns shield */
+        if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
+        if (whitePawnsInfo[Col(sq-1) == 0]) safety -= 10;
+    }
+    else
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(sq-8)) safety -= 20;
+        if (isOnAnOpenCol(sq-7)) safety -= 15;
+        if (isOnAnOpenCol(sq-9)) safety -= 15;
+        /* Pawns shield */
+        if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
+        if (whitePawnsInfo[Col(sq-1) == 0]) safety -= 10;
+        if (whitePawnsInfo[Col(sq+1) == 0]) safety -= 10;
+
+    }
+
+    return safety;
+}
+
+int blackKingSafety(int sq)
+{
+    int safety = 0;
+
+    /* Open cols close to the king */
+    if (isOnAnOpenCol(sq+8)) safety -= 20;
+    if (isOnAnOpenCol(sq+7)) safety -= 10;
+    if (isOnAnOpenCol(sq+9)) safety -= 10;
+
+    /* Semiopen cols by the oponent */
+    if (whitePawnsInfo[Col(sq)] == 0) safety -= 5;
+
+    /* Pawns shield */
+    /* TODO */
+
+    return safety;
+}
 
 /* Are we in the endgame? */
 inline int endGame()
@@ -408,6 +467,7 @@ int BishopMobility(int sq)
 
     return mob;
 }
+
 
 /* Range of the bishop: The squares till reach a pawn no matter its color */
 int BishopRange(int sq)
