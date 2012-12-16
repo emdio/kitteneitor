@@ -16,7 +16,7 @@
 /* Bonus and malus */
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
-#define PASSED_PAWN_BONUS   35
+#define PASSED_PAWN_BONUS   30
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -377,8 +377,26 @@ int whiteKingSafety(int sq)
 {
     int safety = 0;
 
+    int kingCol = Col(sq);
+
     /* Semiopen cols by the oponent */
     if (blackPawnsInfo[Col(sq)] == 0) safety -= 5;
+
+    /* The king long castled */
+    if (kingCol < 3)
+    {
+        if (whitePawnsInfo[0] < 64) safety -= 8;
+        if (whitePawnsInfo[1] < 64) safety -= 8;
+        if (whitePawnsInfo[2] < 64) safety -= 8;
+    }
+    /* The king short castled */
+    else if (kingCol > 4)
+    {
+        if (whitePawnsInfo[5] < 64) safety -= 8;
+        if (whitePawnsInfo[6] < 64) safety -= 8;
+        if (whitePawnsInfo[7] < 64) safety -= 8;
+    }
+
 
     /* King on A col */
     if (Col(sq) == 0)
@@ -420,8 +438,26 @@ int blackKingSafety(int sq)
 {
     int safety = 0;
 
+    int kingCol = Col(sq);
+
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[Col(sq)] == 0) safety -= 5;
+
+    /* The king long castled */
+    if (kingCol < 3)
+    {
+        if (blackPawnsInfo[0] > 2) safety -= 8;
+        if (blackPawnsInfo[1] > 2) safety -= 8;
+        if (blackPawnsInfo[2] > 2) safety -= 8;
+    }
+    /* The king short castled */
+    else if (kingCol > 4)
+    {
+        if (blackPawnsInfo[5] > 2) safety -= 8;
+        if (blackPawnsInfo[6] > 2) safety -= 8;
+        if (blackPawnsInfo[7] > 2) safety -= 8;
+    }
+
 
     /* King on A col */
     if (Col(sq) == 0)
