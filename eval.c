@@ -37,6 +37,8 @@ int range_bishop[16] = {
 /* Kings' safety */
 int posWhiteKing = 0;
 int posBlackKing = 0;
+/* To scale pawns shield for king */
+int pawnsShieldScale[3] = {-5, -15, -40};
 
 /* To count the material */
 int whitePawns = 0;
@@ -376,8 +378,10 @@ int isPassedPawnBlack(int sq)
 int whiteKingSafety(int sq)
 {
     int safety = 0;
-
     int kingCol = Col(sq);
+
+    /* To scale pawns shield */
+    int noShield = 0;
 
     /* Semiopen cols by the oponent */
     if (blackPawnsInfo[Col(sq)] == 0) safety -= 5;
@@ -385,17 +389,19 @@ int whiteKingSafety(int sq)
     /* The king long castled */
     if (kingCol < 3)
     {
-        if (whitePawnsInfo[0] < 64) safety -= 8;
-        if (whitePawnsInfo[1] < 64) safety -= 8;
-        if (whitePawnsInfo[2] < 64) safety -= 8;
+        if (blackPawnsInfo[0] > 2) noShield++;
+        if (blackPawnsInfo[1] > 2) noShield++;
+        if (blackPawnsInfo[2] > 2) noShield++;
     }
     /* The king short castled */
     else if (kingCol > 4)
     {
-        if (whitePawnsInfo[5] < 64) safety -= 8;
-        if (whitePawnsInfo[6] < 64) safety -= 8;
-        if (whitePawnsInfo[7] < 64) safety -= 8;
+        if (blackPawnsInfo[5] > 2) noShield++;
+        if (blackPawnsInfo[6] > 2) noShield++;
+        if (blackPawnsInfo[7] > 2) noShield++;
     }
+
+    safety += pawnsShieldScale[noShield];
 
 
     /* King on A col */
@@ -437,8 +443,11 @@ int whiteKingSafety(int sq)
 int blackKingSafety(int sq)
 {
     int safety = 0;
-
     int kingCol = Col(sq);
+
+    /* To scale pawns shield */
+    int noShield = 0;
+
 
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[Col(sq)] == 0) safety -= 5;
@@ -446,17 +455,19 @@ int blackKingSafety(int sq)
     /* The king long castled */
     if (kingCol < 3)
     {
-        if (blackPawnsInfo[0] > 2) safety -= 8;
-        if (blackPawnsInfo[1] > 2) safety -= 8;
-        if (blackPawnsInfo[2] > 2) safety -= 8;
+        if (blackPawnsInfo[0] > 2) noShield++;
+        if (blackPawnsInfo[1] > 2) noShield++;
+        if (blackPawnsInfo[2] > 2) noShield++;
     }
     /* The king short castled */
     else if (kingCol > 4)
     {
-        if (blackPawnsInfo[5] > 2) safety -= 8;
-        if (blackPawnsInfo[6] > 2) safety -= 8;
-        if (blackPawnsInfo[7] > 2) safety -= 8;
+        if (blackPawnsInfo[5] > 2) noShield++;
+        if (blackPawnsInfo[6] > 2) noShield++;
+        if (blackPawnsInfo[7] > 2) noShield++;
     }
+
+    safety += pawnsShieldScale[noShield];
 
 
     /* King on A col */
