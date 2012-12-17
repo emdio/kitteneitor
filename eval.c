@@ -389,16 +389,16 @@ int whiteKingSafety(int sq)
     /* The king long castled */
     if (kingCol < 3)
     {
-        if (blackPawnsInfo[0] > 2) noShield++;
-        if (blackPawnsInfo[1] > 2) noShield++;
-        if (blackPawnsInfo[2] > 2) noShield++;
+        if (whitePawnsInfo[0] < 64) noShield++;
+        if (whitePawnsInfo[1] < 64) noShield++;
+        if (whitePawnsInfo[2] < 64) noShield++;
     }
     /* The king short castled */
     else if (kingCol > 4)
     {
-        if (blackPawnsInfo[5] > 2) noShield++;
-        if (blackPawnsInfo[6] > 2) noShield++;
-        if (blackPawnsInfo[7] > 2) noShield++;
+        if (whitePawnsInfo[5] < 64) noShield++;
+        if (whitePawnsInfo[6] < 64) noShield++;
+        if (whitePawnsInfo[7] < 64) noShield++;
     }
 
     safety += pawnsShieldScale[noShield];
