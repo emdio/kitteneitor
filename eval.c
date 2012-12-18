@@ -416,6 +416,12 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[6] == 0) safety -= 15;
         if (whitePawnsInfo[7] == 0) safety -= 15;
     }
+    else
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(3)) safety -= 15;
+        if (isOnAnOpenCol(4)) safety -= 15;
+    }
 
     safety += pawnsShieldScale[noShield];
 
@@ -462,6 +468,12 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[5] == 0) safety -= 15;
         if (blackPawnsInfo[6] == 0) safety -= 15;
         if (blackPawnsInfo[7] == 0) safety -= 15;
+    }
+    else
+    {
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(3)) safety -= 15;
+        if (isOnAnOpenCol(4)) safety -= 15;
     }
 
     safety += pawnsShieldScale[noShield];
