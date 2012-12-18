@@ -38,7 +38,7 @@ int range_bishop[16] = {
 int posWhiteKing = 0;
 int posBlackKing = 0;
 /* To scale pawns shield for king */
-int pawnsShieldScale[3] = {-5, -15, -40};
+int pawnsShieldScale[4] = {0, -5, -15, -40};
 
 /* To count the material */
 int whitePawns = 0;
@@ -384,7 +384,7 @@ int whiteKingSafety(int sq)
     int noShield = 0;
 
     /* Semiopen cols by the oponent */
-    if (blackPawnsInfo[Col(sq)] == 0) safety -= 5;
+    if (blackPawnsInfo[kingCol] == 0) safety -= 5;
 
     /* The king long castled */
     if (kingCol < 3)
@@ -392,6 +392,14 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[0] < 64) noShield++;
         if (whitePawnsInfo[1] < 64) noShield++;
         if (whitePawnsInfo[2] < 64) noShield++;
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(0)) safety -= 20;
+        if (isOnAnOpenCol(1)) safety -= 15;
+        if (isOnAnOpenCol(2)) safety -= 15;
+        /* Pawns shield */
+        if (whitePawnsInfo[0] == 0) safety -= 15;
+        if (whitePawnsInfo[1] == 0) safety -= 15;
+        if (whitePawnsInfo[2] == 0) safety -= 15;
     }
     /* The king short castled */
     else if (kingCol > 4)
@@ -399,43 +407,17 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[5] < 64) noShield++;
         if (whitePawnsInfo[6] < 64) noShield++;
         if (whitePawnsInfo[7] < 64) noShield++;
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(5)) safety -= 20;
+        if (isOnAnOpenCol(6)) safety -= 15;
+        if (isOnAnOpenCol(7)) safety -= 15;
+        /* Pawns shield */
+        if (whitePawnsInfo[5] == 0) safety -= 15;
+        if (whitePawnsInfo[6] == 0) safety -= 15;
+        if (whitePawnsInfo[7] == 0) safety -= 15;
     }
 
     safety += pawnsShieldScale[noShield];
-
-
-    /* King on A col */
-    if (Col(sq) == 0)
-    {
-        /* Open cols close to the king */
-        if (isOnAnOpenCol(sq)) safety -= 20;
-        if (isOnAnOpenCol(sq+1)) safety -= 15;
-        /* Pawns shield */
-        if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
-        if (whitePawnsInfo[Col(sq+1) == 0]) safety -= 10;
-    }
-    /* King on H col */
-    else if (Col(sq) == 7)
-    {
-        /* Open cols close to the king */
-        if (isOnAnOpenCol(sq)) safety -= 20;
-        if (isOnAnOpenCol(sq-1)) safety -= 15;
-        /* Pawns shield */
-        if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
-        if (whitePawnsInfo[Col(sq-1) == 0]) safety -= 10;
-    }
-    else
-    {
-        /* Open cols close to the king */
-        if (isOnAnOpenCol(sq)) safety -= 20;
-        if (isOnAnOpenCol(sq-1)) safety -= 15;
-        if (isOnAnOpenCol(sq+1)) safety -= 15;
-        /* Pawns shield */
-        if (whitePawnsInfo[Col(sq) == 0]) safety -= 15;
-        if (whitePawnsInfo[Col(sq-1) == 0]) safety -= 10;
-        if (whitePawnsInfo[Col(sq+1) == 0]) safety -= 10;
-
-    }
 
     return safety;
 }
@@ -448,9 +430,8 @@ int blackKingSafety(int sq)
     /* To scale pawns shield */
     int noShield = 0;
 
-
     /* Semiopen cols by the oponent */
-    if (whitePawnsInfo[Col(sq)] == 0) safety -= 5;
+    if (whitePawnsInfo[kingCol] == 0) safety -= 5;
 
     /* The king long castled */
     if (kingCol < 3)
@@ -458,6 +439,14 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[0] > 2) noShield++;
         if (blackPawnsInfo[1] > 2) noShield++;
         if (blackPawnsInfo[2] > 2) noShield++;
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(0)) safety -= 20;
+        if (isOnAnOpenCol(1)) safety -= 15;
+        if (isOnAnOpenCol(2)) safety -= 15;
+        /* Pawns shield */
+        if (blackPawnsInfo[0] == 0) safety -= 15;
+        if (blackPawnsInfo[1] == 0) safety -= 15;
+        if (blackPawnsInfo[2] == 0) safety -= 15;
     }
     /* The king short castled */
     else if (kingCol > 4)
@@ -465,43 +454,17 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[5] > 2) noShield++;
         if (blackPawnsInfo[6] > 2) noShield++;
         if (blackPawnsInfo[7] > 2) noShield++;
+        /* Open cols close to the king */
+        if (isOnAnOpenCol(5)) safety -= 20;
+        if (isOnAnOpenCol(6)) safety -= 15;
+        if (isOnAnOpenCol(7)) safety -= 15;
+        /* Pawns shield */
+        if (blackPawnsInfo[5] == 0) safety -= 15;
+        if (blackPawnsInfo[6] == 0) safety -= 15;
+        if (blackPawnsInfo[7] == 0) safety -= 15;
     }
 
     safety += pawnsShieldScale[noShield];
-
-
-    /* King on A col */
-    if (Col(sq) == 0)
-    {
-        /* Open cols close to the king */
-        if (isOnAnOpenCol(sq)) safety -= 20;
-        if (isOnAnOpenCol(sq+1)) safety -= 15;
-        /* Pawns shield */
-        if (blackPawnsInfo[Col(sq) == 0]) safety -= 15;
-        if (blackPawnsInfo[Col(sq+1) == 0]) safety -= 10;
-    }
-    /* King on H col */
-    else if (Col(sq) == 7)
-    {
-        /* Open cols close to the king */
-        if (isOnAnOpenCol(sq)) safety -= 20;
-        if (isOnAnOpenCol(sq-1)) safety -= 15;
-        /* Pawns shield */
-        if (blackPawnsInfo[Col(sq) == 0]) safety -= 15;
-        if (blackPawnsInfo[Col(sq-1) == 0]) safety -= 10;
-    }
-    else
-    {
-        /* Open cols close to the king */
-        if (isOnAnOpenCol(sq)) safety -= 20;
-        if (isOnAnOpenCol(sq+1)) safety -= 15;
-        if (isOnAnOpenCol(sq-1)) safety -= 15;
-        /* Pawns shield */
-        if (blackPawnsInfo[Col(sq) == 0]) safety -= 15;
-        if (blackPawnsInfo[Col(sq-1) == 0]) safety -= 10;
-        if (blackPawnsInfo[Col(sq+1) == 0]) safety -= 10;
-
-    }
 
     return safety;
 }
