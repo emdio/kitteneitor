@@ -16,23 +16,23 @@
 /* Bonus and malus */
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
-#define PASSED_PAWN_BONUS   30
+#define ADV_TURN_TO_MOVE    20
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
     -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
 };
-
 int mob_knight[9] = {
     -10, -4, 2, 8, 14, 18, 22, 24, 25
 };
-
 int mob_bishop[16] = {
     -5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
 };
 int range_bishop[16] = {
     -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
 };
+/* For scaling passed pawns depending on the row */
+int passed_pawn[6] = {10, 12, 15, 25, 35, 50};
 
 /* Kings' safety */
 int posWhiteKing = 0;
@@ -207,7 +207,7 @@ Eval ()
             {
             case PAWN:
                 if (isPassedPawnWhite(i))
-                    score += PASSED_PAWN_BONUS;
+                    score += passed_pawn[Row(i)];
                 if (endGame())
                     score += pst_pawn_endgame[i];
                 else
@@ -255,7 +255,7 @@ Eval ()
             {
             case PAWN:
                 if (isPassedPawnBlack(i))
-                    score -= PASSED_PAWN_BONUS;
+                    score -= passed_pawn[Row(i)];
                 if (endGame())
                     score -= pst_pawn_endgame[flip[i]];
                 else
@@ -307,14 +307,14 @@ Eval ()
     if (side == computer_side)
     {
         if (side == WHITE)
-            return (score + ff + 10);
-        return (-score - ff - 10);
+            return (score + ff + ADV_TURN_TO_MOVE);
+        return (-score - ff - ADV_TURN_TO_MOVE);
     }
     else
     {
         if (side == WHITE)
-            return (score + 10);
-        return (-score - 10);
+            return (score + ADV_TURN_TO_MOVE);
+        return (-score - ADV_TURN_TO_MOVE);
     }
 }
 
@@ -393,9 +393,9 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[1] < 64) noShield++;
         if (whitePawnsInfo[2] < 64) noShield++;
         /* Open cols close to the king */
-        if (isOnAnOpenCol(0)) safety -= 20;
-        if (isOnAnOpenCol(1)) safety -= 15;
-        if (isOnAnOpenCol(2)) safety -= 15;
+        if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 15;
+        if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
+        if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 15;
         /* Pawns shield */
         if (whitePawnsInfo[0] == 0) safety -= 15;
         if (whitePawnsInfo[1] == 0) safety -= 15;
@@ -408,9 +408,9 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[6] < 64) noShield++;
         if (whitePawnsInfo[7] < 64) noShield++;
         /* Open cols close to the king */
-        if (isOnAnOpenCol(5)) safety -= 20;
-        if (isOnAnOpenCol(6)) safety -= 15;
-        if (isOnAnOpenCol(7)) safety -= 15;
+        if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 15;
+        if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
+        if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 15;
         /* Pawns shield */
         if (whitePawnsInfo[5] == 0) safety -= 15;
         if (whitePawnsInfo[6] == 0) safety -= 15;
@@ -419,8 +419,8 @@ int whiteKingSafety(int sq)
     else
     {
         /* Open cols close to the king */
-        if (isOnAnOpenCol(3)) safety -= 15;
-        if (isOnAnOpenCol(4)) safety -= 15;
+        if (whitePawnsInfo[3] == 0 && blackPawnsInfo[3] == 0) safety -= 25;
+        if (whitePawnsInfo[4] == 0 && blackPawnsInfo[4] == 0) safety -= 25;
     }
 
     safety += pawnsShieldScale[noShield];
@@ -446,9 +446,9 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[1] > 2) noShield++;
         if (blackPawnsInfo[2] > 2) noShield++;
         /* Open cols close to the king */
-        if (isOnAnOpenCol(0)) safety -= 20;
-        if (isOnAnOpenCol(1)) safety -= 15;
-        if (isOnAnOpenCol(2)) safety -= 15;
+        if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 15;
+        if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
+        if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 15;
         /* Pawns shield */
         if (blackPawnsInfo[0] == 0) safety -= 15;
         if (blackPawnsInfo[1] == 0) safety -= 15;
@@ -461,9 +461,9 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[6] > 2) noShield++;
         if (blackPawnsInfo[7] > 2) noShield++;
         /* Open cols close to the king */
-        if (isOnAnOpenCol(5)) safety -= 20;
-        if (isOnAnOpenCol(6)) safety -= 15;
-        if (isOnAnOpenCol(7)) safety -= 15;
+        if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 15;
+        if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
+        if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 15;
         /* Pawns shield */
         if (blackPawnsInfo[5] == 0) safety -= 15;
         if (blackPawnsInfo[6] == 0) safety -= 15;
@@ -472,8 +472,8 @@ int blackKingSafety(int sq)
     else
     {
         /* Open cols close to the king */
-        if (isOnAnOpenCol(3)) safety -= 15;
-        if (isOnAnOpenCol(4)) safety -= 15;
+        if (whitePawnsInfo[3] == 0 && blackPawnsInfo[3] == 0) safety -= 25;
+        if (whitePawnsInfo[4] == 0 && blackPawnsInfo[4] == 0) safety -= 25;
     }
 
     safety += pawnsShieldScale[noShield];
