@@ -17,6 +17,7 @@
 #define	ROOK_OPEN_COL		25
 #define PAIR_BISHOPS        15
 #define ADV_TURN_TO_MOVE    20
+#define DOUBLED_PAWN_MALUS -12
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -206,6 +207,8 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
+                if (!isPowerOfTwo(whitePawnsInfo[Col(i)]))
+                    score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
                     score += passed_pawn[Row(i)];
                 if (endGame())
@@ -254,6 +257,8 @@ Eval ()
             switch (piece[i])
             {
             case PAWN:
+                if (!isPowerOfTwo(blackPawnsInfo[Col(i)]))
+                    score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
                     score -= passed_pawn[Row(i)];
                 if (endGame())
@@ -594,6 +599,14 @@ int NoMaterial()
                     if (whiteKnights <= 1 && blackKnights <= 1)
                         return 1;
     return 0;
+}
+
+/* Function to check if x is power of 2. It's used to find out
+   doubled pawns */
+inline int isPowerOfTwo (int x)
+{
+  /* First x in the below expression is for the case when x is 0 */
+  return x && (!(x&(x-1)));
 }
 
 
