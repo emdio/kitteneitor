@@ -218,6 +218,8 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
 //    if (reps() > 2)
 //        printf ("reps: %d \n", reps());
 
+
+
     /* 3 vecez la misma posicion */
     if (reps() >= 2)
         return 0;
@@ -249,7 +251,7 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
-    stand_pat = Eval ();
+    stand_pat = Eval (alpha, beta);
     if (stand_pat >= beta)
         return beta;
     if (alpha < stand_pat)

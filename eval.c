@@ -61,7 +61,7 @@ int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 /* The evaluation function */
 int
-Eval ()
+Eval (alpha, beta)
 {
     /* A traditional counter */
     int i;
@@ -185,6 +185,16 @@ Eval ()
             blackBishops * value_piece[BISHOP] -
             blackRooks * value_piece[ROOK] -
             blackQueens * value_piece[QUEEN];
+
+    /* Ttrying the lazy eval */
+    int lazy = score;
+    if (side == BLACK) lazy = -lazy;
+
+    if ( ( lazy + 500 < alpha ) ||
+         ( lazy - 500 > beta  ) )
+    {
+        return lazy;
+    }
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;

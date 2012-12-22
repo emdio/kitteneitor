@@ -20,7 +20,7 @@ void MoveOrder(int from, int movecount, MOVE *moveBuf);
 //__forceinline int col(int);
 
 /* Eval */
-int Eval();
+int Eval(int alpha, int beta);
 int endGame();
 
 /* Main */
