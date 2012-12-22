@@ -22,6 +22,8 @@ void MoveOrder(int from, int movecount, MOVE *moveBuf);
 /* Eval */
 int Eval(int alpha, int beta);
 int endGame();
+inline int isDoubledPawnWhite(int sq);
+inline int isDoubledPawnBlack(int sq);
 
 /* Main */
 void startgame();

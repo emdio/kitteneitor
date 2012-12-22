@@ -14,10 +14,11 @@
  */
 
 /* Bonus and malus */
-#define	ROOK_OPEN_COL		25
-#define PAIR_BISHOPS        15
-#define ADV_TURN_TO_MOVE    20
-#define DOUBLED_PAWN_MALUS -12
+#define	ROOK_OPEN_COL           25
+#define PAIR_BISHOPS            15
+#define ADV_TURN_TO_MOVE        20
+#define DOUBLED_PAWN_MALUS      -12
+#define DOUBLED_PAWN_CASTLE     -25
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -186,7 +187,7 @@ Eval (alpha, beta)
             blackRooks * value_piece[ROOK] -
             blackQueens * value_piece[QUEEN];
 
-    /* Ttrying the lazy eval */
+    /* Trying the lazy eval */
     int lazy = score;
     if (side == BLACK) lazy = -lazy;
 
@@ -217,7 +218,7 @@ Eval (alpha, beta)
             switch (piece[i])
             {
             case PAWN:
-                if (!isPowerOfTwo(whitePawnsInfo[Col(i)]))
+                if (isDoubledPawnWhite(i))
                     score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
                     score += passed_pawn[Row(i)];
@@ -267,7 +268,7 @@ Eval (alpha, beta)
             switch (piece[i])
             {
             case PAWN:
-                if (!isPowerOfTwo(blackPawnsInfo[Col(i)]))
+                if (isDoubledPawnBlack(i))
                     score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
                     score -= passed_pawn[Row(i)];
@@ -398,15 +399,20 @@ int whiteKingSafety(int sq)
     /* To scale pawns shield */
     int noShield = 0;
 
-    /* Semiopen cols by the oponent */
-    if (blackPawnsInfo[kingCol] == 0) safety -= 5;
-
     /* The king long castled */
     if (kingCol < 3)
     {
         if (whitePawnsInfo[0] < 64) noShield++;
         if (whitePawnsInfo[1] < 64) noShield++;
         if (whitePawnsInfo[2] < 64) noShield++;
+        /* Doubled pawns on castle */
+        if (isDoubledPawnWhite(0)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnWhite(1)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnWhite(2)) safety -= DOUBLED_PAWN_CASTLE;
+        /* Semiopen cols by the oponent */
+        if (blackPawnsInfo[0] == 0) safety -= 25;
+        if (blackPawnsInfo[1] == 0) safety -= 25;
+        if (blackPawnsInfo[2] == 0) safety -= 25;
         /* Open cols close to the king */
         if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 15;
         if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
@@ -422,6 +428,14 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[5] < 64) noShield++;
         if (whitePawnsInfo[6] < 64) noShield++;
         if (whitePawnsInfo[7] < 64) noShield++;
+        /* Doubled pawns on castle */
+        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE;
+        /* Semiopen cols by the oponent */
+        if (blackPawnsInfo[5] == 0) safety -= 25;
+        if (blackPawnsInfo[6] == 0) safety -= 25;
+        if (blackPawnsInfo[7] == 0) safety -= 25;
         /* Open cols close to the king */
         if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 15;
         if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
@@ -451,15 +465,20 @@ int blackKingSafety(int sq)
     /* To scale pawns shield */
     int noShield = 0;
 
-    /* Semiopen cols by the oponent */
-    if (whitePawnsInfo[kingCol] == 0) safety -= 5;
-
     /* The king long castled */
     if (kingCol < 3)
     {
         if (blackPawnsInfo[0] > 2) noShield++;
         if (blackPawnsInfo[1] > 2) noShield++;
         if (blackPawnsInfo[2] > 2) noShield++;
+        /* Doubled pawns on castle */
+        if (isDoubledPawnBlack(0)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(1)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(2)) safety -= DOUBLED_PAWN_CASTLE;
+        /* Semiopen cols by the oponent */
+        if (whitePawnsInfo[0] == 0) safety -= 25;
+        if (whitePawnsInfo[1] == 0) safety -= 25;
+        if (whitePawnsInfo[2] == 0) safety -= 25;
         /* Open cols close to the king */
         if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 15;
         if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
@@ -475,6 +494,14 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[5] > 2) noShield++;
         if (blackPawnsInfo[6] > 2) noShield++;
         if (blackPawnsInfo[7] > 2) noShield++;
+        /* Doubled pawns on castle */
+        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE;
+        /* Semiopen cols by the oponent */
+        if (whitePawnsInfo[5] == 0) safety -= 25;
+        if (whitePawnsInfo[6] == 0) safety -= 25;
+        if (whitePawnsInfo[7] == 0) safety -= 25;
         /* Open cols close to the king */
         if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 15;
         if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
@@ -613,10 +640,19 @@ int NoMaterial()
 
 /* Function to check if x is power of 2. It's used to find out
    doubled pawns */
-inline int isPowerOfTwo (int x)
+inline int isDoubledPawnWhite(int col)
 {
+  int tmp = whitePawnsInfo[col];
+
   /* First x in the below expression is for the case when x is 0 */
-  return x && (!(x&(x-1)));
+  return !(tmp && (!(tmp & (tmp - 1))));
+}
+inline int isDoubledPawnBlack(int col)
+{
+  int tmp = blackPawnsInfo[col];
+
+  /* First x in the below expression is for the case when x is 0 */
+  return !(tmp && (!(tmp & (tmp - 1))));
 }
 
 
