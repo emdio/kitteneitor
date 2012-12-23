@@ -14,11 +14,12 @@
  */
 
 /* Bonus and malus */
-#define	ROOK_OPEN_COL           25
-#define PAIR_BISHOPS            15
-#define ADV_TURN_TO_MOVE        20
-#define DOUBLED_PAWN_MALUS      -12
-#define DOUBLED_PAWN_CASTLE     -25
+#define	ROOK_OPEN_COL               25
+#define PAIR_BISHOPS                15
+#define ADV_TURN_TO_MOVE            20
+#define DOUBLED_PAWN_MALUS          12
+#define DOUBLED_PAWN_CASTLE_MALUS   35
+#define MISSING_PAWN_CASTLE_MALUS   40
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -219,7 +220,7 @@ Eval (alpha, beta)
             {
             case PAWN:
                 if (isDoubledPawnWhite(i))
-                    score += DOUBLED_PAWN_MALUS;
+                    score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
                     score += passed_pawn[Row(i)];
                 if (endGame())
@@ -269,7 +270,7 @@ Eval (alpha, beta)
             {
             case PAWN:
                 if (isDoubledPawnBlack(i))
-                    score -= DOUBLED_PAWN_MALUS;
+                    score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
                     score -= passed_pawn[Row(i)];
                 if (endGame())
@@ -406,9 +407,9 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[1] < 64) noShield++;
         if (whitePawnsInfo[2] < 64) noShield++;
         /* Doubled pawns on castle */
-        if (isDoubledPawnWhite(0)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnWhite(1)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnWhite(2)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnWhite(0)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(1)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(2)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[0] == 0) safety -= 25;
         if (blackPawnsInfo[1] == 0) safety -= 25;
@@ -418,9 +419,9 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
         if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 15;
         /* Pawns shield */
-        if (whitePawnsInfo[0] == 0) safety -= 15;
-        if (whitePawnsInfo[1] == 0) safety -= 15;
-        if (whitePawnsInfo[2] == 0) safety -= 15;
+        if (whitePawnsInfo[0] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[1] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[2] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     /* The king short castled */
     else if (kingCol > 4)
@@ -429,9 +430,9 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[6] < 64) noShield++;
         if (whitePawnsInfo[7] < 64) noShield++;
         /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[5] == 0) safety -= 25;
         if (blackPawnsInfo[6] == 0) safety -= 25;
@@ -441,9 +442,9 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
         if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 15;
         /* Pawns shield */
-        if (whitePawnsInfo[5] == 0) safety -= 15;
-        if (whitePawnsInfo[6] == 0) safety -= 15;
-        if (whitePawnsInfo[7] == 0) safety -= 15;
+        if (whitePawnsInfo[5] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[6] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[7] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     else
     {
@@ -472,9 +473,9 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[1] > 2) noShield++;
         if (blackPawnsInfo[2] > 2) noShield++;
         /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(0)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnBlack(1)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnBlack(2)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(0)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(1)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(2)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
         /* Semiopen cols by the oponent */
         if (whitePawnsInfo[0] == 0) safety -= 25;
         if (whitePawnsInfo[1] == 0) safety -= 25;
@@ -484,9 +485,9 @@ int blackKingSafety(int sq)
         if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
         if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 15;
         /* Pawns shield */
-        if (blackPawnsInfo[0] == 0) safety -= 15;
-        if (blackPawnsInfo[1] == 0) safety -= 15;
-        if (blackPawnsInfo[2] == 0) safety -= 15;
+        if (blackPawnsInfo[0] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[1] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[2] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     /* The king short castled */
     else if (kingCol > 4)
@@ -495,9 +496,9 @@ int blackKingSafety(int sq)
         if (blackPawnsInfo[6] > 2) noShield++;
         if (blackPawnsInfo[7] > 2) noShield++;
         /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE;
-        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE;
+        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
         /* Semiopen cols by the oponent */
         if (whitePawnsInfo[5] == 0) safety -= 25;
         if (whitePawnsInfo[6] == 0) safety -= 25;
@@ -507,9 +508,9 @@ int blackKingSafety(int sq)
         if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
         if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 15;
         /* Pawns shield */
-        if (blackPawnsInfo[5] == 0) safety -= 15;
-        if (blackPawnsInfo[6] == 0) safety -= 15;
-        if (blackPawnsInfo[7] == 0) safety -= 15;
+        if (blackPawnsInfo[5] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[6] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[7] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     else
     {
