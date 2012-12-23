@@ -438,16 +438,16 @@ int whiteKingSafety(int sq)
         if (whitePawnsInfo[6] < 64) noShield++;
         if (whitePawnsInfo[7] < 64) noShield++;
         /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(5)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(6)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(7)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(5)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(6)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(7)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[5] == 0) safety -= 25;
         if (blackPawnsInfo[6] == 0) safety -= 25;
         if (blackPawnsInfo[7] == 0) safety -= 25;
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colBlackKing < 3)
+        if (colBlackKing < 4)
         {
             if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 35;
             if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 35;
@@ -521,7 +521,7 @@ int blackKingSafety(int sq)
         if (whitePawnsInfo[7] == 0) safety -= 25;
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colWhiteKing < 3)
+        if (colWhiteKing < 4)
         {
             if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 35;
             if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 35;
