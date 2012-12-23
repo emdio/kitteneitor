@@ -39,7 +39,9 @@ int passed_pawn[6] = {10, 12, 15, 25, 35, 50};
 
 /* Kings' safety */
 int posWhiteKing = 0;
+int colWhiteKing = 0;
 int posBlackKing = 0;
+int colBlackKing = 0;
 /* To scale pawns shield for king */
 int pawnsShieldScale[4] = {0, -5, -15, -40};
 
@@ -130,6 +132,7 @@ Eval (alpha, beta)
                 break;
             case KING:
                 posWhiteKing = i;
+                colWhiteKing = Col(i);
                 break;
             }
         }
@@ -155,6 +158,7 @@ Eval (alpha, beta)
                 break;
             case KING:
                 posBlackKing = i;
+                colBlackKing = Col(i);
                 break;
             }
         }
@@ -395,13 +399,13 @@ int isPassedPawnBlack(int sq)
 int whiteKingSafety(int sq)
 {
     int safety = 0;
-    int kingCol = Col(sq);
+//    int kingCol = Col(sq);
 
     /* To scale pawns shield */
     int noShield = 0;
 
     /* The king long castled */
-    if (kingCol < 3)
+    if (colWhiteKing < 3)
     {
         if (whitePawnsInfo[0] < 64) noShield++;
         if (whitePawnsInfo[1] < 64) noShield++;
@@ -414,17 +418,21 @@ int whiteKingSafety(int sq)
         if (blackPawnsInfo[0] == 0) safety -= 25;
         if (blackPawnsInfo[1] == 0) safety -= 25;
         if (blackPawnsInfo[2] == 0) safety -= 25;
-        /* Open cols close to the king */
-        if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 15;
-        if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
-        if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 15;
+        /* Open cols close to the king are more important in case
+            of opposite castles*/
+        if (colBlackKing > 4)
+        {
+            if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 35;
+            if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 35;
+            if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 35;
+        }
         /* Pawns shield */
         if (whitePawnsInfo[0] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[1] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[2] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     /* The king short castled */
-    else if (kingCol > 4)
+    else if (colWhiteKing > 4)
     {
         if (whitePawnsInfo[5] < 64) noShield++;
         if (whitePawnsInfo[6] < 64) noShield++;
@@ -437,10 +445,14 @@ int whiteKingSafety(int sq)
         if (blackPawnsInfo[5] == 0) safety -= 25;
         if (blackPawnsInfo[6] == 0) safety -= 25;
         if (blackPawnsInfo[7] == 0) safety -= 25;
-        /* Open cols close to the king */
-        if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 15;
-        if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
-        if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 15;
+        /* Open cols close to the king are more important in case
+            of opposite castles*/
+        if (colBlackKing < 3)
+        {
+            if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 35;
+            if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 35;
+            if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 35;
+        }
         /* Pawns shield */
         if (whitePawnsInfo[5] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[6] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
@@ -461,13 +473,13 @@ int whiteKingSafety(int sq)
 int blackKingSafety(int sq)
 {
     int safety = 0;
-    int kingCol = Col(sq);
+//    int kingCol = Col(sq);
 
     /* To scale pawns shield */
     int noShield = 0;
 
     /* The king long castled */
-    if (kingCol < 3)
+    if (colBlackKing < 3)
     {
         if (blackPawnsInfo[0] > 2) noShield++;
         if (blackPawnsInfo[1] > 2) noShield++;
@@ -480,17 +492,21 @@ int blackKingSafety(int sq)
         if (whitePawnsInfo[0] == 0) safety -= 25;
         if (whitePawnsInfo[1] == 0) safety -= 25;
         if (whitePawnsInfo[2] == 0) safety -= 25;
-        /* Open cols close to the king */
-        if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 15;
-        if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 15;
-        if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 15;
+        /* Open cols close to the king are more important in case
+            of opposite castles*/
+        if (colWhiteKing > 4)
+        {
+            if (whitePawnsInfo[0] == 0 && blackPawnsInfo[0] == 0) safety -= 35;
+            if (whitePawnsInfo[1] == 0 && blackPawnsInfo[1] == 0) safety -= 35;
+            if (whitePawnsInfo[2] == 0 && blackPawnsInfo[2] == 0) safety -= 35;
+        }
         /* Pawns shield */
         if (blackPawnsInfo[0] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[1] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[2] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     /* The king short castled */
-    else if (kingCol > 4)
+    else if (colBlackKing > 4)
     {
         if (blackPawnsInfo[5] > 2) noShield++;
         if (blackPawnsInfo[6] > 2) noShield++;
@@ -503,10 +519,14 @@ int blackKingSafety(int sq)
         if (whitePawnsInfo[5] == 0) safety -= 25;
         if (whitePawnsInfo[6] == 0) safety -= 25;
         if (whitePawnsInfo[7] == 0) safety -= 25;
-        /* Open cols close to the king */
-        if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 15;
-        if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 15;
-        if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 15;
+        /* Open cols close to the king are more important in case
+            of opposite castles*/
+        if (colWhiteKing < 3)
+        {
+            if (whitePawnsInfo[5] == 0 && blackPawnsInfo[5] == 0) safety -= 35;
+            if (whitePawnsInfo[6] == 0 && blackPawnsInfo[6] == 0) safety -= 35;
+            if (whitePawnsInfo[7] == 0 && blackPawnsInfo[7] == 0) safety -= 35;
+        }
         /* Pawns shield */
         if (blackPawnsInfo[5] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[6] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
