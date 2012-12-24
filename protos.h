@@ -24,10 +24,24 @@ int Eval(int alpha, int beta);
 int endGame();
 inline int isDoubledPawnWhite(int sq);
 inline int isDoubledPawnBlack(int sq);
+int isPassedPawnWhite(int sq);
+int isPassedPawnBlack(int sq);
+int BishopMobility(int sq);
+int BishopRange(int sq);
+int RookMobility(int sq);
+int KnightMobility(int sq);
+int funFactor();
+int NoMaterial();
+int isOnAnOpenCol(int sq);
+int whiteKingSafety();
+int blackKingSafety();
 
 /* Main */
 void startgame();
 void xboard();
+void hash_rnd_init();
+void hash_key_position();
+void setDistToKing();
 
 /* Search */
 MOVE ComputerThink(int depth);
