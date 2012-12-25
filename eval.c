@@ -195,7 +195,6 @@ Eval (alpha, beta)
     /* Trying the lazy eval */
     int lazy = score;
     if (side == BLACK) lazy = -lazy;
-
     if ( ( lazy + 500 < alpha ) ||
          ( lazy - 500 > beta  ) )
     {
@@ -223,7 +222,7 @@ Eval (alpha, beta)
             switch (piece[i])
             {
             case PAWN:
-                if (isDoubledPawnWhite(i))
+                if (isDoubledPawnWhite(Col(i)))
                     score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
                     score += passed_pawn[Row(i)];
@@ -246,10 +245,10 @@ Eval (alpha, beta)
             case ROOK:
                 score += pst_rook[i];
                 score += rk_dist[i][posBlackKing];
+                score += mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score += ROOK_OPEN_COL;
-                score += mob_rook[RookMobility(i)];
                 break;
             case QUEEN:
                 score += pst_queen[i];
@@ -273,7 +272,7 @@ Eval (alpha, beta)
             switch (piece[i])
             {
             case PAWN:
-                if (isDoubledPawnBlack(i))
+                if (isDoubledPawnBlack(Col(i)))
                     score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
                     score -= passed_pawn[Row(i)];
@@ -337,6 +336,10 @@ Eval (alpha, beta)
             return (score + ADV_TURN_TO_MOVE);
         return (-score - ADV_TURN_TO_MOVE);
     }
+
+//    if (side == WHITE)
+//        return (score );
+//    return (-score );
 }
 
 /* Returns 1 if the pawn of color color in square sq is passed */
