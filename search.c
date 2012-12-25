@@ -46,6 +46,7 @@ ComputerThink (int m_depth)
         /* Search now! */
         score = Search (-MATE, MATE, i, &m);
 
+
         /* If we've searched for a certain percentage of the avaialble time it
         doesn't make sense to start a new ply, so we call it a day */
         checkup(half_time);
@@ -58,6 +59,8 @@ ComputerThink (int m_depth)
             fflush(stdout);  /* Limpiamos la salida estandar */
             break;
         }
+
+
 
 
         /* Stop timer */
@@ -137,8 +140,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     if (IsInCheck(side))
         ++depth;
 
+
+
 //    /* If the opponent is in check maybe we want to search deeper */
-//    if (IsInCheck(Opponent(side)))
+//    if (IsInCheck(!side))
 //        ++depth;
 
 
@@ -146,6 +151,9 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
     {
+
+        int ext = 0;
+
         /* Here must be called OrderMove, so we have the moves are ordered before
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
@@ -170,7 +178,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
          * order to avoid the horizon effect */
         if (depth - 1 > 0)
         {
-            value = -Search(-beta, -alpha, depth - 1, &tmpMove);
+            value = -Search(-beta, -alpha, depth + ext - 1, &tmpMove);
         }
         /* If no depth left (leaf node), we evalute the position
            and apply the alpha-beta search.

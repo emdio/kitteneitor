@@ -109,22 +109,22 @@ char fenstring[256];
 #define H8  7
 
 /* Files and ranks */
-#define FILEA 0
-#define FILEB 1
-#define FILEC 2
-#define FILED 3
-#define FILEE 4
-#define FILEF 5
-#define FILEG 6
-#define FILEH 7
-#define RANK1 0
-#define RANK2 1
-#define RANK3 2
-#define RANK4 3
-#define RANK5 4
-#define RANK6 5
-#define RANK7 6
-#define RANK8 7
+#define COLA 0
+#define COLB 1
+#define COLC 2
+#define COLD 3
+#define COLE 4
+#define COLF 5
+#define COLG 6
+#define COLH 7
+#define ROW1 0
+#define ROW2 1
+#define ROW3 2
+#define ROW4 3
+#define ROW5 4
+#define ROW6 5
+#define ROW7 6
+#define ROW8 7
 
 /* Contador para la regla de los 50 movimientos */
 extern int fifty;
