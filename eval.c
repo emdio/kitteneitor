@@ -17,9 +17,9 @@
 #define	ROOK_OPEN_COL               25
 #define PAIR_BISHOPS                15
 #define ADV_TURN_TO_MOVE            20
-#define DOUBLED_PAWN_MALUS          12
-#define DOUBLED_PAWN_CASTLE_MALUS   35
-#define MISSING_PAWN_CASTLE_MALUS   40
+#define DOUBLED_PAWN_MALUS          15
+#define DOUBLED_PAWN_CASTLE_MALUS   25
+#define MISSING_PAWN_CASTLE_MALUS   30
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {

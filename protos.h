@@ -16,6 +16,7 @@ inline int Col (int square);
 inline int Row (int square);
 inline int Opponent (int color);
 void MoveOrder(int from, int movecount, MOVE *moveBuf);
+int BadCapture(MOVE mcmov);
 
 //__forceinline int col(int);
 
