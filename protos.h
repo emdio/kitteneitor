@@ -17,6 +17,7 @@ inline int Row (int square);
 inline int Opponent (int color);
 void MoveOrder(int from, int movecount, MOVE *moveBuf);
 int BadCapture(MOVE mcmov);
+inline int IsSqProtectedByAPawn(int sq, int side);
 
 //__forceinline int col(int);
 

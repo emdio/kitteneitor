@@ -20,7 +20,7 @@
 #define DOUBLED_PAWN_MALUS          15
 #define DOUBLED_PAWN_CASTLE_MALUS   25
 #define MISSING_PAWN_CASTLE_MALUS   20
-#define HOLE_C3_C6_F3_F6            60
+#define HOLE_C3_C6_F3_F6            6000
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -406,9 +406,8 @@ int whiteKingSafety()
     if (colWhiteKing < COLD)
     {
         /* Hole in c3 */
-        if (color[D4] == BLACK && piece[D4] == PAWN)
-            if (piece[B2] != PAWN && color[B2] !=BLACK)
-                safety -= HOLE_C3_C6_F3_F6;
+        if ( IsSqProtectedByAPawn(C3, BLACK) && !IsSqProtectedByAPawn(C3, WHITE) )
+            safety -= HOLE_C3_C6_F3_F6;
 
         /* Pawns shield */
         if (whitePawnsInfo[COLA] == 64) safety += 12;
@@ -456,9 +455,8 @@ int whiteKingSafety()
     else if (colWhiteKing > COLE)
     {
         /* Hole in f3 */
-        if (color[E4] == BLACK && piece[E4] == PAWN)
-            if (piece[G2] !=PAWN && color[G2] != BLACK)
-                safety -= HOLE_C3_C6_F3_F6;
+        if ( IsSqProtectedByAPawn(F3, BLACK) && !IsSqProtectedByAPawn(F3, WHITE) )
+            safety -= HOLE_C3_C6_F3_F6;
 
         /* Pawns shield */
         if (whitePawnsInfo[COLF] == 64) safety += 12;
@@ -516,9 +514,8 @@ int blackKingSafety()
     if (colBlackKing < COLD)
     {
         /* Hole in f6 */
-        if (color[D5] == WHITE && piece[D5] == PAWN)
-            if (piece[B7] != PAWN && color[B7] != WHITE)
-                safety -= HOLE_C3_C6_F3_F6;
+        if ( IsSqProtectedByAPawn(F6, WHITE) && !IsSqProtectedByAPawn(F6, BLACK) )
+            safety -= HOLE_C3_C6_F3_F6;
 
         /* Pawns shield */
         if (blackPawnsInfo[COLA] == 2) safety += 12;
@@ -564,9 +561,8 @@ int blackKingSafety()
     else if (colBlackKing > COLE)
     {
         /* Hole in c6 */
-        if (color[E5] == WHITE && piece[E5] == PAWN)
-            if (piece[G7] != PAWN && color[G7] != WHITE)
-                safety -= HOLE_C3_C6_F3_F6;
+        if ( IsSqProtectedByAPawn(C6, WHITE) && !IsSqProtectedByAPawn(C6, BLACK) )
+            safety -= HOLE_C3_C6_F3_F6;
 
         /* Pawns shield */
         if (blackPawnsInfo[COLF] == 2) safety += 12;
