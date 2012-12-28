@@ -19,7 +19,8 @@
 #define ADV_TURN_TO_MOVE            10
 #define DOUBLED_PAWN_MALUS          15
 #define DOUBLED_PAWN_CASTLE_MALUS   25
-#define MISSING_PAWN_CASTLE_MALUS   30
+#define MISSING_PAWN_CASTLE_MALUS   20
+#define HOLE_C3_C6_F3_F6            60
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -404,6 +405,11 @@ int whiteKingSafety()
     /* The king long castled */
     if (colWhiteKing < COLD)
     {
+        /* Hole in c3 */
+        if (color[D4] == BLACK && piece[D4] == PAWN)
+            if (piece[B2] != PAWN && color[B2] !=BLACK)
+                safety -= HOLE_C3_C6_F3_F6;
+
         /* Pawns shield */
         if (whitePawnsInfo[COLA] == 64) safety += 12;
         else if (whitePawnsInfo[COLA] == 32) safety += 6;
@@ -439,6 +445,11 @@ int whiteKingSafety()
     /* The king short castled */
     else if (colWhiteKing > COLE)
     {
+        /* Hole in f3 */
+        if (color[E4] == BLACK && piece[E4] == PAWN)
+            if (piece[G2] !=PAWN && color[G2] != BLACK)
+                safety -= HOLE_C3_C6_F3_F6;
+
         /* Pawns shield */
         if (whitePawnsInfo[COLF] == 64) safety += 12;
         else if (whitePawnsInfo[COLF] == 32) safety += 6;
@@ -485,6 +496,11 @@ int blackKingSafety()
     /* The king long castled */
     if (colBlackKing < COLD)
     {
+        /* Hole in f6 */
+        if (color[D5] == WHITE && piece[D5] == PAWN)
+            if (piece[B7] != PAWN && color[B7] != WHITE)
+                safety -= HOLE_C3_C6_F3_F6;
+
         /* Pawns shield */
         if (blackPawnsInfo[COLA] == 2) safety += 12;
         else if (blackPawnsInfo[COLA] == 4) safety += 6;
@@ -519,6 +535,11 @@ int blackKingSafety()
     /* The king short castled */
     else if (colBlackKing > COLE)
     {
+        /* Hole in c6 */
+        if (color[E5] == WHITE && piece[E5] == PAWN)
+            if (piece[G7] != PAWN && color[G7] != WHITE)
+                safety -= HOLE_C3_C6_F3_F6;
+
         /* Pawns shield */
         if (blackPawnsInfo[COLF] == 2) safety += 12;
         else if (blackPawnsInfo[COLF] == 4) safety += 6;
