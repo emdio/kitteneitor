@@ -127,6 +127,8 @@ int init_color[64] = {
 //        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY };
 
 
+
+
 /* * * * * * * * * * * * *
  * Piece Square Tables
  * * * * * * * * * * * * */

@@ -30,6 +30,46 @@ startgame ()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test()
+{
+    /* Piece in each square */
+    int piece_test[64] = {
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, KING, EMPTY, PAWN, KING, EMPTY, EMPTY,
+            PAWN, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, PAWN,
+            EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY };
+    /* Color of each square */
+    int color_test[64] = {
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, WHITE, EMPTY, WHITE, BLACK, EMPTY, EMPTY,
+            BLACK, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, BLACK,
+            EMPTY, EMPTY, EMPTY, WHITE, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY };
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+    setDistToKing();
+
+    side = WHITE;
+    computer_side = BLACK;	/* Human is white side */
+    hdp = 0;
+    castle = 15;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
 void
 xboard ()
 {
@@ -254,6 +294,9 @@ main ()
 
     /* It mainly calls ComputerThink(maxdepth) to the desired ply */
 
+    char  fen_buf[256];  /* Para soporte fen */
+    char  *pointer;   /* Para soporte fen */
+
     setlocale (LC_ALL, "");
 
     char s[256];
@@ -330,6 +373,12 @@ main ()
             PrintBoard ();
             continue;
         }
+        if (!strcmp (s, "test"))
+        {
+            test ();
+            computer_side = side;
+            continue;
+        }
         if (!strcmp (s, "undo"))
         {
             TakeBack ();
@@ -337,6 +386,14 @@ main ()
             computer_side = (WHITE + BLACK) - computer_side;
             continue;
         }
+        if (!strcmp(s,"setboard"))
+              {
+                strcpy(fen_buf, linea);
+                pointer = strstr(fen_buf, " ");
+                pointer++;
+                fen(pointer);
+                continue;
+              }
         if (!strcmp (s, "xboard"))
         {
             xboard ();
@@ -359,20 +416,20 @@ main ()
             continue;
         }
 
-        if (!strcmp (s, "fen"))
-        {
-            strcpy (fenstring, "");
+//        if (!strcmp (s, "fen"))
+//        {
+//            strcpy (fenstring, "");
 
-            sscanf (linea, "fen %s %s %s %s", args[0], args[1], args[2],
-                    args[3]);
+//            sscanf (linea, "fen %s %s %s %s", args[0], args[1], args[2],
+//                    args[3]);
 
-            strcat (fenstring, args[0]);
-            strcat (fenstring, args[1]);
-            strcat (fenstring, args[2]);
-            strcat (fenstring, args[3]);
+//            strcat (fenstring, args[0]);
+//            strcat (fenstring, args[1]);
+//            strcat (fenstring, args[2]);
+//            strcat (fenstring, args[3]);
 
-            fen (fenstring);
-        }
+//            fen (fenstring);
+//        }
 
         if (!strcmp (s, "perft"))
         {
@@ -524,3 +581,101 @@ void setDistToKing()
        }
     }
 }
+
+
+
+void fen(const char *s)
+{
+    int n;
+    int i, sq, a;
+    int z;
+
+    n = strlen(s);
+
+    for (i = 0; i < 64; ++i) {
+        color[i] = EMPTY;
+        piece[i] = EMPTY;
+    }
+
+    sq = 0;
+    a = 0;
+
+    for (i=0, z = 0; i<n && z == 0; ++i) {
+        switch(s[i]) {
+        case '1': sq += 1; break;
+        case '2': sq += 2; break;
+        case '3': sq += 3; break;
+        case '4': sq += 4; break;
+        case '5': sq += 5; break;
+        case '6': sq += 6; break;
+        case '7': sq += 7; break;
+        case '8': sq += 8; break;
+        case 'p': color[sq] = BLACK; piece[sq] = PAWN;   ++sq; break;
+        case 'n': color[sq] = BLACK; piece[sq] = KNIGHT; ++sq; break;
+        case 'b': color[sq] = BLACK; piece[sq] = BISHOP; ++sq; break;
+        case 'r': color[sq] = BLACK; piece[sq] = ROOK;   ++sq; break;
+        case 'q': color[sq] = BLACK; piece[sq] = QUEEN;  ++sq; break;
+        case 'k': color[sq] = BLACK; piece[sq] = KING;   ++sq; break;
+        case 'P': color[sq] = WHITE; piece[sq] = PAWN;   ++sq; break;
+        case 'N': color[sq] = WHITE; piece[sq] = KNIGHT; ++sq; break;
+        case 'B': color[sq] = WHITE; piece[sq] = BISHOP; ++sq; break;
+        case 'R': color[sq] = WHITE; piece[sq] = ROOK;   ++sq; break;
+        case 'Q': color[sq] = WHITE; piece[sq] = QUEEN;  ++sq; break;
+        case 'K': color[sq] = WHITE; piece[sq] = KING;   ++sq; break;
+        case '/': break;
+        default: z = 1; break;
+        }
+        a = i;
+    }
+
+    side  = -1;
+    ++a;
+
+    for (i=a, z = 0; i<n && z == 0; ++i) {
+        switch(s[i]) {
+        case 'w': side = WHITE; break;
+        case 'b': side = BLACK; break;
+        default: z = 1; break;
+        }
+        a = i;
+    }
+
+    castle = 0;
+
+    for (i=a+1, z = 0; i<n && z == 0; ++i) {
+        switch(s[i]) {
+        case 'K': castle |= 1; break;
+        case 'Q': castle |= 2; break;
+        case 'k': castle |= 4; break;
+        case 'q': castle |= 8; break;
+        case '-': break;
+        default: z = 1; break;
+        }
+        a = i;
+    }
+
+//    enpasant = -1;
+
+//    for (i=a+1, z = 0; i<n && z == 0; ++i) {
+//        switch(s[i]) {
+//        case '-': break;
+
+//        case 'a': EPS_SQ = 0; break;
+//        case 'b': EPS_SQ = 1; break;
+//        case 'c': EPS_SQ = 2; break;
+//        case 'd': EPS_SQ = 3; break;
+//        case 'e': EPS_SQ = 4; break;
+//        case 'f': EPS_SQ = 5; break;
+//        case 'g': EPS_SQ = 6; break;
+//        case 'h': EPS_SQ = 7; break;
+//        case '1': EPS_SQ += 56; break;
+//        case '2': EPS_SQ += 48; break;
+//        case '3': EPS_SQ += 40; break;
+//        case '4': EPS_SQ += 32; break;
+//        case '5': EPS_SQ += 24; break;
+//        case '6': EPS_SQ += 16; break;
+//        case '7': EPS_SQ +=  8; break;
+//        case '8': EPS_SQ +=  0; break;
+//        default: z = 1; break;
+//        }
+    }

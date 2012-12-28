@@ -427,8 +427,17 @@ int whiteKingSafety()
 
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLA] == 0) safety -= 25;
+        {
+            if (colBlackKing > COLE) safety -= -15;
+        }
         if (blackPawnsInfo[COLB] == 0) safety -= 25;
+        {
+            if (colBlackKing > COLE) safety -= -15;
+        }
         if (blackPawnsInfo[COLC] == 0) safety -= 25;
+        {
+            if (colBlackKing > COLE) safety -= -15;
+        }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
@@ -462,8 +471,17 @@ int whiteKingSafety()
 
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLF] == 0) safety -= 25;
+        {
+            if (colBlackKing < COLD) safety -= -15;
+        }
         if (blackPawnsInfo[COLG] == 0) safety -= 25;
+        {
+            if (colBlackKing < COLD) safety -= -15;
+        }
         if (blackPawnsInfo[COLH] == 0) safety -= 25;
+        {
+            if (colBlackKing < COLD) safety -= -15;
+        }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
@@ -516,8 +534,17 @@ int blackKingSafety()
 
         /* Semiopen cols by the oponent */
         if (whitePawnsInfo[COLA] == 0) safety -= 25;
+        {
+            if (colWhiteKing > COLD) safety -= -15;
+        }
         if (whitePawnsInfo[COLB] == 0) safety -= 25;
+        {
+            if (colWhiteKing > COLD) safety -= -15;
+        }
         if (whitePawnsInfo[COLC] == 0) safety -= 25;
+        {
+            if (colWhiteKing > COLD) safety -= -15;
+        }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
@@ -555,8 +582,17 @@ int blackKingSafety()
 
         /* Semiopen cols by the oponent */
         if (whitePawnsInfo[COLF] == 0) safety -= 25;
+        {
+            if (colWhiteKing < COLD) safety -= -15;
+        }
         if (whitePawnsInfo[COLG] == 0) safety -= 25;
+        {
+            if (colWhiteKing < COLD) safety -= -15;
+        }
         if (whitePawnsInfo[COLH] == 0) safety -= 25;
+        {
+            if (colWhiteKing < COLD) safety -= -15;
+        }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/

@@ -43,6 +43,7 @@ void xboard();
 void hash_rnd_init();
 void hash_key_position();
 void setDistToKing();
+void fen(const char *s);
 
 /* Search */
 MOVE ComputerThink(int depth);

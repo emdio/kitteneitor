@@ -107,11 +107,11 @@ int get_ms()
 }
 
 /*recibimos una posición en formato FEN del GUI cuando editamos y la configuramos para que la entienda el motor*/
-void
-fen (char *string)
-{
-    puts ("Loading fen...");
-    printf ("El input: %s\n", string);
+//void
+//fen (char *string)
+//{
+//    puts ("Loading fen...");
+//    printf ("El input: %s\n", string);
 //    char c;
 //    int sq=0, i=0, j=0;
 //    /*tipo de pieza según la letra que recibimos, ejemplo B es bishop (nosotros la tenemos definida con el número 2*/
@@ -209,4 +209,4 @@ fen (char *string)
 //    regla50 = 0;              /*inicamos la regla de los 50 movimientos*/
 //    njugadas = 0;             /*ponemos a 0 el contador de jugadas*/
 
-}
+//}
