@@ -449,7 +449,8 @@ int whiteKingSafety()
         }
         /* Pawns shield */
         if (whitePawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLB] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
     }
     /* The king short castled */
     else if (colWhiteKing > COLE)
@@ -493,8 +494,8 @@ int whiteKingSafety()
         }
 
         /* Pawns shield */
-        if (whitePawnsInfo[COLF] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLG] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     else
@@ -556,8 +557,8 @@ int blackKingSafety()
         }
         /* Pawns shield */
         if (blackPawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLB] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLC] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
     }
     /* The king short castled */
     else if (colBlackKing > COLE)
@@ -603,8 +604,8 @@ int blackKingSafety()
             if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety -= 35;
         }
         /* Pawns shield */
-        if (blackPawnsInfo[COLF] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLG] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
     }
     else
