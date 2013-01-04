@@ -9,6 +9,7 @@ clock_t stop_time;
 clock_t half_time;
 int must_stop;
 
+int history[64][64];
 int castle;
 int castle_mask[64];
 int hdp;

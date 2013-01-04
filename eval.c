@@ -20,7 +20,7 @@
 #define DOUBLED_PAWN_MALUS          15
 #define DOUBLED_PAWN_CASTLE_MALUS   25
 #define MISSING_PAWN_CASTLE_MALUS   20
-#define HOLE_C3_C6_F3_F6            60
+#define HOLE_C3_C6_F3_F6            30
 #define HOLE_B3_B6_G3_G6            30
 
 /* Arrays for scaling mobility values */
@@ -319,12 +319,11 @@ Eval (alpha, beta)
     }
 
     /* Finally we return the score, taking into account the side to move
-        We add an extra plus 10 because in the same position the side to
+        We add an extra plus because in the same position the side to
         move has some extra advantage*/
 
-//    ff = funFactor();
-//    ff = 0;
-//    printf("ff=%d\n", ff);
+    ff = funFactor();
+
     if (side == computer_side)
     {
         if (side == WHITE)
@@ -408,8 +407,15 @@ int whiteKingSafety()
     if (colWhiteKing < COLD)
     {
         /* Hole in c3 */
-        if ( IsSqProtectedByAPawn(C3, BLACK) && !IsSqProtectedByAPawn(C3, WHITE) )
+        if ( !IsSqProtectedByAPawn(C3, WHITE) )
+        {
             safety -= HOLE_C3_C6_F3_F6;
+            /* Extra penal if hole is attacked by an enemy pawn */
+            if ( IsSqProtectedByAPawn(C3, BLACK) )
+            {
+                safety -= HOLE_C3_C6_F3_F6;
+            }
+        }
 
         /* Hole in b3 */
         if ( !IsSqProtectedByAPawn(B3, WHITE) )
@@ -461,8 +467,15 @@ int whiteKingSafety()
     else if (colWhiteKing > COLE)
     {
         /* Hole in f3 */
-        if ( IsSqProtectedByAPawn(F3, BLACK) && !IsSqProtectedByAPawn(F3, WHITE) )
+        if ( !IsSqProtectedByAPawn(F3, WHITE) )
+        {
             safety -= HOLE_C3_C6_F3_F6;
+            /* Extra penal if hole is attacked by an enemy pawn */
+            if ( IsSqProtectedByAPawn(F3, BLACK) )
+            {
+                safety -= HOLE_C3_C6_F3_F6;
+            }
+        }
 
         /* Hole in g3 */
         if ( !IsSqProtectedByAPawn(G3, WHITE) )
@@ -509,8 +522,8 @@ int whiteKingSafety()
     else
     {
         /* Open cols close to the king */
-        if (whitePawnsInfo[COLD] == 0 && blackPawnsInfo[COLD] == 0) safety -= 25;
-        if (whitePawnsInfo[COLE] == 0 && blackPawnsInfo[COLE] == 0) safety -= 25;
+        if (whitePawnsInfo[COLD] == 0 && blackPawnsInfo[COLD] == 0) safety -= 35;
+        if (whitePawnsInfo[COLE] == 0 && blackPawnsInfo[COLE] == 0) safety -= 35;
     }
 
     return safety;
@@ -524,8 +537,15 @@ int blackKingSafety()
     if (colBlackKing < COLD)
     {
         /* Hole in c6 */
-        if ( IsSqProtectedByAPawn(C6, WHITE) && !IsSqProtectedByAPawn(C6, BLACK) )
+        if ( !IsSqProtectedByAPawn(C6, BLACK) )
+        {
             safety -= HOLE_C3_C6_F3_F6;
+            /* Extra penal if hole is attacked by an enemy pawn */
+            if ( IsSqProtectedByAPawn(C6, WHITE) )
+            {
+                safety -= HOLE_C3_C6_F3_F6;
+            }
+        }
 
         /* Hole in b6 */
         if ( !IsSqProtectedByAPawn(B6, BLACK) )
@@ -575,8 +595,15 @@ int blackKingSafety()
     else if (colBlackKing > COLE)
     {
         /* Hole in f6 */
-        if ( IsSqProtectedByAPawn(F6, WHITE) && !IsSqProtectedByAPawn(F6, BLACK) )
+        if ( !IsSqProtectedByAPawn(F6, BLACK) )
+        {
             safety -= HOLE_C3_C6_F3_F6;
+            /* Extra penal if hole is attacked by an enemy pawn */
+            if ( IsSqProtectedByAPawn(F6, WHITE) )
+            {
+                safety -= HOLE_C3_C6_F3_F6;
+            }
+        }
 
         /* Hole in g6 */
         if ( !IsSqProtectedByAPawn(G6, BLACK) )

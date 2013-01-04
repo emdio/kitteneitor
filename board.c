@@ -237,70 +237,70 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     move.grade = 0;
 
 
-    /* Just to make tests with the difference */
-    int mult = 100;
+//    /* Just to make tests with the difference */
+//    int mult = 1;
 
-    /* Are we moving to a better/worse piece square? */
-    if (color[from] == WHITE)
-    {
-        switch (piece[from])
-        {
-        case PAWN:
-            if (endGame())
-                move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
-            else
-                move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
-            break;
-        case KNIGHT:
-            move.grade += mult*(pst_knight[dest] - pst_knight[from]);
-            break;
-        case BISHOP:
-            move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
-            break;
-        case ROOK:
-            move.grade += mult*(pst_rook[dest] - pst_rook[from]);
-            break;
-        case QUEEN:
-            move.grade += mult*(pst_queen[dest] - pst_queen[from]);
-            break;
-        case KING:
-            if (endGame())
-                move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
-            else
-                move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
-            break;
-        }
-    }
-    else if (color[from] == BLACK)
-    {
-        switch (piece[from])
-        {
-        case PAWN:
-            if (endGame())
-                move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
-            else
-                move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
-            break;
-        case KNIGHT:
-            move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
-            break;
-        case BISHOP:
-            move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
-            break;
-        case ROOK:
-            move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
-            break;
-        case QUEEN:
-            move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
-            break;
-        case KING:
-            if (endGame())
-                move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
-            else
-                move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
-            break;
-        }
-    }
+//    /* Are we moving to a better/worse piece square? */
+//    if (color[from] == WHITE)
+//    {
+//        switch (piece[from])
+//        {
+//        case PAWN:
+//            if (endGame())
+//                move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
+//            else
+//                move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
+//            break;
+//        case KNIGHT:
+//            move.grade += mult*(pst_knight[dest] - pst_knight[from]);
+//            break;
+//        case BISHOP:
+//            move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
+//            break;
+//        case ROOK:
+//            move.grade += mult*(pst_rook[dest] - pst_rook[from]);
+//            break;
+//        case QUEEN:
+//            move.grade += mult*(pst_queen[dest] - pst_queen[from]);
+//            break;
+//        case KING:
+//            if (endGame())
+//                move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
+//            else
+//                move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
+//            break;
+//        }
+//    }
+//    else if (color[from] == BLACK)
+//    {
+//        switch (piece[from])
+//        {
+//        case PAWN:
+//            if (endGame())
+//                move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
+//            else
+//                move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
+//            break;
+//        case KNIGHT:
+//            move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
+//            break;
+//        case BISHOP:
+//            move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
+//            break;
+//        case ROOK:
+//            move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
+//            break;
+//        case QUEEN:
+//            move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
+//            break;
+//        case KING:
+//            if (endGame())
+//                move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
+//            else
+//                move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
+//            break;
+//        }
+//    }
 
 
     /* Is it a capture? */
@@ -321,7 +321,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade = 3000000 + value_piece[piece[dest]] - value_piece[piece[from]];
             /* It isn't a bad capture, but if the captured piece is not protected
              * by a pawn we give it an extra push */
-//            if (!IsSqProtectedByAPawn(dest, Opponent(side)))
+//            if (!IsSqProtectedByAPawn(dest, Opponent(color[from])))
 //            {
 //                move.grade += 100;
 //                /* And if the capturing piece is a pawn we give another extra push */
@@ -333,6 +333,73 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     /* So it isn't a capture */
     else
     {
+
+//        move.grade += history[from][dest];
+
+        /* Just to make tests with the difference */
+        int mult = 1;
+
+        /* Are we moving to a better/worse piece square? */
+        if (color[from] == WHITE)
+        {
+            switch (piece[from])
+            {
+            case PAWN:
+                if (endGame())
+                    move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
+                else
+                    move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
+                break;
+            case KNIGHT:
+                move.grade += mult*(pst_knight[dest] - pst_knight[from]);
+                break;
+            case BISHOP:
+                move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
+                break;
+            case ROOK:
+                move.grade += mult*(pst_rook[dest] - pst_rook[from]);
+                break;
+            case QUEEN:
+                move.grade += mult*(pst_queen[dest] - pst_queen[from]);
+                break;
+            case KING:
+                if (endGame())
+                    move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
+                else
+                    move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
+                break;
+            }
+        }
+        else if (color[from] == BLACK)
+        {
+            switch (piece[from])
+            {
+            case PAWN:
+                if (endGame())
+                    move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
+                else
+                    move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
+                break;
+            case KNIGHT:
+                move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
+                break;
+            case BISHOP:
+                move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
+                break;
+            case ROOK:
+                move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
+                break;
+            case QUEEN:
+                move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
+                break;
+            case KING:
+                if (endGame())
+                    move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
+                else
+                    move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
+                break;
+            }
+        }
         /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
         if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
             move.grade -= (value_piece[piece[from]]);
@@ -341,29 +408,29 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade += (value_piece[piece[from]]);
         /* Are we placing a Queen in a square protected by a piece? */
         /* Is a queen attacked by a piece? */
-        if ( piece[from] == QUEEN )
-        {
-            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
-                move.grade -= (value_piece[piece[from]]);
-            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
-                move.grade -= (value_piece[piece[from]]);
-            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
-                move.grade += (value_piece[piece[from]]);
-            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
-                move.grade += (value_piece[piece[from]]);
-        }
+//        if ( piece[from] == QUEEN )
+//        {
+//            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
+//                move.grade -= (value_piece[piece[from]]);
+//            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
+//                move.grade -= (value_piece[piece[from]]);
+//            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
+//                move.grade += (value_piece[piece[from]]);
+//            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
+//                move.grade += (value_piece[piece[from]]);
+//        }
 
-        if ( piece[from] == ROOK )
-        {
-            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
-                move.grade -= (value_piece[piece[from]]);
-            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
-                move.grade -= (value_piece[piece[from]]);
-            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
-                move.grade += (value_piece[piece[from]]);
-            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
-                move.grade += (value_piece[piece[from]]);
-        }
+//        if ( piece[from] == ROOK )
+//        {
+//            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
+//                move.grade -= (value_piece[piece[from]]);
+//            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
+//                move.grade -= (value_piece[piece[from]]);
+//            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
+//                move.grade += (value_piece[piece[from]]);
+//            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
+//                move.grade += (value_piece[piece[from]]);
+//        }
 
         /* Just penalizing moving the king with no reason */
 //        if ( piece[from] == KING )

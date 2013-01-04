@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 #include <time.h>
 
 #include "defs.h"
@@ -35,6 +37,7 @@ ComputerThink (int m_depth)
         countCapCalls = 0;
         countSearchCalls = 0;
         nodes = 0;
+        memset(history, 0, sizeof(history));
 
         clock_t start;
         clock_t stop;
@@ -82,10 +85,10 @@ ComputerThink (int m_depth)
         if (i == m_depth)
         {
             printf
-            ("Search result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n",
+            ("Search result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
              'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
              8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
-             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls);
+             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
         }
         else
         {
@@ -197,11 +200,19 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
         /* Once we have an evaluation, we use it in in an alpha-beta search */
         if (value > alpha)
         {
+
+            /* Este movimiento causo un cutoff, asi que incrementamos
+            el valor de historia para que sea ordenado antes la
+            proxima vez que se busque */
+            history[moveBuf[i].from][moveBuf[i].dest] += depth;
+
+
             /* This move is so good and caused a cutoff */
             if (value >= beta)
             {
                 return beta;
             }
+
             alpha = value;
             /* So far, current move is the best reaction for current position */
             *pBestMove = moveBuf[i];
