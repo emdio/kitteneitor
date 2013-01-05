@@ -204,7 +204,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             /* Este movimiento causo un cutoff, asi que incrementamos
             el valor de historia para que sea ordenado antes la
             proxima vez que se busque */
-//            history[moveBuf[i].from][moveBuf[i].dest] += depth;
+            history[moveBuf[i].from][moveBuf[i].dest] += depth;
 
 
             /* This move is so good and caused a cutoff */
