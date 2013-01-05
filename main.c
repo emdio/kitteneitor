@@ -30,7 +30,7 @@ startgame ()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
-void test()
+void test1()
 {
     /* Piece in each square */
     int piece_test[64] = {
@@ -66,6 +66,46 @@ void test()
     computer_side = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 15;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
+void test2()
+{
+    /* Piece in each square */
+    int piece_test[64] = {
+            EMPTY, ROOK, BISHOP, EMPTY, EMPTY, ROOK, EMPTY, KING,
+            EMPTY, EMPTY, QUEEN, EMPTY, BISHOP, PAWN, PAWN, PAWN,
+            PAWN, EMPTY, PAWN, PAWN, PAWN, KNIGHT, EMPTY, EMPTY,
+            PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+            EMPTY, PAWN, KNIGHT, QUEEN, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, PAWN, EMPTY, BISHOP, PAWN, PAWN, PAWN,
+            ROOK, EMPTY, BISHOP, EMPTY, EMPTY, EMPTY, ROOK, KING };
+    /* Color of each square */
+    int color_test[64] = {
+            EMPTY, BLACK, BLACK, EMPTY, EMPTY, BLACK, EMPTY, BLACK,
+            EMPTY, EMPTY, BLACK, EMPTY, BLACK, BLACK, BLACK, BLACK,
+            BLACK, EMPTY, BLACK, BLACK, BLACK, BLACK, EMPTY, EMPTY,
+            WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, EMPTY, EMPTY,
+            EMPTY, WHITE, WHITE, WHITE, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, WHITE, EMPTY, WHITE, WHITE, WHITE, WHITE,
+            WHITE, EMPTY, WHITE, EMPTY, EMPTY, EMPTY, WHITE, WHITE};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+    setDistToKing();
+
+    side = BLACK;
+    computer_side = WHITE;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
     fifty = 0;
     hash_key_position(); /* hash de la posicion inicial */
 }
@@ -373,9 +413,15 @@ main ()
             PrintBoard ();
             continue;
         }
-        if (!strcmp (s, "test"))
+        if (!strcmp (s, "test1"))
         {
-            test ();
+            test1 ();
+            computer_side = side;
+            continue;
+        }
+        if (!strcmp (s, "test2"))
+        {
+            test2 ();
             computer_side = side;
             continue;
         }

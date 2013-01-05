@@ -158,9 +158,11 @@ int IsSqProtectedByABishop(int sq, int side)
 sustituye de momento a SEE (static exchange evaluator)*/
 int BadCapture(MOVE mcmov) {
 
-    int pawn_protected = 0;
     int bishop_protected = 0;
     int knight_protected = 0;
+
+    if (piece[mcmov.from] == PAWN)
+        return 0;
 
     /* Capturing equal or more material is never bad */
     if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
@@ -168,10 +170,10 @@ int BadCapture(MOVE mcmov) {
 
     /* If the captured piece isn't protected by a pawn and its value
      * is bigger than a pawn, then it isn't a bad capture */
-    if (!IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) &&
-            value_piece[piece[mcmov.dest]] > value_piece[PAWN] &&
-            value_piece[piece[mcmov.from]] < value_piece[ROOK] )
-        return 0;
+//    if (!IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) &&
+//            value_piece[piece[mcmov.dest]] > value_piece[PAWN] &&
+//            value_piece[piece[mcmov.from]] < value_piece[ROOK] )
+//        return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
     know either it is protected by a pawn? */
@@ -191,17 +193,13 @@ int BadCapture(MOVE mcmov) {
         bishop_protected = 1;
 
 
-    /* Analyze the results */
-    if (pawn_protected)
-        return 1;
+//    if (knight_protected && piece[mcmov.from] == QUEEN)
+//        return 1;
+//    if (bishop_protected && piece[mcmov.from] == QUEEN)
+//        return 1;
 
-    if (knight_protected && piece[mcmov.from] == QUEEN)
-        return 1;
-    if (bishop_protected && piece[mcmov.from] == QUEEN)
-        return 1;
-
-    if (knight_protected && bishop_protected)
-        return 1;
+//    if (knight_protected && bishop_protected)
+//        return 1;
 
     if (knight_protected || bishop_protected)
         return 1;
@@ -321,9 +319,9 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             move.grade = 3000000 + value_piece[piece[dest]] - value_piece[piece[from]];
             /* It isn't a bad capture, but if the captured piece is not protected
              * by a pawn we give it an extra push */
-//            if (!IsSqProtectedByAPawn(dest, Opponent(color[from])))
+            if (!IsSqProtectedByAPawn(dest, Opponent(color[from])))
 //            {
-//                move.grade += 100;
+                move.grade += 100;
 //                /* And if the capturing piece is a pawn we give another extra push */
 //                if (piece[from] == PAWN)
 //                    move.grade += 100;

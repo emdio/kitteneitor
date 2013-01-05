@@ -204,7 +204,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             /* Este movimiento causo un cutoff, asi que incrementamos
             el valor de historia para que sea ordenado antes la
             proxima vez que se busque */
-            history[moveBuf[i].from][moveBuf[i].dest] += depth;
+//            history[moveBuf[i].from][moveBuf[i].dest] += depth;
 
 
             /* This move is so good and caused a cutoff */
@@ -270,9 +270,17 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
-    stand_pat = Eval (alpha, beta);
+    score = Eval (alpha, beta);
+    stand_pat = score;
     if (stand_pat >= beta)
         return beta;
+
+    int BIG_DELTA = VALUE_QUEEN;
+    if ( score < alpha - BIG_DELTA )
+    {
+        return alpha;
+    }
+
     if (alpha < stand_pat)
         alpha = stand_pat;
 
