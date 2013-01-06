@@ -16,7 +16,8 @@ ComputerThink (int m_depth)
     /* It returns the move the computer makes */
     MOVE m;
     MOVE bestMove;
-    int score, i;
+    LINE pline;
+    int score, i, j;
     double knps;
 
     /* Time management */
@@ -47,7 +48,7 @@ ComputerThink (int m_depth)
         start = clock ();
 
         /* Search now! */
-        score = Search (-MATE, MATE, i, &m);
+        score = Search (-MATE, MATE, i, &m, &pline);
 
 
         /* If we've searched for a certain percentage of the avaialble time it
@@ -62,9 +63,6 @@ ComputerThink (int m_depth)
             fflush(stdout);  /* Limpiamos la salida estandar */
             break;
         }
-
-
-
 
         /* Stop timer */
         stop = clock ();
@@ -81,22 +79,50 @@ ComputerThink (int m_depth)
 
         bestMove = m;
 
+
+
         /* After searching, print results */
-        if (i == m_depth)
-        {
-            printf
-            ("Search result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
-             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
-             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
-             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
-        }
-        else
+//        if (i != m_depth)
         {
             printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
                     - Row (bestMove.dest), i, decimal_score);
+
+            /* Printing PV */
+            for(j=0; j<pline.cmove; j++)
+            {
+              printf(" %c%d%c%d", 'a' + Col(pline.argmove[j].from),
+                                   8 - Row(pline.argmove[j].from),
+                                  'a' + Col(pline.argmove[j].dest),
+                                   8 - Row(pline.argmove[j].dest));
+              /* Paso 3 Si es coronacion ponemos la nueva pieza */
+              switch (pline.argmove[j].type_of_move)
+              {
+                 case MOVE_TYPE_PROMOTION_TO_QUEEN:
+                    printf("q");
+                    break;
+                 case MOVE_TYPE_PROMOTION_TO_ROOK:
+                    printf("r");
+                    break;
+                 case MOVE_TYPE_PROMOTION_TO_BISHOP:
+                    printf("b");
+                    break;
+                 case MOVE_TYPE_PROMOTION_TO_KNIGHT:
+                    printf("n");
+                    break;
+               }
+            }
         }
-//        fflush(stdout);
+        if (i == m_depth)
+        {
+            printf
+            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
+             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
+             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
+             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
+        }
+        puts("");
+        fflush(stdout);
 
     }
     return bestMove;
@@ -110,7 +136,7 @@ ComputerThink (int m_depth)
  */
 
 int
-Search (int alpha, int beta, int depth, MOVE * pBestMove)
+Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 {
 
     /* Vars deffinition */
@@ -118,9 +144,9 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     int value;			/* To store the evaluation */
     int havemove;		/* Either we have or not a legal move available */
     int movecnt;		/* The number of available moves */
-
     MOVE moveBuf[200];  /* List of movements */
     MOVE tmpMove;
+    LINE    line;
 
     nodes++;
     countSearchCalls++;
@@ -131,10 +157,14 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     if (must_stop)
         return 0;
 
-
     havemove = 0;		/* is there a move available? */
     pBestMove->type_of_move = MOVE_TYPE_NONE;
 
+    if (depth == 0)
+    {
+       pline->cmove = 0;
+       return Quiescent(alpha, beta);
+    }
 
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
@@ -143,20 +173,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
     if (IsInCheck(side))
         ++depth;
 
-
-
-//    /* If the opponent is in check maybe we want to search deeper */
-//    if (IsInCheck(!side))
-//        ++depth;
-
-
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
     {
-
-        int ext = 0;
-
         /* Here must be called OrderMove, so we have the moves are ordered before
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
@@ -177,21 +197,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
         /* If we've reached this far, then we have a move available */
         havemove = 1;
 
-        /* If we're in a leaf node we call quiescent search in
-         * order to avoid the horizon effect */
-        if (depth - 1 > 0)
-        {
-            value = -Search(-beta, -alpha, depth + ext - 1, &tmpMove);
-        }
-        /* If no depth left (leaf node), we evalute the position
-           and apply the alpha-beta search.
-           In the case of existing a quiescent function, it should be
-           called here instead of Eval() */
-        else
-        {
-            value = -Quiescent (-beta, -alpha);
-//            value = -Eval();
-        }
+        value = -Search(-beta, -alpha, depth - 1, &tmpMove, &line);
 
         /* We've evaluated the position, so we return to the previous position in such a way
            that when we take the next move from moveBuf everything is in order */
@@ -206,7 +212,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             proxima vez que se busque */
             history[moveBuf[i].from][moveBuf[i].dest] += depth;
 
-
             /* This move is so good and caused a cutoff */
             if (value >= beta)
             {
@@ -216,6 +221,11 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove)
             alpha = value;
             /* So far, current move is the best reaction for current position */
             *pBestMove = moveBuf[i];
+
+            /* Update the principal line */
+            pline->argmove[0] = moveBuf[i];
+            memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(MOVE));
+            pline->cmove = line.cmove + 1;
         }
     }
 
@@ -373,4 +383,3 @@ int checkupHalfTime(int stoping_time)
 
     return 0;
 }
-

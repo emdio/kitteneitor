@@ -399,10 +399,10 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
             }
         }
         /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
-        if  ( IsSqProtectedByAPawn(dest, Opponent(color[from])) )
+        if  ( piece[from] != PAWN &&IsSqProtectedByAPawn(dest, Opponent(color[from])) )
             move.grade -= (value_piece[piece[from]]);
         /* Is a piece being attacked by a pawn? Then we probably should move it */
-        if  ( IsSqProtectedByAPawn(from, Opponent(color[from])) )
+        if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
             move.grade += (value_piece[piece[from]]);
         /* Are we placing a Queen in a square protected by a piece? */
         /* Is a queen attacked by a piece? */

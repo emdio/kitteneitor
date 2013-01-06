@@ -159,16 +159,12 @@ typedef struct {
     int fifty;
 } HISTO;
 
-///*  Historial de movimientos en el juego permite el retroceso
-//    para reintegrar la posicion previa */
-//typedef struct tag_HIST {
-//    MOVE     m;
-//    int      cap;
-//    int      castle;
-//    int      enpasant;
-//    int      fifty;
-//    int      hash;
-//}   HIST;
+/* Estructura para PV */
+typedef struct tag_LINE
+{
+   int cmove;
+   MOVE argmove[50];
+} LINE;
 
 
 /* Triple repeticion */
