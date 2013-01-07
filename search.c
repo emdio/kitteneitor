@@ -160,21 +160,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     havemove = 0;		/* is there a move available? */
     pBestMove->type_of_move = MOVE_TYPE_NONE;
 
-
-    /* Taken from magic engine code */
-        if (Eval(alpha, beta) >= beta &&
-            alpha <= beta - 1)
-        {
-            if (depth >=6)
-            {
-                depth--;
-            }
-            else if (depth > 1)
-            {
-                depth -= 2;
-            }
-        }
-
     if (depth == 0)
     {
        pline->cmove = 0;
