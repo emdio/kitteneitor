@@ -774,7 +774,9 @@ int NoMaterial()
             if (whiteQueens == 0 && blackQueens == 0)
                 if (whiteBishops <= 1 && blackBishops <= 1)
                     if (whiteKnights <= 1 && blackKnights <= 1)
-                        return 1;
+                        if (whiteKnights == 0 || whiteBishops == 0)
+                            if (blackKnights == 0 || blackBishops == 0)
+                                return 1;
     return 0;
 }
 

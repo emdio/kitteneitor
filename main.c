@@ -110,6 +110,46 @@ void test2()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test3()
+{
+    /* Piece in each square */
+    int piece_test[64] = {
+            ROOK, EMPTY, EMPTY, EMPTY, EMPTY, ROOK, KING, EMPTY,
+            PAWN, PAWN, EMPTY, BISHOP, EMPTY, PAWN, PAWN, EMPTY,
+            EMPTY, EMPTY, KNIGHT, EMPTY, PAWN, EMPTY, KNIGHT, BISHOP,
+            EMPTY, EMPTY, EMPTY, PAWN, PAWN, EMPTY, QUEEN, EMPTY,
+            EMPTY, EMPTY, PAWN, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, QUEEN, EMPTY, EMPTY, EMPTY, EMPTY, KNIGHT,
+            PAWN, EMPTY, PAWN, EMPTY, BISHOP, PAWN, PAWN, PAWN,
+            ROOK, EMPTY, EMPTY, EMPTY, EMPTY, ROOK, KING, EMPTY};
+    /* Color of each square */
+    int color_test[64] = {
+            BLACK, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, BLACK, EMPTY,
+            BLACK, BLACK, EMPTY, BLACK, EMPTY, BLACK, BLACK, EMPTY,
+            EMPTY, EMPTY, BLACK, EMPTY, BLACK, EMPTY, BLACK, WHITE,
+            EMPTY, EMPTY, EMPTY, BLACK, WHITE, EMPTY, WHITE, EMPTY,
+            EMPTY, EMPTY, BLACK, WHITE, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, WHITE,
+            WHITE, EMPTY, WHITE, EMPTY, WHITE, WHITE, WHITE, WHITE,
+            WHITE, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, WHITE, EMPTY};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+    setDistToKing();
+
+    side = BLACK;
+    computer_side = WHITE;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
 void
 xboard ()
 {
@@ -422,6 +462,12 @@ main ()
         if (!strcmp (s, "test2"))
         {
             test2 ();
+            computer_side = side;
+            continue;
+        }
+        if (!strcmp (s, "test3"))
+        {
+            test3 ();
             computer_side = side;
             continue;
         }
