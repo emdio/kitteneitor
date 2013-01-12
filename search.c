@@ -53,7 +53,8 @@ ComputerThink (int m_depth)
 
         /* If we've searched for a certain percentage of the avaialble time it
         doesn't make sense to start a new ply, so we call it a day */
-        checkup(half_time);
+//        checkup(half_time);
+
 
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
@@ -79,10 +80,17 @@ ComputerThink (int m_depth)
 
         bestMove = m;
 
+        /* If the score is too large we just stop thinking */
+        if (abs(score) > MATE - 10)
+        {
+            printf("score = %d\n", score);
+            fflush(stdout);
+            break;
+        }
+
 
 
         /* After searching, print results */
-//        if (i != m_depth)
         {
             printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
                     'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
@@ -144,6 +152,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     int value;			/* To store the evaluation */
     int havemove;		/* Either we have or not a legal move available */
     int movecnt;		/* The number of available moves */
+//    int score;
     MOVE moveBuf[200];  /* List of movements */
     MOVE tmpMove;
     LINE    line;
@@ -159,6 +168,22 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 
     havemove = 0;		/* is there a move available? */
     pBestMove->type_of_move = MOVE_TYPE_NONE;
+
+
+//    int R = 2;
+//    if (depth - 1 - R > 1 &&
+//        depth >= 5 &&
+//        !IsInCheck(side) &&
+//        !endGame() )
+//    {
+//        side = (BLACK + WHITE) - side;
+//        score = -Search(depth - 1 - R, 1 - alpha, 0 - alpha, &tmpMove, &line);
+//        side = (BLACK + WHITE) - side;
+//        if (score >= beta)
+//            return beta;
+//    }
+
+
 
     if (depth == 0)
     {
@@ -185,6 +210,8 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
          * result is really bad. Maybe it makes sense if the move
          * ordering is improvedor seting alower threshold */
 //        if (moveBuf[i].grade < 0) continue;
+
+
 
         /* If the current move isn't legal, we take it back
          * and take the next move in the list */
@@ -358,28 +385,9 @@ void MoveOrder(int init, int movecount, MOVE *moveBuf)
 void checkup(clock_t stoping_time)
 {
     must_stop = 0;
-    /* is the engine's time up? if so, longjmp back to the
-       beginning of think() */
     if (get_ms() >= stoping_time)
-//    if (clock() >= stoping_time)
     {
         must_stop = 1;
-//		longjmp(env, 0);
     }
-
-//    return must_stop;
 }
 
-/* checkup() is called once in a while during the search. */
-int checkupHalfTime(int stoping_time)
-{
-    /* is the engine's time up? if so, longjmp back to the
-       beginning of think() */
-    stoping_time = (stoping_time / 2);
-    if (get_ms() >= stoping_time)
-    {
-        return 1;
-    }
-
-    return 0;
-}

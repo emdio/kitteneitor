@@ -666,12 +666,24 @@ void setDistToKing()
        {
           dist_bonus[i][j] = 14 - ( abs( Col(i) - Col(j) ) + abs( Row(i) - Row(j) ) );
 
-          qk_dist[i][j]  = (dist_bonus[i][j] * 5) / 2;
-          rk_dist[i][j]  =  dist_bonus[i][j] / 2;
-          nk_dist[i][j]  =  dist_bonus[i][j];
-          bk_dist[i][j]  = dist_bonus[i][j] / 2;
+          qk_dist[i][j]  = dist_bonus[i][j] * 5;
+          rk_dist[i][j]  =  dist_bonus[i][j];
+          nk_dist[i][j]  =  dist_bonus[i][j] * 4;
+          bk_dist[i][j]  = dist_bonus[i][j] * 3;
        }
     }
+//    for (i = 0; i < 64; ++i)
+//    {
+//       for (j = 0; j < 64; ++j)
+//       {
+//           printf (" %d-%d - %d\n", i, j, qk_dist[i][j]);
+//           printf (" %d-%d - %d\n", j, i, qk_dist[j][i]);
+//           printf (" %d-%d - %d\n", i, j, nk_dist[i][j]);
+//           printf (" %d-%d - %d\n", j, i, nk_dist[j][i]);
+//           puts("");
+//       }
+//    }
+
 }
 
 

@@ -194,13 +194,13 @@ Eval (alpha, beta)
             blackQueens * value_piece[QUEEN];
 
     /* Trying the lazy eval */
-    int lazy = score;
-    if (side == BLACK) lazy = -lazy;
-    if ( ( lazy + 500 < alpha ) ||
-         ( lazy - 500 > beta  ) )
-    {
-        return lazy;
-    }
+//    int lazy = score;
+//    if (side == BLACK) lazy = -lazy;
+//    if ( ( lazy + 500 < alpha ) ||
+//         ( lazy - 500 > beta  ) )
+//    {
+//        return lazy;
+//    }
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
@@ -339,7 +339,7 @@ Eval (alpha, beta)
 
 //    if (side == WHITE)
 //        return (score );
-//    return (-score );
+//    return -score;
 }
 
 /* Returns 1 if the pawn of color color in square sq is passed */
