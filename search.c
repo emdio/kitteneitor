@@ -307,6 +307,7 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
+
     score = Eval (alpha, beta);
     stand_pat = score;
     if (stand_pat >= beta)
@@ -332,11 +333,13 @@ Quiescent (int alpha, int beta)
     for (i = 0; i < capscnt; ++i)
     {
         /* If it's a bad capture we don't need to go on (tx to Pedro) */
-        if (BadCapture(cBuf[i])) continue;
+//        if (BadCapture(cBuf[i])) continue;
 
 //        if ( cBuf[i].grade < 0 ) continue;
 
         MoveOrder(i, capscnt, cBuf);
+
+//        if (BadCapture(cBuf[i])) continue;
 
         if (!MakeMove (cBuf[i]))
         {
@@ -345,6 +348,9 @@ Quiescent (int alpha, int beta)
             TakeBack ();
             continue;
         }
+
+        if (BadCapture(cBuf[i])) continue;
+
         score = -Quiescent (-beta, -alpha);
         TakeBack ();
         if (score >= beta)
