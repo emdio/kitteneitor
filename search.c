@@ -339,7 +339,7 @@ Quiescent (int alpha, int beta)
 
         MoveOrder(i, capscnt, cBuf);
 
-//        if (BadCapture(cBuf[i])) continue;
+        if (BadCapture(cBuf[i])) continue;
 
         if (!MakeMove (cBuf[i]))
         {
@@ -348,9 +348,6 @@ Quiescent (int alpha, int beta)
             TakeBack ();
             continue;
         }
-
-        if (BadCapture(cBuf[i])) continue;
-
         score = -Quiescent (-beta, -alpha);
         TakeBack ();
         if (score >= beta)

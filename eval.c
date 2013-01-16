@@ -22,6 +22,7 @@
 #define MISSING_PAWN_CASTLE_MALUS   20
 #define HOLE_C3_C6_F3_F6            30
 #define HOLE_B3_B6_G3_G6            30
+#define TRAPPED_ROOK_PENALTY        70
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -250,6 +251,13 @@ Eval (alpha, beta)
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score += ROOK_OPEN_COL;
+                /* Rook trapped by king */
+                if(i == H1 || i == G1)
+                    {
+                    if(posWhiteKing > E1 && posWhiteKing < H1)
+                        score -= TRAPPED_ROOK_PENALTY;
+                }
+
                 break;
             case QUEEN:
                 score += pst_queen[i];
@@ -300,6 +308,12 @@ Eval (alpha, beta)
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score -= ROOK_OPEN_COL;
+                /* Rook trapped by king */
+                if(i == H8 || i == G8)
+                    {
+                    if(posBlackKing > E8 && posBlackKing < H8)
+                        score += TRAPPED_ROOK_PENALTY;
+                }
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
