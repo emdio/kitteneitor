@@ -9,7 +9,6 @@
 /*
  ****************************************************************************
  * Evaluation for current position - main "brain" function *
- * Lack: almost no knowlegde; material value + piece square tables *
  ****************************************************************************
  */
 
@@ -37,9 +36,13 @@ int mob_bishop[16] = {
 int range_bishop[16] = {
     -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
 };
+
 /* For scaling passed pawns depending on the row */
 int passed_pawn_white[7] = {0, 10, 12, 15, 35, 55, 70};
 int passed_pawn_black[7] = {70, 55, 35, 15, 12, 10, 0};
+
+/* For scaling pawn number in fun factor */
+int num_pawns_funfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -15, -15};
 
 /* Kings' safety */
 int posWhiteKing = 0;
@@ -860,12 +863,8 @@ int funFactor()
     /* We like queens on the board */
     if (whiteQueens >= 1 || blackQueens >= 1)
         funfa += 10;
-    /* Too many pawns on the board aren't that funny */
-    if (whitePawns + blackPawns < 12)
-        funfa += 5;
-    /* Too many many pawns on the board aren't that funny */
-    if (whitePawns + blackPawns == 16)
-        funfa -= 10;
+    /* Taking into account the number of pawns on the board */
+    funfa += num_pawns_funfac[whitePawns + blackPawns];
     /* No queens at all? That doesn't rule */
 //    if (whiteQueens == 0 && blackQueens == 0)
 //        funfa -= 10;

@@ -193,21 +193,8 @@ int BadCapture(MOVE mcmov) {
         bishop_protected = 1;
 
 
-//    if (knight_protected && piece[mcmov.from] == QUEEN)
-//        return 1;
-//    if (bishop_protected && piece[mcmov.from] == QUEEN)
-//        return 1;
-
-//    if (knight_protected && bishop_protected)
-//        return 1;
-
     if (knight_protected || bishop_protected)
         return 1;
-
-//    if (knight_protected && piece[mcmov.from] == ROOK)
-//        return 1;
-//    if (bishop_protected && piece[mcmov.from] == ROOK)
-//        return 1;
 
 
     /* If we have reached this far then it isn't a bad capture */
@@ -234,210 +221,133 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     to the top of the table)*/
     move.grade = 0;
 
-
-//    /* Just to make tests with the difference */
-//    int mult = 1;
-
-//    /* Are we moving to a better/worse piece square? */
-//    if (color[from] == WHITE)
-//    {
-//        switch (piece[from])
-//        {
-//        case PAWN:
-//            if (endGame())
-//                move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
-//            else
-//                move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
-//            break;
-//        case KNIGHT:
-//            move.grade += mult*(pst_knight[dest] - pst_knight[from]);
-//            break;
-//        case BISHOP:
-//            move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
-//            break;
-//        case ROOK:
-//            move.grade += mult*(pst_rook[dest] - pst_rook[from]);
-//            break;
-//        case QUEEN:
-//            move.grade += mult*(pst_queen[dest] - pst_queen[from]);
-//            break;
-//        case KING:
-//            if (endGame())
-//                move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
-//            else
-//                move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
-//            break;
-//        }
-//    }
-//    else if (color[from] == BLACK)
-//    {
-//        switch (piece[from])
-//        {
-//        case PAWN:
-//            if (endGame())
-//                move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
-//            else
-//                move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
-//            break;
-//        case KNIGHT:
-//            move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
-//            break;
-//        case BISHOP:
-//            move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
-//            break;
-//        case ROOK:
-//            move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
-//            break;
-//        case QUEEN:
-//            move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
-//            break;
-//        case KING:
-//            if (endGame())
-//                move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
-//            else
-//                move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
-//            break;
-//        }
-//    }
-
-
-    /* Is it a capture? */
-//    if ( (color[dest] == Opponent(color[from])) )
-//    if ( color[from] == Opponent(color[dest]) )
-    if ( color[dest] != EMPTY )
+    /* Is it a promotion? */
+    if ((type >= MOVE_TYPE_PROMOTION_TO_QUEEN) &&
+        (type <= MOVE_TYPE_PROMOTION_TO_KNIGHT))
     {
-        /*malas capturas por detrás*/
-        if (BadCapture(move))
-            move.grade = -10000000 + value_piece[piece[dest]] - value_piece[piece[from]];
-
-        /*ordenamos por MVV/LVA*/
-        else
-        {
-            /* These are "good" captures, but we aren't taking into account factors
-             * such as if the captured piece is protected by a pawn: base on this
-             * kind of checkings we can give different levels of "goodness"? */
-            move.grade = 3000000 + value_piece[piece[dest]] - value_piece[piece[from]];
-            /* It isn't a bad capture, but if the captured piece is not protected
-             * by a pawn we give it an extra push */
-            if (!IsSqProtectedByAPawn(dest, Opponent(color[from])))
-//            {
-                move.grade += 100;
-//                /* And if the capturing piece is a pawn we give another extra push */
-//                if (piece[from] == PAWN)
-//                    move.grade += 100;
-//            }
-        }
+       if (type == MOVE_TYPE_PROMOTION_TO_QUEEN)
+          move.grade = 1000050;
+       else if (type == MOVE_TYPE_PROMOTION_TO_ROOK)
+          move.grade = 30000;
+       else if (type == MOVE_TYPE_PROMOTION_TO_KNIGHT)
+          move.grade = 40000;
+       else if (type == MOVE_TYPE_PROMOTION_TO_BISHOP)
+          move.grade = 20000;
     }
-    /* So it isn't a capture */
     else
     {
-
-//        move.grade += history[from][dest];
-
-        /* Just to make tests with the difference */
-        int mult = 1;
-
-        /* Are we moving to a better/worse piece square? */
-        if (color[from] == WHITE)
+        /* Is it a capture? */
+        if ( color[dest] != EMPTY )
         {
-            switch (piece[from])
+            /*malas capturas por detrás*/
+            if (BadCapture(move) == 1)
             {
-            case PAWN:
-                if (endGame())
-                    move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
-                else
-                    move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
-                break;
-            case KNIGHT:
-                move.grade += mult*(pst_knight[dest] - pst_knight[from]);
-                break;
-            case BISHOP:
-                move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
-                break;
-            case ROOK:
-                move.grade += mult*(pst_rook[dest] - pst_rook[from]);
-                break;
-            case QUEEN:
-                move.grade += mult*(pst_queen[dest] - pst_queen[from]);
-                break;
-            case KING:
-                if (endGame())
-                    move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
-                else
-                    move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
-                break;
+                move.grade = -10000000 + value_piece[piece[dest]] - value_piece[piece[from]];
+            }
+            /*ordenamos por MVV/LVA*/
+            else
+            {
+                /* These are "good" captures, but we aren't taking into account factors
+                 * such as if the captured piece is protected by a pawn: base on this
+                 * kind of checkings we can give different levels of "goodness"? */
+                move.grade = 3000000 + value_piece[piece[dest]] - value_piece[piece[from]];
+                /* It isn't a bad capture, but if the captured piece is not protected
+                 * by a pawn we give it an extra push */
+//                if (!IsSqProtectedByAPawn(dest, Opponent(color[from])))
+//                    move.grade += 0;
             }
         }
-        else if (color[from] == BLACK)
+        /* So it isn't a capture */
+        else
         {
-            switch (piece[from])
+            /* Just to make tests with the difference */
+            int mult = 1;
+
+            /* Are we moving to a better/worse piece square? */
+            if (color[from] == WHITE)
             {
-            case PAWN:
-                if (endGame())
-                    move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
-                else
-                    move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
-                break;
-            case KNIGHT:
-                move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
-                break;
-            case BISHOP:
-                move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
-                break;
-            case ROOK:
-                move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
-                break;
-            case QUEEN:
-                move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
-                break;
-            case KING:
-                if (endGame())
-                    move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
-                else
-                    move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
-                break;
+                switch (piece[from])
+                {
+                case PAWN:
+                    if (endGame())
+                        move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
+                    else
+                        move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
+                    break;
+                case KNIGHT:
+                    move.grade += mult*(pst_knight[dest] - pst_knight[from]);
+                    break;
+                case BISHOP:
+                    move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
+                    break;
+                case ROOK:
+                    move.grade += mult*(pst_rook[dest] - pst_rook[from]);
+                    break;
+                case QUEEN:
+                    move.grade += mult*(pst_queen[dest] - pst_queen[from]);
+                    break;
+                case KING:
+                    if (endGame())
+                        move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
+                    else
+                        move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
+                    break;
+                }
             }
+            else if (color[from] == BLACK)
+            {
+                switch (piece[from])
+                {
+                case PAWN:
+                    if (endGame())
+                        move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
+                    else
+                        move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
+                    break;
+                case KNIGHT:
+                    move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
+                    break;
+                case BISHOP:
+                    move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
+                    break;
+                case ROOK:
+                    move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
+                    break;
+                case QUEEN:
+                    move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
+                    break;
+                case KING:
+                    if (endGame())
+                        move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
+                    else
+                        move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
+                    break;
+                }
+            }
+            /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
+//            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])) )
+//                move.grade -= (value_piece[piece[from]]);
+//            /* Is a piece being attacked by a pawn? Then we probably should move it */
+//            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
+//                move.grade += (value_piece[piece[from]]);
+
+//            else if  ( piece[from] == QUEEN || piece[from] == ROOK)
+//            {
+//                if (IsSqProtectedByABishop(from, Opponent(color[from])))
+//                    move.grade += (value_piece[piece[from]]);
+//                else if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
+//                    move.grade += (value_piece[piece[from]]);
+//                else if  ( IsSqProtectedByABishop(dest, Opponent(color[from])) )
+//                    move.grade -= (value_piece[piece[from]]);
+//                else if  (IsSqProtectedByAKnight(dest, Opponent(color[from])) )
+//                    move.grade -= (value_piece[piece[from]]);
+//            }
+
+
+            /* Finally we use the history */
+            move.grade += 1* history[from][dest];
         }
-        /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
-        if  ( piece[from] != PAWN &&IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-            move.grade -= (value_piece[piece[from]]);
-        /* Is a piece being attacked by a pawn? Then we probably should move it */
-        if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
-            move.grade += (value_piece[piece[from]]);
-        /* Are we placing a Queen in a square protected by a piece? */
-        /* Is a queen attacked by a piece? */
-//        if ( piece[from] == QUEEN )
-//        {
-//            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
-//                move.grade -= (value_piece[piece[from]]);
-//            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
-//                move.grade -= (value_piece[piece[from]]);
-//            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
-//                move.grade += (value_piece[piece[from]]);
-//            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
-//                move.grade += (value_piece[piece[from]]);
-//        }
-
-//        if ( piece[from] == ROOK )
-//        {
-//            if ( IsSqProtectedByAKnight(dest, Opponent(color[from])) )
-//                move.grade -= (value_piece[piece[from]]);
-//            if (IsSqProtectedByABishop(dest, Opponent(color[from])) )
-//                move.grade -= (value_piece[piece[from]]);
-//            if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
-//                move.grade += (value_piece[piece[from]]);
-//            if ( IsSqProtectedByABishop(from, Opponent(color[from])) )
-//                move.grade += (value_piece[piece[from]]);
-//        }
-
-        /* Just penalizing moving the king with no reason */
-//        if ( piece[from] == KING )
-//        {
-//            move.grade -= 100;
-//        }
-        move.grade += history[from][dest];
     }
-
 
     /* Once we're done with grading the moves we fill the rest of the fields */
     pBuf[*pMCount] = move;

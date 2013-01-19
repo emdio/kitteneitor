@@ -20,6 +20,8 @@ ComputerThink (int m_depth)
     int score, i, j;
     double knps;
 
+    memset(history, 0, sizeof(history));
+
     /* Time management */
     int start_time = get_ms();
 //    clock_t start_time = clock();
@@ -38,7 +40,7 @@ ComputerThink (int m_depth)
         countCapCalls = 0;
         countSearchCalls = 0;
         nodes = 0;
-        memset(history, 0, sizeof(history));
+//        memset(history, 0, sizeof(history));
 
         clock_t start;
         clock_t stop;
@@ -182,8 +184,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 //        if (score >= beta)
 //            return beta;
 //    }
-
-
 
     if (depth == 0)
     {
