@@ -83,12 +83,12 @@ ComputerThink (int m_depth)
         bestMove = m;
 
         /* If the score is too large we just stop thinking */
-        if (abs(score) > MATE - 10)
-        {
-            printf("score = %d\n", score);
-            fflush(stdout);
-            break;
-        }
+//        if (abs(score) > MATE - 10)
+//        {
+//            printf("score = %d\n", score);
+//            fflush(stdout);
+//            break;
+//        }
 
 
 

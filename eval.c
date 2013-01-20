@@ -339,24 +339,24 @@ Eval (alpha, beta)
         We add an extra plus because in the same position the side to
         move has some extra advantage*/
 
-    ff = funFactor();
+//    ff = funFactor();
 
-    if (side == computer_side)
-    {
-        if (side == WHITE)
-            return (score + ff + ADV_TURN_TO_MOVE);
-        return (-score - ff - ADV_TURN_TO_MOVE);
-    }
-    else
-    {
-        if (side == WHITE)
-            return (score + ADV_TURN_TO_MOVE);
-        return (-score - ADV_TURN_TO_MOVE);
-    }
+//    if (side == computer_side)
+//    {
+//        if (side == WHITE)
+//            return (score + ff + ADV_TURN_TO_MOVE);
+//        return (-score - ff - ADV_TURN_TO_MOVE);
+//    }
+//    else
+//    {
+//        if (side == WHITE)
+//            return (score + ADV_TURN_TO_MOVE);
+//        return (-score - ADV_TURN_TO_MOVE);
+//    }
 
-//    if (side == WHITE)
-//        return (score );
-//    return -score;
+    if (side == WHITE)
+        return (score );
+    return -score;
 }
 
 /* Returns 1 if the pawn of color color in square sq is passed */
@@ -475,10 +475,25 @@ int whiteKingSafety()
             if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[1] == 0) safety -= 35;
             if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[2] == 0) safety -= 35;
         }
-        /* Pawns shield */
+        /* Pawns holes */
         if (whitePawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+
+        /* Pawns storm */
+        if (piece[A4] == PAWN && color[A4] == BLACK)
+            safety -= 15;
+        if (piece[B4] == PAWN && color[B4] == BLACK)
+            safety -= 15;
+        if (piece[C4] == PAWN && color[C4] == BLACK)
+            safety -= 15;
+        if (piece[A3] == PAWN && color[A3] == BLACK)
+            safety -= 25;
+        if (piece[B3] == PAWN && color[B3] == BLACK)
+            safety -= 25;
+        if (piece[C3] == PAWN && color[C3] == BLACK)
+            safety -= 25;
+
     }
     /* The king short castled */
     else if (colWhiteKing > COLE)
@@ -538,6 +553,20 @@ int whiteKingSafety()
         if (whitePawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
         if (whitePawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+
+        /* Pawns storm */
+        if (piece[F4] == PAWN && color[F4] == BLACK)
+            safety -= 15;
+        if (piece[G4] == PAWN && color[G4] == BLACK)
+            safety -= 15;
+        if (piece[H4] == PAWN && color[H4] == BLACK)
+            safety -= 15;
+        if (piece[F3] == PAWN && color[F3] == BLACK)
+            safety -= 25;
+        if (piece[G3] == PAWN && color[G3] == BLACK)
+            safety -= 25;
+        if (piece[H3] == PAWN && color[H3] == BLACK)
+            safety -= 25;
     }
     else /* The king is in the middle of the board */
     {
@@ -624,6 +653,20 @@ int blackKingSafety()
         if (blackPawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+
+        /* Pawns storm */
+        if (piece[A5] == PAWN && color[A5] == WHITE)
+            safety -= 15;
+        if (piece[B5] == PAWN && color[B5] == WHITE)
+            safety -= 15;
+        if (piece[C5] == PAWN && color[C5] == WHITE)
+            safety -= 15;
+        if (piece[A6] == PAWN && color[A6] == WHITE)
+            safety -= 25;
+        if (piece[B6] == PAWN && color[B6] == WHITE)
+            safety -= 25;
+        if (piece[C6] == PAWN && color[C6] == WHITE)
+            safety -= 25;
     }
     /* The king short castled */
     else if (colBlackKing > COLE)
@@ -686,6 +729,20 @@ int blackKingSafety()
         if (blackPawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
         if (blackPawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+
+        /* Pawns storm */
+        if (piece[F5] == PAWN && color[F5] == WHITE)
+            safety -= 15;
+        if (piece[G5] == PAWN && color[G5] == WHITE)
+            safety -= 15;
+        if (piece[H5] == PAWN && color[H5] == WHITE)
+            safety -= 15;
+        if (piece[F6] == PAWN && color[F6] == WHITE)
+            safety -= 25;
+        if (piece[G6] == PAWN && color[G6] == WHITE)
+            safety -= 25;
+        if (piece[H6] == PAWN && color[H6] == WHITE)
+            safety -= 25;
     }
     else
     {

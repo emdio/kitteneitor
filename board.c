@@ -345,7 +345,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
 
 
             /* Finally we use the history */
-            move.grade += 1* history[from][dest];
+//            move.grade += 1* history[from][dest];
         }
     }
 
