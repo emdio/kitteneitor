@@ -238,18 +238,18 @@ Eval (alpha, beta)
                 break;
             case KNIGHT:
                 score += pst_knight[i];
-                score += nk_dist[i][posBlackKing];
+//                score += nk_dist[i][posBlackKing];
                 score += mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score += pst_bishop[i];
-                score += bk_dist[i][posBlackKing];
+//                score += bk_dist[i][posBlackKing];
                 score += mob_bishop[BishopMobility(i)];
                 score += range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score += pst_rook[i];
-                score += rk_dist[i][posBlackKing];
+//                score += rk_dist[i][posBlackKing];
                 score += mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
@@ -264,7 +264,7 @@ Eval (alpha, beta)
                 break;
             case QUEEN:
                 score += pst_queen[i];
-                score += qk_dist[i][posBlackKing];
+//                score += qk_dist[i][posBlackKing];
                 break;
             case KING:
                 if (endGame())
@@ -295,18 +295,18 @@ Eval (alpha, beta)
                 break;
             case KNIGHT:
                 score -= pst_knight[flip[i]];
-                score -= nk_dist[i][posWhiteKing];
+//                score -= nk_dist[i][posWhiteKing];
                 score -= mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score -= pst_bishop[flip[i]];
-                score -= bk_dist[i][posWhiteKing];
+//                score -= bk_dist[i][posWhiteKing];
                 score -= mob_bishop[BishopMobility(i)];
                 score -= range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
-                score -= rk_dist[i][posWhiteKing];
+//                score -= rk_dist[i][posWhiteKing];
                 score -= mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
@@ -320,7 +320,7 @@ Eval (alpha, beta)
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
-                score -= qk_dist[i][posWhiteKing];
+//                score -= qk_dist[i][posWhiteKing];
                 break;
             case KING:
                 if (endGame())
