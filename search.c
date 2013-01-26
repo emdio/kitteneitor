@@ -293,7 +293,6 @@ Quiescent (int alpha, int beta)
 {
     int i;
     int capscnt;
-    int stand_pat;
     int score;
 
     countquiesCalls++;
@@ -307,46 +306,12 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
-
-//    score = Eval (alpha, beta);
-
-    //TEST1
-//    score = ( IsInCheck(side) ) ? -MATE : Eval(alpha, beta);
-//    // --- stand pat cutoff?
-//    stand_pat = score;
-//    if (stand_pat >= beta)
-//        return stand_pat;
-
-//    if (stand_pat > alpha)
-//        alpha = stand_pat;
-
-    //TEST2
     score = ( IsInCheck(side) ) ? -MATE : Eval(-MATE, beta);
     // --- stand pat cutoff?
-    stand_pat = score;
-    if (stand_pat >= beta)
-        return stand_pat;
-
-    if (stand_pat > alpha)
-        alpha = stand_pat;
-
-    //TEST3
-//    score = ( IsInCheck(side) ) ? -MATE : Eval(-MATE, beta);
-//    // --- stand pat cutoff?
-
-//    if (score > alpha) {
-//        if (score>=beta) return score;
-//        alpha = score;
-//      }
-
-
-
-//    best = Evaluate(p);
-//      if (best >= beta)
-//        return best;
-//      if (best > alpha)
-//        alpha = best;
-
+    if (score > alpha) {
+        if (score>=beta) return score;
+        alpha = score;
+      }
 
 
     /* If we haven't got a cut off we generate the captures and
@@ -354,6 +319,8 @@ Quiescent (int alpha, int beta)
     MOVE cBuf[200];
     capscnt = GenCaps (side, cBuf);
     countCapCalls++;
+
+    MoveOrder(i, capscnt, cBuf);
 
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < capscnt; ++i)
@@ -363,7 +330,7 @@ Quiescent (int alpha, int beta)
 
 //        if ( cBuf[i].grade < 0 ) continue;
 
-        MoveOrder(i, capscnt, cBuf);
+//        MoveOrder(i, capscnt, cBuf);
 
         if (BadCapture(cBuf[i])) continue;
 
