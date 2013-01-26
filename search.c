@@ -294,6 +294,7 @@ Quiescent (int alpha, int beta)
     int i;
     int capscnt;
     int score;
+    int best;
 
     countquiesCalls++;
     nodes++;
@@ -306,11 +307,19 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
-    score = ( IsInCheck(side) ) ? -MATE : Eval(-MATE, beta);
+//    score = ( IsInCheck(side) ) ? -2*MATE : Eval(alpha, beta);
+//    if (IsInCheck(side))
+//    {
+//        best = -MATE;
+//    }
+//    else
+    {
+        best = Eval(alpha, beta);
+    }
     // --- stand pat cutoff?
-    if (score > alpha) {
-        if (score>=beta) return score;
-        alpha = score;
+    if (best > alpha) {
+        if (best >= beta) return best;
+        alpha = best;
       }
 
 
@@ -343,12 +352,27 @@ Quiescent (int alpha, int beta)
         }
         score = -Quiescent (-beta, -alpha);
         TakeBack ();
-        if (score >= beta)
-            return beta;
-        if (score > alpha)
-            alpha = score;
+//        if (score >= beta)
+//            return beta;
+//        if (score > alpha)
+//            alpha = score;
+
+        // best move so far?
+
+        if ( score > best )
+        {
+            best = score;
+            if ( best > alpha ) // alpha improvement
+            {
+                if (best >= beta)  // fail-high cutoff
+                {
+                    return best;
+                }
+                alpha = best;
+            }
+        }
     }
-    return alpha;
+    return best;
 }
 
 void MoveOrder(int init, int movecount, MOVE *moveBuf)
