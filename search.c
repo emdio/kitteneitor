@@ -308,19 +308,45 @@ Quiescent (int alpha, int beta)
 
     /* First we just try the evaluation function */
 
-    score = Eval (alpha, beta);
+//    score = Eval (alpha, beta);
+
+    //TEST1
+//    score = ( IsInCheck(side) ) ? -MATE : Eval(alpha, beta);
+//    // --- stand pat cutoff?
+//    stand_pat = score;
+//    if (stand_pat >= beta)
+//        return stand_pat;
+
+//    if (stand_pat > alpha)
+//        alpha = stand_pat;
+
+    //TEST2
+    score = ( IsInCheck(side) ) ? -MATE : Eval(-MATE, beta);
+    // --- stand pat cutoff?
     stand_pat = score;
     if (stand_pat >= beta)
-        return beta;
+        return stand_pat;
 
-    int BIG_DELTA = VALUE_QUEEN;
-    if ( score < alpha - BIG_DELTA )
-    {
-        return alpha;
-    }
-
-    if (alpha < stand_pat)
+    if (stand_pat > alpha)
         alpha = stand_pat;
+
+    //TEST3
+//    score = ( IsInCheck(side) ) ? -MATE : Eval(-MATE, beta);
+//    // --- stand pat cutoff?
+
+//    if (score > alpha) {
+//        if (score>=beta) return score;
+//        alpha = score;
+//      }
+
+
+
+//    best = Evaluate(p);
+//      if (best >= beta)
+//        return best;
+//      if (best > alpha)
+//        alpha = best;
+
 
 
     /* If we haven't got a cut off we generate the captures and
