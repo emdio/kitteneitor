@@ -292,12 +292,17 @@ int
 Quiescent (int alpha, int beta)
 {
     int i;
-    int capscnt;
+    int legal = 0;
+    int movescnt;
     int score;
     int best;
 
+    MOVE movesBuf[200];
+
     countquiesCalls++;
     nodes++;
+
+    int is_in_check = IsInCheck(side);
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
@@ -308,71 +313,72 @@ Quiescent (int alpha, int beta)
 
     /* First we just try the evaluation function */
 //    score = ( IsInCheck(side) ) ? -2*MATE : Eval(alpha, beta);
-//    if (IsInCheck(side))
-//    {
-//        best = -MATE;
-//    }
-//    else
+    if (is_in_check)
+    {
+        movescnt = GenMoves(side, movesBuf);
+        countCapCalls++;
+
+        MoveOrder(i, movescnt, movesBuf);
+    }
+    else
     {
         best = Eval(alpha, beta);
+        // --- stand pat cutoff?
+
+        if (best > alpha)
+        {
+            if (best >= beta)
+                return best;
+            alpha = best;
+        }
+
+        movescnt = GenCaps (side, movesBuf);
+        countCapCalls++;
+
+        MoveOrder(i, movescnt, movesBuf);
     }
-    // --- stand pat cutoff?
-    if (best > alpha) {
-        if (best >= beta) return best;
-        alpha = best;
-      }
 
 
     /* If we haven't got a cut off we generate the captures and
      * store them in cBuf */
-    MOVE cBuf[200];
-    capscnt = GenCaps (side, cBuf);
-    countCapCalls++;
 
-    MoveOrder(i, capscnt, cBuf);
 
     /* Now the alpha-beta search in quiescent */
-    for (i = 0; i < capscnt; ++i)
+    for (i = 0; i < movescnt; ++i)
     {
-        /* If it's a bad capture we don't need to go on (tx to Pedro) */
-//        if (BadCapture(cBuf[i])) continue;
+        /* If not in check or promotion (Thx to Pedro) */
+        if (!is_in_check && movesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
+        {
+            /* if bad capture we are done */
+            if (BadCapture(movesBuf[i])) continue;
+        }
 
-//        if ( cBuf[i].grade < 0 ) continue;
-
-//        MoveOrder(i, capscnt, cBuf);
-
-        if (BadCapture(cBuf[i])) continue;
-
-        if (!MakeMove (cBuf[i]))
+        if (!MakeMove (movesBuf[i]))
         {
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
             TakeBack ();
             continue;
         }
+
+        legal++;
+
         score = -Quiescent (-beta, -alpha);
         TakeBack ();
-//        if (score >= beta)
-//            return beta;
-//        if (score > alpha)
-//            alpha = score;
 
-        // best move so far?
+        if (must_stop)
+            return 0;
 
-        if ( score > best )
-        {
-            best = score;
-            if ( best > alpha ) // alpha improvement
-            {
-                if (best >= beta)  // fail-high cutoff
-                {
-                    return best;
-                }
-                alpha = best;
-            }
-        }
+        if (score >= beta)
+            return beta;
+        if (score > alpha)
+            alpha = score;
     }
-    return best;
+
+    if (is_in_check && legal == 0)
+        alpha = -MATE + ply;
+
+    return alpha;
 }
 
 void MoveOrder(int init, int movecount, MOVE *moveBuf)
