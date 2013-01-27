@@ -456,19 +456,19 @@ main ()
         if (!strcmp (s, "test1"))
         {
             test1 ();
-            computer_side = side;
+            PrintBoard();
             continue;
         }
         if (!strcmp (s, "test2"))
         {
             test2 ();
-            computer_side = side;
+            PrintBoard();
             continue;
         }
         if (!strcmp (s, "test3"))
         {
             test3 ();
-            computer_side = side;
+            PrintBoard();
             continue;
         }
         if (!strcmp (s, "undo"))

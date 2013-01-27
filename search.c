@@ -310,9 +310,11 @@ Quiescent (int alpha, int beta)
     if (must_stop)
         return 0;
 
+    if (reps() >= 2)
+        return 0;
+
 
     /* First we just try the evaluation function */
-//    score = ( IsInCheck(side) ) ? -2*MATE : Eval(alpha, beta);
     if (is_in_check)
     {
         movescnt = GenMoves(side, movesBuf);
@@ -339,10 +341,6 @@ Quiescent (int alpha, int beta)
     }
 
 
-    /* If we haven't got a cut off we generate the captures and
-     * store them in cBuf */
-
-
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
     {
@@ -352,6 +350,8 @@ Quiescent (int alpha, int beta)
             /* if bad capture we are done */
             if (BadCapture(movesBuf[i])) continue;
         }
+
+//        MoveOrder(i, movescnt, movesBuf);
 
         if (!MakeMove (movesBuf[i]))
         {
