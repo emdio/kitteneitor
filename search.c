@@ -93,10 +93,42 @@ ComputerThink (int m_depth)
 
 
         /* After searching, print results */
+//        {
+//            printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
+//                    'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
+//                    - Row (bestMove.dest), i, decimal_score);
+
+//            /* Printing PV */
+//            for(j=0; j<pline.cmove; j++)
+//            {
+//              printf(" %c%d%c%d", 'a' + Col(pline.argmove[j].from),
+//                                   8 - Row(pline.argmove[j].from),
+//                                  'a' + Col(pline.argmove[j].dest),
+//                                   8 - Row(pline.argmove[j].dest));
+//              /* Paso 3 Si es coronacion ponemos la nueva pieza */
+//              switch (pline.argmove[j].type_of_move)
+//              {
+//                 case MOVE_TYPE_PROMOTION_TO_QUEEN:
+//                    printf("q");
+//                    break;
+//                 case MOVE_TYPE_PROMOTION_TO_ROOK:
+//                    printf("r");
+//                    break;
+//                 case MOVE_TYPE_PROMOTION_TO_BISHOP:
+//                    printf("b");
+//                    break;
+//                 case MOVE_TYPE_PROMOTION_TO_KNIGHT:
+//                    printf("n");
+//                    break;
+//               }
+//            }
+//        }
+
+        /* After searching, print results in xboard mode
+            depth eval time nodes PV*/
         {
-            printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
-                    'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
-                    - Row (bestMove.dest), i, decimal_score);
+            int int_time = (int)(t * 100);
+            printf ("%d %d %d %d", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
@@ -123,14 +155,14 @@ ComputerThink (int m_depth)
                }
             }
         }
-        if (i == m_depth)
-        {
-            printf
-            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
-             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
-             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
-             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
-        }
+//        if (i == m_depth)
+//        {
+//            printf
+//            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
+//             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
+//             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
+//             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
+//        }
         puts("");
         fflush(stdout);
 
@@ -360,6 +392,9 @@ Quiescent (int alpha, int beta)
             TakeBack ();
             continue;
         }
+
+//        if (reps() >= 2)
+//            return 0;
 
         legal++;
 
