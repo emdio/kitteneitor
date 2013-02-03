@@ -170,20 +170,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     havemove = 0;		/* is there a move available? */
     pBestMove->type_of_move = MOVE_TYPE_NONE;
 
-
-//    int R = 2;
-//    if (depth - 1 - R > 1 &&
-//        depth >= 5 &&
-//        !IsInCheck(side) &&
-//        !endGame() )
-//    {
-//        side = (BLACK + WHITE) - side;
-//        score = -Search(depth - 1 - R, 1 - alpha, 0 - alpha, &tmpMove, &line);
-//        side = (BLACK + WHITE) - side;
-//        if (score >= beta)
-//            return beta;
-//    }
-
+    /* If we are in a leaf node we cal quiescence instead of eval */
     if (depth == 0)
     {
        pline->cmove = 0;
@@ -196,6 +183,15 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
         ++depth;
+
+    /* Static null move prunning */
+    if (ply && !IsInCheck(side))
+    {
+        int ev = Eval(-MATE, MATE);
+        int evalua = ev - 150;
+        if (evalua >= beta)
+            return evalua;
+    }
 
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
@@ -266,15 +262,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
             return 0;
     }
 
-//    for (i = 0; i < hdp; ++i)
-//        printf("hash %d: %d-%d\n", i, hist[i].hash, hash.key);
-//        if (hist[i].hash == hash.key)
-
-//    if (reps() > 2)
-//        printf ("reps: %d \n", reps());
-
-
-
     /* 3 vecez la misma posicion */
     if (reps() >= 2)
         return 0;
@@ -314,7 +301,8 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
-    /* If we are in check we generate the legal moves */
+    /* We generate the moves deppending either
+       we are in check or not */
     if (is_in_check)
     {
         movescnt = GenMoves(side, movesBuf);
@@ -348,8 +336,6 @@ Quiescent (int alpha, int beta)
             if (BadCapture(movesBuf[i])) continue;
         }
 
-//        MoveOrder(i, movescnt, movesBuf);
-
         if (!MakeMove (movesBuf[i]))
         {
             /* If the current move isn't legal, we take it back
@@ -358,9 +344,7 @@ Quiescent (int alpha, int beta)
             continue;
         }
 
-//        if (reps() >= 2)
-//            return 0;
-
+        /* If we're here then tehre's at least one legal move */
         legal++;
 
         score = -Quiescent (-beta, -alpha);
@@ -375,6 +359,7 @@ Quiescent (int alpha, int beta)
             alpha = score;
     }
 
+    /* If it's a check and there are no legal moves then it's checkmate */
     if (is_in_check && !legal)
         alpha = -MATE + ply;
 
