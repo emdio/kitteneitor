@@ -91,44 +91,11 @@ ComputerThink (int m_depth)
 //        }
 
 
-
-        /* After searching, print results */
-//        {
-//            printf ("Search result: move = %c%d%c%d; depth = %d, score = %.2f\n",
-//                    'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest), 8
-//                    - Row (bestMove.dest), i, decimal_score);
-
-//            /* Printing PV */
-//            for(j=0; j<pline.cmove; j++)
-//            {
-//              printf(" %c%d%c%d", 'a' + Col(pline.argmove[j].from),
-//                                   8 - Row(pline.argmove[j].from),
-//                                  'a' + Col(pline.argmove[j].dest),
-//                                   8 - Row(pline.argmove[j].dest));
-//              /* Paso 3 Si es coronacion ponemos la nueva pieza */
-//              switch (pline.argmove[j].type_of_move)
-//              {
-//                 case MOVE_TYPE_PROMOTION_TO_QUEEN:
-//                    printf("q");
-//                    break;
-//                 case MOVE_TYPE_PROMOTION_TO_ROOK:
-//                    printf("r");
-//                    break;
-//                 case MOVE_TYPE_PROMOTION_TO_BISHOP:
-//                    printf("b");
-//                    break;
-//                 case MOVE_TYPE_PROMOTION_TO_KNIGHT:
-//                    printf("n");
-//                    break;
-//               }
-//            }
-//        }
-
         /* After searching, print results in xboard mode
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf ("%d %d %d %d", i, score, int_time, nodes);
+            printf (" %d  %2d %4d %8d ", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
@@ -137,7 +104,7 @@ ComputerThink (int m_depth)
                                    8 - Row(pline.argmove[j].from),
                                   'a' + Col(pline.argmove[j].dest),
                                    8 - Row(pline.argmove[j].dest));
-              /* Paso 3 Si es coronacion ponemos la nueva pieza */
+              /* Checking either it's a promotion */
               switch (pline.argmove[j].type_of_move)
               {
                  case MOVE_TYPE_PROMOTION_TO_QUEEN:
@@ -347,11 +314,11 @@ Quiescent (int alpha, int beta)
 
 
     /* First we just try the evaluation function */
+    /* If we are in check we generate the legal moves */
     if (is_in_check)
     {
         movescnt = GenMoves(side, movesBuf);
         countCapCalls++;
-
         MoveOrder(i, movescnt, movesBuf);
     }
     else
@@ -368,10 +335,8 @@ Quiescent (int alpha, int beta)
 
         movescnt = GenCaps (side, movesBuf);
         countCapCalls++;
-
         MoveOrder(i, movescnt, movesBuf);
     }
-
 
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
@@ -410,7 +375,7 @@ Quiescent (int alpha, int beta)
             alpha = score;
     }
 
-    if (is_in_check && legal == 0)
+    if (is_in_check && !legal)
         alpha = -MATE + ply;
 
     return alpha;

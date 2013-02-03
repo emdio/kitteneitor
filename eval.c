@@ -100,9 +100,7 @@ Eval (alpha, beta)
     blackRooks = 0;
     blackQueens = 0;
 
-
     count_evaluations++;
-
 
     /* The score of the position */
     int score = 0;
@@ -200,13 +198,13 @@ Eval (alpha, beta)
     /* Trying the lazy eval */
     int lazy = score;
     if (side == BLACK) lazy = -lazy;
-//    if ( ( lazy + 500 < alpha ) ||
-//         ( lazy - 500 > beta  ) )
-//    {
-//        return lazy;
-//    }
-    if (abs(lazy) > 300)
+    if ( ( lazy + 500 < alpha ) ||
+         ( lazy - 500 > beta  ) )
+    {
         return lazy;
+    }
+//    if (abs(lazy) > 300)
+//        return lazy;
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
