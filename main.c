@@ -254,6 +254,8 @@ xboard ()
         {   /* computer's turn */
             /* Find out the best move to react the current position */
             theBest = ComputerThink (max_depth);
+            if (theBest.type_of_move > 8)
+                printf ("type of move the best %d \n", theBest.type_of_move);
             MakeMove (theBest);
             /* send move */
             switch (theBest.type_of_move)
@@ -426,6 +428,9 @@ xboard ()
                     }
                 }
 
+                if (moveBuf[i].type_of_move > 8)
+                    printf ("type of move the best %d \n", moveBuf[i].type_of_move);
+
                 if (MakeMove (moveBuf[i]))
                 {
                     goto continuar;	/* legal move */
@@ -491,6 +496,9 @@ main ()
         {   /* Computer's turn */
 
             theBest = ComputerThink (max_depth);
+
+            if (theBest.type_of_move > 8)
+                printf ("type of move the best %d \n", theBest.type_of_move);
 
             MakeMove (theBest);
 

@@ -1088,6 +1088,10 @@ MakeMove (MOVE m)
 
     count_MakeMove++;
 
+    int typeOfMove = m.type_of_move;
+//    if (typeOfMove > 8)
+//        printf ("type of move %d \n", typeOfMove);
+
     hist[hdp].m = m;
     hist[hdp].cap = piece[m.dest];	/* store in history the piece of the dest square */
     hist[hdp].castle = castle;

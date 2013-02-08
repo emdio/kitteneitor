@@ -207,6 +207,9 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 //        if (moveBuf[i].grade < 0) continue;
 
 
+//        if (moveBuf[i].type_of_move > 8)
+//            printf ("type of move the best %d \n", moveBuf[i].type_of_move);
+
 
         /* If the current move isn't legal, we take it back
          * and take the next move in the list */
@@ -279,11 +282,11 @@ Quiescent (int alpha, int beta)
 {
     int i;
     int legal = 0;
-    int movescnt;
+    int movescnt = 0;
     int score;
     int best;
 
-    MOVE movesBuf[200];
+    MOVE qMovesBuf[200];
 
     countquiesCalls++;
     nodes++;
@@ -305,9 +308,9 @@ Quiescent (int alpha, int beta)
        we are in check or not */
     if (is_in_check)
     {
-        movescnt = GenMoves(side, movesBuf);
+        movescnt = GenMoves(side, qMovesBuf);
         countCapCalls++;
-        MoveOrder(i, movescnt, movesBuf);
+//        MoveOrder(i, movescnt, qMovesBuf);
     }
     else
     {
@@ -321,22 +324,33 @@ Quiescent (int alpha, int beta)
             alpha = best;
         }
 
-        movescnt = GenCaps (side, movesBuf);
+        movescnt = GenCaps (side, qMovesBuf);
         countCapCalls++;
-        MoveOrder(i, movescnt, movesBuf);
+//        MoveOrder(i, movescnt, qMovesBuf);
     }
+
+//    MoveOrder(i, movescnt, qMovesBuf);
+
 
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
     {
+
+//        MoveOrder(i, movescnt, qMovesBuf);
+
+//        if (qMovesBuf[i].type_of_move > 8)
+//            printf ("type of move in the quiescent %d \n", qMovesBuf[i].type_of_move);
+
         /* If not in check or promotion (Thx to Pedro) */
-        if (!is_in_check && movesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
+        if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
             /* if bad capture we are done */
-            if (BadCapture(movesBuf[i])) continue;
+            if (BadCapture(qMovesBuf[i])) continue;
         }
 
-        if (!MakeMove (movesBuf[i]))
+        MoveOrder(i, movescnt, qMovesBuf);
+
+        if (!MakeMove (qMovesBuf[i]))
         {
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
@@ -366,29 +380,29 @@ Quiescent (int alpha, int beta)
     return alpha;
 }
 
-void MoveOrder(int init, int movecount, MOVE *moveBuf)
+void MoveOrder(int init, int movecounter, MOVE *orderMovesBuf)
 {
-    int i;
-    int aux;
-    int Max;
+    int i = 0;
+    int aux = 0;
+    int Max = 0;
     MOVE Tmp;
 
-    Max = moveBuf[init].grade;
+    Max = orderMovesBuf[init].grade;
     aux = init;
 
-    for(i = (init + 1); i < movecount; i++)
+    for(i = (init + 1); i < movecounter; i++)
     {
-        if (moveBuf[i].grade > Max)
+        if (orderMovesBuf[i].grade > Max)
         {
-            Max = moveBuf[i].grade;
+            Max = orderMovesBuf[i].grade;
             aux = i;
         }
     }
-    if (Max != moveBuf[init].grade)
+    if (Max != orderMovesBuf[init].grade)
     {
-        Tmp = moveBuf[init];
-        moveBuf[init] = moveBuf[aux];
-        moveBuf[aux] = Tmp;
+        Tmp = orderMovesBuf[init];
+        orderMovesBuf[init] = orderMovesBuf[aux];
+        orderMovesBuf[aux] = Tmp;
     }
 }
 
