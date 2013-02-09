@@ -201,6 +201,11 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
 
+        if (moveBuf[i].from != moveBuf[i].dest)
+        {
+            if (BadCapture(moveBuf[i])) continue;
+        }
+
         /* This a test similiar to what is done in qsearch, but the
          * result is really bad. Maybe it makes sense if the move
          * ordering is improvedor seting alower threshold */
