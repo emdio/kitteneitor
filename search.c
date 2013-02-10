@@ -95,7 +95,7 @@ ComputerThink (int m_depth)
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf (" %d  %2d %4d %8d ", i, score, int_time, nodes);
+            printf (" %d  %4d %6d %10d ", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
@@ -177,9 +177,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
        return Quiescent(alpha, beta);
     }
 
-    /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
-
     /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
         ++depth;
@@ -192,6 +189,9 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         if (evalua >= beta)
             return evalua;
     }
+
+    /* Generate and count all moves for current position */
+    movecnt = GenMoves (side, moveBuf);
 
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
