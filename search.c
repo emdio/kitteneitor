@@ -201,27 +201,46 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
 
+        /* I guess this is too risky: if we have a bad capture and
+         * we aren't giving check then we just continue */
         if (moveBuf[i].from != moveBuf[i].dest)
         {
-            if (BadCapture(moveBuf[i])) continue;
+            if (BadCapture(moveBuf[i]))
+            {
+                if (!MakeMove(moveBuf[i]))
+                {
+                    TakeBack();
+                    continue;
+                }
+                else if (!IsInCheck(side))
+                    {
+                        TakeBack();
+                        continue;
+                    }
+            }
+            else if (!MakeMove (moveBuf[i]))
+            {
+                TakeBack ();
+                continue;
+            }
+
         }
-
-        /* This a test similiar to what is done in qsearch, but the
-         * result is really bad. Maybe it makes sense if the move
-         * ordering is improvedor seting alower threshold */
-//        if (moveBuf[i].grade < 0) continue;
-
-
-//        if (moveBuf[i].type_of_move > 8)
-//            printf ("type of move the best %d \n", moveBuf[i].type_of_move);
-
-
-        /* If the current move isn't legal, we take it back
-         * and take the next move in the list */
-        if (!MakeMove (moveBuf[i]))
+        else
         {
-            TakeBack ();
-            continue;
+
+            /* This a test similiar to what is done in qsearch, but the
+             * result is really bad. Maybe it makes sense if the move
+             * ordering is improvedor seting alower threshold */
+//            if (moveBuf[i].grade < 0) continue;
+
+
+            /* If the current move isn't legal, we take it back
+             * and take the next move in the list */
+            if (!MakeMove (moveBuf[i]))
+            {
+                TakeBack ();
+                continue;
+            }
         }
 
         /* If we've reached this far, then we have a move available */
