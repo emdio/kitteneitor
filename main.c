@@ -112,6 +112,7 @@ void test2()
 
 void test3()
 {
+    puts ("FEN: r4rk1/pp1b1pp1/2n1p1nB/3pP1Q1/2pP4/2q4N/P1P1BPPP/R4RK1 b - - 0 1");
     /* Piece in each square */
     int piece_test[64] = {
             ROOK, EMPTY, EMPTY, EMPTY, EMPTY, ROOK, KING, EMPTY,

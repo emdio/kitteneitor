@@ -49,7 +49,7 @@ void fen(const char *s);
 /* Search */
 MOVE ComputerThink(int depth);
 int Quiescent(int alpha, int beta);
-int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline);
+int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline, int nullMove);
 void checkup(clock_t stoping_time);
 int checkupHalfTime(int stoping_time);
 
