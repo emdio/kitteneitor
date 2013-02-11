@@ -356,7 +356,7 @@ Quiescent (int alpha, int beta)
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
             /* if bad capture we are done */
-            if (BadCapture(qMovesBuf[i]) || value_piece[piece[qMovesBuf[i].dest]] <= (alpha - 200 - best )) continue;
+            if (BadCapture(qMovesBuf[i])) continue;
         }
 
         MoveOrder(i, movescnt, qMovesBuf);
