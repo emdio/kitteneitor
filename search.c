@@ -50,7 +50,7 @@ ComputerThink (int m_depth)
         start = clock ();
 
         /* Search now! */
-        score = Search (-MATE, MATE, i, &m, &pline, 1);
+        score = Search (-MATE, MATE, i, &m, &pline);
 
 
         /* If we've searched for a certain percentage of the avaialble time it
@@ -145,7 +145,7 @@ ComputerThink (int m_depth)
  */
 
 int
-Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline, int nullMove)
+Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 {
 
     /* Vars deffinition */
@@ -240,7 +240,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline, int null
         /* If we've reached this far, then we have a move available */
         havemove = 1;
 
-        value = -Search(-beta, -alpha, depth - 1, &tmpMove, &line, 1);
+        value = -Search(-beta, -alpha, depth - 1, &tmpMove, &line);
 
         /* We've evaluated the position, so we return to the previous position in such a way
            that when we take the next move from moveBuf everything is in order */
