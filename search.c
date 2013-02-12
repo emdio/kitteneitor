@@ -204,30 +204,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 
         /* I guess this is too risky: if we have a bad capture and
          * we aren't giving check then we just continue */
-        if (moveBuf[i].from != moveBuf[i].dest)
-        {
-            if (BadCapture(moveBuf[i]))
-            {
-                if (!MakeMove(moveBuf[i]))
-                {
-                    TakeBack();
-                    continue;
-                }
-                else if (!IsInCheck(side))
-                    {
-                        TakeBack();
-                        continue;
-                    }
-            }
-            else if (!MakeMove (moveBuf[i]))
-            {
-                TakeBack ();
-                continue;
-            }
-
-        }
-        else
-        {
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
             if (!MakeMove (moveBuf[i]))
@@ -235,7 +211,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
                 TakeBack ();
                 continue;
             }
-        }
 
         /* If we've reached this far, then we have a move available */
         havemove = 1;
