@@ -94,43 +94,43 @@ ComputerThink (int m_depth)
 
         /* After searching, print results in xboard mode
             depth eval time nodes PV*/
-        {
-            int int_time = (int)(t * 100);
-            printf (" %d  %4d %6d %10d ", i, score, int_time, nodes);
-
-            /* Printing PV */
-            for(j=0; j<pline.cmove; j++)
-            {
-              printf(" %c%d%c%d", 'a' + Col(pline.argmove[j].from),
-                                   8 - Row(pline.argmove[j].from),
-                                  'a' + Col(pline.argmove[j].dest),
-                                   8 - Row(pline.argmove[j].dest));
-              /* Checking either it's a promotion */
-              switch (pline.argmove[j].type_of_move)
-              {
-                 case MOVE_TYPE_PROMOTION_TO_QUEEN:
-                    printf("q");
-                    break;
-                 case MOVE_TYPE_PROMOTION_TO_ROOK:
-                    printf("r");
-                    break;
-                 case MOVE_TYPE_PROMOTION_TO_BISHOP:
-                    printf("b");
-                    break;
-                 case MOVE_TYPE_PROMOTION_TO_KNIGHT:
-                    printf("n");
-                    break;
-               }
-            }
-        }
-//        if (i == m_depth)
 //        {
-//            printf
-//            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
-//             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
-//             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
-//             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
+//            int int_time = (int)(t * 100);
+//            printf (" %d  %4d %6d %10d ", i, score, int_time, nodes);
+
+//            /* Printing PV */
+//            for(j=0; j<pline.cmove; j++)
+//            {
+//              printf(" %c%d%c%d", 'a' + Col(pline.argmove[j].from),
+//                                   8 - Row(pline.argmove[j].from),
+//                                  'a' + Col(pline.argmove[j].dest),
+//                                   8 - Row(pline.argmove[j].dest));
+//              /* Checking either it's a promotion */
+//              switch (pline.argmove[j].type_of_move)
+//              {
+//                 case MOVE_TYPE_PROMOTION_TO_QUEEN:
+//                    printf("q");
+//                    break;
+//                 case MOVE_TYPE_PROMOTION_TO_ROOK:
+//                    printf("r");
+//                    break;
+//                 case MOVE_TYPE_PROMOTION_TO_BISHOP:
+//                    printf("b");
+//                    break;
+//                 case MOVE_TYPE_PROMOTION_TO_KNIGHT:
+//                    printf("n");
+//                    break;
+//               }
+//            }
 //        }
+        if (i == m_depth)
+        {
+            printf
+            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
+             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
+             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
+             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
+        }
         puts("");
         fflush(stdout);
 
