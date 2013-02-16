@@ -54,5 +54,6 @@ void checkup(clock_t stoping_time);
 int checkupHalfTime(int stoping_time);
 
 /* Utils */
+void PrintResult(int count, MOVE *ListMoves);
 U64 perft(int depth);
 void PrintBoard();

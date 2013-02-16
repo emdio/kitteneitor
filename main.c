@@ -363,8 +363,11 @@ xboard ()
                     - Row (theBest.from), 'a' + Col (theBest.dest), 8
                     - Row (theBest.dest), c);
 
-//            fflush(stdout);
-//            setbuf(stdout, NULL);
+            /* Obtenemos los movimientos del contrario para saber si el juego finalizo */
+            movecnt = GenMoves(side, moveBuf);
+            /* Si es final imprime el resultado */
+            PrintResult(movecnt, moveBuf);
+
             continue;
         }
 
@@ -789,6 +792,62 @@ main ()
             }
         PrintBoard ();
     }
+}
+
+
+/*************************************************************************************
+      Esta funcion revisa si el juego finalizo y envia el resultado al GUI
+**************************************************************************************/
+void PrintResult(int count, MOVE *ListMoves)
+{
+    int i;
+
+    /* Hay un movimiento legal ? */
+    for (i = 0; i < count; ++i)
+        {
+            if (MakeMove(ListMoves[i]))
+                {
+                    TakeBack();
+                    break;
+                }
+            else
+                TakeBack();
+        }
+
+    if (i == count)
+        {
+            /* Mate o ahogado */
+            computer_side = EMPTY;   /* modo force */
+            if (IsInCheck(side))
+                {
+                    /* Mate */
+                    if (side == WHITE)
+                        printf("0-1 {Black mates}\n");
+                    else
+                        printf("1-0 {White mates}\n");
+                }
+            else
+                /* Ahogado */
+                printf("1/2-1/2 {Stalemate}\n");
+        }
+    else if (fifty >= 100)
+        {
+            /* Regla de los 50 movimientos */
+            printf("1/2-1/2 {Draw by fifty move rule}\n");
+            computer_side = EMPTY;   /* modo force */
+        }
+    else if (reps() == 3)
+        {
+            /* Triple repeticion */
+            printf("1/2-1/2 {Draw by repetition}\n");
+            computer_side = EMPTY;   /* modo force */
+        }
+    else if (NoMaterial())
+        {
+            /* Insuficiencia de Material */
+            printf("1/2-1/2 {Insufficient material}\n");
+            computer_side = EMPTY;   /* modo force */
+        }
 }
 
 
