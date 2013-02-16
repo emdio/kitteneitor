@@ -327,6 +327,8 @@ Quiescent (int alpha, int beta)
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
     {
+        MoveOrder(i, movescnt, qMovesBuf);
+
         /* If not in check or promotion (Thx to Pedro) and
            it's a bad capture the we are done*/
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
@@ -334,8 +336,6 @@ Quiescent (int alpha, int beta)
             /* if bad capture we are done */
             if (BadCapture(qMovesBuf[i])) continue;
         }
-
-        MoveOrder(i, movescnt, qMovesBuf);
 
         if (!MakeMove (qMovesBuf[i]))
         {
