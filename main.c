@@ -273,6 +273,48 @@ void test6()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test7()
+{
+    puts ("A position where Kitt crashed");
+    puts ("8/1b6/4p1k1/2p5/7P/4p1PK/2p2q2/6R1 b - - 1 77");
+    /* Piece in each square */
+    int piece_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, BISHOP, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, KING, EMPTY,
+        EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, PAWN, EMPTY, BISHOP, EMPTY, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, KING,
+        EMPTY, PAWN, EMPTY, EMPTY, EMPTY, QUEEN, EMPTY, EMPTY,
+        EMPTY, ROOK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+    /* Color of each square */
+    int color_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, BLACK, EMPTY,
+        EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, BLACK, EMPTY, WHITE, EMPTY, WHITE,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, WHITE,
+        EMPTY, BLACK, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY,
+        EMPTY, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+    setDistToKing();
+
+    side = WHITE;
+    computer_side = BLACK;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
 void
 xboard ()
 {
@@ -297,9 +339,8 @@ xboard ()
         {   /* computer's turn */
             /* Find out the best move to react the current position */
             theBest = ComputerThink (max_depth);
-//            if (theBest.type_of_move > 8)
-//                printf ("type of move the best %d \n", theBest.type_of_move);
             MakeMove (theBest);
+
             /* send move */
             switch (theBest.type_of_move)
             {
@@ -322,7 +363,7 @@ xboard ()
                     - Row (theBest.from), 'a' + Col (theBest.dest), 8
                     - Row (theBest.dest), c);
 
-            fflush(stdout);
+//            fflush(stdout);
 //            setbuf(stdout, NULL);
             continue;
         }
@@ -617,6 +658,12 @@ main ()
         if (!strcmp (s, "test6"))
         {
             test6 ();
+            PrintBoard();
+            continue;
+        }
+        if (!strcmp (s, "test7"))
+        {
+            test7 ();
             PrintBoard();
             continue;
         }
