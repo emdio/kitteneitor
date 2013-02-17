@@ -184,13 +184,13 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         ++depth;
 
     /* Static null move prunning */
-//    if (ply && !IsInCheck(side))
-//    {
-//        int ev = Eval(-MATE, MATE);
-//        int evalua = ev - 150;
-//        if (evalua >= beta)
-//            return evalua;
-//    }
+    if (ply && !IsInCheck(side))
+    {
+        int ev = Eval(-MATE, MATE);
+        int evalua = ev - 150;
+        if (evalua >= beta)
+            return beta;
+    }
 
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);

@@ -203,8 +203,6 @@ Eval (alpha, beta)
     {
         return lazy;
     }
-//    if (abs(lazy) > 300)
-//        return lazy;
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
