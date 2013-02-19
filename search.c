@@ -333,11 +333,18 @@ Quiescent (int alpha, int beta)
            it's a bad capture the we are done*/
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
+            if (!MakeMove (qMovesBuf[i]))
+            {
+            /* If the current move isn't legal, we take it back*
+             *  and take the next move in the list */
+                TakeBack ();
+                continue;
+            }
             /* if bad capture we are done */
             if (BadCapture(qMovesBuf[i])) continue;
         }
 
-        if (!MakeMove (qMovesBuf[i]))
+        else if (!MakeMove (qMovesBuf[i]))
         {
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
