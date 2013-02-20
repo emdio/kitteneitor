@@ -1,4 +1,4 @@
-materia#include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <locale.h>
@@ -798,38 +798,38 @@ main ()
 /*************************************************************************************
       Esta funcion revisa si el juego finalizo y envia el resultado al GUI
 **************************************************************************************/
-//void PrintResult(int count, MOVE *ListMoves)
-//{
-    //int i;
+void PrintResult(int count, MOVE *ListMoves)
+{
+    int i;
 
-    ///* Hay un movimiento legal ? */
-    //for (i = 0; i < count; ++i)
-        //{
-            //if (MakeMove(ListMoves[i]))
-                //{
-                    //TakeBack();
-                    //break;
-                //}
-            //else
-                //TakeBack();
-        //}
+    /* Hay un movimiento legal ? */
+    for (i = 0; i < count; ++i)
+        {
+            if (MakeMove(ListMoves[i]))
+                {
+                    TakeBack();
+                    break;
+                }
+            else
+                TakeBack();
+        }
 
-    //if (i == count)
-        //{
-            ///* Mate o ahogado */
-            //computer_side = EMPTY;   /* modo force */
-            //if (IsInCheck(side))
-                //{
-                    ///* Mate */
-                    //if (side == WHITE)
-                        //printf("0-1 {Black mates}\n");
-                    //else
-                        //printf("1-0 {White mates}\n");
-                //}
-            //else
-                ///* Ahogado */
-                //printf("1/2-1/2 {Stalemate}\n");
-        //}
+    if (i == count)
+        {
+            /* Mate o ahogado */
+            computer_side = EMPTY;   /* modo force */
+            if (IsInCheck(side))
+                {
+                    /* Mate */
+                    if (side == WHITE)
+                        printf("0-1 {Black mates}\n");
+                    else
+                        printf("1-0 {White mates}\n");
+                }
+            else
+                /* Ahogado */
+                printf("1/2-1/2 {Stalemate}\n");
+        }
     //else if (fifty >= 100)
         //{
             ///* Regla de los 50 movimientos */
@@ -848,7 +848,7 @@ main ()
             //printf("1/2-1/2 {Insufficient material}\n");
             //computer_side = EMPTY;   /* modo force */
         //}
-//}
+}
 
 
 /*************************************************************************************
