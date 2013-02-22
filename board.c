@@ -6,6 +6,8 @@
 //#define NDEBUG
 //#include <assert.h>
 
+#define BOARDDEBUG
+
 
 
 /* This is usually defined by a macro like #define Col(pos) (pos & 7) */
@@ -54,6 +56,13 @@ inline int IsSqProtectedByAPawn(int sq, int side)
     /* We need to check the columm because in col 1 and 8 sq can only be attacked
      * from one side */
     int col = Col(sq);
+
+#ifdef BOARDDEBUG
+    if (side != BLACK && side != WHITE) printf ("IsSqProtectedByAPawn() wrong color");
+    if (sq < 0) printf("IsSqProtectedByAPawn() k < 0");
+    if (sq > 63) printf("IsSqProtectedByAPawn() k > 63");
+#endif
+
     if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
         return 1;
     else if ( col != 0 && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
@@ -65,6 +74,13 @@ inline int IsSqProtectedByAPawn(int sq, int side)
 /* IsProtectedByAKnight returns 1 if square sq is protected by a knight of color side */
 int IsSqProtectedByAKnight(int sq, int side)
 {
+
+#ifdef BOARDDEBUG
+    if (side != BLACK && side != WHITE) printf ("IsSqProtectedByAKnight() wrong color");
+    if (sq < 0) printf("IsSqProtectedByAKnight() k < 0");
+    if (sq > 63) printf("IsSqProtectedByAKnight() k > 63");
+#endif
+
     int y;
     int col = Col (sq);
     y = sq - 6;
@@ -97,6 +113,13 @@ int IsSqProtectedByAKnight(int sq, int side)
 /* IsProtectedByABishop returns 1 if square sq is protected by a bishop of color side */
 int IsSqProtectedByABishop(int sq, int side)
 {
+
+#ifdef BOARDDEBUG
+    if (side != BLACK && side != WHITE) printf ("IsSqProtectedByAKnight() wrong color");
+    if (sq < 0) printf("IsSqProtectedByAKnight() k < 0");
+    if (sq > 63) printf("IsSqProtectedByAKnight() k > 63");
+#endif
+
     int y;
     for (y = sq - 9; y >= 0 && Col (y) != 7; y -= 9)
     {   /* go left up */
@@ -220,6 +243,16 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     probably would be the best move (or at least deserves a position close
     to the top of the table)*/
     move.grade = 0;
+
+
+    #ifdef BOARDDEBUG
+        if (from > 63) printf ("Gen_Push from > 63");
+        if (dest > 63) printf ("Gen_Push dest > 63");
+        if (from < 0) printf ("Gen_Push from < 0");
+        if (dest < 0) printf ("Gen_Push dest < 0");
+        if (type < 0 ) printf ("Gen_Push type < 0");
+        if (type > MOVE_TYPE_PROMOTION_TO_KNIGHT) printf ("Gen_Push type > MOVE_TYPE_PROMOTION_TO_KNIGHT");
+    #endif
 
     /* Is it a promotion? */
     if ((type >= MOVE_TYPE_PROMOTION_TO_QUEEN) &&
@@ -366,6 +399,13 @@ Gen_PushNormal (int from, int dest, MOVE * pBuf, int *pMCount)
 void
 Gen_PushPawn (int from, int dest, MOVE * pBuf, int *pMCount)
 {
+#ifdef BOARDDEBUG
+    if (from > 63) printf ("Gen_Push from > 63");
+    if (dest > 63) printf ("Gen_Push dest > 63");
+    if (from < 0) printf ("Gen_Push from < 0");
+    if (dest < 0) printf ("Gen_Push dest < 0");
+#endif
+
     if (piece[dest] == EPS_SQ)
     {
         Gen_Push (from, dest, MOVE_TYPE_EPS, pBuf, pMCount);
@@ -389,6 +429,13 @@ Gen_PushPawn (int from, int dest, MOVE * pBuf, int *pMCount)
 void
 Gen_PushPawnTwo (int from, int dest, MOVE * pBuf, int *pMCount)
 {
+#ifdef BOARDDEBUG
+    if (from > 63) printf ("Gen_Push from > 63");
+    if (dest > 63) printf ("Gen_Push dest > 63");
+    if (from < 0) printf ("Gen_Push from < 0");
+    if (dest < 0) printf ("Gen_Push dest < 0");
+#endif
+
     Gen_Push (from, dest, MOVE_TYPE_PAWN_TWO, pBuf, pMCount);
 }
 
@@ -396,6 +443,13 @@ Gen_PushPawnTwo (int from, int dest, MOVE * pBuf, int *pMCount)
 void
 Gen_PushKing (int from, int dest, MOVE * pBuf, int *pMCount)
 {
+#ifdef BOARDDEBUG
+    if (from > 63) printf ("Gen_Push from > 63");
+    if (dest > 63) printf ("Gen_Push dest > 63");
+    if (from < 0) printf ("Gen_Push from < 0");
+    if (dest < 0) printf ("Gen_Push dest < 0");
+#endif
+
     /* Is it a castle? */
     if (from == E1 && (dest == G1 || dest == C1))	/* this is a white castle */
     {
@@ -422,6 +476,10 @@ GenMoves (int current_side, MOVE * pBuf)
     int col;
     int movecount;
     movecount = 0;
+
+#ifdef BOARDDEBUG
+    if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
+#endif
 
     for (i = 0; i < 64; i++)	/* Scan all board */
         if (color[i] == current_side)
@@ -684,6 +742,10 @@ GenCaps (int current_side, MOVE * pBuf)
     xside = Opponent(current_side);
     capscount = 0;
 
+#ifdef BOARDDEBUG
+    if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
+#endif
+
     for (i = 0; i < 64; i++)	/* Scan all board */
         if (color[i] == current_side)
         {
@@ -881,6 +943,10 @@ IsInCheck (int current_side)
 {
     int k;			/* The square where the king is placed */
 
+#ifdef BOARDDEBUG
+    if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
+#endif
+
     /* Find the King of the side to move */
     for (k = 0; k < 64; k++)
         if ((piece[k] == KING) && color[k] == current_side)
@@ -901,6 +967,12 @@ IsAttacked (int current_side, int k)
     int col;			/* Col where the square is placed */
     int xside;
     xside = Opponent(current_side);	/* opposite current_side, who may be attacking */
+
+#ifdef BOARDDEBUG
+    if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
+    if (k < 0) printf("IsAttacked() k < 0");
+    if (k > 63) printf("IsAttacked() k > 63");
+#endif
 
     /* Situation of the square */
     row = Row (k);
