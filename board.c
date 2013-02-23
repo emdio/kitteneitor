@@ -1160,9 +1160,11 @@ MakeMove (MOVE m)
 
     count_MakeMove++;
 
+#ifdef BOARDDEBUG
     int typeOfMove = m.type_of_move;
-//    if (typeOfMove > 8)
-//        printf ("type of move %d \n", typeOfMove);
+    if (typeOfMove > 8) printf ("type of move %d > 8\n", typeOfMove);
+    if (typeOfMove < 0) printf ("type of move %d \n < 8", typeOfMove);
+#endif
 
     hist[hdp].m = m;
     hist[hdp].cap = piece[m.dest];	/* store in history the piece of the dest square */

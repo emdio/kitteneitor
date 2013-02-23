@@ -6,6 +6,7 @@
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
+#include <stdlib.h>
 
 //#define NDEBUG
 //#include <assert.h>
@@ -919,7 +920,7 @@ void setDistToKing()
     {
        for (j = 0; j < 64; ++j)
        {
-          dist_bonus[i][j] = 14 - ( abs( Col(i) - Col(j) ) + abs( Row(i) - Row(j) ) );
+          dist_bonus[i][j] = 14 - ( ABS( Col(i) - Col(j) ) + ABS( Row(i) - Row(j) ) );
 
           qk_dist[i][j]  = dist_bonus[i][j] * 5;
           rk_dist[i][j]  =  dist_bonus[i][j];

@@ -18,6 +18,8 @@
 #define UP     -8
 #define DOWN    8
 
+#define ABS(a)	   (((a) < 0) ? -(a) : (a))
+
 char fenstring[256];
 
 /* The values of the pieces */

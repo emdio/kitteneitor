@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <time.h>
 
 #include "defs.h"
@@ -84,7 +85,7 @@ ComputerThink (int m_depth)
         bestMove = m;
 
         /* If the score is too large we just stop thinking */
-//        if (abs(score) > MATE - 10)
+//        if (ABS(score) > MATE - 10)
 //        {
 //            printf("score = %d\n", score);
 //            fflush(stdout);
@@ -96,7 +97,7 @@ ComputerThink (int m_depth)
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf (" %d  %4d %6d %10d ", i, score, int_time, nodes);
+            printf (" %d  %4d %6d %10lu ", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
@@ -271,7 +272,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 }
 
 int
-Quiescent (int alpha, int beta)
+    Quiescent (int alpha, int beta)
 {
     int i;
     int legal = 0;
@@ -299,13 +300,13 @@ Quiescent (int alpha, int beta)
     /* First we just try the evaluation function */
     /* We generate the moves deppending either
        we are in check or not */
-    if (is_in_check)
-    {
-        /* If we're in check we generate the legal moves */
-        movescnt = GenMoves(side, qMovesBuf);
-        countCapCalls++;
-    }
-    else
+//    if (is_in_check)
+//    {
+//        /* If we're in check we generate the legal moves */
+//        movescnt = GenMoves(side, qMovesBuf);
+//        countCapCalls++;
+//    }
+//    else
     {
         best = Eval(alpha, beta);
         // --- stand pat cutoff?
@@ -368,8 +369,8 @@ Quiescent (int alpha, int beta)
     }
 
     /* If it's a check and there are no legal moves then it's checkmate */
-    if (is_in_check && !legal)
-        alpha = -MATE + ply;
+//    if (is_in_check && !legal)
+//        alpha = -MATE + ply;
 
     return alpha;
 }

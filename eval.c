@@ -957,7 +957,7 @@ int funFactor()
     int funfa = 0;
 
     /* If we aren't in the endgame we like opposite castles */
-    if ( !endGame() && (abs(colWhiteKing - colBlackKing) > 4) )
+    if ( !endGame() && (ABS(colWhiteKing - colBlackKing) > 4) )
         funfa += 10;
     /* We like queens on the board */
     if (whiteQueens >= 1 || blackQueens >= 1)
@@ -978,5 +978,3 @@ int funFactor()
 
     return funfa;
 }
-
-

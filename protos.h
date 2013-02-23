@@ -52,8 +52,10 @@ int Quiescent(int alpha, int beta);
 int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline);
 void checkup(clock_t stoping_time);
 int checkupHalfTime(int stoping_time);
+int reps();
 
 /* Utils */
 void PrintResult(int count, MOVE *ListMoves);
 U64 perft(int depth);
 void PrintBoard();
+int get_ms();
