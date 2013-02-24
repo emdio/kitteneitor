@@ -178,6 +178,8 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     {
        pline->cmove = 0;
        return Quiescent(alpha, beta);
+       /* Uncomment nest line if want to make tests avoiding qsearch */
+       //return Eval(alpha, beta);
     }
 
     /* If we're in check we want to search deeper */

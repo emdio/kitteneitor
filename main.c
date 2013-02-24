@@ -33,6 +33,8 @@ startgame ()
 
 void test1()
 {
+    puts("A good position for perft");
+    puts("FEN: 8/2K1Pk2/p1p5/3p3p/3P4/4P3/2p5/8 w - - 0 1");
     /* Piece in each square */
     int piece_test[64] = {
             EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
@@ -66,7 +68,7 @@ void test1()
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
     hdp = 0;
-    castle = 15;
+    castle = 0;
     fifty = 0;
     hash_key_position(); /* hash de la posicion inicial */
 }
@@ -154,6 +156,7 @@ void test3()
 
 void test4()
 {
+    puts("Seting up test 4");
     /* Piece in each square */
     int piece_test[64] = {
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
