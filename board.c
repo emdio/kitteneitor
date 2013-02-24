@@ -3,9 +3,6 @@
 #include "data.h"
 #include "protos.h"
 
-//#define NDEBUG
-//#include <assert.h>
-
 #define BOARDDEBUG
 
 
@@ -59,8 +56,8 @@ inline int IsSqProtectedByAPawn(int sq, int side)
 
 #ifdef BOARDDEBUG
     if (side != BLACK && side != WHITE) printf ("IsSqProtectedByAPawn() wrong color");
-    if (sq < 0) printf("IsSqProtectedByAPawn() k < 0");
-    if (sq > 63) printf("IsSqProtectedByAPawn() k > 63");
+    if (sq < 0) printf("IsSqProtectedByAPawn() sq < 0");
+    if (sq > 63) printf("IsSqProtectedByAPawn() sq > 63");
 #endif
 
     if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
@@ -184,6 +181,12 @@ int BadCapture(MOVE mcmov) {
     int bishop_protected = 0;
     int knight_protected = 0;
 
+#ifdef BOARDDEBUG
+    int typeOfMove = mcmov.type_of_move;
+    if (typeOfMove > 8) printf ("type of move %d > 8\n", typeOfMove);
+    if (typeOfMove < 0) printf ("type of move %d \n < 8", typeOfMove);
+#endif
+
     if (piece[mcmov.from] == PAWN)
         return 0;
 
@@ -204,14 +207,14 @@ int BadCapture(MOVE mcmov) {
         return 1;
 
 
-    /**********************************************/
-    /* Is the piece protected by a knight? */
+//    /**********************************************/
+//    /* Is the piece protected by a knight? */
     if ( IsSqProtectedByAKnight(mcmov.dest, color[mcmov.dest]) )
         knight_protected = 1;
 
 
-    /**********************************************/
-    /* Is the piece protected by a bishop? */
+//    /**********************************************/
+//    /* Is the piece protected by a bishop? */
     if ( IsSqProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
         bishop_protected = 1;
 
@@ -229,8 +232,7 @@ int BadCapture(MOVE mcmov) {
  * Move generator *
  ****************************************************************************
  */
-void
-Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
+void Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
 {
     MOVE move;
     move.from = from;
@@ -387,8 +389,7 @@ Gen_Push (int from, int dest, int type, MOVE * pBuf, int *pMCount)
     *pMCount = *pMCount + 1;
 }
 
-void
-Gen_PushNormal (int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushNormal (int from, int dest, MOVE * pBuf, int *pMCount)
 {
     Gen_Push (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
 }
@@ -396,8 +397,7 @@ Gen_PushNormal (int from, int dest, MOVE * pBuf, int *pMCount)
 /* Especial cases for Pawn */
 
 /* Pawn can promote */
-void
-Gen_PushPawn (int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushPawn (int from, int dest, MOVE * pBuf, int *pMCount)
 {
 #ifdef BOARDDEBUG
     if (from > 63) printf ("Gen_Push from > 63");
@@ -426,8 +426,7 @@ Gen_PushPawn (int from, int dest, MOVE * pBuf, int *pMCount)
 }
 
 /* When a pawn moves two squares then appears the possibility of the en passant capture*/
-void
-Gen_PushPawnTwo (int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushPawnTwo (int from, int dest, MOVE * pBuf, int *pMCount)
 {
 #ifdef BOARDDEBUG
     if (from > 63) printf ("Gen_Push from > 63");
@@ -440,8 +439,7 @@ Gen_PushPawnTwo (int from, int dest, MOVE * pBuf, int *pMCount)
 }
 
 /* Especial cases for King */
-void
-Gen_PushKing (int from, int dest, MOVE * pBuf, int *pMCount)
+void Gen_PushKing (int from, int dest, MOVE * pBuf, int *pMCount)
 {
 #ifdef BOARDDEBUG
     if (from > 63) printf ("Gen_Push from > 63");
@@ -466,16 +464,14 @@ Gen_PushKing (int from, int dest, MOVE * pBuf, int *pMCount)
 }
 
 /* Gen all moves of current_side to move and push them to pBuf, and return number of moves */
-int
-GenMoves (int current_side, MOVE * pBuf)
+int GenMoves (int current_side, MOVE * pBuf)
 {
-    int i;			/* Counter for the board squares */
-    int k;			/* Counter for cols */
-    int y;
-    int row;
-    int col;
-    int movecount;
-    movecount = 0;
+    int i = 0;			/* Counter for the board squares */
+    int k = 0;			/* Counter for cols */
+    int y = 0;
+    int row = 0;
+    int col = 0;
+    int movecount= 0;
 
 #ifdef BOARDDEBUG
     if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
@@ -719,28 +715,27 @@ GenMoves (int current_side, MOVE * pBuf)
                 }
 
                 break;
-//                default:
-//                printf("Piece type unknown, %d", piece[i]);
-                // assert(false);
+                default:
+                printf("Piece type unknown, %d", piece[i]);
             }
         }
+    #ifdef BOARDDEBUG
+        if (movecount > 200) printf ("Too much moves on GenMoves %d \n", movecount);
+    #endif
     return movecount;
 }
 
 /* Gen all captures of current_side to move and push them to pBuf, return number of moves
  * It's necesary at least ir order to use quiescent in the search */
-int
-GenCaps (int current_side, MOVE * pBuf)
+int GenCaps (int current_side, MOVE * pBuf)
 {
-    int i;			/* Counter for the board squares */
-    int k;			/* Counter for cols */
-    int y;
-    int row;
-    int col;
-    int capscount;		/* Counter for the posible captures */
-    int xside;
-    xside = Opponent(current_side);
-    capscount = 0;
+    int i = 0;			/* Counter for the board squares */
+    int k = 0;			/* Counter for cols */
+    int y = 0;
+    int row = 0;
+    int col = 0;
+    int capscount = 0;		/* Counter for the posible captures */
+    int xside =  Opponent(current_side);
 
 #ifdef BOARDDEBUG
     if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
@@ -927,30 +922,47 @@ GenCaps (int current_side, MOVE * pBuf)
                 if (col < 7 && i < 56 && color[i + 9] == xside)
                     Gen_PushKing (i, i + 9, pBuf, &capscount);	/* right down */
                 break;
-//                               default:
-//                               printf("Piece type unknown");
-                // assert(false);
+               default:
+               printf("Piece type unknown");
             }
         }
+
+#ifdef BOARDDEBUG
+    if (capscount > 200) printf ("Too much moves on GenCaps %d \n", capscount);
+#endif
+
     return capscount;
 }
 
 
 /* Check if current side is in check. Necesary in order to check legality of moves
  and check if castle is allowed */
-int
-IsInCheck (int current_side)
+int IsInCheck (int current_side)
 {
-    int k;			/* The square where the king is placed */
+    int i = 0;
+    int k = 0;			/* The square where the king is placed */
 
 #ifdef BOARDDEBUG
+    int kingWasFound = 0;
     if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
 #endif
 
     /* Find the King of the side to move */
-    for (k = 0; k < 64; k++)
-        if ((piece[k] == KING) && color[k] == current_side)
+    for (i = 0; i < 64; i++)
+        if ((piece[i] == KING) && color[i] == current_side)
+        {
+            k = i;
+            #ifdef BOARDDEBUG
+                kingWasFound = 1;
+            #endif
             break;
+        }
+
+#ifdef BOARDDEBUG
+    if (k < 0) printf("IsInCheck() k < 0: %d\n", k);
+    if (k > 63) printf("IsInCheck() k > 63: %d\n", k);
+    if (kingWasFound == 0) printf("IsInCheck() The king was not found!\n");
+#endif
 
     /* Use IsAttacked in order to know if current_side is under check */
     return IsAttacked (current_side, k);
@@ -961,17 +973,17 @@ IsInCheck (int current_side)
 int
 IsAttacked (int current_side, int k)
 {
-    int h;
-    int y;
-    int row;			/* Row where the square is placed */
-    int col;			/* Col where the square is placed */
-    int xside;
-    xside = Opponent(current_side);	/* opposite current_side, who may be attacking */
+    int h = 0;
+    int y = 0;
+    int row = 0;			/* Row where the square is placed */
+    int col = 0;			/* Col where the square is placed */
+    int xside = Opponent(current_side);	/* opposite current_side, who may be attacking */
 
 #ifdef BOARDDEBUG
-    if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color");
-    if (k < 0) printf("IsAttacked() k < 0");
-    if (k > 63) printf("IsAttacked() k > 63");
+    if (current_side != BLACK && current_side != WHITE) printf ("GenMoves() wrong color\n");
+    if (xside != BLACK && xside != WHITE) printf ("GenMoves() wrong color\n");
+    if (k < 0) printf("IsAttacked() k < 0: %d\n", k);
+    if (k > 63) printf("IsAttacked() k > 63: %d\n", k);
 #endif
 
     /* Situation of the square */
@@ -1156,7 +1168,7 @@ IsAttacked (int current_side, int k)
 int
 MakeMove (MOVE m)
 {
-    int r;
+    int r = 0;
 
     count_MakeMove++;
 

@@ -319,6 +319,48 @@ void test7()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test8()
+{
+    puts ("A position where Kitt crashed");
+    puts ("8/5p2/2Rk4/4p3/4r3/8/r6p/5K2 b - - 3 48");
+    /* Piece in each square */
+    int piece_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY,
+        EMPTY, EMPTY, ROOK, KING, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, ROOK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        ROOK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KING, EMPTY, EMPTY,};
+    /* Color of each square */
+    int color_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY,
+        EMPTY, EMPTY, WHITE, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, EMPTY,};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+    setDistToKing();
+
+    side = BLACK;
+    computer_side = WHITE;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
 void
 xboard ()
 {
@@ -338,7 +380,6 @@ xboard ()
     for (;;)
     {
         fflush (stdout);
-//        setbuf(stdout, NULL);
         if (side == computer_side)
         {   /* computer's turn */
             /* Find out the best move to react the current position */
@@ -671,6 +712,12 @@ main ()
         if (!strcmp (s, "test7"))
         {
             test7 ();
+            PrintBoard();
+            continue;
+        }
+        if (!strcmp (s, "test8"))
+        {
+            test8 ();
             PrintBoard();
             continue;
         }

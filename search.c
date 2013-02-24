@@ -8,8 +8,9 @@
 #include "data.h"
 #include "protos.h"
 
-//#define NDEBUG
-//#include <assert.h>
+
+#define SEARCH_DEBUG
+
 
 MOVE
 ComputerThink (int m_depth)
@@ -276,11 +277,11 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 int
     Quiescent (int alpha, int beta)
 {
-    int i;
+    int i = 0;
     int legal = 0;
     int movescnt = 0;
-    int score;
-    int best;
+    int score = 0;
+    int best = 0;
 
     MOVE qMovesBuf[200];
 
@@ -302,14 +303,20 @@ int
     /* First we just try the evaluation function */
     /* We generate the moves deppending either
        we are in check or not */
-//    if (is_in_check)
-//    {
-//        /* If we're in check we generate the legal moves */
-//        movescnt = GenMoves(side, qMovesBuf);
-//        countCapCalls++;
-//    }
-//    else
+    if (is_in_check)
     {
+        /* If we're in check we generate the legal moves */
+        movescnt = GenMoves(side, qMovesBuf);
+        countCapCalls++;
+        #ifdef SEARCH_DEBUG
+                if (movescnt > 200) printf("Too much moves!: %d", movescnt);
+        #endif
+    }
+    else
+    {
+        #ifdef SEARCH_DEBUG
+                if (is_in_check != 0) printf("This never shoul hapen");
+        #endif
         best = Eval(alpha, beta);
         // --- stand pat cutoff?
 
@@ -322,6 +329,11 @@ int
 
         /* If we aren't in check we just generate the evasions */
         movescnt = GenCaps (side, qMovesBuf);
+
+        #ifdef SEARCH_DEBUG
+                if (movescnt > 200) printf("Too much moves!: %d", movescnt);
+        #endif
+
         countCapCalls++;
     }
 
@@ -333,7 +345,7 @@ int
         MoveOrder(i, movescnt, qMovesBuf);
 
         /* If not in check or promotion (Thx to Pedro) and
-           it's a bad capture the we are done*/
+           it's a bad capture then we are done*/
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
             if (!MakeMove (qMovesBuf[i]))
@@ -361,6 +373,8 @@ int
         score = -Quiescent (-beta, -alpha);
         TakeBack ();
 
+        if ((nodes & 1023) == 0)
+            checkup(stop_time);
         if (must_stop)
             return 0;
 
@@ -371,8 +385,13 @@ int
     }
 
     /* If it's a check and there are no legal moves then it's checkmate */
-//    if (is_in_check && !legal)
-//        alpha = -MATE + ply;
+    if (is_in_check && legal == 0)
+        alpha = -MATE + ply;
+
+#ifdef SEARCH_DEBUG
+        if (alpha > MATE) printf("alpha too high: %d", alpha);
+        if (alpha < -MATE) printf("alpha too low: %d", alpha);
+#endif
 
     return alpha;
 }

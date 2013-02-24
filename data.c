@@ -4,7 +4,7 @@
 
 //MOVE bestMove;
 
-/* Contadorr para la regla de los 50 movimientos */
+/* Contador para la regla de los 50 movimientos */
 int fifty;
 
 int side;			/* Side to move, value = BLACK or WHITE */
