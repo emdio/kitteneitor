@@ -41,7 +41,8 @@ int castle = 15;		/* At start position all castle types ar available */
  * and white's lost all its castle rights
  *
  * */
-int castle_mask[64] = {
+int castle_mask[64] =
+{
     7, 15, 15, 15, 3, 15, 15, 11,
     15, 15, 15, 15, 15, 15, 15, 15,
     15, 15, 15, 15, 15, 15, 15, 15,
@@ -67,7 +68,8 @@ U64 countSearchCalls;
 
 /* The values of the pieces in centipawns */
 int value_piece[6] =
-{   VALUE_PAWN, VALUE_KNIGHT, VALUE_BISHOP, VALUE_ROOK, VALUE_QUEEN,
+{
+    VALUE_PAWN, VALUE_KNIGHT, VALUE_BISHOP, VALUE_ROOK, VALUE_QUEEN,
     VALUE_KING
 };
 
@@ -82,7 +84,8 @@ clock_t total_time;
 int must_stop;
 
 /* Piece in each square */
-int init_piece[64] = {
+int init_piece[64] =
+{
     ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
     PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
     EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
@@ -94,7 +97,8 @@ int init_piece[64] = {
 };
 
 /* Color of each square */
-int init_color[64] = {
+int init_color[64] =
+{
     BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
     BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
     EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
@@ -136,29 +140,32 @@ int init_color[64] = {
  * depending on the very square where it's placed. Vg, a knight in d4 will
  * be given an extra +15, whilst a knight in a1 will be penalized with -40.
  * This simple idea allows the engine to make more sensible moves */
-int pst_pawn_midgame[64] = {
-      0,  0,  0,  0,  0,  0,  0,  0,
-      8, 12, 15, 18, 18, 15, 12,  8,
-      7,  9, 10, 16, 16, 10,  9,  7,
-      6,  7,  9, 12, 12,  9,  7,  6,
-      5,  6,  7,  8,  8,  7,  6,  5,
-      4,  5,  5,  6,  6,  5,  5,  4,
-      3,  3,  3,-21,-21,  3,  3,  3,
-      0,  0,  0,  0,  0,  0,  0,  0
+int pst_pawn_midgame[64] =
+{
+    0,  0,  0,  0,  0,  0,  0,  0,
+    8, 12, 15, 18, 18, 15, 12,  8,
+    7,  9, 10, 16, 16, 10,  9,  7,
+    6,  7,  9, 12, 12,  9,  7,  6,
+    5,  6,  7,  8,  8,  7,  6,  5,
+    4,  5,  5,  6,  6,  5,  5,  4,
+    3,  3,  3,-21,-21,  3,  3,  3,
+    0,  0,  0,  0,  0,  0,  0,  0
 };
 
-int pst_pawn_endgame[64] = {
-      0,  0,  0,  0,  0,  0,  0,  0,
-     25, 25, 25, 25, 25, 25, 25, 25,
-     20, 20, 20, 20, 20, 20, 20, 20,
-     10, 10, 10, 10, 10, 10, 10, 10,
-      0,  0,  0,  0,  0,  0,  0,  0,
-     -5, -5, -5, -5, -5, -5, -5, -5,
+int pst_pawn_endgame[64] =
+{
+    0,  0,  0,  0,  0,  0,  0,  0,
+    25, 25, 25, 25, 25, 25, 25, 25,
+    20, 20, 20, 20, 20, 20, 20, 20,
+    10, 10, 10, 10, 10, 10, 10, 10,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    -5, -5, -5, -5, -5, -5, -5, -5,
     -10,-10,-10,-21,-21,-10,-10,-10,
-      0,  0,  0,  0,  0,  0,  0,  0
+    0,  0,  0,  0,  0,  0,  0,  0
 };
 
-int pst_knight[64] = {
+int pst_knight[64] =
+{
     -90,-25,-25,-25,-25,-25,-25,-90,
     -30,  5,  5,  5,  5,  5,  5,-30,
     -30,  5, 10, 15, 15, 10,  5,-30,
@@ -169,7 +176,8 @@ int pst_knight[64] = {
     -40,-30,-24,-21,-21,-24,-30,-40
 };
 
-int pst_bishop[64] = {
+int pst_bishop[64] =
+{
     -11,  0,  0,  0,  0,  0,  0,-11,
     -11,  5,  0,  0,  0,  0,  5,-11,
     -11,  0,  5,  0,  0,  5,  0,-11,
@@ -180,48 +188,52 @@ int pst_bishop[64] = {
     -11,-21,-27,-20,-20,-27,-21,-11
 };
 
-int pst_rook[64] = {
-      0,  0,  0,  0,  0,  0,  0,  0,
-     10, 10, 10, 10, 10, 10, 10, 10,
-      0,  0,  0,  0,  0,  0,  0,  0,
-      0,  0,  0,  0,  0,  0,  0,  0,
-      0,  0,  0,  0,  0,  0,  0,  0,
-      0,  0,  0,  0,  0,  0,  0,  0,
-      0,  0,  0,  0,  0,  0,  0,  0,
-      0,  0,  0,  5,  5,  0,  0,  0
+int pst_rook[64] =
+{
+    0,  0,  0,  0,  0,  0,  0,  0,
+    10, 10, 10, 10, 10, 10, 10, 10,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  5,  5,  0,  0,  0
 };
 
-int pst_queen[64] = {
-      0,  0,  0,  0,  0,  0,  0,  0,
-     -2,  7,  8,  8,  8,  8,  7, -2,
-     -4,  5,  8,  7,  7,  8,  5, -4,
-     -6,  4,  7, 12, 12,  7,  4, -6,
-     -6,  4,  5,  6,  6,  5,  4, -6,
-     -6,  3,  4,  0,  0,  4,  3, -6,
-     -6,  2,  3,  3,  3,  3,  2, -6,
-     -9, -2, -2, -2, -2, -2, -2, -9
+int pst_queen[64] =
+{
+    0,  0,  0,  0,  0,  0,  0,  0,
+    -2,  7,  8,  8,  8,  8,  7, -2,
+    -4,  5,  8,  7,  7,  8,  5, -4,
+    -6,  4,  7, 12, 12,  7,  4, -6,
+    -6,  4,  5,  6,  6,  5,  4, -6,
+    -6,  3,  4,  0,  0,  4,  3, -6,
+    -6,  2,  3,  3,  3,  3,  2, -6,
+    -9, -2, -2, -2, -2, -2, -2, -9
 };
 
-int pst_king_midgame[64] = {
-   -25, -25, -25, -25, -25, -25, -25, -25,
-   -25, -25, -25, -25, -25, -25, -25, -25,
-   -25, -25, -25, -25, -25, -25, -25, -25,
-   -25, -25, -25, -25, -25, -25, -25, -25,
-   -25, -25, -25, -25, -25, -25, -25, -25,
-   -25, -25, -25, -25, -25, -25, -25, -25,
-   -25, -25, -25, -25, -25, -25, -25, -25,
+int pst_king_midgame[64] =
+{
+    -25, -25, -25, -25, -25, -25, -25, -25,
+    -25, -25, -25, -25, -25, -25, -25, -25,
+    -25, -25, -25, -25, -25, -25, -25, -25,
+    -25, -25, -25, -25, -25, -25, -25, -25,
+    -25, -25, -25, -25, -25, -25, -25, -25,
+    -25, -25, -25, -25, -25, -25, -25, -25,
+    -25, -25, -25, -25, -25, -25, -25, -25,
     11,  16, -15, -15, -15, -15,  16,  11
 };
 
-int pst_king_endgame[64] = {
-     0,  10,  20,  30,  30,  20,  10,   0,
+int pst_king_endgame[64] =
+{
+    0,  10,  20,  30,  30,  20,  10,   0,
     10,  20,  30,  40,  40,  30,  20,  10,
     20,  30,  40,  50,  50,  40,  30,  20,
     30,  40,  50,  60,  60,  50,  40,  30,
     30,  40,  50,  60,  60,  50,  40,  30,
     20,  30,  40,  50,  50,  40,  30,  20,
     10,  20,  30,  40,  40,  30,  20,  10,
-     0,  10,  20,  30,  30,  20,  10,   0
+    0,  10,  20,  30,  30,  20,  10,   0
 };
 
 /* The flip array is used to calculate the piece/square
@@ -229,7 +241,8 @@ values for BLACKS pieces, without needing to write the
 arrays for them (idea taken from TSCP).
 The piece/square value of a white pawn is pst_pawn[sq]
 and the value of a black pawn is pst_pawn[flip[sq]] */
-int flip[64] = {
+int flip[64] =
+{
     56, 57, 58, 59, 60, 61, 62, 63,
     48, 49, 50, 51, 52, 53, 54, 55,
     40, 41, 42, 43, 44, 45, 46, 47,

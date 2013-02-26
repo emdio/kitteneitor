@@ -135,17 +135,19 @@ extern int fifty;
 typedef unsigned long long U64;
 
 /* Estructura para triple repeticion */
-typedef struct tag_REPET {
-   int key;
-   int piece[2][6][64];
-   int side;
-   int ep[64];
+typedef struct tag_REPET
+{
+    int key;
+    int piece[2][6][64];
+    int side;
+    int ep[64];
 } HASH;
 
 
 /* A move is defined by its origin and final squares, the castle rights and the kind of
  * move it's: normal, enpasant... */
-typedef struct {
+typedef struct
+{
     int from;
     int dest;
     int type_of_move;
@@ -153,7 +155,8 @@ typedef struct {
 } MOVE;
 
 /* For storing all moves of game */
-typedef struct {
+typedef struct
+{
     MOVE m;
     int castle;
     int cap;
@@ -164,8 +167,8 @@ typedef struct {
 /* Estructura para PV */
 typedef struct tag_LINE
 {
-   int cmove;
-   MOVE argmove[50];
+    int cmove;
+    MOVE argmove[50];
 } LINE;
 
 
