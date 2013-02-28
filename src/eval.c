@@ -362,11 +362,11 @@ int Eval (alpha, beta)
 /* Returns 1 if the pawn of color color in square sq is passed */
 int isPassedPawnWhite(int sq)
 {
-
 #ifdef DEBUG_EVAL
     if (sq > 63) printf ("isPassedPawn from > 63");
     if (sq < 0) printf ("isPassedPawn from < 0");
 #endif
+
     /* Special case, pawn in A row */
     if (Col(sq) == 0)
         {
@@ -810,7 +810,7 @@ int BishopMobility(int sq)
     if (sq < 0) printf ("BishopMobility from < 0");
 #endif
 
-    int l;
+    int l = 0;
     int mob = 0;
 
     for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
@@ -836,7 +836,7 @@ int BishopRange(int sq)
     if (sq < 0) printf ("BishopRange from < 0");
 #endif
 
-    int l;
+    int l = 0;
     int range = 0;
 
     for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] != PAWN); l-=9)
@@ -858,7 +858,7 @@ int KnightMobility(int sq)
     if (sq < 0) printf ("KnightMobility from < 0");
 #endif
 
-    int l;
+    int l = 0;
     int mob = 0;
 
     l = sq - 17;
@@ -891,7 +891,7 @@ int RookMobility(int sq)
     if (sq < 0) printf ("RookMobility from < 0");
 #endif
 
-    int l;
+    int l = 0;
     int mob = 0;
 
     for (l = sq-8; ((l >= 0) && piece[l] == EMPTY); l-=8)
