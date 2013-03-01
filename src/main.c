@@ -478,7 +478,7 @@ void xboard()
                             c = 'n';
                             break;
                         default:
-                            c = ' ';
+                            c = '\n';
                         }
                     printf ("move %c%d%c%d%c\n", 'a' + Col (theBest.from), 8
                             - Row (theBest.from), 'a' + Col (theBest.dest), 8
