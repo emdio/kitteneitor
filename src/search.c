@@ -84,6 +84,12 @@ MOVE ComputerThink (int m_depth)
 
             bestMove = m;
 
+            if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+            {
+                fprintf(logfile, "In ComputerThink we have a move\n");
+                fflush(logfile);  // always flush the file!
+            }
+
             /* If the score is too large we just stop thinking */
 //        if (ABS(score) > MATE - 10)
 //        {
