@@ -80,11 +80,16 @@ int Eval (alpha, beta)
     /* Set some values to 0 */
     /* Pawn's info */
     for (i=0; i<8; ++i)
-        {
-            whitePawnsInfo[i] = 0;
-            blackPawnsInfo[i] = 0;
-        }
+    {
+        whitePawnsInfo[i] = 0;
+        blackPawnsInfo[i] = 0;
+    }
 
+//    if ( logfile )
+//    {
+//        fprintf(logfile, "Entering eval function\n");
+//        fflush(logfile);  // always flush the file!
+//    }
 
 
     /* The fun factor */
@@ -352,6 +357,12 @@ int Eval (alpha, beta)
 //        if (side == WHITE)
 //            return (score + ADV_TURN_TO_MOVE);
 //        return (-score - ADV_TURN_TO_MOVE);
+//    }
+
+//    if ( logfile )
+//    {
+//        fprintf(logfile, "Leaving eval function\n");
+//        fflush(logfile);  // always flush the file!
 //    }
 
     if (side == WHITE)

@@ -1,7 +1,10 @@
 /* Just a copy of data.c */
 #include <time.h>
+#include <stdio.h>
 
 MOVE bestMove;
+
+FILE *logfile;
 
 clock_t max_time;
 clock_t total_time;

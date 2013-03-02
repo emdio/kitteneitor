@@ -446,6 +446,12 @@ void xboard()
     int movecnt;
     //int illegal_king = 0;
 
+    if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+    {
+        fprintf(logfile, "Entering xboard()\n");
+        fflush(logfile);  // always flush the file!
+    }
+
     printf ("\n");
 //    hash_key_position(); /* hash de la posicion inicial */
 //    hash_rnd_init();
@@ -483,6 +489,12 @@ void xboard()
                     printf ("move %c%d%c%d%c\n", 'a' + Col (theBest.from), 8
                             - Row (theBest.from), 'a' + Col (theBest.dest), 8
                             - Row (theBest.dest), c);
+
+                    if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+                    {
+                        fprintf(logfile, "Printing result\n");
+                        fflush(logfile);  // always flush the file!
+                    }
 
                     /* Obtenemos los movimientos del contrario para saber si el juego finalizo */
                     movecnt = GenMoves(side, moveBuf);
@@ -664,6 +676,11 @@ continuar:
 int main()
 {
 
+    FILE *ini;
+    FILE *log;
+    char val[128];
+    int  use_log_file = 0;
+
     char linea[256];
     char args[4][64];
 
@@ -686,6 +703,34 @@ int main()
     MOVE moveBuf[200];
     MOVE theBest;
     int movecnt;
+
+    /* Load the conf file */
+    ini = fopen("kitt.ini", "r");
+    if (ini == NULL)
+    {
+        printf("I couldn't open the ini file.\n");
+    }
+    else
+    {
+        printf("I could open the ini file.\n");
+    }
+
+    while (fscanf(ini, "%s %d", val, &use_log_file) != EOF)
+    {
+        printf("%s %d\n", val, use_log_file);
+//        printf("Whatever.\n");
+    }
+    fclose(ini);
+
+    if ( use_log_file )
+        logfile = fopen("kitt.log", "w");
+
+    if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+    {
+        fprintf(logfile, "First text added to log file\n");
+        fflush(logfile);  // always flush the file!
+    }
+
 
     puts ("Kitteneitor, by Emilio Diaz");
     puts (" Help");

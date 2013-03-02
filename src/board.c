@@ -5,8 +5,6 @@
 
 #define BOARDDEBUG
 
-
-
 /* This is usually defined by a macro like #define Col(pos) (pos & 7) */
 inline int Col (int square)
 {
