@@ -661,8 +661,6 @@ continuar:
         }
 }
 
-
-
 int main()
 {
 
@@ -936,10 +934,6 @@ int main()
         }
 }
 
-
-/*************************************************************************************
-      Esta funcion revisa si el juego finalizo y envia el resultado al GUI
-**************************************************************************************/
 void PrintResult(int count, MOVE *ListMoves)
 {
     int i;
@@ -1082,8 +1076,6 @@ void setDistToKing()
 //    }
 
 }
-
-
 
 void fen(const char *s)
 {
