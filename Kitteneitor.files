@@ -1,9 +1,0 @@
-src/board.c
-src/data.c
-src/data.h
-src/defs.h
-src/eval.c
-src/main.c
-src/protos.h
-src/search.c
-src/utils.c
