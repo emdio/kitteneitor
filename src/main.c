@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include <locale.h>
+#include <signal.h>
 
 #include "defs.h"
 #include "data.h"
@@ -452,6 +453,7 @@ void xboard()
         fflush(logfile);  // always flush the file!
     }
 
+    signal(SIGINT, SIG_IGN);
     printf ("\n");
 //    hash_key_position(); /* hash de la posicion inicial */
 //    hash_rnd_init();
@@ -495,9 +497,25 @@ void xboard()
 
                     /* computer's turn */
                     /* Find out the best move to react the current position */
+                if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+                    {
+                        fprintf(logfile, "Calling 'theBest = ComputerThink (max_depth);' in xboard\n", side, computer_side);
+                        fflush(logfile);  // always flush the file!
+                    }
                     theBest = ComputerThink (max_depth);
+                if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+                    {
+                        fprintf(logfile, "Finished Calling 'theBest = ComputerThink (max_depth);' in xboard\n", side, computer_side);
+                        fprintf(logfile, "Now we calll MakeMove(TheBest)\n");
+                        fflush(logfile);  // always flush the file!
+                    }
                     MakeMove (theBest);
 
+                if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+                    {
+                        fprintf(logfile, "Now we have to send the move in xboard\n", side, computer_side);
+                        fflush(logfile);  // always flush the file!
+                    }
                     /* send move */
                     switch (theBest.type_of_move)
                         {
