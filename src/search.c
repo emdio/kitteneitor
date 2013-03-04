@@ -91,12 +91,12 @@ MOVE ComputerThink (int m_depth)
             }
 
             /* If the score is too large we just stop thinking */
-//        if (ABS(score) > MATE - 10)
-//        {
-//            printf("score = %d\n", score);
-//            fflush(stdout);
-//            break;
-//        }
+            if (ABS(score) > MATE - max_depth)
+            {
+                printf("score = %d\n", score);
+                fflush(stdout);
+                break;
+            }
 
 
             /* After searching, print results in xboard mode
