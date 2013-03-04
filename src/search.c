@@ -290,7 +290,7 @@ int Quiescent (int alpha, int beta)
     countquiesCalls++;
     nodes++;
 
-    int is_in_check = IsInCheck(side);
+//    int is_in_check = IsInCheck(side);
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
@@ -305,20 +305,20 @@ int Quiescent (int alpha, int beta)
     /* First we just try the evaluation function */
     /* We generate the moves deppending either
        we are in check or not */
-    if (is_in_check)
-        {
-            /* If we're in check we generate the legal moves */
-            movescnt = GenMoves(side, qMovesBuf);
-            countCapCalls++;
-#ifdef SEARCH_DEBUG
-            if (movescnt > 200) printf("Too much moves!: %d", movescnt);
-#endif
-        }
-    else
-        {
-#ifdef SEARCH_DEBUG
-            if (is_in_check != 0) printf("This never shoul hapen");
-#endif
+//    if (is_in_check)
+//        {
+//            /* If we're in check we generate the legal moves */
+//            movescnt = GenMoves(side, qMovesBuf);
+//            countCapCalls++;
+//#ifdef SEARCH_DEBUG
+//            if (movescnt > 200) printf("Too much moves!: %d", movescnt);
+//#endif
+//        }
+//    else
+//        {
+//#ifdef SEARCH_DEBUG
+//            if (is_in_check != 0) printf("This never shoul hapen");
+//#endif
             best = Eval(alpha, beta);
             // --- stand pat cutoff?
 
@@ -337,7 +337,7 @@ int Quiescent (int alpha, int beta)
 #endif
 
             countCapCalls++;
-        }
+//        }
 
 
 
@@ -346,25 +346,26 @@ int Quiescent (int alpha, int beta)
         {
             MoveOrder(i, movescnt, qMovesBuf);
 
-            /* If not in check or promotion (Thx to Pedro) and
-               it's a bad capture then we are done*/
-            if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
-                {
-                    if (!MakeMove (qMovesBuf[i]))
-                        {
-                            /* If the current move isn't legal, we take it back*
-                             *  and take the next move in the list */
-                            TakeBack ();
-                            continue;
-                        }
-                    /* if bad capture we are done */
-#ifdef SEARCH_DEBUG
-                    if ( !(color[qMovesBuf[i].from] != color[qMovesBuf[i].dest]) ) puts("Not a capture!");
-#endif
-                    if (BadCapture(qMovesBuf[i])) continue;
-                }
+//            /* If not in check or promotion (Thx to Pedro) and
+//               it's a bad capture then we are done*/
+//            if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
+//                {
+//                    if (!MakeMove (qMovesBuf[i]))
+//                        {
+//                            /* If the current move isn't legal, we take it back*
+//                             *  and take the next move in the list */
+//                            TakeBack ();
+//                            continue;
+//                        }
+//                    /* if bad capture we are done */
+//#ifdef SEARCH_DEBUG
+//                    if ( !(color[qMovesBuf[i].from] != color[qMovesBuf[i].dest]) ) puts("Not a capture!");
+//#endif
+//                    if (BadCapture(qMovesBuf[i])) continue;
+//                }
 
-            else if (!MakeMove (qMovesBuf[i]))
+//            else
+                if (!MakeMove (qMovesBuf[i]))
                 {
                     /* If the current move isn't legal, we take it back
                      * and take the next move in the list */
@@ -389,9 +390,9 @@ int Quiescent (int alpha, int beta)
                 alpha = score;
         }
 
-    /* If it's a check and there are no legal moves then it's checkmate */
-    if (is_in_check && legal == 0)
-        alpha = -MATE + ply;
+//    /* If it's a check and there are no legal moves then it's checkmate */
+//    if (is_in_check && legal == 0)
+//        alpha = -MATE + ply;
 
 #ifdef SEARCH_DEBUG
     if (alpha > MATE) printf("alpha too high: %d", alpha);

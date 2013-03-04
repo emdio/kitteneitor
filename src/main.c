@@ -450,23 +450,29 @@ void xboard()
     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
     {
         fprintf(logfile, "Entering xboard()\n");
-        fflush(logfile);  // always flush the file!
+        fflush(logfile);
     }
 
+    /* From http://www.gnu.org/software/xboard/engine-intf.html:
+     * First, when an engine is sent the "quit" command, it is also given a SIGTERM signal
+     * shortly afterward to make sure it goes away. If your engine reliably responds to "quit",
+     * and the signal causes problems for you, you should either ignore it by calling
+     * signal(SIGTERM, SIG_IGN) at the start of your program, or disable it with the "feature" command.*/
     signal(SIGINT, SIG_IGN);
+
     printf ("\n");
 //    hash_key_position(); /* hash de la posicion inicial */
 //    hash_rnd_init();
     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
     {
         fprintf(logfile, "Calling start_game()\n");
-        fflush(logfile);  // always flush the file!
+        fflush(logfile);
     }
     startgame ();
     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
     {
         fprintf(logfile, "Finished calling start_game()\n");
-        fflush(logfile);  // always flush the file!
+        fflush(logfile);
     }
 
     /* Waiting a command from the GUI */
@@ -475,7 +481,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "Right before flushing in xboard()\n");
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             fflush (stdout);
@@ -483,7 +489,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "Righ after flushing in xboard()\n");
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             if (side == computer_side)
@@ -492,7 +498,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
                         fprintf(logfile, "side == computer_side in xboard(): %d %d\n", side, computer_side);
-                        fflush(logfile);  // always flush the file!
+                        fflush(logfile);
                     }
 
                     /* computer's turn */
@@ -500,21 +506,21 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
                         fprintf(logfile, "Calling 'theBest = ComputerThink (max_depth);' in xboard\n", side, computer_side);
-                        fflush(logfile);  // always flush the file!
+                        fflush(logfile);
                     }
                     theBest = ComputerThink (max_depth);
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
                         fprintf(logfile, "Finished Calling 'theBest = ComputerThink (max_depth);' in xboard\n", side, computer_side);
                         fprintf(logfile, "Now we calll MakeMove(TheBest)\n");
-                        fflush(logfile);  // always flush the file!
+                        fflush(logfile);
                     }
                     MakeMove (theBest);
 
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
                         fprintf(logfile, "Now we have to send the move in xboard\n", side, computer_side);
-                        fflush(logfile);  // always flush the file!
+                        fflush(logfile);
                     }
                     /* send move */
                     switch (theBest.type_of_move)
@@ -541,7 +547,7 @@ void xboard()
                     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
                         fprintf(logfile, "Printing result in xboard()\n");
-                        fflush(logfile);  // always flush the file!
+                        fflush(logfile);
                     }
 
                     /* Obtenemos los movimientos del contrario para saber si el juego finalizo */
@@ -555,7 +561,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "Right after computer turn if: side %d computer_side %d\n", side, computer_side);
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             if (!fgets(line, 256, stdin))
@@ -563,7 +569,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "if (!fgets (line, 256, stdin)) happened!!!\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                 return;
             }
@@ -571,7 +577,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "Right after 'if (!fgets (line, 256, stdin))'\n", side, computer_side);
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             if (line[0] == '\n')
@@ -579,7 +585,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "line[0] == 'n' happened!\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                 continue;
             }
@@ -587,7 +593,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "Scanning for a command in xboard()\n");
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             sscanf (line, "%s", command);
@@ -595,7 +601,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "We got command in xboard()\n");
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             if (!strcmp (command, "xboard"))
@@ -603,7 +609,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called xboard in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     continue;
                 }
@@ -612,7 +618,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called new in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     startgame ();
                     continue;
@@ -622,7 +628,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called quit in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     return;
                 }
@@ -631,7 +637,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called force in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     computer_side = EMPTY;
                     continue;
@@ -642,7 +648,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called result in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     computer_side = EMPTY;
                     continue;
@@ -652,7 +658,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called command '?'\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     computer_side = EMPTY;
                     continue;
@@ -662,7 +668,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called . in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     continue;
                 }
@@ -671,7 +677,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called exit in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     continue;
                 }
@@ -680,7 +686,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called white in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     side = WHITE;
                     computer_side = BLACK;
@@ -691,7 +697,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called black in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     side = BLACK;
                     computer_side = WHITE;
@@ -702,7 +708,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called sd in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     sscanf (line, "sd %d", &max_depth);
                     continue;
@@ -712,13 +718,13 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Entering go in xboard\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     computer_side = side;
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Leaving go in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     continue;
                 }
@@ -728,7 +734,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called time in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     sscanf (line, "time %d", &max_time);
                     /*pasamos a milisegundos que es como trabajamos internamente*/
@@ -740,7 +746,7 @@ void xboard()
 //            if (total_time < 3000)
 //                max_depth = 6;
 //            else
-                    max_depth = 3;
+                    max_depth = 32;
                     continue;
                 }
             if (!strcmp(command, "otim"))
@@ -748,7 +754,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called otime in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     continue;
                 }
@@ -757,7 +763,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called undo in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     if (hdp == 0)
                         continue;
@@ -769,7 +775,7 @@ void xboard()
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                 {
                     fprintf(logfile, "Called remove in xboard()\n");
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     if (hdp <= 1)
                         continue;
@@ -782,7 +788,7 @@ void xboard()
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
                 fprintf(logfile, "We have a move in xboard()\n");
-                fflush(logfile);  // always flush the file!
+                fflush(logfile);
             }
 
             /* is a move? */
@@ -795,7 +801,7 @@ void xboard()
                 {
                     fprintf(logfile, "Unknown command received in xboard(): ");
                     fprintf(logfile, "%d %d %d %d \n", command[0],command[1], command[2], command[3]);
-                    fflush(logfile);  // always flush the file!
+                    fflush(logfile);
                 }
                     printf("Error (unknown command): %s\n", command); /*no move, unknown command */
                     continue;
@@ -823,7 +829,7 @@ void xboard()
                                     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                                     {
                                         fprintf(logfile, "Looping through moves in xboard(): ");
-                                        fflush(logfile);  // always flush the file!
+                                        fflush(logfile);
                                     }
                                     switch (command[4])
                                         {
@@ -850,7 +856,7 @@ void xboard()
                                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                                 {
                                     fprintf(logfile, "We read a move in xboard()\n");
-                                    fflush(logfile);  // always flush the file!
+                                    fflush(logfile);
                                 }
                                     goto continuar;	/* legal move */
                                 }
@@ -859,7 +865,7 @@ void xboard()
                                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                                 {
                                     fprintf(logfile, "Ilegal move in xboard(): ");
-                                    fflush(logfile);  // always flush the file!
+                                    fflush(logfile);
                                 }
                                     printf ("Illegal move. King is in check\n");
                                     goto continuar;
@@ -928,7 +934,7 @@ int main()
     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
     {
         fprintf(logfile, "First text added to log file\n");
-        fflush(logfile);  // always flush the file!
+        fflush(logfile);
     }
 
 
