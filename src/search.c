@@ -103,7 +103,7 @@ MOVE ComputerThink (int m_depth)
                 depth eval time nodes PV*/
             {
                 int int_time = (int)(t * 100);
-                printf (" %d  %4d %6d %10lu ", i, score, int_time, nodes);
+                printf (" %d  %4d %6d %10llu ", i, score, int_time, nodes);
 
                 /* Printing PV */
                 for(j=0; j<pline.cmove; j++)

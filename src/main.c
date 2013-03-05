@@ -505,13 +505,13 @@ void xboard()
                     /* Find out the best move to react the current position */
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
-                        fprintf(logfile, "Calling 'theBest = ComputerThink (max_depth);' in xboard\n", side, computer_side);
+                    fprintf(logfile, "Calling 'theBest = ComputerThink (max_depth);' in xboard\n"", side, computer_side");
                         fflush(logfile);
                     }
                     theBest = ComputerThink (max_depth);
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
-                        fprintf(logfile, "Finished Calling 'theBest = ComputerThink (max_depth);' in xboard\n", side, computer_side);
+                        fprintf(logfile, "Finished Calling 'theBest = ComputerThink (max_depth);' in xboard\n");
                         fprintf(logfile, "Now we calll MakeMove(TheBest)\n");
                         fflush(logfile);
                     }
@@ -519,7 +519,7 @@ void xboard()
 
                 if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
                     {
-                        fprintf(logfile, "Now we have to send the move in xboard\n", side, computer_side);
+                        fprintf(logfile, "Now we have to send the move in xboard\n");
                         fflush(logfile);
                     }
                     /* send move */
@@ -576,7 +576,7 @@ void xboard()
 
             if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
             {
-                fprintf(logfile, "Right after 'if (!fgets (line, 256, stdin))'\n", side, computer_side);
+                fprintf(logfile, "Right after 'if (!fgets (line, 256, stdin))'\n");
                 fflush(logfile);
             }
 
@@ -621,6 +621,7 @@ void xboard()
                     fflush(logfile);
                 }
                     startgame ();
+                    max_depth = 32;
                     continue;
                 }
             if (!strcmp (command, "quit"))
@@ -736,7 +737,7 @@ void xboard()
                     fprintf(logfile, "Called time in xboard()\n");
                     fflush(logfile);
                 }
-                    sscanf (line, "time %d", &max_time);
+                    sscanf (line, "time %ld", &max_time);
                     /*pasamos a milisegundos que es como trabajamos internamente*/
                     max_time *= 10;
                     max_time /= 10;
@@ -1094,7 +1095,7 @@ int main()
                 }
             if (!strcmp (s, "sd"))
                 {
-                    scanf ("%d", &max_depth);
+                    int aux = scanf ("%d", &max_depth);
                     continue;
                 }
 
@@ -1115,7 +1116,7 @@ int main()
 
             if (!strcmp (s, "perft"))
                 {
-                    scanf ("%d", &max_depth);
+                    int aux = scanf ("%d", &max_depth);
                     clock_t start;
                     clock_t stop;
                     double t = 0.0;
