@@ -53,11 +53,9 @@ MOVE ComputerThink (int m_depth)
             /* Search now! */
             score = Search (-MATE, MATE, i, &m, &pline);
 
-
             /* If we've searched for a certain percentage of the avaialble time it
             doesn't make sense to start a new ply, so we call it a day */
 //        checkup(half_time);
-
 
             /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
                Tomado de Darky */
@@ -103,7 +101,6 @@ MOVE ComputerThink (int m_depth)
             {
                 int int_time = (int)(t * 100);
                 printf (" %d  %4d %6d %10llu ", i, score, int_time, nodes);
-
                 /* Printing PV */
                 for(j=0; j<pline.cmove; j++)
                     {
@@ -131,7 +128,6 @@ MOVE ComputerThink (int m_depth)
             }
             puts("");
             fflush(stdout);
-
         }
     return bestMove;
 }
