@@ -98,7 +98,6 @@ MOVE ComputerThink (int m_depth)
                 break;
             }
 
-
             /* After searching, print results in xboard mode
                 depth eval time nodes PV*/
             {
@@ -130,14 +129,6 @@ MOVE ComputerThink (int m_depth)
                             }
                     }
             }
-//        if (i == m_depth)
-//        {
-//            printf
-//            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
-//             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
-//             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
-//             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
-//        }
             puts("");
             fflush(stdout);
 
@@ -211,8 +202,6 @@ int Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
             picking one up from the list*/
             MoveOrder(i, movecnt, moveBuf);
 
-            /* I guess this is too risky: if we have a bad capture and
-             * we aren't giving check then we just continue */
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
             if (!MakeMove (moveBuf[i]))
@@ -243,7 +232,6 @@ int Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
                         {
                             return beta;
                         }
-
                     alpha = value;
                     /* So far, current move is the best reaction for current position */
                     *pBestMove = moveBuf[i];
@@ -254,7 +242,6 @@ int Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
                     pline->cmove = line.cmove + 1;
                 }
         }
-
 
     /* Once we've checked all the moves, if we have no legal moves,
      * then that's checkmate or stalemate */
@@ -280,17 +267,13 @@ int Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 int Quiescent (int alpha, int beta)
 {
     int i = 0;
-    int legal = 0;
     int movescnt = 0;
     int score = 0;
     int best = 0;
-
     MOVE qMovesBuf[200];
 
     countquiesCalls++;
     nodes++;
-
-//    int is_in_check = IsInCheck(side);
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
@@ -301,80 +284,35 @@ int Quiescent (int alpha, int beta)
     if (reps() >= 2)
         return 0;
 
+    best = Eval(alpha, beta);
+    // --- stand pat cutoff?
+    if (best > alpha)
+        {
+            if (best >= beta)
+                return best;
+            alpha = best;
+        }
 
-    /* First we just try the evaluation function */
-    /* We generate the moves deppending either
-       we are in check or not */
-//    if (is_in_check)
-//        {
-//            /* If we're in check we generate the legal moves */
-//            movescnt = GenMoves(side, qMovesBuf);
-//            countCapCalls++;
-//#ifdef SEARCH_DEBUG
-//            if (movescnt > 200) printf("Too much moves!: %d", movescnt);
-//#endif
-//        }
-//    else
-//        {
-//#ifdef SEARCH_DEBUG
-//            if (is_in_check != 0) printf("This never shoul hapen");
-//#endif
-            best = Eval(alpha, beta);
-            // --- stand pat cutoff?
-
-            if (best > alpha)
-                {
-                    if (best >= beta)
-                        return best;
-                    alpha = best;
-                }
-
-            /* If we aren't in check we just generate the evasions */
-            movescnt = GenCaps (side, qMovesBuf);
+    /* As we are in qasearch we generate the captures */
+    movescnt = GenCaps (side, qMovesBuf);
+    countCapCalls++;
 
 #ifdef SEARCH_DEBUG
             if (movescnt > 200) printf("Too much moves!: %d", movescnt);
 #endif
 
-            countCapCalls++;
-//        }
-
-
-
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
         {
-            MoveOrder(i, movescnt, qMovesBuf);
+        MoveOrder(i, movescnt, qMovesBuf);
 
-//            /* If not in check or promotion (Thx to Pedro) and
-//               it's a bad capture then we are done*/
-//            if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
-//                {
-//                    if (!MakeMove (qMovesBuf[i]))
-//                        {
-//                            /* If the current move isn't legal, we take it back*
-//                             *  and take the next move in the list */
-//                            TakeBack ();
-//                            continue;
-//                        }
-//                    /* if bad capture we are done */
-//#ifdef SEARCH_DEBUG
-//                    if ( !(color[qMovesBuf[i].from] != color[qMovesBuf[i].dest]) ) puts("Not a capture!");
-//#endif
-//                    if (BadCapture(qMovesBuf[i])) continue;
-//                }
-
-//            else
-                if (!MakeMove (qMovesBuf[i]))
-                {
-                    /* If the current move isn't legal, we take it back
-                     * and take the next move in the list */
-                    TakeBack ();
-                    continue;
-                }
-
-            /* If we're here then there's at least one legal move */
-            legal++;
+            if (!MakeMove (qMovesBuf[i]))
+            {
+                /* If the current move isn't legal, we take it back
+                 * and take the next move in the list */
+                TakeBack ();
+                continue;
+            }
 
             score = -Quiescent (-beta, -alpha);
             TakeBack ();
@@ -389,11 +327,6 @@ int Quiescent (int alpha, int beta)
             if (score > alpha)
                 alpha = score;
         }
-
-//    /* If it's a check and there are no legal moves then it's checkmate */
-//    if (is_in_check && legal == 0)
-//        alpha = -MATE + ply;
-
 #ifdef SEARCH_DEBUG
     if (alpha > MATE) printf("alpha too high: %d", alpha);
     if (alpha < -MATE) printf("alpha too low: %d", alpha);
