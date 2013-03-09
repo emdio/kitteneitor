@@ -55,7 +55,7 @@ MOVE ComputerThink (int m_depth)
 
             /* If we've searched for a certain percentage of the avaialble time it
             doesn't make sense to start a new ply, so we call it a day */
-//        checkup(half_time);
+            //checkup(half_time);
 
             /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
                Tomado de Darky */
