@@ -44,7 +44,6 @@ void xboard();
 void hash_rnd_init();
 void hash_key_position();
 void setDistToKing();
-void fen(const char *s);
 
 /* Search */
 MOVE ComputerThink(int depth);
@@ -59,3 +58,4 @@ void PrintResult(int count, MOVE *ListMoves);
 U64 perft(int depth);
 void PrintBoard();
 int get_ms();
+void fen(char *s);

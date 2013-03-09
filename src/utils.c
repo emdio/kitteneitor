@@ -103,107 +103,231 @@ int get_ms()
     return(tv.tv_sec * 1000 + (tv.tv_usec / 1000));
 }
 
-/*recibimos una posición en formato FEN del GUI cuando editamos y la configuramos para que la entienda el motor*/
-//void
-//fen (char *string)
-//{
-//    puts ("Loading fen...");
-//    printf ("El input: %s\n", string);
-//    char c;
-//    int sq=0, i=0, j=0;
-//    /*tipo de pieza según la letra que recibimos, ejemplo B es bishop (nosotros la tenemos definida con el número 2*/
-//    int       tpieza[26] = {6,2,6,6,6,6,6,6,6,6,5,6,6,1,6,0,4,3,6,6,6,6,6,6,6,6};
+void fen(char *s)
+{
+    int n;
+    int i, sq, a;
+    int z;
 
-//    puts("Loading fen 1");
+    puts("fen 0");
+    n = strlen(s);
 
-//    /*Rellenamos la tabla de posiciones y colores*/
-//    while (sq < 64) {
+    puts("fen 1");
+    for (i = 0; i < 64; ++i)
+        {
+        printf("i: %d\n", i);
+            color[i] = EMPTY;
+            piece[i] = EMPTY;
+        }
 
-////        printf("sp=%d\n", sq);
+    sq = 0;
+    a = 0;
 
-////        puts("Loading fen 2");
+    puts("fen 1");
 
-////        enroque_mascara[sq] = 15;
-//        c = string[i++];
-//        if ('a'<c && c<'z') {
-//            color[sq] = BLACK;
-//            piece[sq] = tpieza[c - 'a'];
+    for (i=0, z = 0; i<n && z == 0; ++i)
+        {
+            switch(s[i])
+                {
+                case '1':
+                    sq += 1;
+                    break;
+                case '2':
+                    sq += 2;
+                    break;
+                case '3':
+                    sq += 3;
+                    break;
+                case '4':
+                    sq += 4;
+                    break;
+                case '5':
+                    sq += 5;
+                    break;
+                case '6':
+                    sq += 6;
+                    break;
+                case '7':
+                    sq += 7;
+                    break;
+                case '8':
+                    sq += 8;
+                    break;
+                case 'p':
+                    color[sq] = BLACK;
+                    piece[sq] = PAWN;
+                    ++sq;
+                    break;
+                case 'n':
+                    color[sq] = BLACK;
+                    piece[sq] = KNIGHT;
+                    ++sq;
+                    break;
+                case 'b':
+                    color[sq] = BLACK;
+                    piece[sq] = BISHOP;
+                    ++sq;
+                    break;
+                case 'r':
+                    color[sq] = BLACK;
+                    piece[sq] = ROOK;
+                    ++sq;
+                    break;
+                case 'q':
+                    color[sq] = BLACK;
+                    piece[sq] = QUEEN;
+                    ++sq;
+                    break;
+                case 'k':
+                    color[sq] = BLACK;
+                    piece[sq] = KING;
+                    ++sq;
+                    break;
+                case 'P':
+                    color[sq] = WHITE;
+                    piece[sq] = PAWN;
+                    ++sq;
+                    break;
+                case 'N':
+                    color[sq] = WHITE;
+                    piece[sq] = KNIGHT;
+                    ++sq;
+                    break;
+                case 'B':
+                    color[sq] = WHITE;
+                    piece[sq] = BISHOP;
+                    ++sq;
+                    break;
+                case 'R':
+                    color[sq] = WHITE;
+                    piece[sq] = ROOK;
+                    ++sq;
+                    break;
+                case 'Q':
+                    color[sq] = WHITE;
+                    piece[sq] = QUEEN;
+                    ++sq;
+                    break;
+                case 'K':
+                    color[sq] = WHITE;
+                    piece[sq] = KING;
+                    ++sq;
+                    break;
+                case '/':
+                    break;
+                default:
+                    z = 1;
+                    break;
+                }
+            a = i;
+        }
 
-//            sq++;
+    side  = -1;
+    ++a;
+
+    for (i=a, z = 0; i<n && z == 0; ++i)
+        {
+            switch(s[i])
+                {
+                case 'w':
+                    side = WHITE;
+                    break;
+                case 'b':
+                    side = BLACK;
+                    break;
+                default:
+                    z = 1;
+                    break;
+                }
+            a = i;
+        }
+
+    castle = 0;
+
+    for (i=a+1, z = 0; i<n && z == 0; ++i)
+        {
+            switch(s[i])
+                {
+                case 'K':
+                    castle |= 1;
+                    break;
+                case 'Q':
+                    castle |= 2;
+                    break;
+                case 'k':
+                    castle |= 4;
+                    break;
+                case 'q':
+                    castle |= 8;
+                    break;
+                case '-':
+                    break;
+                default:
+                    z = 1;
+                    break;
+                }
+            a = i;
+        }
+
+//    enpasant = -1;
+
+//    for (i=a+1, z = 0; i<n && z == 0; ++i)
+//        {
+//            switch(s[i])
+//                {
+//                case '-':
+//                    break;
+//                case 'a':
+//                    enpasant = 0;
+//                    break;
+//                case 'b':
+//                    enpasant = 1;
+//                    break;
+//                case 'c':
+//                    enpasant = 2;
+//                    break;
+//                case 'd':
+//                    enpasant = 3;
+//                    break;
+//                case 'e':
+//                    enpasant = 4;
+//                    break;
+//                case 'f':
+//                    enpasant = 5;
+//                    break;
+//                case 'g':
+//                    enpasant = 6;
+//                    break;
+//                case 'h':
+//                    enpasant = 7;
+//                    break;
+//                case '1':
+//                    enpasant += 56;
+//                    break;
+//                case '2':
+//                    enpasant += 48;
+//                    break;
+//                case '3':
+//                    enpasant += 40;
+//                    break;
+//                case '4':
+//                    enpasant += 32;
+//                    break;
+//                case '5':
+//                    enpasant += 24;
+//                    break;
+//                case '6':
+//                    enpasant += 16;
+//                    break;
+//                case '7':
+//                    enpasant +=  8;
+//                    break;
+//                case '8':
+//                    enpasant +=  0;
+//                    break;
+//                default:
+//                    z = 1;
+//                    break;
+//                }
 //        }
-//        else if ('A'<c && c<'Z') {
-//            color[sq] = WHITE;
-//            piece[sq] = tpieza[c - 'A'];
-
-//            sq++;
-//        }
-//        else if ('1'<=c && c<='8') {
-//            for (j=0; j<(c - '0'); j++) {
-//                color[sq+j] = EMPTY;
-//                piece[sq+j] = EMPTY;
-//            }
-//            sq += j;
-//        }
-////        puts("Loading fen 3");
-//    }
-
-//    /*Color para el turno*/
-//    c = string[i++];
-//    if (c == 'w')             { side = WHITE; }
-//    else if (c == 'b')        { side = BLACK; }
-
-
-//    /*Flag del enroque*/
-//        castle = 0;
-//        c = string[i++];
-//        while (c == 'K' || c == 'Q' || c == 'k' || c == 'q') {
-//            if (c == 'K') {
-//                castle = castle + 1;
-////                tb1 = 63;
-//            }
-//            if (c == 'Q') {
-//                castle = castle + 2;
-////                tb2 = 56;
-//            }
-//            if (c == 'k') {
-//                castle = castle + 4;
-////                tn1 = 7;
-//            }
-//            if (c == 'q') {
-//                castle = castle + 8;
-////                tn2 = 0;
-//            }
-//            c = string[i++];
-//        }
-
-
-/*printf("enroque: %d\n", enroque);
-   printf("tb1: %d\n", tb1);
-   printf("tb2: %d\n", tb2);
-   printf("tn1: %d\n", tn1);
-   printf("tn2: %d\n", tn2); */
-
-/*máscaras para los enroques */
-//    enroque_mascara[rb] = 12;
-//    enroque_mascara[rn] = 3;
-//    enroque_mascara[tb2] = 13;
-//    enroque_mascara[tb1] = 14;
-//    enroque_mascara[tn2] = 7;
-//    enroque_mascara[tn1] = 11;
-
-/*Flag de al paso */
-//    c = string[i++];
-//    if (c>='a' && c<='h') {
-//        alpaso = (c - 'a');
-//        c = string[i++];
-//        if (c>='1' && c<='8') alpaso += 8*(7-(c - '1'));
-//        else alpaso = -1;
-//    }
-//    else alpaso = -1;
-
-
-/*no comprobamos en el fen la regla de 50 movimientos o el número de jugadas, la ponemos directamente a 0 */
-//    regla50 = 0;              /*inicamos la regla de los 50 movimientos*/
-//    njugadas = 0;             /*ponemos a 0 el contador de jugadas*/
-
-//}
+}
