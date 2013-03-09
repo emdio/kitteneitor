@@ -41,7 +41,7 @@ MOVE ComputerThink (int m_depth)
             countCapCalls = 0;
             countSearchCalls = 0;
             nodes = 0;
-//        memset(history, 0, sizeof(history));
+            memset(history, 0, sizeof(history));
 
             clock_t start;
             clock_t stop;
