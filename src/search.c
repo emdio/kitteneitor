@@ -66,14 +66,6 @@ MOVE ComputerThink (int m_depth)
                     break;
                 }
 
-            /* If the score is too large we just stop thinking */
-            if (ABS(score) > MATE - max_depth)
-                {
-                    printf("score = %d\n", score);
-                    fflush(stdout);
-                    break;
-                }
-
             /* Stop timer */
             stop = clock ();
             t = (double) (stop - start) / CLOCKS_PER_SEC;
