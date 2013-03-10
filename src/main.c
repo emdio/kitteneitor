@@ -461,8 +461,10 @@ void xboard()
     signal(SIGINT, SIG_IGN);
 
     printf ("\n");
-//    hash_key_position(); /* hash de la posicion inicial */
-//    hash_rnd_init();
+
+    hash_key_position(); /* hash de la posicion inicial */
+    hash_rnd_init();
+
     if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
     {
         fprintf(logfile, "Calling start_game()\n");
@@ -622,7 +624,7 @@ void xboard()
                 }
                     startgame ();
                     max_depth = 32;
-                    side = black;
+                    computer_side = BLACK;
                     continue;
                 }
             if (!strcmp (command, "quit"))
