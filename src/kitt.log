@@ -246,126 +246,6 @@ Right after computer turn if: side 0 computer_side 7
 Right after 'if (!fgets (line, 256, stdin))'
 Scanning for a command in xboard()
 We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
 Entering go in xboard
 Leaving go in xboard()
 Right before flushing in xboard()
@@ -376,7 +256,6 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -401,60 +280,13 @@ Right after computer turn if: side 1 computer_side 0
 Right after 'if (!fgets (line, 256, stdin))'
 Scanning for a command in xboard()
 We got command in xboard()
-Called force in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
 We have a move in xboard()
 We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Entering go in xboard
-Leaving go in xboard()
 Right before flushing in xboard()
 Righ after flushing in xboard()
 side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -528,7 +360,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -560,7 +391,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -669,6 +499,73 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
@@ -737,77 +634,6 @@ side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -953,7 +779,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -985,119 +810,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -1172,7 +884,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -1204,7 +915,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -1385,6 +1095,40 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
@@ -1422,7 +1166,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -1454,46 +1197,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -1721,7 +1424,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -1754,79 +1456,6 @@ side == computer_side in xboard(): 0 0
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -1905,6 +1534,217 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
@@ -1977,6 +1817,256 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
+Now we calll MakeMove(TheBest)
+Now we have to send the move in xboard
+Printing result in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 0
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+side == computer_side in xboard(): 0 0
+Calling 'theBest = ComputerThink (max_depth);' in xboard
+, side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -2270,6 +2360,66 @@ Right after computer turn if: side 1 computer_side 7
 Right after 'if (!fgets (line, 256, stdin))'
 Scanning for a command in xboard()
 We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 0 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 0 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 0 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 0 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called time in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 0 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+Called otime in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 0 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
+We have a move in xboard()
+We read a move in xboard()
+Right before flushing in xboard()
+Righ after flushing in xboard()
+Right after computer turn if: side 1 computer_side 7
+Right after 'if (!fgets (line, 256, stdin))'
+Scanning for a command in xboard()
+We got command in xboard()
 Entering go in xboard
 Leaving go in xboard()
 Right before flushing in xboard()
@@ -2280,7 +2430,6 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2380,6 +2529,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -2451,6 +2601,7 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2484,6 +2635,7 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2515,12 +2667,10 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2556,7 +2706,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2588,12 +2737,10 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2734,7 +2881,6 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2801,6 +2947,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -2840,6 +2987,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2871,6 +3019,8 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -2945,6 +3095,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -2979,6 +3130,7 @@ Calling 'theBest = ComputerThink (max_depth);' in xboard
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3010,6 +3162,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -3049,6 +3202,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3080,6 +3234,8 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -3155,6 +3311,8 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3186,6 +3344,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -3262,7 +3421,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3330,6 +3488,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -3371,6 +3530,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3407,7 +3567,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3439,7 +3598,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -3518,6 +3676,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3554,6 +3713,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3658,7 +3818,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -3701,6 +3860,8 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3726,7 +3887,7 @@ Right after 'if (!fgets (line, 256, stdin))'
 Scanning for a command in xboard()
 We got command in xboard()
 We have a move in xboard()
-We read a move in xboard()
+Looping through moves in xboard(): We read a move in xboard()
 Right before flushing in xboard()
 Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
@@ -3738,6 +3899,9 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3775,6 +3939,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3849,6 +4014,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3880,11 +4046,13 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -3922,6 +4090,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4064,7 +4233,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4145,7 +4313,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4183,7 +4350,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4215,7 +4381,6 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4408,7 +4573,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4478,6 +4642,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4485,6 +4650,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4523,6 +4689,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4554,43 +4721,8 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 1 1
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4634,6 +4766,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4665,6 +4798,7 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4672,6 +4806,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -4703,6 +4838,8 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4741,6 +4878,9 @@ Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4882,12 +5022,13 @@ Right after 'if (!fgets (line, 256, stdin))'
 Scanning for a command in xboard()
 We got command in xboard()
 We have a move in xboard()
-Looping through moves in xboard(): We read a move in xboard()
+We read a move in xboard()
 Right before flushing in xboard()
 Righ after flushing in xboard()
 side == computer_side in xboard(): 1 1
 Calling 'theBest = ComputerThink (max_depth);' in xboard
 , side, computer_sideIn ComputerThink we have a move
+In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
@@ -4927,40 +5068,6 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 1 1
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
-In ComputerThink we have a move
 In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
@@ -4997,6 +5104,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
 In ComputerThink we have a move
+In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
 Now we have to send the move in xboard
@@ -5047,6 +5155,7 @@ In ComputerThink we have a move
 In ComputerThink we have a move
 Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
 Now we calll MakeMove(TheBest)
+Was the king found? 0
 Now we have to send the move in xboard
 Printing result in xboard()
 Right before flushing in xboard()
@@ -5119,111 +5228,6 @@ Called undo in xboard()
 Right before flushing in xboard()
 Righ after flushing in xboard()
 Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-Unknown command received in xboard(): 99 111 109 112 
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called black in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called white in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 1
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called force in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called time in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called otime in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-We have a move in xboard()
-We read a move in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 0 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Entering go in xboard
-Leaving go in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-side == computer_side in xboard(): 0 0
-Calling 'theBest = ComputerThink (max_depth);' in xboard
-, side, computer_sideIn ComputerThink we have a move
-In ComputerThink we have a move
-Finished Calling 'theBest = ComputerThink (max_depth);' in xboard
-Now we calll MakeMove(TheBest)
-Now we have to send the move in xboard
-Printing result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 0
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called result in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
-Right after 'if (!fgets (line, 256, stdin))'
-Scanning for a command in xboard()
-We got command in xboard()
-Called force in xboard()
-Right before flushing in xboard()
-Righ after flushing in xboard()
-Right after computer turn if: side 1 computer_side 7
 Right after 'if (!fgets (line, 256, stdin))'
 Scanning for a command in xboard()
 We got command in xboard()

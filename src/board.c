@@ -973,6 +973,15 @@ int IsInCheck (int current_side)
                 break;
             }
 
+    if ( logfile )  // *not* 'user_wants_logfile' in case the original fopen() failed
+    {
+        if (!kingWasFound)
+        {
+            fprintf(logfile, "Was the king found? %d\n", kingWasFound);
+            fflush(logfile);
+        }
+    }
+
 #ifdef BOARDDEBUG
     if (k < 0) printf("IsInCheck() k < 0: %d\n", k);
     if (k > 63) printf("IsInCheck() k > 63: %d\n", k);

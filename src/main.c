@@ -624,7 +624,6 @@ void xboard()
                 }
                     startgame ();
                     max_depth = 32;
-                    computer_side = BLACK;
                     continue;
                 }
             if (!strcmp (command, "quit"))
