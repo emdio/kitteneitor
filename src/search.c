@@ -167,8 +167,8 @@ int Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         }
 
     /* If we're in check we want to search deeper */
-    if (IsInCheck(side))
-        ++depth;
+//    if (IsInCheck(side))
+//        ++depth;
 
     /* Static null move prunning */
     if (ply && !IsInCheck(side))
@@ -255,7 +255,7 @@ int Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 int Quiescent (int alpha, int beta)
 {
     int i = 0;
-    int movescnt = 0;
+    int capsCount = 0;
     int score = 0;
     int best = 0;
     MOVE qMovesBuf[200];
@@ -282,17 +282,17 @@ int Quiescent (int alpha, int beta)
         }
 
     /* As we are in qasearch we generate the captures */
-    movescnt = GenCaps (side, qMovesBuf);
+    capsCount = GenCaps (side, qMovesBuf);
     countCapCalls++;
 
 #ifdef SEARCH_DEBUG
-            if (movescnt > 200) printf("Too much moves!: %d", movescnt);
+            if (capsCount > 200) printf("Too much moves!: %d", capsCount);
 #endif
 
     /* Now the alpha-beta search in quiescent */
-    for (i = 0; i < movescnt; ++i)
+    for (i = 0; i < capsCount; ++i)
         {
-        MoveOrder(i, movescnt, qMovesBuf);
+        MoveOrder(i, capsCount, qMovesBuf);
 
             if (!MakeMove (qMovesBuf[i]))
             {
