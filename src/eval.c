@@ -3,7 +3,8 @@
 #include "data.h"
 #include "protos.h"
 
-#define DEBUG_EVAL
+//#define NDEBUG
+//#include <assert.h>
 
 /*
  ****************************************************************************
@@ -202,6 +203,8 @@ Eval (alpha, beta)
     {
         return lazy;
     }
+//    if (abs(lazy) > 300)
+//        return lazy;
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
@@ -359,11 +362,6 @@ Eval (alpha, beta)
 /* Returns 1 if the pawn of color color in square sq is passed */
 int isPassedPawnWhite(int sq)
     {
-
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("isPassedPawn from > 63");
-    if (sq < 0) printf ("isPassedPawn from < 0");
-#endif
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
         {
@@ -394,11 +392,6 @@ int isPassedPawnWhite(int sq)
 
 int isPassedPawnBlack(int sq)
     {
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("isPassedPawnBlack from > 63");
-    if (sq < 0) printf ("isPassedPawnBlack from < 0");
-#endif
-
         /* Special case, pawn in A row */
         if (Col(sq) == 0)
         {
@@ -788,25 +781,15 @@ inline int endGame()
 /* Returns 0 if it sq is on an open col */
 inline int isOnAnOpenCol(int sq)
 {
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("isOnAnOpenCol from > 63");
-    if (sq < 0) printf ("isOnAnOpenCol from < 0");
-#endif
-
     if (whitePawnsInfo[Col(sq)] == 0 && blackPawnsInfo[Col(sq)] == 0)
         return 1;
     return 0;
 }
 
-/* Mobility of the bishop: number of empty squares a bishop can reach
+/* Mobility of the bishop: number of empty squares a bishop can reach 
  * from its actual position */
 int BishopMobility(int sq)
 {
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("BishopMobility from > 63");
-    if (sq < 0) printf ("BishopMobility from < 0");
-#endif
-
     int l;
     int mob = 0;
 
@@ -828,11 +811,6 @@ int BishopMobility(int sq)
 /* Range of the bishop: The squares till reach a pawn no matter its color */
 int BishopRange(int sq)
 {
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("BishopRange from > 63");
-    if (sq < 0) printf ("BishopRange from < 0");
-#endif
-
     int l;
     int range = 0;
 
@@ -850,11 +828,6 @@ int BishopRange(int sq)
 
 int KnightMobility(int sq)
 {
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("KnightMobility from > 63");
-    if (sq < 0) printf ("KnightMobility from < 0");
-#endif
-
     int l;
     int mob = 0;
 
@@ -883,11 +856,6 @@ int KnightMobility(int sq)
 
 int RookMobility(int sq)
 {
-#ifdef DEBUG_EVAL
-    if (sq > 63) printf ("RookMobility from > 63");
-    if (sq < 0) printf ("RookMobility from < 0");
-#endif
-
     int l;
     int mob = 0;
 
@@ -921,11 +889,6 @@ int NoMaterial()
    doubled pawns */
 inline int isDoubledPawnWhite(int col)
 {
-#ifdef DEBUG_EVAL
-    if (col > 7) printf ("isDoubledPawnWhite sq > 63");
-    if (col < 0) printf ("isDoubledPawnWhite sq < 0");
-#endif
-
   int tmp = whitePawnsInfo[col];
 
   /* First x in the below expression is for the case when x is 0 */
@@ -933,11 +896,6 @@ inline int isDoubledPawnWhite(int col)
 }
 inline int isDoubledPawnBlack(int col)
 {
-#ifdef DEBUG_EVAL
-    if (col > 7) printf ("isDoubledPawnBlack sq > 63");
-    if (col < 0) printf ("isDoubledPawnBlack sq < 0");
-#endif
-
   int tmp = blackPawnsInfo[col];
 
   /* First x in the below expression is for the case when x is 0 */
@@ -957,7 +915,7 @@ int funFactor()
     int funfa = 0;
 
     /* If we aren't in the endgame we like opposite castles */
-    if ( !endGame() && (ABS(colWhiteKing - colBlackKing) > 4) )
+    if ( !endGame() && (abs(colWhiteKing - colBlackKing) > 4) )
         funfa += 10;
     /* We like queens on the board */
     if (whiteQueens >= 1 || blackQueens >= 1)
@@ -975,6 +933,8 @@ int funFactor()
         funfa += 10;
     if ( (whiteBishops + whiteKnights) != (blackBishops + blackKnights) )
         funfa += 10;
-
+    
     return funfa;
 }
+
+

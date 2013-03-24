@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <time.h>
 
 #include "defs.h"
@@ -78,14 +77,13 @@ ComputerThink (int m_depth)
         double decimal_score = ((double) score) / 100.;
         if (side == BLACK)
         {
-            score = -score;
             decimal_score = -decimal_score;
         }
 
         bestMove = m;
 
         /* If the score is too large we just stop thinking */
-//        if (ABS(score) > MATE - 10)
+//        if (abs(score) > MATE - 10)
 //        {
 //            printf("score = %d\n", score);
 //            fflush(stdout);
@@ -97,7 +95,7 @@ ComputerThink (int m_depth)
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf (" %d  %4d %6d %10lu ", i, score, int_time, nodes);
+            printf (" %d  %2d %4d %8d ", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
@@ -155,7 +153,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     int value;			/* To store the evaluation */
     int havemove;		/* Either we have or not a legal move available */
     int movecnt;		/* The number of available moves */
-
 //    int score;
     MOVE moveBuf[200];  /* List of movements */
     MOVE tmpMove;
@@ -180,7 +177,10 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
        return Quiescent(alpha, beta);
     }
 
-    /* If we're in check we want to search deeper */
+    /* Generate and count all moves for current position */
+    movecnt = GenMoves (side, moveBuf);
+
+    /* If we're in check maybe we want to search deeper */
     if (IsInCheck(side))
         ++depth;
 
@@ -190,11 +190,8 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         int ev = Eval(-MATE, MATE);
         int evalua = ev - 150;
         if (evalua >= beta)
-            return beta;
+            return evalua;
     }
-
-    /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
 
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
@@ -204,15 +201,23 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
 
-        /* I guess this is too risky: if we have a bad capture and
-         * we aren't giving check then we just continue */
-            /* If the current move isn't legal, we take it back
-             * and take the next move in the list */
-            if (!MakeMove (moveBuf[i]))
-            {
-                TakeBack ();
-                continue;
-            }
+        /* This a test similiar to what is done in qsearch, but the
+         * result is really bad. Maybe it makes sense if the move
+         * ordering is improvedor seting alower threshold */
+//        if (moveBuf[i].grade < 0) continue;
+
+
+//        if (moveBuf[i].type_of_move > 8)
+//            printf ("type of move the best %d \n", moveBuf[i].type_of_move);
+
+
+        /* If the current move isn't legal, we take it back
+         * and take the next move in the list */
+        if (!MakeMove (moveBuf[i]))
+        {
+            TakeBack ();
+            continue;
+        }
 
         /* If we've reached this far, then we have a move available */
         havemove = 1;
@@ -226,6 +231,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         /* Once we have an evaluation, we use it in in an alpha-beta search */
         if (value > alpha)
         {
+
             /* Este movimiento causo un cutoff, asi que incrementamos
             el valor de historia para que sea ordenado antes la
             proxima vez que se busque */
@@ -272,7 +278,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 }
 
 int
-    Quiescent (int alpha, int beta)
+Quiescent (int alpha, int beta)
 {
     int i;
     int legal = 0;
@@ -300,13 +306,13 @@ int
     /* First we just try the evaluation function */
     /* We generate the moves deppending either
        we are in check or not */
-//    if (is_in_check)
-//    {
-//        /* If we're in check we generate the legal moves */
-//        movescnt = GenMoves(side, qMovesBuf);
-//        countCapCalls++;
-//    }
-//    else
+    if (is_in_check)
+    {
+        movescnt = GenMoves(side, qMovesBuf);
+        countCapCalls++;
+//        MoveOrder(i, movescnt, qMovesBuf);
+    }
+    else
     {
         best = Eval(alpha, beta);
         // --- stand pat cutoff?
@@ -318,34 +324,33 @@ int
             alpha = best;
         }
 
-        /* If we aren't in check we just generate the evasions */
         movescnt = GenCaps (side, qMovesBuf);
         countCapCalls++;
+//        MoveOrder(i, movescnt, qMovesBuf);
     }
 
+//    MoveOrder(i, movescnt, qMovesBuf);
 
 
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
     {
-        MoveOrder(i, movescnt, qMovesBuf);
 
-        /* If not in check or promotion (Thx to Pedro) and
-           it's a bad capture the we are done*/
+//        MoveOrder(i, movescnt, qMovesBuf);
+
+//        if (qMovesBuf[i].type_of_move > 8)
+//            printf ("type of move in the quiescent %d \n", qMovesBuf[i].type_of_move);
+
+        /* If not in check or promotion (Thx to Pedro) */
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
-            if (!MakeMove (qMovesBuf[i]))
-            {
-            /* If the current move isn't legal, we take it back*
-             *  and take the next move in the list */
-                TakeBack ();
-                continue;
-            }
             /* if bad capture we are done */
             if (BadCapture(qMovesBuf[i])) continue;
         }
 
-        else if (!MakeMove (qMovesBuf[i]))
+        MoveOrder(i, movescnt, qMovesBuf);
+
+        if (!MakeMove (qMovesBuf[i]))
         {
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
@@ -353,7 +358,7 @@ int
             continue;
         }
 
-        /* If we're here then there's at least one legal move */
+        /* If we're here then tehre's at least one legal move */
         legal++;
 
         score = -Quiescent (-beta, -alpha);
@@ -369,8 +374,8 @@ int
     }
 
     /* If it's a check and there are no legal moves then it's checkmate */
-//    if (is_in_check && !legal)
-//        alpha = -MATE + ply;
+    if (is_in_check && !legal)
+        alpha = -MATE + ply;
 
     return alpha;
 }
