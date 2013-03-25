@@ -278,6 +278,98 @@ void test6()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test7()
+{
+    puts ("A position where Kitt crashed");
+    puts ("8/5p2/2Rk4/4p3/4r3/8/r6p/5K2 b - - 3 48");
+    /* Piece in each square */
+    int piece_test[64] =
+    {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY,
+        EMPTY, EMPTY, ROOK, KING, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, ROOK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        ROOK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KING, EMPTY, EMPTY
+    };
+    /* Color of each square */
+    int color_test[64] =
+    {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY,
+        EMPTY, EMPTY, WHITE, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, EMPTY
+    };
+
+    int i;
+    for (i = 0; i < 64; ++i)
+        {
+            piece[i] = piece_test[i];
+            color[i] = color_test[i];
+        }
+
+    setDistToKing();
+
+    side = BLACK;
+    computer_side = WHITE;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
+void test8()
+{
+    puts ("A position where Kitt crashed");
+    puts ("q7/1p1P2p1/2p1R1Q1/5p2/1P1p4/6Pk/P6P/7K w - - 1 41");
+    /* Piece in each square */
+    int piece_test[64] =
+    {
+        QUEEN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, PAWN, EMPTY, PAWN, EMPTY, EMPTY, PAWN, EMPTY,
+        EMPTY, EMPTY, PAWN, EMPTY, ROOK, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, KING,
+        EMPTY, PAWN, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, QUEEN, EMPTY,
+        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KING
+    };
+    /* Color of each square */
+    int color_test[64] =
+    {
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, BLACK, EMPTY, WHITE, EMPTY, EMPTY, BLACK, EMPTY,
+        EMPTY, EMPTY, BLACK, EMPTY, WHITE, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, BLACK,
+        EMPTY, WHITE, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY,
+        WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, WHITE,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE
+    };
+
+    int i;
+    for (i = 0; i < 64; ++i)
+        {
+            piece[i] = piece_test[i];
+            color[i] = color_test[i];
+        }
+
+    setDistToKing();
+
+    side = WHITE;
+    computer_side = BLACK;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
 void
 xboard ()
 {
@@ -624,6 +716,17 @@ main ()
         if (!strcmp (s, "test6"))
         {
             test6 ();
+            PrintBoard();
+            continue;
+        }
+        if (!strcmp (s, "test7"))
+        {
+            test7 ();
+            PrintBoard();
+            continue;
+        }if (!strcmp (s, "test8"))
+        {
+            test8 ();
             PrintBoard();
             continue;
         }
