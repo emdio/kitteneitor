@@ -184,15 +184,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     if (IsInCheck(side))
         ++depth;
 
-    /* Static null move prunning */
-    if (ply && !IsInCheck(side))
-    {
-        int ev = Eval(-MATE, MATE);
-        int evalua = ev - 150;
-        if (evalua >= beta)
-            return evalua;
-    }
-
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
