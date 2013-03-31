@@ -192,16 +192,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
 
-        /* This a test similiar to what is done in qsearch, but the
-         * result is really bad. Maybe it makes sense if the move
-         * ordering is improvedor seting alower threshold */
-//        if (moveBuf[i].grade < 0) continue;
-
-
-//        if (moveBuf[i].type_of_move > 8)
-//            printf ("type of move the best %d \n", moveBuf[i].type_of_move);
-
-
         /* If the current move isn't legal, we take it back
          * and take the next move in the list */
         if (!MakeMove (moveBuf[i]))
@@ -222,19 +212,16 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         /* Once we have an evaluation, we use it in in an alpha-beta search */
         if (value > alpha)
         {
-
-            /* Este movimiento causo un cutoff, asi que incrementamos
-            el valor de historia para que sea ordenado antes la
-            proxima vez que se busque */
+            /* This move is so good and caused a cutoff */
             history[moveBuf[i].from][moveBuf[i].dest] += depth;
 
-            /* This move is so good and caused a cutoff */
             if (value >= beta)
             {
                 return beta;
             }
 
             alpha = value;
+
             /* So far, current move is the best reaction for current position */
             *pBestMove = moveBuf[i];
 
@@ -293,7 +280,6 @@ Quiescent (int alpha, int beta)
     if (reps() >= 2)
         return 0;
 
-
     /* First we just try the evaluation function */
     /* We generate the moves deppending either
        we are in check or not */
@@ -301,7 +287,6 @@ Quiescent (int alpha, int beta)
     {
         movescnt = GenMoves(side, qMovesBuf);
         countCapCalls++;
-//        MoveOrder(i, movescnt, qMovesBuf);
     }
     else
     {
@@ -317,21 +302,11 @@ Quiescent (int alpha, int beta)
 
         movescnt = GenCaps (side, qMovesBuf);
         countCapCalls++;
-//        MoveOrder(i, movescnt, qMovesBuf);
     }
-
-//    MoveOrder(i, movescnt, qMovesBuf);
-
 
     /* Now the alpha-beta search in quiescent */
     for (i = 0; i < movescnt; ++i)
     {
-
-//        MoveOrder(i, movescnt, qMovesBuf);
-
-//        if (qMovesBuf[i].type_of_move > 8)
-//            printf ("type of move in the quiescent %d \n", qMovesBuf[i].type_of_move);
-
         /* If not in check or promotion (Thx to Pedro) */
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
@@ -350,7 +325,7 @@ Quiescent (int alpha, int beta)
         }
 
         /* If we're here then tehre's at least one legal move */
-        legal++;
+        legal = 1;
 
         score = -Quiescent (-beta, -alpha);
         TakeBack ();
