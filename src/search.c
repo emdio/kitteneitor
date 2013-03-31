@@ -19,16 +19,12 @@ ComputerThink (int m_depth)
     LINE pline;
     int score, i, j;
     double knps;
-
     memset(history, 0, sizeof(history));
 
     /* Time management */
     int start_time = get_ms();
-//    clock_t start_time = clock();
     stop_time = start_time + max_time;
     half_time = start_time + 0.5 * max_time;
-
-//    printf ("max_time = %d\n", max_time);
 
     for (i = 1; i <= m_depth; ++i)
     {
@@ -40,7 +36,6 @@ ComputerThink (int m_depth)
         countCapCalls = 0;
         countSearchCalls = 0;
         nodes = 0;
-//        memset(history, 0, sizeof(history));
 
         clock_t start;
         clock_t stop;
@@ -63,7 +58,7 @@ ComputerThink (int m_depth)
         if (must_stop)
         {
             must_stop = 0;
-            fflush(stdout);  /* Limpiamos la salida estandar */
+            fflush(stdout);
             break;
         }
 
@@ -122,17 +117,8 @@ ComputerThink (int m_depth)
                }
             }
         }
-//        if (i == m_depth)
-//        {
-//            printf
-//            ("\nSearch result final: move = %c%d%c%d; depth = %d, score = %.2f, time = %.2f s, knps = %.2f\n countCapCalls = %'llu\n countQSearch = %'llu\n moves made = %'llu\n ratio_Qsearc_Capcalls = %.2f\n nodes = %'llu\n",
-//             'a' + Col (bestMove.from), 8 - Row (bestMove.from), 'a' + Col (bestMove.dest),
-//             8 - Row (bestMove.dest), i, decimal_score, t, knps, countCapCalls,
-//             countquiesCalls, count_MakeMove, ratio_Qsearc_Capcalls, nodes);
-//        }
         puts("");
         fflush(stdout);
-
     }
     return bestMove;
 }
@@ -231,7 +217,6 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
             pline->cmove = line.cmove + 1;
         }
     }
-
 
     /* Once we've checked all the moves, if we have no legal moves,
      * then that's checkmate or stalemate */
