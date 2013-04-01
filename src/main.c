@@ -2,18 +2,12 @@
 #include <string.h>
 #include <time.h>
 #include <locale.h>
-
 #include <signal.h>
-
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
 
-//#define NDEBUG
-//#include <assert.h>
-
-void
-startgame ()
+void startgame()
 {
     int i;
     for (i = 0; i < 64; ++i)
@@ -370,8 +364,7 @@ void test8()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
-void
-xboard ()
+void xboard()
 {
     char line[256], command[256], c;
     int from, dest, i;
@@ -590,10 +583,7 @@ continuar:
     }
 }
 
-
-
-int
-main ()
+int main()
 {
 
     char linea[256];
@@ -854,7 +844,6 @@ main ()
     }
 }
 
-
 /*************************************************************************************
         Funciones para detectar repeticion de movimientos
 **************************************************************************************/
@@ -944,8 +933,6 @@ void setDistToKing()
 //    }
 
 }
-
-
 
 void fen(const char *s)
 {

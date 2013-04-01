@@ -2,16 +2,12 @@
 #include "data.h"
 #include <time.h>
 
-//MOVE bestMove;
-
 /* Contador para la regla de los 50 movimientos */
 int fifty;
-
 int side;			/* Side to move, value = BLACK or WHITE */
 int computer_side;
 int max_depth;			/* max depth to search */
 HISTO hist[6000];		/* Game length < 6000 */
-
 char fenstring[256];
 
 /* For castle rights we use a bitfield, like in TSCP

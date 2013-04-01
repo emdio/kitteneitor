@@ -3,9 +3,6 @@
 #include "data.h"
 #include "protos.h"
 
-//#define NDEBUG
-//#include <assert.h>
-
 /*
  ****************************************************************************
  * Evaluation for current position - main "brain" function *
@@ -62,15 +59,12 @@ int blackBishops = 0;
 int blackRooks = 0;
 int blackQueens = 0;
 
-
 /* Pawn's info */
 int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-
 /* The evaluation function */
-int
-Eval (alpha, beta)
+int Eval(alpha, beta)
 {
     /* A traditional counter */
     int i;
@@ -82,8 +76,6 @@ Eval (alpha, beta)
         whitePawnsInfo[i] = 0;
         blackPawnsInfo[i] = 0;
     }
-
-
 
     /* The fun factor */
     int ff = 0;
@@ -203,8 +195,6 @@ Eval (alpha, beta)
     {
         return lazy;
     }
-//    if (abs(lazy) > 300)
-//        return lazy;
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
@@ -238,18 +228,15 @@ Eval (alpha, beta)
                 break;
             case KNIGHT:
                 score += pst_knight[i];
-//                score += nk_dist[i][posBlackKing];
                 score += mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score += pst_bishop[i];
-//                score += bk_dist[i][posBlackKing];
                 score += mob_bishop[BishopMobility(i)];
                 score += range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score += pst_rook[i];
-//                score += rk_dist[i][posBlackKing];
                 score += mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
@@ -264,7 +251,6 @@ Eval (alpha, beta)
                 break;
             case QUEEN:
                 score += pst_queen[i];
-//                score += qk_dist[i][posBlackKing];
                 break;
             case KING:
                 if (endGame())
@@ -295,18 +281,15 @@ Eval (alpha, beta)
                 break;
             case KNIGHT:
                 score -= pst_knight[flip[i]];
-//                score -= nk_dist[i][posWhiteKing];
                 score -= mob_knight[KnightMobility(i)];
                 break;
             case BISHOP:
                 score -= pst_bishop[flip[i]];
-//                score -= bk_dist[i][posWhiteKing];
                 score -= mob_bishop[BishopMobility(i)];
                 score -= range_bishop[BishopRange(i)];
                 break;
             case ROOK:
                 score -= pst_rook[flip[i]];
-//                score -= rk_dist[i][posWhiteKing];
                 score -= mob_rook[RookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
@@ -320,7 +303,6 @@ Eval (alpha, beta)
                 break;
             case QUEEN:
                 score -= pst_queen[flip[i]];
-//                score -= qk_dist[i][posWhiteKing];
                 break;
             case KING:
                 if (endGame())
@@ -493,7 +475,6 @@ int whiteKingSafety()
             safety -= 25;
         if (piece[C3] == PAWN && color[C3] == BLACK)
             safety -= 25;
-
     }
     /* The king short castled */
     else if (colWhiteKing > COLE)
@@ -806,7 +787,6 @@ int BishopMobility(int sq)
 
     return mob;
 }
-
 
 /* Range of the bishop: The squares till reach a pawn no matter its color */
 int BishopRange(int sq)

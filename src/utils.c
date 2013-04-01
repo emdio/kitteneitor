@@ -1,16 +1,13 @@
 #include <stdio.h>
-
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
-
 #include <sys/time.h>
 #include <string.h>
+
 struct timeval tv;
 struct timezone tz;
 
-//#define NDEBUG
-//#include <assert.h>
 
 /*
  ****************************************************************************

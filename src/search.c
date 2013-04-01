@@ -2,16 +2,11 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
-
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
 
-//#define NDEBUG
-//#include <assert.h>
-
-MOVE
-ComputerThink (int m_depth)
+MOVE ComputerThink(int m_depth)
 {
     /* It returns the move the computer makes */
     MOVE m;
@@ -130,8 +125,7 @@ ComputerThink (int m_depth)
  ****************************************************************************
  */
 
-int
-Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
+int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 {
 
     /* Vars deffinition */
@@ -240,8 +234,7 @@ Search (int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     return alpha;
 }
 
-int
-Quiescent (int alpha, int beta)
+int Quiescent(int alpha, int beta)
 {
     int i;
     int legal = 0;
