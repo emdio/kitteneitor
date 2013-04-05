@@ -364,6 +364,113 @@ void test8()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test9()
+{
+    puts ("A position where Kitt plays h5h4??");
+    puts ("8/5p2/8/2bk1p1p/2N1p3/pK2P1P1/P4P1P/8 b kq - 0 34");
+    /* Piece in each square */
+    int piece_test[64] =
+    {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, BISHOP, KING, EMPTY, PAWN, EMPTY, PAWN,
+        EMPTY, EMPTY, KNIGHT, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
+        PAWN, KING, EMPTY, EMPTY, PAWN, EMPTY, PAWN, EMPTY,
+        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+    };
+    /* Color of each square */
+    int color_test[64] =
+    {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, BLACK, BLACK, EMPTY, BLACK, EMPTY, BLACK,
+        EMPTY, EMPTY, WHITE, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
+        BLACK, WHITE, EMPTY, EMPTY, WHITE, EMPTY, WHITE, EMPTY,
+        WHITE, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, WHITE,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+    };
+
+    int i;
+    for (i = 0; i < 64; ++i)
+        {
+            piece[i] = piece_test[i];
+            color[i] = color_test[i];
+        }
+
+    setDistToKing();
+
+    side = BLACK;
+    computer_side = WHITE;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
+//void testWhitePassedPawns()
+//{
+//    int i = 0;
+//    int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+//    int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+//    for (i=0; i<64; i++)
+//    {
+//        if (piece[i] == PAWN && color[i] == BLACK)
+//            blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+//    }
+
+//    for (i=0; i<64; i++)
+//    {
+//        if (piece[i] == PAWN && color[i] == WHITE)
+//            whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
+//    }
+
+//    for (i=0; i<8; i++)
+//        printf("whitePawnsInfo col %d: %d\n", i+1, whitePawnsInfo[i]);
+//    puts("-----------------------");
+//    for (i=0; i<8; i++)
+//        printf("blackPawnsInfo col %d: %d\n", i+1, blackPawnsInfo[i]);
+
+//    for (i=0; i<64; i++)
+//    {
+//        if (piece[i] == PAWN && color[i] == WHITE && isPassedPawnWhite(i))
+//                printf ("White passed pawn in %d square\n", i);
+//    }
+//}
+
+//void testBlackPassedPawns()
+//{
+//    int i = 0;
+//    int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+//    int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+//    for (i=0; i<64; i++)
+//    {
+//        if (piece[i] == PAWN && color[i] == BLACK)
+//            blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+//    }
+
+//    for (i=0; i<64; i++)
+//    {
+//        if (piece[i] == PAWN && color[i] == WHITE)
+//            whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
+//    }
+//    for (i=0; i<8; i++)
+//        printf("whitePawnsInfo col %d: %d\n", i+1, whitePawnsInfo[i]);
+//    puts("-----------------------");
+//    for (i=0; i<8; i++)
+//        printf("blackPawnsInfo col %d: %d\n", i+1, blackPawnsInfo[i]);
+
+//    for (i=0; i<64; i++)
+//    {
+//        if (piece[i] == PAWN && color[i] == BLACK && isPassedPawnBlack(i))
+//            printf ("Black passed pawn in %d square %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+//    }
+//}
+
 void xboard()
 {
     char line[256], command[256], c;
@@ -714,10 +821,27 @@ int main()
             test7 ();
             PrintBoard();
             continue;
-        }if (!strcmp (s, "test8"))
+        }
+        if (!strcmp (s, "test8"))
         {
             test8 ();
             PrintBoard();
+            continue;
+        }
+        if (!strcmp (s, "test9"))
+        {
+            test9 ();
+            PrintBoard();
+            continue;
+        }
+        if (!strcmp (s, "testWhitePassedPawns"))
+        {
+            testWhitePassedPawns ();
+            continue;
+        }
+        if (!strcmp (s, "testBlackPassedPawns"))
+        {
+            testBlackPassedPawns ();
             continue;
         }
         if (!strcmp (s, "undo"))
