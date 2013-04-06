@@ -71,11 +71,11 @@ int Eval(alpha, beta)
 
     /* Set some values to 0 */
     /* Pawn's info */
-//    for (i=0; i<8; ++i)
-//    {
-//        whitePawnsInfo[i] = 0;
-//        blackPawnsInfo[i] = 0;
-//    }
+    for (i=0; i<8; ++i)
+    {
+        whitePawnsInfo[i] = 0;
+        blackPawnsInfo[i] = 0;
+    }
 
     /* The fun factor */
     int ff = 0;
@@ -885,6 +885,8 @@ inline int isDoubledPawnWhite(int col)
 inline int isDoubledPawnBlack(int col)
 {
   int tmp = blackPawnsInfo[col];
+
+  printf("blackPawnsInfo[col] is: %d\n", tmp);
 
   /* First x in the below expression is for the case when x is 0 */
   return !(tmp && (!(tmp & (tmp - 1))));
