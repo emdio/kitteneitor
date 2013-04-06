@@ -348,21 +348,21 @@ int isPassedPawnWhite(int sq)
     if (Col(sq) == 0)
     {
         if ( blackPawnsInfo[Col(sq)] == 0 &&
-             (blackPawnsInfo[Col(sq+1)] >= 1<<Row(sq)) )
+             (blackPawnsInfo[Col(sq+1)] >= 1<<Row(sq) || blackPawnsInfo[Col(sq) + 1] == 0) )
             return 1;
     }
     /* Special case, pawn in H row */
     else if (Col(sq) == 7)
     {
         if ( blackPawnsInfo[Col(sq)] == 0 &&
-           (blackPawnsInfo[Col(sq-1)] >= 1<<Row(sq)) )
+           (blackPawnsInfo[Col(sq-1)] >= 1<<Row(sq) || blackPawnsInfo[Col(sq) - 1] == 0) )
             return 1;
     }
     else
     {
         if ( blackPawnsInfo[Col(sq)] == 0 &&
-             (blackPawnsInfo[Col(sq) - 1] >= 1<<Row(sq))&&
-             (blackPawnsInfo[Col(sq) + 1] >= 1<<Row(sq)) )
+             (blackPawnsInfo[Col(sq) - 1] >= 1<<Row(sq) || blackPawnsInfo[Col(sq) - 1] == 0) &&
+             (blackPawnsInfo[Col(sq) + 1] >= 1<<Row(sq) || blackPawnsInfo[Col(sq) + 1] == 0) )
             return 1;
     }
     return 0;
