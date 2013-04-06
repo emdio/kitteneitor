@@ -877,7 +877,7 @@ inline int isDoubledPawnWhite(int col)
 {
   int tmp = whitePawnsInfo[col];
 
-  printf("whitePawnsInfo[col] is: %d\n", tmp);
+//  printf("whitePawnsInfo[col] is: %d\n", tmp);
 
   /* First x in the below expression is for the case when x is 0 */
   return !(tmp && (!(tmp & (tmp - 1))));
