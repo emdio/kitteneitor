@@ -348,21 +348,21 @@ int isPassedPawnWhite(int sq)
     if (Col(sq) == 0)
     {
         if ( blackPawnsInfo[Col(sq)] == 0 &&
-             (blackPawnsInfo[Col(sq+1)] <= 1<<Row(sq)) )
+             (blackPawnsInfo[Col(sq+1)] >= 1<<Row(sq)) )
             return 1;
     }
     /* Special case, pawn in H row */
     else if (Col(sq) == 7)
     {
         if ( blackPawnsInfo[Col(sq)] == 0 &&
-           (blackPawnsInfo[Col(sq-1)] <= 1<<Row(sq)) )
+           (blackPawnsInfo[Col(sq-1)] >= 1<<Row(sq)) )
             return 1;
     }
     else
     {
         if ( blackPawnsInfo[Col(sq)] == 0 &&
-             (blackPawnsInfo[Col(sq) - 1] <= 1<<Row(sq))&&
-             (blackPawnsInfo[Col(sq) + 1] <= 1<<Row(sq)) )
+             (blackPawnsInfo[Col(sq) - 1] >= 1<<Row(sq))&&
+             (blackPawnsInfo[Col(sq) + 1] >= 1<<Row(sq)) )
             return 1;
     }
     return 0;
@@ -950,7 +950,7 @@ void testWhitePassedPawns()
 //                printf("blackPawnsInfo col %d: %d\n", j+1, blackPawnsInfo[j]);
 //            }
             if (isPassedPawnWhite(i))
-                printf ("White passed pawn in %d square %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("White passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
         }
     }
 }
@@ -985,7 +985,7 @@ void testBlackPassedPawns()
 //                printf("blackPawnsInfo col %d: %d\n", j+1, blackPawnsInfo[j]);
 //            }
             if (isPassedPawnBlack(i))
-                printf ("Black passed pawn in %d square %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("Black passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
         }
     }
 }
