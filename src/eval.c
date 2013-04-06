@@ -886,7 +886,7 @@ inline int isDoubledPawnBlack(int col)
 {
   int tmp = blackPawnsInfo[col];
 
-  printf("blackPawnsInfo[col] is: %d\n", tmp);
+//  printf("blackPawnsInfo[col] is: %d\n", tmp);
 
   /* First x in the below expression is for the case when x is 0 */
   return !(tmp && (!(tmp & (tmp - 1))));
