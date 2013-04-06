@@ -844,6 +844,11 @@ int main()
             testBlackPassedPawns ();
             continue;
         }
+        if (!strcmp (s, "testWhiteDoubledPawns"))
+        {
+            testWhiteDoubledPawns ();
+            continue;
+        }
         if (!strcmp (s, "undo"))
         {
             TakeBack ();

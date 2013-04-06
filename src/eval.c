@@ -13,9 +13,9 @@
 #define	ROOK_OPEN_COL                   25
 #define PAIR_BISHOPS                    25
 #define ADV_TURN_TO_MOVE                10
-#define DOUBLED_PAWN_MALUS              10
-#define DOUBLED_PAWN_CASTLE_MALUS       25
-#define MISSING_PAWN_CASTLE_MALUS       20
+#define DOUBLED_PAWN_MALUS             -10
+#define DOUBLED_PAWN_CASTLE_MALUS      -25
+#define MISSING_PAWN_CASTLE_MALUS      -20
 #define HOLE_C3_C6_F3_F6                30
 #define HOLE_B3_B6_G3_G6                30
 #define TRAPPED_ROOK_PENALTY            70
@@ -434,9 +434,9 @@ int whiteKingSafety()
         else if (whitePawnsInfo[COLC] == 32) safety += 6;
 
         /* Doubled pawns on castle */
-        if (isDoubledPawnWhite(COLA)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnWhite(COLB)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnWhite(COLC)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(COLA)) safety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(COLB)) safety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(COLC)) safety += DOUBLED_PAWN_CASTLE_MALUS;
 
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLA] == 0) safety -= 25;
@@ -500,12 +500,15 @@ int whiteKingSafety()
         /* Pawns shield */
         if (whitePawnsInfo[COLF] == 64) safety += 12;
         else if (whitePawnsInfo[COLF] == 32) safety += 6;
-
         if (whitePawnsInfo[COLG] == 64) safety +=12;
         else if (whitePawnsInfo[COLG] == 32) safety += 6;
-
         if (whitePawnsInfo[COLH] == 64) safety +=12;
         else if (whitePawnsInfo[COLH] == 32) safety += 6;
+
+        /* Doubled pawns on castle */
+        if (isDoubledPawnWhite(COLF)) safety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(COLG)) safety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(COLH)) safety += DOUBLED_PAWN_CASTLE_MALUS;
 
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLF] == 0) safety -= 25;
@@ -874,6 +877,8 @@ inline int isDoubledPawnWhite(int col)
 {
   int tmp = whitePawnsInfo[col];
 
+  printf("whitePawnsInfo[col] is: %d\n", tmp);
+
   /* First x in the below expression is for the case when x is 0 */
   return !(tmp && (!(tmp & (tmp - 1))));
 }
@@ -986,6 +991,62 @@ void testBlackPassedPawns()
 //            }
             if (isPassedPawnBlack(i))
                 printf ("Black passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+        }
+    }
+}
+
+void testWhiteDoubledPawns()
+{
+    int i = 0, j=0;
+
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == WHITE)
+        {
+            for (j=0; j<8; ++j)
+            {
+                whitePawnsInfo[j] = 0;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    whitePawnsInfo[(int)Col(j)] += 1<<Row(j);
+            }
+//            for (j=0; j<8; j++)
+//            {
+//                printf("whitePawnsInfo col %d: %d\n", j+1, whitePawnsInfo[j]);
+//            }
+
+            if (isDoubledPawnWhite(Col(i)))
+                printf ("White doubled pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+        }
+    }
+}
+
+void testBlackDoubledPawns()
+{
+    int i = 0, j=0;
+
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == BLACK)
+        {
+            for (j=0; j<8; ++j)
+            {
+                whitePawnsInfo[j] = 0;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == BLACK)
+                    blackPawnsInfo[(int)Col(j)] += 1<<Row(j);
+            }
+//            for (j=0; j<8; j++)
+//            {
+//                printf("whitePawnsInfo col %d: %d\n", j+1, whitePawnsInfo[j]);
+//            }
+
+            if (isDoubledPawnBlack(Col(i)))
+                printf ("Balck doubled pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
         }
     }
 }
