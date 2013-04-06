@@ -13,7 +13,7 @@
 #define	ROOK_OPEN_COL                   25
 #define PAIR_BISHOPS                    25
 #define ADV_TURN_TO_MOVE                10
-#define DOUBLED_PAWN_MALUS             0
+#define DOUBLED_PAWN_MALUS              10
 #define DOUBLED_PAWN_CASTLE_MALUS       25
 #define MISSING_PAWN_CASTLE_MALUS       20
 #define HOLE_C3_C6_F3_F6                30
@@ -35,8 +35,8 @@ int range_bishop[16] = {
 };
 
 /* For scaling passed pawns depending on the row */
-int passed_pawn_white[7] = {0, 10, 12, 15, 35, 55, 70};
-int passed_pawn_black[7] = {70, 55, 35, 15, 12, 10, 0};
+int passed_pawn_white[7] = {0, 10, 17, 25, 55, 75, 90};
+int passed_pawn_black[7] = {90, 75, 55, 25, 17, 10, 0};
 
 /* For scaling pawn number in fun factor */
 int num_pawns_funfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -15, -15};
