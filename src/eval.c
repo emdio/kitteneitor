@@ -16,7 +16,7 @@
 #define DOUBLED_PAWN_MALUS             -10
 #define DOUBLED_PAWN_CASTLE_MALUS      -25
 #define MISSING_PAWN_CASTLE_MALUS      -20
-#define HOLE_C3_C6_F3_F6                30
+#define HOLE_C3_C6_F3_F6               -30
 #define HOLE_B3_B6_G3_G6                30
 #define TRAPPED_ROOK_PENALTY            70
 
@@ -411,11 +411,11 @@ int whiteKingSafety()
         /* Hole in c3 */
         if ( !IsSqProtectedByAPawn(C3, WHITE) )
         {
-            safety -= HOLE_C3_C6_F3_F6;
+            safety += HOLE_C3_C6_F3_F6;
             /* Extra penal if hole is attacked by an enemy pawn */
             if ( IsSqProtectedByAPawn(C3, BLACK) )
             {
-                safety -= HOLE_C3_C6_F3_F6;
+                safety += HOLE_C3_C6_F3_F6;
             }
         }
 
@@ -485,11 +485,11 @@ int whiteKingSafety()
         /* Hole in f3 */
         if ( !IsSqProtectedByAPawn(F3, WHITE) )
         {
-            safety -= HOLE_C3_C6_F3_F6;
+            safety += HOLE_C3_C6_F3_F6;
             /* Extra penal if hole is attacked by an enemy pawn */
             if ( IsSqProtectedByAPawn(F3, BLACK) )
             {
-                safety -= HOLE_C3_C6_F3_F6;
+                safety += HOLE_C3_C6_F3_F6;
             }
         }
 
