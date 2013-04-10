@@ -35,8 +35,8 @@ int range_bishop[16] = {
 };
 
 /* For scaling passed pawns depending on the row */
-int passed_pawn_white[7] = {190, 175, 155, 125, 117, 110, 0};
-int passed_pawn_black[7] = {0, 110, 117, 125, 155, 175, 190};
+int passed_pawn_white[7] = {90, 75, 55, 25, 17, 10, 0};
+int passed_pawn_black[7] = {0, 10, 17, 25, 55, 75, 90};
 
 /* For scaling pawn number in fun factor */
 int num_pawns_funfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -15, -15};
