@@ -127,7 +127,6 @@ MOVE ComputerThink(int m_depth)
 
 int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 {
-
     /* Vars deffinition */
     int i;
     int value;			/* To store the evaluation */
@@ -221,6 +220,10 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         else
             return 0;
     }
+
+    /* If we're in check maybe we want to search deeper */
+    if (IsInCheck(side))
+        ++depth;
 
     /* 3 vecez la misma posicion */
     if (reps() >= 2)

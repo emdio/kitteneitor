@@ -17,8 +17,8 @@
 #define DOUBLED_PAWN_CASTLE_MALUS      -25
 #define MISSING_PAWN_CASTLE_MALUS      -20
 #define HOLE_C3_C6_F3_F6               -30
-#define HOLE_B3_B6_G3_G6                30
-#define TRAPPED_ROOK_PENALTY            70
+#define HOLE_B3_B6_G3_G6               -30
+#define TRAPPED_ROOK_PENALTY           -70
 
 /* Arrays for scaling mobility values */
 int mob_rook[16] = {
@@ -245,7 +245,7 @@ int Eval(alpha, beta)
                 if(i == H1 || i == G1)
                     {
                     if(posWhiteKing > E1 && posWhiteKing < H1)
-                        score -= TRAPPED_ROOK_PENALTY;
+                        score += TRAPPED_ROOK_PENALTY;
                 }
 
                 break;
@@ -298,7 +298,7 @@ int Eval(alpha, beta)
                 if(i == H8 || i == G8)
                     {
                     if(posBlackKing > E8 && posBlackKing < H8)
-                        score += TRAPPED_ROOK_PENALTY;
+                        score -= TRAPPED_ROOK_PENALTY;
                 }
                 break;
             case QUEEN:
@@ -421,7 +421,7 @@ int whiteKingSafety()
 
         /* Hole in b3 */
         if ( !IsSqProtectedByAPawn(B3, WHITE) )
-            safety -= HOLE_B3_B6_G3_G6;
+            safety += HOLE_B3_B6_G3_G6;
 
         /* Pawns shield */
         if (whitePawnsInfo[COLA] == 64) safety += 12;
@@ -461,9 +461,9 @@ int whiteKingSafety()
             if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[2] == 0) safety -= 35;
         }
         /* Pawns holes */
-        if (whitePawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLA] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLB] == 0) safety += 2*MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLC] == 0) safety += 0.5*MISSING_PAWN_CASTLE_MALUS;
 
         /* Pawns storm */
         if (piece[A4] == PAWN && color[A4] == BLACK)
@@ -495,7 +495,7 @@ int whiteKingSafety()
 
         /* Hole in g3 */
         if ( !IsSqProtectedByAPawn(G3, WHITE) )
-            safety -= HOLE_B3_B6_G3_G6;
+            safety += HOLE_B3_B6_G3_G6;
 
         /* Pawns shield */
         if (whitePawnsInfo[COLF] == 64) safety += 12;
@@ -537,9 +537,9 @@ int whiteKingSafety()
         }
 
         /* Pawns shield */
-        if (whitePawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLF] == 0) safety += 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLG] == 0) safety += 2*MISSING_PAWN_CASTLE_MALUS;
+        if (whitePawnsInfo[COLH] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
 
         /* Pawns storm */
         if (piece[F4] == PAWN && color[F4] == BLACK)
