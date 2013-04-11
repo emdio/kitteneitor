@@ -441,15 +441,15 @@ int whiteKingSafety()
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLA] == 0) safety -= 25;
         {
-            if (colBlackKing > COLE) safety -= -15;
+            if (colBlackKing > COLE) safety -= 15;
         }
         if (blackPawnsInfo[COLB] == 0) safety -= 25;
         {
-            if (colBlackKing > COLE) safety -= -15;
+            if (colBlackKing > COLE) safety -= 15;
         }
         if (blackPawnsInfo[COLC] == 0) safety -= 25;
         {
-            if (colBlackKing > COLE) safety -= -15;
+            if (colBlackKing > COLE) safety -= 15;
         }
 
         /* Open cols close to the king are more important in case
@@ -514,17 +514,17 @@ int whiteKingSafety()
         if (blackPawnsInfo[COLF] == 0) safety -= 25;
         {
             /* It's more dangerous in case of opposite castles */
-            if (colBlackKing < COLD) safety -= -15;
+            if (colBlackKing < COLD) safety -= 15;
         }
         if (blackPawnsInfo[COLG] == 0) safety -= 25;
         {
             /* It's more dangerous in case of opposite castles */
-            if (colBlackKing < COLD) safety -= -15;
+            if (colBlackKing < COLD) safety -= 15;
         }
         if (blackPawnsInfo[COLH] == 0) safety -= 25;
         {
             /* It's more dangerous in case of opposite castles */
-            if (colBlackKing < COLD) safety -= -15;
+            if (colBlackKing < COLD) safety -= 15;
         }
 
         /* Open cols close to the king are more important in case
@@ -615,45 +615,45 @@ int blackKingSafety()
         if (isDoubledPawnBlack(COLC)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
 
         /* Semiopen cols by the oponent */
-        if (whitePawnsInfo[COLA] == 0) safety -= 25;
+        if (whitePawnsInfo[COLA] == 0) safety += 25;
         {
-            if (colWhiteKing > COLD) safety -= -15;
+            if (colWhiteKing > COLD) safety += 15;
         }
-        if (whitePawnsInfo[COLB] == 0) safety -= 25;
+        if (whitePawnsInfo[COLB] == 0) safety += 25;
         {
-            if (colWhiteKing > COLD) safety -= -15;
+            if (colWhiteKing > COLD) safety += 15;
         }
-        if (whitePawnsInfo[COLC] == 0) safety -= 25;
+        if (whitePawnsInfo[COLC] == 0) safety += 25;
         {
-            if (colWhiteKing > COLD) safety -= -15;
+            if (colWhiteKing > COLD) safety += 15;
         }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
         if (colWhiteKing > COLD)
         {
-            if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) safety -= 35;
-            if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) safety -= 35;
-            if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) safety -= 35;
+            if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) safety += 35;
+            if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) safety += 35;
+            if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) safety += 35;
         }
         /* Pawns shield */
-        if (blackPawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLA] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLB] == 0) safety += 2*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLC] == 0) safety += 0.5*MISSING_PAWN_CASTLE_MALUS;
 
         /* Pawns storm */
         if (piece[A5] == PAWN && color[A5] == WHITE)
-            safety -= 15;
+            safety += 15;
         if (piece[B5] == PAWN && color[B5] == WHITE)
-            safety -= 15;
+            safety += 15;
         if (piece[C5] == PAWN && color[C5] == WHITE)
-            safety -= 15;
+            safety += 15;
         if (piece[A6] == PAWN && color[A6] == WHITE)
-            safety -= 25;
+            safety += 25;
         if (piece[B6] == PAWN && color[B6] == WHITE)
-            safety -= 25;
+            safety += 25;
         if (piece[C6] == PAWN && color[C6] == WHITE)
-            safety -= 25;
+            safety += 25;
     }
     /* The king short castled */
     else if (colBlackKing > COLE)
@@ -661,21 +661,21 @@ int blackKingSafety()
         /* Hole in f6 */
         if ( !IsSqProtectedByAPawn(F6, BLACK) )
         {
-            safety -= HOLE_C3_C6_F3_F6;
+            safety += HOLE_C3_C6_F3_F6;
             /* Extra penal if hole is attacked by an enemy pawn */
             if ( IsSqProtectedByAPawn(F6, WHITE) )
             {
-                safety -= HOLE_C3_C6_F3_F6;
+                safety += HOLE_C3_C6_F3_F6;
             }
         }
 
         /* Hole in g6 */
         if ( !IsSqProtectedByAPawn(G6, BLACK) )
-            safety -= HOLE_B3_B6_G3_G6;
+            safety += HOLE_B3_B6_G3_G6;
 
         /* Hole in b6 */
         if ( !IsSqProtectedByAPawn(B6, BLACK) )
-            safety -= HOLE_B3_B6_G3_G6;
+            safety += HOLE_B3_B6_G3_G6;
 
         /* Pawns shield */
         if (blackPawnsInfo[COLF] == 2) safety += 12;
@@ -686,36 +686,36 @@ int blackKingSafety()
         else if (blackPawnsInfo[COLH] == 4) safety += 6;
 
         /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(COLF)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(COLG)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(COLH)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(COLF)) safety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(COLG)) safety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnBlack(COLH)) safety += DOUBLED_PAWN_CASTLE_MALUS;
 
         /* Semiopen cols by the oponent */
-        if (whitePawnsInfo[COLF] == 0) safety -= 25;
+        if (whitePawnsInfo[COLF] == 0) safety += 25;
         {
-            if (colWhiteKing < COLD) safety -= -15;
+            if (colWhiteKing < COLD) safety += 15;
         }
-        if (whitePawnsInfo[COLG] == 0) safety -= 25;
+        if (whitePawnsInfo[COLG] == 0) safety += 25;
         {
-            if (colWhiteKing < COLD) safety -= -15;
+            if (colWhiteKing < COLD) safety += +15;
         }
-        if (whitePawnsInfo[COLH] == 0) safety -= 25;
+        if (whitePawnsInfo[COLH] == 0) safety += 25;
         {
-            if (colWhiteKing < COLD) safety -= -15;
+            if (colWhiteKing < COLD) safety += 15;
         }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
         if (colWhiteKing < COLE)
         {
-            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety -= 35;
-            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety -= 35;
-            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety -= 35;
+            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety += 35;
+            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety += 35;
+            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety += 35;
         }
         /* Pawns shield */
-        if (blackPawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLF] == 0) safety += 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLG] == 0) safety += 2*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLH] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
 
         /* Pawns storm */
         if (piece[F5] == PAWN && color[F5] == WHITE)
@@ -736,18 +736,18 @@ int blackKingSafety()
         /* Open cols close to the king */
         if (blackPawnsInfo[COLD] == 0)
         {
-            safety -= 15;
+            safety += 15;
             if (whitePawnsInfo[COLD] == 0)
             {
-                safety -= 35;
+                safety += 35;
             }
         }
         if (blackPawnsInfo[COLE] == 0)
         {
-            safety -= 15;
+            safety += 15;
             if (whitePawnsInfo[COLE] == 0)
             {
-                safety -= 35;
+                safety += 35;
             }
         }
     }
