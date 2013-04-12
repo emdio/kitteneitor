@@ -426,10 +426,8 @@ int whiteKingSafety()
         /* Pawns shield */
         if (whitePawnsInfo[COLA] == 64) safety += 12;
         else if (whitePawnsInfo[COLA] == 32) safety += 6;
-
         if (whitePawnsInfo[COLB] == 64) safety +=12;
         else if (whitePawnsInfo[COLB] == 32) safety += 6;
-
         if (whitePawnsInfo[COLC] == 64) safety +=12;
         else if (whitePawnsInfo[COLC] == 32) safety += 6;
 
@@ -637,9 +635,9 @@ int blackKingSafety()
             if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) safety += 35;
         }
         /* Pawns shield */
-        if (blackPawnsInfo[COLA] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLB] == 0) safety += 2*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLC] == 0) safety += 0.5*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
+        if (blackPawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
 
         /* Pawns storm */
         if (piece[A5] == PAWN && color[A5] == WHITE)
