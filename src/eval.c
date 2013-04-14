@@ -244,7 +244,7 @@ int Eval(alpha, beta)
                 /* Rook trapped by king */
                 if(i == H1 || i == G1)
                     {
-                    if(posWhiteKing > E1 && posWhiteKing < H1)
+                    if(colWhiteKing > E1 && colWhiteKing < H1)
                         score += TRAPPED_ROOK_PENALTY;
                 }
 
@@ -297,7 +297,7 @@ int Eval(alpha, beta)
                 /* Rook trapped by king */
                 if(i == H8 || i == G8)
                     {
-                    if(posBlackKing > E8 && posBlackKing < H8)
+                    if(colBlackKing > E8 && colBlackKing < H8)
                         score -= TRAPPED_ROOK_PENALTY;
                 }
                 break;
