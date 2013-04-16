@@ -111,7 +111,7 @@ int Eval(alpha, beta)
             {
             case PAWN:
                 whitePawns++;
-                whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
+//                whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
                 break;
             case KNIGHT:
                 whiteKnights++;
@@ -137,7 +137,7 @@ int Eval(alpha, beta)
             {
             case PAWN:
                 blackPawns++;
-                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+//                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
                 break;
             case KNIGHT:
                 blackKnights++;
@@ -188,29 +188,29 @@ int Eval(alpha, beta)
             blackQueens * value_piece[QUEEN];
 
     /* Trying the lazy eval */
-    int lazy = score;
-    if (side == BLACK) lazy = -lazy;
-    if ( ( lazy + 500 < alpha ) ||
-         ( lazy - 500 > beta  ) )
-    {
-        return lazy;
-    }
+//    int lazy = score;
+//    if (side == BLACK) lazy = -lazy;
+//    if ( ( lazy + 500 < alpha ) ||
+//         ( lazy - 500 > beta  ) )
+//    {
+//        return lazy;
+//    }
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
 
-    /* Anyone has the pair of bishops? */
-    if (whiteBishops==2 && blackBishops!=2)
-        score += PAIR_BISHOPS;
-    else if (blackBishops==2 && whiteBishops!=2)
-        score -= PAIR_BISHOPS;
+//    /* Anyone has the pair of bishops? */
+//    if (whiteBishops==2 && blackBishops!=2)
+//        score += PAIR_BISHOPS;
+//    else if (blackBishops==2 && whiteBishops!=2)
+//        score -= PAIR_BISHOPS;
 
     /* Check all the squares searching for the pieces */
     for (i = 0; i < 64; i++)
     {
         if (color[i] == EMPTY)
             continue;
-        if (color[i] == WHITE)
+        else if (color[i] == WHITE)
         {
             /* Now we add to the evaluation the value of the
              * piece square tables */
@@ -257,7 +257,7 @@ int Eval(alpha, beta)
                     score += pst_king_endgame[i];
                 else
                 {
-                    score += whiteKingSafety(i);
+//                    score += whiteKingSafety(i);
                     score += pst_king_midgame[i];
                 }
                 break;
@@ -309,7 +309,7 @@ int Eval(alpha, beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-                    score += blackKingSafety(i);
+//                    score += blackKingSafety(i);
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
@@ -774,8 +774,6 @@ int BishopMobility(int sq)
     int l;
     int mob = 0;
 
-    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
-        mob++;
     for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
         mob++;
     for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] == EMPTY); l-=7)

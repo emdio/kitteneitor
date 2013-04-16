@@ -1233,8 +1233,6 @@ int MakeMove(MOVE m)
 /* Undo what MakeMove did */
 void TakeBack()
 {
-
-//    side = (WHITE + BLACK) - side;
     side = Opponent(side);
     hdp--;
     ply--;
