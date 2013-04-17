@@ -219,8 +219,8 @@ int Eval(alpha, beta)
             case PAWN:
                 if (isDoubledPawnWhite(Col(i)))
                     score += DOUBLED_PAWN_MALUS;
-                if (isPassedPawnWhite(i))
-                    score += passed_pawn_white[Row(i)];
+//                if (isPassedPawnWhite(i))
+//                    score += passed_pawn_white[Row(i)];
                 if (endGame())
                     score += pst_pawn_endgame[i];
                 else
@@ -243,7 +243,7 @@ int Eval(alpha, beta)
                     score += ROOK_OPEN_COL;
                 /* Rook trapped by king */
                 if(i == H1 || i == G1)
-                    {
+                {
                     if(colWhiteKing > E1 && colWhiteKing < H1)
                         score += TRAPPED_ROOK_PENALTY;
                 }
@@ -257,7 +257,7 @@ int Eval(alpha, beta)
                     score += pst_king_endgame[i];
                 else
                 {
-//                    score += whiteKingSafety(i);
+                    score += whiteKingSafety(i);
                     score += pst_king_midgame[i];
                 }
                 break;
@@ -272,8 +272,8 @@ int Eval(alpha, beta)
             case PAWN:
                 if (isDoubledPawnBlack(Col(i)))
                     score -= DOUBLED_PAWN_MALUS;
-                if (isPassedPawnBlack(i))
-                    score -= passed_pawn_black[Row(i)];
+//                if (isPassedPawnBlack(i))
+//                    score -= passed_pawn_black[Row(i)];
                 if (endGame())
                     score -= pst_pawn_endgame[flip[i]];
                 else
@@ -296,7 +296,7 @@ int Eval(alpha, beta)
                     score -= ROOK_OPEN_COL;
                 /* Rook trapped by king */
                 if(i == H8 || i == G8)
-                    {
+                {
                     if(colBlackKing > E8 && colBlackKing < H8)
                         score -= TRAPPED_ROOK_PENALTY;
                 }
@@ -309,7 +309,7 @@ int Eval(alpha, beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-//                    score += blackKingSafety(i);
+                    score += blackKingSafety(i);
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
@@ -454,9 +454,9 @@ int whiteKingSafety()
             of opposite castles*/
         if (colBlackKing > COLE)
         {
-            if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[0] == 0) safety -= 35;
-            if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[1] == 0) safety -= 35;
-            if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[2] == 0) safety -= 35;
+            if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) safety -= 35;
+            if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) safety -= 35;
+            if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) safety -= 35;
         }
         /* Pawns holes */
         if (whitePawnsInfo[COLA] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
@@ -527,7 +527,7 @@ int whiteKingSafety()
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colBlackKing < 4)
+        if (colBlackKing < COLE)
         {
             if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety -= 35;
             if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety -= 35;
@@ -615,20 +615,20 @@ int blackKingSafety()
         /* Semiopen cols by the oponent */
         if (whitePawnsInfo[COLA] == 0) safety += 25;
         {
-            if (colWhiteKing > COLD) safety += 15;
+            if (colWhiteKing > COLE) safety += 15;
         }
         if (whitePawnsInfo[COLB] == 0) safety += 25;
         {
-            if (colWhiteKing > COLD) safety += 15;
+            if (colWhiteKing > COLE) safety += 15;
         }
         if (whitePawnsInfo[COLC] == 0) safety += 25;
         {
-            if (colWhiteKing > COLD) safety += 15;
+            if (colWhiteKing > COLE) safety += 15;
         }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colWhiteKing > COLD)
+        if (colWhiteKing > COLE)
         {
             if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) safety += 35;
             if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) safety += 35;
