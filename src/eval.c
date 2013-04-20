@@ -111,7 +111,7 @@ int Eval(alpha, beta)
             {
             case PAWN:
                 whitePawns++;
-//                whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
+                whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
                 break;
             case KNIGHT:
                 whiteKnights++;
@@ -137,7 +137,7 @@ int Eval(alpha, beta)
             {
             case PAWN:
                 blackPawns++;
-//                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
                 break;
             case KNIGHT:
                 blackKnights++;
