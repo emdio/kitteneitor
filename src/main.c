@@ -676,7 +676,7 @@ void xboard()
         /* Tomado de TSCP recibimos del GUI el tiempo que nos queda */
         if (!strcmp(command, "time"))
         {
-            sscanf (line, "time %d", &max_time);
+            sscanf (line, "time %ld", &max_time);
             /*pasamos a milisegundos que es como trabajamos internamente*/
             max_time *= 10;
             max_time /= 10;

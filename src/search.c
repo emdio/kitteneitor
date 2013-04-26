@@ -85,7 +85,7 @@ MOVE ComputerThink(int m_depth)
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf (" %d  %2d %4d %8d ", i, score, int_time, nodes);
+            printf (" %d  %2d %4d %8llu ", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
@@ -220,10 +220,6 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
         else
             return 0;
     }
-
-    /* If we're in check maybe we want to search deeper */
-    if (IsInCheck(side))
-        ++depth;
 
     /* 3 vecez la misma posicion */
     if (reps() >= 2)
