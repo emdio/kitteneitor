@@ -45,11 +45,12 @@ inline int IsSqProtectedByAPawn(int sq, int side)
     /* We need to check the columm because in col 1 and 8 sq can only be attacked
      * from one side */
     int col = Col(sq);
-    if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
+
+    if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN && color[sq + Behind(side) + 1] == side )
         return 1;
     else if ( col != 0 && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
         return 1;
-
+            
     return 0;
 }
 
@@ -1351,5 +1352,18 @@ void TakeBack()
 
     /* Recuperamos la posicion anterior en zobrist key */
     hash.key = hist[hdp].hash;
+}
+
+void testIsSqProtectedByAPawn()
+{
+    int i, j;
+    for (i=0; i < 64; i++)
+    {
+        for (j = WHITE; j <= BLACK; j++)
+        {
+            if ( IsSqProtectedByAPawn(i, j) )
+                printf ("Pawn %d is protected b %d \n", i, j);
+        }
+    }
 }
 

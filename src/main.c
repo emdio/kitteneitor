@@ -947,6 +947,11 @@ int main()
             testWhiteDoubledPawns ();
             continue;
         }
+        if (!strcmp (s, "testIsSqProtectedByAPawn"))
+        {
+             testIsSqProtectedByAPawn();
+            continue;
+        }
         if (!strcmp (s, "undo"))
         {
             TakeBack ();
