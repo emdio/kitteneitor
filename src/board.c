@@ -45,12 +45,39 @@ inline int IsSqProtectedByAPawn(int sq, int side)
     /* We need to check the columm because in col 1 and 8 sq can only be attacked
      * from one side */
     int col = Col(sq);
-
-    if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN && color[sq + Behind(side) + 1] == side )
-        return 1;
-    else if ( col != 0 && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
-        return 1;
+    int row = Row(sq);
+    
+    if (side == WHITE)
+    {
+        if ( row < 7)
+        {
+            if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN && color[sq + Behind(side) + 1] == side )
+                return 1;
+            else if ( col != 0 && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
+                return 1;
+        }
+    }
+    else if (side == BLACK)
+    {
+        if ( row > 0)
+        {
+            if ( col != 7 && piece[sq + Behind(side) + 1] == PAWN && color[sq + Behind(side) + 1] == side )
+                return 1;
+            else if ( col != 0 && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
+                return 1;
+        }
+    }
             
+    
+//    if ( col == COLH && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
+//        return 1;
+//    if ( col == COLA && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
+//        return 1;
+//    if ( col != COLA && col != COLH && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
+//        return 1;
+//    if ( col != COLA && col != COLH && piece[sq + Behind(side) + 1] == PAWN && color[sq + Behind(side) + 1] == side )
+//        return 1;
+
     return 0;
 }
 
