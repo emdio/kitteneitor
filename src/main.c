@@ -952,6 +952,16 @@ int main()
              testIsSqProtectedByAPawn();
             continue;
         }
+        if (!strcmp (s, "testIsSqProtectedByAKnight"))
+        {
+             testIsSqProtectedByAKnight();
+            continue;
+        }
+        if (!strcmp (s, "testIsSqProtectedByABishop"))
+        {
+             testIsSqProtectedByABishop();
+            continue;
+        }
         if (!strcmp (s, "undo"))
         {
             TakeBack ();

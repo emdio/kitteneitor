@@ -117,57 +117,80 @@ int IsSqProtectedByAKnight(int sq, int side)
 int IsSqProtectedByABishop(int sq, int side)
 {
     int y;
-    for (y = sq - 9; y >= 0 && Col (y) != 7; y -= 9)
-    {   /* go left up */
-        if (color[y] != EMPTY)
+    /* Check diagonal lines for attacking of Queen, Bishop, King, Pawn */
+    /* go right down */
+    y = sq + 9;
+    if (y < 64 && Col (y) != 0)
+    {
+        if (color[y] == side)
         {
-            if (color[y] == side)
-            {
-                if (piece[y] == BISHOP)
-                {
-                    return 1;
-                }
-            }
+            if (piece[y] == BISHOP)
+                return 1;
         }
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
+            for (y += 9; y < 64 && Col (y) != 0; y += 9)
+            {
+                if (piece[y] == BISHOP && color[y] == side)
+                    return 1;
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
+                    break;
+            }
     }
-    for (y = sq - 7; y >= 0 && Col (y) != 0; y -= 7)
-    {   /* go right up */
-        if (color[y] != EMPTY)
+    /* go left down */
+    y = sq + 7;
+    if (y < 64 && Col (y) != 7)
+    {
+        if (color[y] == side)
         {
-            if (color[y] == side)
-            {
-                if (piece[y] == BISHOP)
-                {
-                    return 1;
-                }
-            }
+            if (piece[y] == BISHOP)
+                return 1;
         }
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
+            for (y += 7; y < 64 && Col (y) != 7; y += 7)
+            {
+                if (piece[y] == BISHOP && color[y] == side)
+                    return 1;
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
+                    break;
+
+            }
     }
-    for (y = sq + 9; y < 64 && Col (y) != 0; y += 9)
-    {   /* go right down */
-        if (color[y] != EMPTY)
+    /* go left up */
+    y = sq - 9;
+    if (y >= 0 && Col (y) != 7)
+    {
+        if (color[y] == side)
         {
-            if (color[y] == side)
-            {
-                if (piece[y] == BISHOP)
-                {
-                    return 1;
-                }
-            }
+            if (piece[y] == BISHOP)
+                return 1;
         }
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
+            for (y -= 9; y >= 0 && Col (y) != 7; y -= 9)
+            {
+                if (piece[y] == BISHOP && color[y] == side)
+                    return 1;
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
+                    break;
+
+            }
     }
-    for (y = sq + 7; y < 64 && Col (y) != 7; y += 7)
-    {   /* go left down */
-        if (color[y] != EMPTY)
+    /* go right up */
+    y = sq - 7;
+    if (y >= 0 && Col (y) != 0)
+    {
+        if (color[y] == side)
         {
-            if (color[y] == side)
-            {
-                if (piece[y] == BISHOP)
-                {
-                    return 1;
-                }
-            }
+            if (piece[y] == BISHOP)
+                return 1;
         }
+        if (piece[y] == EMPTY || piece[y] == EPS_SQ)
+            for (y -= 7; y >= 0 && Col (y) != 0; y -= 7)
+            {
+                if (piece[y] == BISHOP && color[y] == side)
+                    return 1;
+                if (piece[y] != EMPTY && piece[y] != EPS_SQ)
+                    break;
+            }
     }
 
     return 0;
@@ -203,19 +226,15 @@ int BadCapture(MOVE mcmov) {
     /**********************************************/
     /* Is the piece protected by a knight? */
     if ( IsSqProtectedByAKnight(mcmov.dest, color[mcmov.dest]) )
-        knight_protected = 1;
+        return 1;
 
 
     /**********************************************/
     /* Is the piece protected by a bishop? */
     if ( IsSqProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
-        bishop_protected = 1;
-
-
-    if (knight_protected || bishop_protected)
         return 1;
 
-
+    
     /* If we have reached this far then it isn't a bad capture */
     return 0;
 }
@@ -343,27 +362,26 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                 }
             }
             /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
-//            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-//                move.grade -= (value_piece[piece[from]]);
-//            /* Is a piece being attacked by a pawn? Then we probably should move it */
-//            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
-//                move.grade += (value_piece[piece[from]]);
+            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])) )
+                move.grade -= (value_piece[piece[from]]);
+            /* Is a piece being attacked by a pawn? Then we probably should move it */
+            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
+                move.grade += (value_piece[piece[from]]);
 
-//            else if  ( piece[from] == QUEEN || piece[from] == ROOK)
-//            {
-//                if (IsSqProtectedByABishop(from, Opponent(color[from])))
-//                    move.grade += (value_piece[piece[from]]);
-//                else if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
-//                    move.grade += (value_piece[piece[from]]);
-//                else if  ( IsSqProtectedByABishop(dest, Opponent(color[from])) )
-//                    move.grade -= (value_piece[piece[from]]);
-//                else if  (IsSqProtectedByAKnight(dest, Opponent(color[from])) )
-//                    move.grade -= (value_piece[piece[from]]);
-//            }
-
+            else if  ( piece[from] == QUEEN || piece[from] == ROOK)
+            {
+                if (IsSqProtectedByABishop(from, Opponent(color[from])))
+                    move.grade += (value_piece[piece[from]]);
+                else if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
+                    move.grade += (value_piece[piece[from]]);
+                else if  ( IsSqProtectedByABishop(dest, Opponent(color[from])) )
+                    move.grade -= (value_piece[piece[from]]);
+                else if  (IsSqProtectedByAKnight(dest, Opponent(color[from])) )
+                    move.grade -= (value_piece[piece[from]]);
+            }
 
             /* Finally we use the history */
-//            move.grade += 1* history[from][dest];
+            move.grade += 1* history[from][dest];
         }
     }
 
@@ -1389,8 +1407,33 @@ void testIsSqProtectedByAPawn()
         for (j = WHITE; j <= BLACK; j++)
         {
             if ( IsSqProtectedByAPawn(i, j) )
-                printf ("Pawn %d is protected b %d \n", i, j);
+                printf ("Pawn %d is protected by pawn of side %d \n", i, j);
         }
     }
 }
 
+void testIsSqProtectedByAKnight()
+{
+    int i, j;
+    for (i=0; i < 64; i++)
+    {
+        for (j = WHITE; j <= BLACK; j++)
+        {
+            if ( IsSqProtectedByAKnight(i, j) )
+                printf ("Square %d is protected by knight of side %d \n", i, j);
+        }
+    }
+}
+
+void testIsSqProtectedByABishop()
+{
+    int i, j;
+    for (i=0; i < 64; i++)
+    {
+        for (j = WHITE; j <= BLACK; j++)
+        {
+            if ( IsSqProtectedByABishop(i, j) )
+                printf ("Square %d is protected by bishop of side %d \n", i, j);
+        }
+    }
+}
