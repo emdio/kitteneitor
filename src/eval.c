@@ -10,7 +10,7 @@
  */
 
 /* Bonus and malus */
-#define	ROOK_OPEN_COL                   25
+#define	ROOK_OPEN_COL                   15
 #define PAIR_BISHOPS                    25
 #define ADV_TURN_TO_MOVE                10
 #define DOUBLED_PAWN_MALUS             -10
