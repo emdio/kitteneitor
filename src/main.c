@@ -679,7 +679,7 @@ void xboard()
             sscanf (line, "time %ld", &max_time);
             /*pasamos a milisegundos que es como trabajamos internamente*/
             max_time *= 10;
-            max_time /= 10;
+//            max_time /= 10;
             max_time -= 300;
             total_time = max_time;
 
