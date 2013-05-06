@@ -187,24 +187,24 @@ int Eval(alpha, beta)
             blackRooks * value_piece[ROOK] -
             blackQueens * value_piece[QUEEN];
 
-    /* Trying the lazy eval */
-//    int lazy = score;
-//    if (side == BLACK) lazy = -lazy;
-//    if ( ( lazy + 500 < alpha ) ||
-//         ( lazy - 500 > beta  ) )
-//    {
-//        return lazy;
-//    }
-
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
 
-//    /* Anyone has the pair of bishops? */
-//    if (whiteBishops==2 && blackBishops!=2)
-//        score += PAIR_BISHOPS;
-//    else if (blackBishops==2 && whiteBishops!=2)
-//        score -= PAIR_BISHOPS;
+    /* Anyone has the pair of bishops? */
+    if (whiteBishops==2 && blackBishops!=2)
+        score += PAIR_BISHOPS;
+    else if (blackBishops==2 && whiteBishops!=2)
+        score -= PAIR_BISHOPS;
 
+    /* Trying the lazy eval */
+    int lazy = score;
+    if (side == BLACK) lazy = -lazy;
+    if ( ( lazy + 300 < alpha ) ||
+         ( lazy - 300 > beta  ) )
+    {
+        return lazy;
+    }
+    
     /* Check all the squares searching for the pieces */
     for (i = 0; i < 64; i++)
     {
