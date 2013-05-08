@@ -527,11 +527,11 @@ int whiteKingSafety()
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colBlackKing < COLE)
+        if (colBlackKing <= COLE)
         {
-            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety -= 35;
-            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety -= 35;
-            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety -= 35;
+            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety -= 135;
+            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety -= 135;
+            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety -= 235;
         }
 
         /* Pawns shield */
@@ -700,11 +700,11 @@ int blackKingSafety()
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colWhiteKing < COLE)
+        if (colWhiteKing <= COLE)
         {
-            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety += 35;
-            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety += 35;
-            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety += 35;
+            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety += 135;
+            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety += 135;
+            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety += 135;
         }
         /* Pawns shield */
         if (blackPawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
