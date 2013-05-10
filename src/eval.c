@@ -257,7 +257,7 @@ int Eval(alpha, beta)
                     score += pst_king_endgame[i];
                 else
                 {
-                    score += whiteKingSafety(i);
+                    score += whiteKingSafety();
                     score += pst_king_midgame[i];
                 }
                 break;
@@ -309,7 +309,7 @@ int Eval(alpha, beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-                    score += blackKingSafety(i);
+                    score += blackKingSafety();
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
