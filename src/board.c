@@ -46,7 +46,7 @@ inline int IsSqProtectedByAPawn(int sq, int side)
      * from one side */
     int col = Col(sq);
     int row = Row(sq);
-    
+
     if (side == WHITE)
     {
         if ( row < 7)
@@ -67,8 +67,8 @@ inline int IsSqProtectedByAPawn(int sq, int side)
                 return 1;
         }
     }
-            
-    
+
+
 //    if ( col == COLH && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
 //        return 1;
 //    if ( col == COLA && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
@@ -221,7 +221,7 @@ int BadCapture(MOVE mcmov) {
     /* Is the piece protected by a bishop? */
     if ( IsSqProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
         return 1;
-    
+
     /* If we have reached this far then it isn't a bad capture */
     return 0;
 }
@@ -348,11 +348,11 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                     break;
                 }
             }
-            
+
             /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
             if  ( piece[from] != PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])) )
                 move.grade -= (value_piece[piece[from]]);
-            
+
             /* Is a piece being attacked by a pawn? Then we probably should move it */
             if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
                 move.grade += 100*(value_piece[piece[from]]);
