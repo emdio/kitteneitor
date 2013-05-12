@@ -683,10 +683,12 @@ int blackKingSafety()
 
 int whiteKingShortCastle()
 {
+    int whiteKingSafety;
+
         /* Hole in c3 */
         if ( !IsSqProtectedByAPawn(C3, WHITE) )
         {
-            safety += HOLE_C3_C6_F3_F6;
+            whiteKingSafety += HOLE_C3_C6_F3_F6;
             /* Extra penal if hole is attacked by an enemy pawn */
             if ( IsSqProtectedByAPawn(C3, BLACK) )
             {
@@ -696,14 +698,14 @@ int whiteKingShortCastle()
 
         /* Hole in b3 */
         if ( !IsSqProtectedByAPawn(B3, WHITE) )
-            safety += HOLE_B3_B6_G3_G6;
+            whiteKingSafety += HOLE_B3_B6_G3_G6;
 
         /* Pawns shield */
         if (whitePawnsInfo[COLA] == 64) whiteKingSafety += 12;
         else if (whitePawnsInfo[COLA] == 32) whiteKingSafety += 6;
         if (whitePawnsInfo[COLB] == 64) whiteKingSafety +=12;
         else if (whitePawnsInfo[COLB] == 32) whiteKingSafety += 6;
-        if (whitePawnsInfo[COLC] == 64) safety +=12;
+        if (whitePawnsInfo[COLC] == 64) whiteKingSafety +=12;
         else if (whitePawnsInfo[COLC] == 32) whiteKingSafety += 6;
 
         /* Doubled pawns on castle */
@@ -740,17 +742,17 @@ int whiteKingShortCastle()
 
         /* Pawns storm */
         if (piece[A4] == PAWN && color[A4] == BLACK)
-            safety -= 15;
+            whiteKingSafety -= 15;
         if (piece[B4] == PAWN && color[B4] == BLACK)
-            safety -= 15;
+            whiteKingSafety -= 15;
         if (piece[C4] == PAWN && color[C4] == BLACK)
-            safety -= 15;
+            whiteKingSafety -= 15;
         if (piece[A3] == PAWN && color[A3] == BLACK)
-            safety -= 25;
+            whiteKingSafety -= 25;
         if (piece[B3] == PAWN && color[B3] == BLACK)
-            safety -= 25;
+            whiteKingSafety -= 25;
         if (piece[C3] == PAWN && color[C3] == BLACK)
-            safety -= 25;
+            whiteKingSafety -= 25;
 
     return whiteKingSafety;
 }
