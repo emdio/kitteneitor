@@ -406,7 +406,7 @@ int whiteKingSafety()
     int safety = 0;
 
     /* The king long castled */
-    if (colWhiteKing < COLD)
+    if (colWhiteKing < COLD )
     {
         /* Hole in c3 */
         if ( !IsSqProtectedByAPawn(C3, WHITE) )
