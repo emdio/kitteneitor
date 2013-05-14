@@ -407,7 +407,9 @@ int whiteKingSafety()
 
     /* The king long castled */
     if (colWhiteKing < COLD)
+    {
         safety += whiteKingLongCastle();
+    }
 
     /* The king short castled */
     else if (colWhiteKing > COLE)
@@ -516,75 +518,9 @@ int blackKingSafety()
     /* The king long castled */
     if (colBlackKing < COLD)
     {
-        /* Hole in c6 */
-        if ( !IsSqProtectedByAPawn(C6, BLACK) )
-        {
-            safety -= HOLE_C3_C6_F3_F6;
-            /* Extra penal if hole is attacked by an enemy pawn */
-            if ( IsSqProtectedByAPawn(C6, WHITE) )
-            {
-                safety -= HOLE_C3_C6_F3_F6;
-            }
-        }
-
-        /* Hole in b6 */
-        if ( !IsSqProtectedByAPawn(B6, BLACK) )
-            safety -= HOLE_B3_B6_G3_G6;
-
-        /* Pawns shield */
-        if (blackPawnsInfo[COLA] == 2) safety -= 12;
-        else if (blackPawnsInfo[COLA] == 4) safety -= 6;
-        if (blackPawnsInfo[COLB] == 2) safety -= 12;
-        else if (blackPawnsInfo[COLB] == 4) safety -= 6;
-        if (blackPawnsInfo[COLC] == 2) safety -= 12;
-        else if (blackPawnsInfo[COLC] == 4) safety -= 6;
-
-        /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(COLA)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(COLB)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(COLC)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-
-        /* Semiopen cols by the oponent */
-        if (whitePawnsInfo[COLA] == 0) safety += 25;
-        {
-            if (colWhiteKing > COLE) safety += 15;
-        }
-        if (whitePawnsInfo[COLB] == 0) safety += 25;
-        {
-            if (colWhiteKing > COLE) safety += 15;
-        }
-        if (whitePawnsInfo[COLC] == 0) safety += 25;
-        {
-            if (colWhiteKing > COLE) safety += 15;
-        }
-
-        /* Open cols close to the king are more important in case
-            of opposite castles*/
-        if (colWhiteKing > COLE)
-        {
-            if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) safety += 35;
-            if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) safety += 35;
-            if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) safety += 35;
-        }
-        /* Pawns shield */
-        if (blackPawnsInfo[COLA] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLB] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLC] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
-
-        /* Pawns storm */
-        if (piece[A5] == PAWN && color[A5] == WHITE)
-            safety += 15;
-        if (piece[B5] == PAWN && color[B5] == WHITE)
-            safety += 15;
-        if (piece[C5] == PAWN && color[C5] == WHITE)
-            safety += 15;
-        if (piece[A6] == PAWN && color[A6] == WHITE)
-            safety += 25;
-        if (piece[B6] == PAWN && color[B6] == WHITE)
-            safety += 25;
-        if (piece[C6] == PAWN && color[C6] == WHITE)
-            safety += 25;
+        safety += blackKingLongCastle();
     }
+
     /* The king short castled */
     else if (colBlackKing > COLE)
     {
@@ -755,6 +691,82 @@ int whiteKingLongCastle()
             whiteKingSafety -= 25;
 
     return whiteKingSafety;
+}
+
+int blackKingLongCastle()
+{
+    int blackKingSafety = 0;
+
+    /* Hole in c6 */
+    if ( !IsSqProtectedByAPawn(C6, BLACK) )
+    {
+        blackKingSafety -= HOLE_C3_C6_F3_F6;
+        /* Extra penal if hole is attacked by an enemy pawn */
+        if ( IsSqProtectedByAPawn(C6, WHITE) )
+        {
+            blackKingSafety -= HOLE_C3_C6_F3_F6;
+        }
+    }
+
+    /* Hole in b6 */
+    if ( !IsSqProtectedByAPawn(B6, BLACK) )
+        blackKingSafety -= HOLE_B3_B6_G3_G6;
+
+    /* Pawns shield */
+    if (blackPawnsInfo[COLA] == 2) blackKingSafety -= 12;
+    else if (blackPawnsInfo[COLA] == 4) blackKingSafety -= 6;
+    if (blackPawnsInfo[COLB] == 2) blackKingSafety -= 12;
+    else if (blackPawnsInfo[COLB] == 4) blackKingSafety -= 6;
+    if (blackPawnsInfo[COLC] == 2) blackKingSafety -= 12;
+    else if (blackPawnsInfo[COLC] == 4) blackKingSafety -= 6;
+
+    /* Doubled pawns on castle */
+    if (isDoubledPawnBlack(COLA)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnBlack(COLB)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnBlack(COLC)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+
+    /* Semiopen cols by the oponent */
+    if (whitePawnsInfo[COLA] == 0) blackKingSafety += 25;
+    {
+        if (colWhiteKing > COLE) blackKingSafety += 15;
+    }
+    if (whitePawnsInfo[COLB] == 0) blackKingSafety += 25;
+    {
+        if (colWhiteKing > COLE) blackKingSafety += 15;
+    }
+    if (whitePawnsInfo[COLC] == 0) blackKingSafety += 25;
+    {
+        if (colWhiteKing > COLE) blackKingSafety += 15;
+    }
+
+    /* Open cols close to the king are more important in case
+        of opposite castles*/
+    if (colWhiteKing > COLE)
+    {
+        if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) blackKingSafety += 35;
+        if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) blackKingSafety += 35;
+        if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) blackKingSafety += 35;
+    }
+    /* Pawns shield */
+    if (blackPawnsInfo[COLA] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
+    if (blackPawnsInfo[COLB] == 0) blackKingSafety -= 2*MISSING_PAWN_CASTLE_MALUS;
+    if (blackPawnsInfo[COLC] == 0) blackKingSafety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+
+    /* Pawns storm */
+    if (piece[A5] == PAWN && color[A5] == WHITE)
+        blackKingSafety += 15;
+    if (piece[B5] == PAWN && color[B5] == WHITE)
+        blackKingSafety += 15;
+    if (piece[C5] == PAWN && color[C5] == WHITE)
+        blackKingSafety += 15;
+    if (piece[A6] == PAWN && color[A6] == WHITE)
+        blackKingSafety += 25;
+    if (piece[B6] == PAWN && color[B6] == WHITE)
+        blackKingSafety += 25;
+    if (piece[C6] == PAWN && color[C6] == WHITE)
+        blackKingSafety += 25;
+
+    return blackKingSafety;
 }
 
 /* Are we in the endgame? */
