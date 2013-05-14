@@ -407,7 +407,7 @@ int whiteKingSafety()
 
     /* The king long castled */
     if (colWhiteKing < COLD)
-        safety += whiteKingShortCastle();
+        safety += whiteKingLongCastle();
 
     /* The king short castled */
     else if (colWhiteKing > COLE)
@@ -681,7 +681,7 @@ int blackKingSafety()
     return safety;
 }
 
-int whiteKingShortCastle()
+int whiteKingLongCastle()
 {
     int whiteKingSafety;
 
