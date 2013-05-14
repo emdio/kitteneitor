@@ -414,79 +414,9 @@ int whiteKingSafety()
     /* The king short castled */
     else if (colWhiteKing > COLE)
     {
-        /* Hole in f3 */
-        if ( !IsSqProtectedByAPawn(F3, WHITE) )
-        {
-            safety += HOLE_C3_C6_F3_F6;
-            /* Extra penal if hole is attacked by an enemy pawn */
-            if ( IsSqProtectedByAPawn(F3, BLACK) )
-            {
-                safety += HOLE_C3_C6_F3_F6;
-            }
-        }
-
-        /* Hole in g3 */
-        if ( !IsSqProtectedByAPawn(G3, WHITE) )
-            safety += HOLE_B3_B6_G3_G6;
-
-        /* Pawns shield */
-        if (whitePawnsInfo[COLF] == 64) safety += 12;
-        else if (whitePawnsInfo[COLF] == 32) safety += 6;
-        if (whitePawnsInfo[COLG] == 64) safety +=12;
-        else if (whitePawnsInfo[COLG] == 32) safety += 6;
-        if (whitePawnsInfo[COLH] == 64) safety +=12;
-        else if (whitePawnsInfo[COLH] == 32) safety += 6;
-
-        /* Doubled pawns on castle */
-        if (isDoubledPawnWhite(COLF)) safety += DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnWhite(COLG)) safety += DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnWhite(COLH)) safety += DOUBLED_PAWN_CASTLE_MALUS;
-
-        /* Semiopen cols by the oponent */
-        if (blackPawnsInfo[COLF] == 0) safety -= 25;
-        {
-            /* It's more dangerous in case of opposite castles */
-            if (colBlackKing < COLD) safety -= 15;
-        }
-        if (blackPawnsInfo[COLG] == 0) safety -= 25;
-        {
-            /* It's more dangerous in case of opposite castles */
-            if (colBlackKing < COLD) safety -= 15;
-        }
-        if (blackPawnsInfo[COLH] == 0) safety -= 25;
-        {
-            /* It's more dangerous in case of opposite castles */
-            if (colBlackKing < COLD) safety -= 15;
-        }
-
-        /* Open cols close to the king are more important in case
-            of opposite castles*/
-        if (colBlackKing <= COLE)
-        {
-            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety -= 135;
-            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety -= 135;
-            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety -= 235;
-        }
-
-        /* Pawns shield */
-        if (whitePawnsInfo[COLF] == 0) safety += 0.5*MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLG] == 0) safety += 2*MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLH] == 0) safety += MISSING_PAWN_CASTLE_MALUS;
-
-        /* Pawns storm */
-        if (piece[F4] == PAWN && color[F4] == BLACK)
-            safety -= 15;
-        if (piece[G4] == PAWN && color[G4] == BLACK)
-            safety -= 15;
-        if (piece[H4] == PAWN && color[H4] == BLACK)
-            safety -= 15;
-        if (piece[F3] == PAWN && color[F3] == BLACK)
-            safety -= 25;
-        if (piece[G3] == PAWN && color[G3] == BLACK)
-            safety -= 25;
-        if (piece[H3] == PAWN && color[H3] == BLACK)
-            safety -= 25;
+        safety += whiteKingShortCastle;
     }
+
     else /* The king is in the middle of the board */
     {
         /* Open cols close to the king */
@@ -524,75 +454,9 @@ int blackKingSafety()
     /* The king short castled */
     else if (colBlackKing > COLE)
     {
-        /* Hole in f6 */
-        if ( !IsSqProtectedByAPawn(F6, BLACK) )
-        {
-            safety -= HOLE_C3_C6_F3_F6;
-            /* Extra penal if hole is attacked by an enemy pawn */
-            if ( IsSqProtectedByAPawn(F6, WHITE) )
-            {
-                safety -= HOLE_C3_C6_F3_F6;
-            }
-        }
-
-        /* Hole in g6 */
-        if ( !IsSqProtectedByAPawn(G6, BLACK) )
-            safety -= HOLE_B3_B6_G3_G6;
-
-        /* Pawns shield */
-        if (blackPawnsInfo[COLF] == 2) safety -= 12;
-        else if (blackPawnsInfo[COLF] == 4) safety -= 6;
-        if (blackPawnsInfo[COLG] == 2) safety -=12;
-        else if (blackPawnsInfo[COLG] == 4) safety -= 6;
-        if (blackPawnsInfo[COLH] == 2) safety -=12;
-        else if (blackPawnsInfo[COLH] == 4) safety -= 6;
-
-        /* Doubled pawns on castle */
-        if (isDoubledPawnBlack(COLF)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(COLG)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-        if (isDoubledPawnBlack(COLH)) safety -= DOUBLED_PAWN_CASTLE_MALUS;
-
-        /* Semiopen cols by the oponent */
-        if (whitePawnsInfo[COLF] == 0) safety += 25;
-        {
-            if (colWhiteKing < COLD) safety += 15;
-        }
-        if (whitePawnsInfo[COLG] == 0) safety += 25;
-        {
-            if (colWhiteKing < COLD) safety += +15;
-        }
-        if (whitePawnsInfo[COLH] == 0) safety += 25;
-        {
-            if (colWhiteKing < COLD) safety += 15;
-        }
-
-        /* Open cols close to the king are more important in case
-            of opposite castles*/
-        if (colWhiteKing <= COLE)
-        {
-            if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) safety += 135;
-            if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) safety += 135;
-            if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) safety += 135;
-        }
-        /* Pawns shield */
-        if (blackPawnsInfo[COLF] == 0) safety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLG] == 0) safety -= 2*MISSING_PAWN_CASTLE_MALUS;
-        if (blackPawnsInfo[COLH] == 0) safety -= MISSING_PAWN_CASTLE_MALUS;
-
-        /* Pawns storm */
-        if (piece[F5] == PAWN && color[F5] == WHITE)
-            safety += 15;
-        if (piece[G5] == PAWN && color[G5] == WHITE)
-            safety += 15;
-        if (piece[H5] == PAWN && color[H5] == WHITE)
-            safety += 15;
-        if (piece[F6] == PAWN && color[F6] == WHITE)
-            safety += 25;
-        if (piece[G6] == PAWN && color[G6] == WHITE)
-            safety += 25;
-        if (piece[H6] == PAWN && color[H6] == WHITE)
-            safety += 25;
+        safety += blackKingShortCastle();
     }
+
     else
     {
         /* Open cols close to the king */
@@ -764,6 +628,160 @@ int blackKingLongCastle()
     if (piece[B6] == PAWN && color[B6] == WHITE)
         blackKingSafety += 25;
     if (piece[C6] == PAWN && color[C6] == WHITE)
+        blackKingSafety += 25;
+
+    return blackKingSafety;
+}
+
+int whiteKingShortCastle()
+{
+    int whiteKingSafety = 0;
+
+    /* Hole in f3 */
+    if ( !IsSqProtectedByAPawn(F3, WHITE) )
+    {
+        whiteKingSafety += HOLE_C3_C6_F3_F6;
+        /* Extra penal if hole is attacked by an enemy pawn */
+        if ( IsSqProtectedByAPawn(F3, BLACK) )
+        {
+            whiteKingSafety += HOLE_C3_C6_F3_F6;
+        }
+    }
+
+    /* Hole in g3 */
+    if ( !IsSqProtectedByAPawn(G3, WHITE) )
+        whiteKingSafety += HOLE_B3_B6_G3_G6;
+
+    /* Pawns shield */
+    if (whitePawnsInfo[COLF] == 64) whiteKingSafety += 12;
+    else if (whitePawnsInfo[COLF] == 32) whiteKingSafety += 6;
+    if (whitePawnsInfo[COLG] == 64) whiteKingSafety +=12;
+    else if (whitePawnsInfo[COLG] == 32) whiteKingSafety += 6;
+    if (whitePawnsInfo[COLH] == 64) whiteKingSafety +=12;
+    else if (whitePawnsInfo[COLH] == 32) whiteKingSafety += 6;
+
+    /* Doubled pawns on castle */
+    if (isDoubledPawnWhite(COLF)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnWhite(COLG)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnWhite(COLH)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
+
+    /* Semiopen cols by the oponent */
+    if (blackPawnsInfo[COLF] == 0) whiteKingSafety -= 25;
+    {
+        /* It's more dangerous in case of opposite castles */
+        if (colBlackKing < COLD) whiteKingSafety -= 15;
+    }
+    if (blackPawnsInfo[COLG] == 0) whiteKingSafety -= 25;
+    {
+        /* It's more dangerous in case of opposite castles */
+        if (colBlackKing < COLD) whiteKingSafety -= 15;
+    }
+    if (blackPawnsInfo[COLH] == 0) whiteKingSafety -= 25;
+    {
+        /* It's more dangerous in case of opposite castles */
+        if (colBlackKing < COLD) whiteKingSafety -= 15;
+    }
+
+    /* Open cols close to the king are more important in case
+        of opposite castles*/
+    if (colBlackKing <= COLE)
+    {
+        if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) whiteKingSafety -= 135;
+        if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) whiteKingSafety -= 135;
+        if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) whiteKingSafety -= 235;
+    }
+
+    /* Pawns shield */
+    if (whitePawnsInfo[COLF] == 0) whiteKingSafety += 0.5*MISSING_PAWN_CASTLE_MALUS;
+    if (whitePawnsInfo[COLG] == 0) whiteKingSafety += 2*MISSING_PAWN_CASTLE_MALUS;
+    if (whitePawnsInfo[COLH] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
+
+    /* Pawns storm */
+    if (piece[F4] == PAWN && color[F4] == BLACK)
+        whiteKingSafety -= 15;
+    if (piece[G4] == PAWN && color[G4] == BLACK)
+        whiteKingSafety -= 15;
+    if (piece[H4] == PAWN && color[H4] == BLACK)
+        whiteKingSafety -= 15;
+    if (piece[F3] == PAWN && color[F3] == BLACK)
+        whiteKingSafety -= 25;
+    if (piece[G3] == PAWN && color[G3] == BLACK)
+        whiteKingSafety -= 25;
+    if (piece[H3] == PAWN && color[H3] == BLACK)
+        whiteKingSafety -= 25;
+}
+
+int blackKingShortCastle()
+{
+    blackKingSafety = 0;
+
+    /* Hole in f6 */
+    if ( !IsSqProtectedByAPawn(F6, BLACK) )
+    {
+        blackKingSafety -= HOLE_C3_C6_F3_F6;
+        /* Extra penal if hole is attacked by an enemy pawn */
+        if ( IsSqProtectedByAPawn(F6, WHITE) )
+        {
+            blackKingSafety -= HOLE_C3_C6_F3_F6;
+        }
+    }
+
+    /* Hole in g6 */
+    if ( !IsSqProtectedByAPawn(G6, BLACK) )
+        blackKingSafety -= HOLE_B3_B6_G3_G6;
+
+    /* Pawns shield */
+    if (blackPawnsInfo[COLF] == 2) blackKingSafety -= 12;
+    else if (blackPawnsInfo[COLF] == 4) blackKingSafety -= 6;
+    if (blackPawnsInfo[COLG] == 2) blackKingSafety -=12;
+    else if (blackPawnsInfo[COLG] == 4) blackKingSafety -= 6;
+    if (blackPawnsInfo[COLH] == 2) blackKingSafety -=12;
+    else if (blackPawnsInfo[COLH] == 4) blackKingSafety -= 6;
+
+    /* Doubled pawns on castle */
+    if (isDoubledPawnBlack(COLF)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnBlack(COLG)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnBlack(COLH)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+
+    /* Semiopen cols by the oponent */
+    if (whitePawnsInfo[COLF] == 0) blackKingSafety += 25;
+    {
+        if (colWhiteKing < COLD) blackKingSafety += 15;
+    }
+    if (whitePawnsInfo[COLG] == 0) blackKingSafety += 25;
+    {
+        if (colWhiteKing < COLD) blackKingSafety += +15;
+    }
+    if (whitePawnsInfo[COLH] == 0) blackKingSafety += 25;
+    {
+        if (colWhiteKing < COLD) blackKingSafety += 15;
+    }
+
+    /* Open cols close to the king are more important in case
+        of opposite castles*/
+    if (colWhiteKing <= COLE)
+    {
+        if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) blackKingSafety += 135;
+        if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) blackKingSafety += 135;
+        if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) blackKingSafety += 135;
+    }
+    /* Pawns shield */
+    if (blackPawnsInfo[COLF] == 0) blackKingSafety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
+    if (blackPawnsInfo[COLG] == 0) blackKingSafety -= 2*MISSING_PAWN_CASTLE_MALUS;
+    if (blackPawnsInfo[COLH] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
+
+    /* Pawns storm */
+    if (piece[F5] == PAWN && color[F5] == WHITE)
+        blackKingSafety += 15;
+    if (piece[G5] == PAWN && color[G5] == WHITE)
+        blackKingSafety += 15;
+    if (piece[H5] == PAWN && color[H5] == WHITE)
+        blackKingSafety += 15;
+    if (piece[F6] == PAWN && color[F6] == WHITE)
+        blackKingSafety += 25;
+    if (piece[G6] == PAWN && color[G6] == WHITE)
+        blackKingSafety += 25;
+    if (piece[H6] == PAWN && color[H6] == WHITE)
         blackKingSafety += 25;
 
     return blackKingSafety;
