@@ -414,7 +414,7 @@ int whiteKingSafety()
     /* The king short castled */
     else if (colWhiteKing > COLE)
     {
-        safety += whiteKingShortCastle;
+        safety += whiteKingShortCastle();
     }
 
     else /* The king is in the middle of the board */
@@ -713,7 +713,7 @@ int whiteKingShortCastle()
 
 int blackKingShortCastle()
 {
-    blackKingSafety = 0;
+    int blackKingSafety = 0;
 
     /* Hole in f6 */
     if ( !IsSqProtectedByAPawn(F6, BLACK) )
