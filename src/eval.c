@@ -15,7 +15,7 @@
 #define ADV_TURN_TO_MOVE                10
 #define DOUBLED_PAWN_MALUS             -10
 #define DOUBLED_PAWN_CASTLE_MALUS      -25
-#define MISSING_PAWN_CASTLE_MALUS      -20
+#define MISSING_PAWN_CASTLE_MALUS      -120
 #define HOLE_C3_C6_F3_F6               -30
 #define HOLE_B3_B6_G3_G6               -30
 #define TRAPPED_ROOK_PENALTY           -70
