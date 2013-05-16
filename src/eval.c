@@ -509,7 +509,7 @@ int whiteKingLongCastle()
         else if (whitePawnsInfo[COLC] == 32) whiteKingSafety += 6;
 
         /* Doubled pawns on castle */
-        if (isDoubledPawnWhite(COLA)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
+        if (isDoubledPawnWhite(COLA)) whiteKingSafety += 3*DOUBLED_PAWN_CASTLE_MALUS;
         if (isDoubledPawnWhite(COLB)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
         if (isDoubledPawnWhite(COLC)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
 
@@ -585,7 +585,7 @@ int blackKingLongCastle()
     else if (blackPawnsInfo[COLC] == 4) blackKingSafety -= 6;
 
     /* Doubled pawns on castle */
-    if (isDoubledPawnBlack(COLA)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnBlack(COLA)) blackKingSafety -= 3*DOUBLED_PAWN_CASTLE_MALUS;
     if (isDoubledPawnBlack(COLB)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
     if (isDoubledPawnBlack(COLC)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
 
@@ -663,7 +663,7 @@ int whiteKingShortCastle()
     /* Doubled pawns on castle */
     if (isDoubledPawnWhite(COLF)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
     if (isDoubledPawnWhite(COLG)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
-    if (isDoubledPawnWhite(COLH)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnWhite(COLH)) whiteKingSafety += 3*DOUBLED_PAWN_CASTLE_MALUS;
 
     /* Semiopen cols by the oponent */
     if (blackPawnsInfo[COLF] == 0) whiteKingSafety -= 25;
@@ -741,7 +741,7 @@ int blackKingShortCastle()
     /* Doubled pawns on castle */
     if (isDoubledPawnBlack(COLF)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
     if (isDoubledPawnBlack(COLG)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
-    if (isDoubledPawnBlack(COLH)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
+    if (isDoubledPawnBlack(COLH)) blackKingSafety -= 3*DOUBLED_PAWN_CASTLE_MALUS;
 
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[COLF] == 0) blackKingSafety += 25;
