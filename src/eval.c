@@ -516,20 +516,20 @@ int whiteKingLongCastle()
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLA] == 0) whiteKingSafety -= 25;
         {
-            if (colBlackKing > COLE) whiteKingSafety -= 15;
+            if (colBlackKing >= COLE) whiteKingSafety -= 15;
         }
         if (blackPawnsInfo[COLB] == 0) whiteKingSafety -= 25;
         {
-            if (colBlackKing > COLE) whiteKingSafety -= 15;
+            if (colBlackKing >= COLE) whiteKingSafety -= 15;
         }
         if (blackPawnsInfo[COLC] == 0) whiteKingSafety -= 25;
         {
-            if (colBlackKing > COLE) whiteKingSafety -= 15;
+            if (colBlackKing >= COLE) whiteKingSafety -= 15;
         }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colBlackKing > COLE)
+        if (colBlackKing >= COLE)
         {
             if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) whiteKingSafety -= 35;
             if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) whiteKingSafety -= 35;
@@ -592,20 +592,20 @@ int blackKingLongCastle()
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[COLA] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing > COLE) blackKingSafety += 15;
+        if (colWhiteKing >= COLE) blackKingSafety += 15;
     }
     if (whitePawnsInfo[COLB] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing > COLE) blackKingSafety += 15;
+        if (colWhiteKing >= COLE) blackKingSafety += 15;
     }
     if (whitePawnsInfo[COLC] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing > COLE) blackKingSafety += 15;
+        if (colWhiteKing >= COLE) blackKingSafety += 15;
     }
 
     /* Open cols close to the king are more important in case
         of opposite castles*/
-    if (colWhiteKing > COLE)
+    if (colWhiteKing >= COLE)
     {
         if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) blackKingSafety += 35;
         if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) blackKingSafety += 35;
@@ -669,17 +669,17 @@ int whiteKingShortCastle()
     if (blackPawnsInfo[COLF] == 0) whiteKingSafety -= 25;
     {
         /* It's more dangerous in case of opposite castles */
-        if (colBlackKing < COLD) whiteKingSafety -= 15;
+        if (colBlackKing <= COLE) whiteKingSafety -= 15;
     }
     if (blackPawnsInfo[COLG] == 0) whiteKingSafety -= 25;
     {
         /* It's more dangerous in case of opposite castles */
-        if (colBlackKing < COLD) whiteKingSafety -= 15;
+        if (colBlackKing <= COLE) whiteKingSafety -= 15;
     }
     if (blackPawnsInfo[COLH] == 0) whiteKingSafety -= 25;
     {
         /* It's more dangerous in case of opposite castles */
-        if (colBlackKing < COLD) whiteKingSafety -= 15;
+        if (colBlackKing <= COLE) whiteKingSafety -= 15;
     }
 
     /* Open cols close to the king are more important in case
@@ -746,15 +746,15 @@ int blackKingShortCastle()
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[COLF] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing < COLD) blackKingSafety += 15;
+        if (colWhiteKing <= COLE) blackKingSafety += 15;
     }
     if (whitePawnsInfo[COLG] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing < COLD) blackKingSafety += +15;
+        if (colWhiteKing <= COLE) blackKingSafety += +15;
     }
     if (whitePawnsInfo[COLH] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing < COLD) blackKingSafety += 15;
+        if (colWhiteKing <= COLE) blackKingSafety += 15;
     }
 
     /* Open cols close to the king are more important in case
