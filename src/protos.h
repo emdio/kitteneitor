@@ -37,6 +37,7 @@ int NoMaterial();
 int isOnAnOpenCol(int sq);
 int whiteKingSafety();
 int blackKingSafety();
+int isOppCastles();
 
 /* Main */
 void startgame();

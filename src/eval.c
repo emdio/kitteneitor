@@ -396,6 +396,10 @@ int isPassedPawnBlack(int sq)
     return 0;
 }
 
+/*
+     KINGS' SAFETY
+*/
+
 int whiteKingSafety()
 {
     int safety = 0;
@@ -477,9 +481,12 @@ int blackKingSafety()
     return safety;
 }
 
+/* Kings' long castle */
+
 int whiteKingLongCastle()
 {
-    int whiteKingSafety;
+    int whiteKingSafety = 0;
+    int isOpp = isOppCastles();
 
         /* Hole in c3 */
         if ( !IsSqProtectedByAPawn(C3, WHITE) )
@@ -512,20 +519,20 @@ int whiteKingLongCastle()
         /* Semiopen cols by the oponent */
         if (blackPawnsInfo[COLA] == 0) whiteKingSafety -= 25;
         {
-            if (colBlackKing >= COLE) whiteKingSafety -= 105;
+            if (isOpp) whiteKingSafety -= 105;
         }
         if (blackPawnsInfo[COLB] == 0) whiteKingSafety -= 25;
         {
-            if (colBlackKing >= COLE) whiteKingSafety -= 105;
+            if (isOpp) whiteKingSafety -= 105;
         }
         if (blackPawnsInfo[COLC] == 0) whiteKingSafety -= 25;
         {
-            if (colBlackKing >= COLE) whiteKingSafety -= 105;
+            if (isOpp) whiteKingSafety -= 105;
         }
 
         /* Open cols close to the king are more important in case
             of opposite castles*/
-        if (colBlackKing >= COLE)
+        if (isOpp)
         {
             if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) whiteKingSafety -= 35;
             if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) whiteKingSafety -= 35;
@@ -556,6 +563,7 @@ int whiteKingLongCastle()
 int blackKingLongCastle()
 {
     int blackKingSafety = 0;
+    int isOpp = isOppCastles();
 
     /* Hole in c6 */
     if ( !IsSqProtectedByAPawn(C6, BLACK) )
@@ -588,20 +596,20 @@ int blackKingLongCastle()
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[COLA] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing >= COLE) blackKingSafety += 105;
+        if (isOpp) blackKingSafety += 105;
     }
     if (whitePawnsInfo[COLB] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing >= COLE) blackKingSafety += 105;
+        if (isOpp) blackKingSafety += 105;
     }
     if (whitePawnsInfo[COLC] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing >= COLE) blackKingSafety += 105;
+        if (isOpp) blackKingSafety += 105;
     }
 
     /* Open cols close to the king are more important in case
         of opposite castles*/
-    if (colWhiteKing >= COLE)
+    if (isOpp)
     {
         if (whitePawnsInfo[COLA] == 0 && blackPawnsInfo[COLA] == 0) blackKingSafety += 35;
         if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) blackKingSafety += 35;
@@ -629,9 +637,12 @@ int blackKingLongCastle()
     return blackKingSafety;
 }
 
+/* Kings' short castle */
+
 int whiteKingShortCastle()
 {
     int whiteKingSafety = 0;
+    int isOpp = isOppCastles();
 
     /* Hole in f3 */
     if ( !IsSqProtectedByAPawn(F3, WHITE) )
@@ -665,22 +676,22 @@ int whiteKingShortCastle()
     if (blackPawnsInfo[COLF] == 0) whiteKingSafety -= 25;
     {
         /* It's more dangerous in case of opposite castles */
-        if (colBlackKing <= COLE) whiteKingSafety -= 105;
+        if (isOpp) whiteKingSafety -= 105;
     }
     if (blackPawnsInfo[COLG] == 0) whiteKingSafety -= 25;
     {
         /* It's more dangerous in case of opposite castles */
-        if (colBlackKing <= COLE) whiteKingSafety -= 105;
+        if (isOpp) whiteKingSafety -= 105;
     }
     if (blackPawnsInfo[COLH] == 0) whiteKingSafety -= 25;
     {
         /* It's more dangerous in case of opposite castles */
-        if (colBlackKing <= COLE) whiteKingSafety -= 105;
+        if (isOpp) whiteKingSafety -= 105;
     }
 
     /* Open cols close to the king are more important in case
         of opposite castles*/
-    if (colBlackKing <= COLE)
+    if (isOpp)
     {
         if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) whiteKingSafety -= 135;
         if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) whiteKingSafety -= 135;
@@ -710,6 +721,7 @@ int whiteKingShortCastle()
 int blackKingShortCastle()
 {
     int blackKingSafety = 0;
+    int isOpp = isOppCastles();
 
     /* Hole in f6 */
     if ( !IsSqProtectedByAPawn(F6, BLACK) )
@@ -742,20 +754,20 @@ int blackKingShortCastle()
     /* Semiopen cols by the oponent */
     if (whitePawnsInfo[COLF] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing <= COLE) blackKingSafety += 105;
+        if (isOpp) blackKingSafety += 105;
     }
     if (whitePawnsInfo[COLG] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing <= COLE) blackKingSafety += 105;
+        if (isOpp) blackKingSafety += 105;
     }
     if (whitePawnsInfo[COLH] == 0) blackKingSafety += 25;
     {
-        if (colWhiteKing <= COLE) blackKingSafety += 105;
+        if (isOpp) blackKingSafety += 105;
     }
 
     /* Open cols close to the king are more important in case
         of opposite castles*/
-    if (colWhiteKing <= COLE)
+    if (isOpp)
     {
         if (whitePawnsInfo[COLF] == 0 && blackPawnsInfo[COLF] == 0) blackKingSafety += 135;
         if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) blackKingSafety += 135;
@@ -783,6 +795,12 @@ int blackKingShortCastle()
     return blackKingSafety;
 }
 
+/* Is it an opposite kings position? */
+int isOppCastles()
+{
+    return abs(colBlackKing - colWhiteKing) > 4;
+}
+
 /* Are we in the endgame? */
 inline int endGame()
 {
@@ -793,12 +811,10 @@ inline int endGame()
     return 0;
 }
 
-/* Returns 0 if it sq is on an open col */
+/* Returns 0 if sq is on an open col */
 inline int isOnAnOpenCol(int sq)
 {
-    if (whitePawnsInfo[Col(sq)] == 0 && blackPawnsInfo[Col(sq)] == 0)
-        return 1;
-    return 0;
+    return (whitePawnsInfo[Col(sq)] == 0 && blackPawnsInfo[Col(sq)] == 0);
 }
 
 /* Mobility of the bishop: number of empty squares a bishop can reach
@@ -908,6 +924,7 @@ inline int isDoubledPawnWhite(int col)
   /* First x in the below expression is for the case when x is 0 */
   return !(tmp && (!(tmp & (tmp - 1))));
 }
+
 inline int isDoubledPawnBlack(int col)
 {
   int tmp = blackPawnsInfo[col];
@@ -925,6 +942,7 @@ inline int isDoubledPawnBlack(int col)
  *  -Queens on the board
  *  -Not too much pawns, to give place to open positions
  *  -Unbalanced material
+ *  -...
  */
 int funFactor()
 {
@@ -953,6 +971,9 @@ int funFactor()
     return funfa;
 }
 
+/*
+       TESTS FUNCTIONS
+*/
 void testWhitePassedPawns()
 {
     int i = 0, j=0;
