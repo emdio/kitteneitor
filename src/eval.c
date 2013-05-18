@@ -176,16 +176,11 @@ int Eval(alpha, beta)
 
     /* After counting the material we update the score */
 //    score = piece_mat[WHITE] - piece_mat[BLACK];
-    score = whitePawns * value_piece[PAWN] +
-            whiteKnights * value_piece[KNIGHT] +
-            whiteBishops * value_piece[BISHOP] +
-            whiteRooks * value_piece[ROOK] +
-            whiteQueens * value_piece[QUEEN] -
-            blackPawns * value_piece[PAWN] -
-            blackKnights * value_piece[KNIGHT] -
-            blackBishops * value_piece[BISHOP] -
-            blackRooks * value_piece[ROOK] -
-            blackQueens * value_piece[QUEEN];
+    score = (whitePawns - blackPawns) * value_piece[PAWN] +
+            (whiteKnights - blackKnights) * value_piece[KNIGHT] +
+            (whiteBishops - blackBishops) * value_piece[BISHOP] +
+            (whiteRooks - blackRooks) * value_piece[ROOK] +
+            (whiteQueens - blackQueens) * value_piece[QUEEN];
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
