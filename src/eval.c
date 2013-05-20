@@ -15,7 +15,7 @@
 #define ADV_TURN_TO_MOVE                10
 #define DOUBLED_PAWN_MALUS             -10
 #define DOUBLED_PAWN_CASTLE_MALUS      -25
-#define MISSING_PAWN_CASTLE_MALUS      -120
+#define MISSING_PAWN_CASTLE_MALUS      -55
 #define HOLE_C3_C6_F3_F6               -30
 #define HOLE_B3_B6_G3_G6               -30
 #define TRAPPED_ROOK_PENALTY           -70
@@ -507,15 +507,15 @@ int whiteKingLongCastle()
         // Col A
         if (whitePawnsInfo[COLA] == 64) whiteKingSafety += 12;
         else if (whitePawnsInfo[COLA] == 32) whiteKingSafety += 6;
-        else if (whitePawnsInfo[COLA] == 0) whiteKingSafety -= 30;
+        else if (whitePawnsInfo[COLA] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
         // Col B
         if (whitePawnsInfo[COLB] == 64) whiteKingSafety +=12;
         else if (whitePawnsInfo[COLB] == 32) whiteKingSafety += 6;
-        else if (whitePawnsInfo[COLB] == 0) whiteKingSafety -= 50;
+        else if (whitePawnsInfo[COLB] == 0) whiteKingSafety += 2*MISSING_PAWN_CASTLE_MALUS;
         // Col C
         if (whitePawnsInfo[COLC] == 64) whiteKingSafety +=12;
         else if (whitePawnsInfo[COLC] == 32) whiteKingSafety += 6;
-        else if (whitePawnsInfo[COLC] == 0) whiteKingSafety -= 30;
+        else if (whitePawnsInfo[COLC] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
 
         /* Doubled pawns on castle */
         if (isDoubledPawnWhite(COLA)) whiteKingSafety += 3*DOUBLED_PAWN_CASTLE_MALUS;
@@ -544,10 +544,6 @@ int whiteKingLongCastle()
             if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) whiteKingSafety -= 35;
             if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) whiteKingSafety -= 35;
         }
-        /* Pawns holes */
-        if (whitePawnsInfo[COLA] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLB] == 0) whiteKingSafety += 2*MISSING_PAWN_CASTLE_MALUS;
-        if (whitePawnsInfo[COLC] == 0) whiteKingSafety += 0.5*MISSING_PAWN_CASTLE_MALUS;
 
         /* Pawns storm */
         if (piece[A4] == PAWN && color[A4] == BLACK)
@@ -590,15 +586,15 @@ int blackKingLongCastle()
     // Col A
     if (blackPawnsInfo[COLA] == 2) blackKingSafety -= 12;
     else if (blackPawnsInfo[COLA] == 4) blackKingSafety -= 6;
-    else if (blackPawnsInfo[COLA] == 0) blackKingSafety += 30;
+    else if (blackPawnsInfo[COLA] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
     // Col B
     if (blackPawnsInfo[COLB] == 2) blackKingSafety -= 12;
     else if (blackPawnsInfo[COLB] == 4) blackKingSafety -= 6;
-    else if (blackPawnsInfo[COLB] == 0) blackKingSafety += 50;
+    else if (blackPawnsInfo[COLB] == 0) blackKingSafety -= 2*MISSING_PAWN_CASTLE_MALUS;
     // Col C
     if (blackPawnsInfo[COLC] == 2) blackKingSafety -= 12;
     else if (blackPawnsInfo[COLC] == 4) blackKingSafety -= 6;
-    else if (blackPawnsInfo[COLC] == 0) blackKingSafety += 30;
+    else if (blackPawnsInfo[COLC] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
 
     /* Doubled pawns on castle */
     if (isDoubledPawnBlack(COLA)) blackKingSafety -= 3*DOUBLED_PAWN_CASTLE_MALUS;
@@ -627,10 +623,6 @@ int blackKingLongCastle()
         if (whitePawnsInfo[COLB] == 0 && blackPawnsInfo[COLB] == 0) blackKingSafety += 35;
         if (whitePawnsInfo[COLC] == 0 && blackPawnsInfo[COLC] == 0) blackKingSafety += 35;
     }
-    /* Pawns shield */
-    if (blackPawnsInfo[COLA] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
-    if (blackPawnsInfo[COLB] == 0) blackKingSafety -= 2*MISSING_PAWN_CASTLE_MALUS;
-    if (blackPawnsInfo[COLC] == 0) blackKingSafety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
 
     /* Pawns storm */
     if (piece[A5] == PAWN && color[A5] == WHITE)
@@ -675,15 +667,15 @@ int whiteKingShortCastle()
     // Col F
     if (whitePawnsInfo[COLF] == 64) whiteKingSafety += 12;
     else if (whitePawnsInfo[COLF] == 32) whiteKingSafety += 6;
-    else if (whitePawnsInfo[COLF] == 0) whiteKingSafety -= 30;
+    else if (whitePawnsInfo[COLF] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
     // Col G
     if (whitePawnsInfo[COLG] == 64) whiteKingSafety +=12;
     else if (whitePawnsInfo[COLG] == 32) whiteKingSafety += 6;
-    else if (whitePawnsInfo[COLG] == 0) whiteKingSafety -= 50;
+    else if (whitePawnsInfo[COLG] == 0) whiteKingSafety += 2*MISSING_PAWN_CASTLE_MALUS;
     // Col H
     if (whitePawnsInfo[COLH] == 64) whiteKingSafety +=12;
     else if (whitePawnsInfo[COLH] == 32) whiteKingSafety += 6;
-    else if (whitePawnsInfo[COLH] == 0) whiteKingSafety -= 30;
+    else if (whitePawnsInfo[COLH] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
 
     /* Doubled pawns on castle */
     if (isDoubledPawnWhite(COLF)) whiteKingSafety += DOUBLED_PAWN_CASTLE_MALUS;
@@ -715,11 +707,6 @@ int whiteKingShortCastle()
         if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) whiteKingSafety -= 135;
         if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) whiteKingSafety -= 235;
     }
-
-    /* Pawns shield */
-    if (whitePawnsInfo[COLF] == 0) whiteKingSafety += 0.5*MISSING_PAWN_CASTLE_MALUS;
-    if (whitePawnsInfo[COLG] == 0) whiteKingSafety += 2*MISSING_PAWN_CASTLE_MALUS;
-    if (whitePawnsInfo[COLH] == 0) whiteKingSafety += MISSING_PAWN_CASTLE_MALUS;
 
     /* Pawns storm */
     if (piece[F4] == PAWN && color[F4] == BLACK)
@@ -760,15 +747,15 @@ int blackKingShortCastle()
     // Col F
     if (blackPawnsInfo[COLF] == 2) blackKingSafety -= 12;
     else if (blackPawnsInfo[COLF] == 4) blackKingSafety -= 6;
-    else if (blackPawnsInfo[COLF] == 0) blackKingSafety += 30;
+    else if (blackPawnsInfo[COLF] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
     // Col G
     if (blackPawnsInfo[COLG] == 2) blackKingSafety -=12;
     else if (blackPawnsInfo[COLG] == 4) blackKingSafety -= 6;
-    else if (blackPawnsInfo[COLG] == 0) blackKingSafety += 50;
+    else if (blackPawnsInfo[COLG] == 0) blackKingSafety -= 2*MISSING_PAWN_CASTLE_MALUS;
     // Col H
     if (blackPawnsInfo[COLH] == 2) blackKingSafety -=12;
     else if (blackPawnsInfo[COLH] == 4) blackKingSafety -= 6;
-    else if (blackPawnsInfo[COLH] == 0) blackKingSafety += 30;
+    else if (blackPawnsInfo[COLH] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
 
     /* Doubled pawns on castle */
     if (isDoubledPawnBlack(COLF)) blackKingSafety -= DOUBLED_PAWN_CASTLE_MALUS;
@@ -797,10 +784,6 @@ int blackKingShortCastle()
         if (whitePawnsInfo[COLG] == 0 && blackPawnsInfo[COLG] == 0) blackKingSafety += 135;
         if (whitePawnsInfo[COLH] == 0 && blackPawnsInfo[COLH] == 0) blackKingSafety += 135;
     }
-    /* Pawns shield */
-    if (blackPawnsInfo[COLF] == 0) blackKingSafety -= 0.5*MISSING_PAWN_CASTLE_MALUS;
-    if (blackPawnsInfo[COLG] == 0) blackKingSafety -= 2*MISSING_PAWN_CASTLE_MALUS;
-    if (blackPawnsInfo[COLH] == 0) blackKingSafety -= MISSING_PAWN_CASTLE_MALUS;
 
     /* Pawns storm */
     if (piece[F5] == PAWN && color[F5] == WHITE)
