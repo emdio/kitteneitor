@@ -38,6 +38,10 @@ int range_bishop[16] = {
 int passed_pawn_white[7] = {90, 75, 55, 25, 17, 10, 0};
 int passed_pawn_black[7] = {0, 10, 17, 25, 55, 75, 90};
 
+/* For storing pawns' ranks */
+int whitePawnsRanks[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int blackPawnsRanks[10] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+
 /* For scaling pawn number in fun factor */
 int num_pawns_funfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -15, -15};
 
@@ -70,11 +74,17 @@ int Eval(alpha, beta)
     int i;
 
     /* Set some values to 0 */
+
     /* Pawn's info */
     for (i=0; i<8; ++i)
     {
         whitePawnsInfo[i] = 0;
         blackPawnsInfo[i] = 0;
+    }
+    for (i = 0; i < 10; ++i)
+    {
+        whitePawnsRanks[i] = 0;
+        blackPawnsRanks[i] = 7;
     }
 
     /* The fun factor */
@@ -111,7 +121,8 @@ int Eval(alpha, beta)
             {
             case PAWN:
                 whitePawns++;
-                whitePawnsInfo[(int)Col(i)] += 1<<Row(63 - i);
+//                whitePawnsInfo[(int)Col(i)] += 1<<Row(63 - i);
+                getWhitePawnRank(i);
                 break;
             case KNIGHT:
                 whiteKnights++;
@@ -137,7 +148,8 @@ int Eval(alpha, beta)
             {
             case PAWN:
                 blackPawns++;
-                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+//                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+                getBlackPawnRank(i);
                 break;
             case KNIGHT:
                 blackKnights++;
@@ -159,19 +171,19 @@ int Eval(alpha, beta)
         }
     }
 
-//    printf("\nBlack pawns: ");
-//    for (i=0; i<8; ++i)
-//    {
-//        printf("%4d", blackPawnsInfo[i]);
-//    }
-//    puts("");
+    printf("\nBlack pawns: ");
+    for (i=0; i<10; ++i)
+    {
+        printf("%4d", blackPawnsRanks[i]);
+    }
+    puts("");
 
-//    printf ("White pawns: ");
-//    for (i=0; i<8; ++i)
-//    {
-//        printf("%4d", whitePawnsInfo[i]);
-//    }
-//    puts("");
+    printf ("White pawns: ");
+    for (i=0; i<10; ++i)
+    {
+        printf("%4d", whitePawnsRanks[i]);
+    }
+    puts("");
 
 
     /* After counting the material we update the score */
@@ -802,6 +814,24 @@ int blackKingShortCastle()
     return blackKingSafety;
 }
 
+void getWhitePawnRank(sq)
+{
+int tmpCol = Col(sq) + 1;
+    if (Row(sq) > whitePawnsRanks[tmpCol])
+    {
+        whitePawnsRanks[tmpCol] = Row(sq);
+    }
+}
+
+void getBlackPawnRank(sq)
+{
+int tmpCol = Col(sq) + 1;
+    if (Row(sq) < blackPawnsRanks[tmpCol])
+    {
+        blackPawnsRanks[tmpCol] = Row(sq);
+    }
+}
+
 /* Is it an opposite kings position? */
 int isOppCastles()
 {
@@ -821,7 +851,7 @@ inline int endGame()
 /* Returns 0 if sq is on an open col */
 inline int isOnAnOpenCol(int sq)
 {
-    return (whitePawnsInfo[Col(sq)] == 0 && blackPawnsInfo[Col(sq)] == 0);
+    return (whitePawnsRanks[Col(sq) + 1] == 0 && blackPawnsRanks[Col(sq) + 1] == 7);
 }
 
 /* Mobility of the bishop: number of empty squares a bishop can reach
@@ -1104,5 +1134,36 @@ void testBlackDoubledPawns()
             if (isDoubledPawnBlack(Col(i)))
                 printf ("Balck doubled pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
         }
+    }
+}
+
+void testOpenCols()
+{
+    int i = 0, j=0;
+
+    for (j = 0; j < 10; ++j)
+    {
+        whitePawnsRanks[j] = 0;
+        blackPawnsRanks[j] = 7;
+    }
+
+    for (i = 0; i < 64; i++)
+    {
+        if (piece[i] == PAWN)
+        {
+             for (j = 0; j < 64; ++j)
+            {
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+                else if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+            }
+        }
+    }
+
+    for (i = 0; i < 64; i++)
+    {
+    if (isOnAnOpenCol(i))
+        printf ("Open col in square %d, column %d\n", i, Col(i));
     }
 }

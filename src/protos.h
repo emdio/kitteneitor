@@ -38,6 +38,8 @@ int isOnAnOpenCol(int sq);
 int whiteKingSafety();
 int blackKingSafety();
 int isOppCastles();
+void getWhitePawnRank(int sq);
+void getBlackPawnRank(int sq);
 
 /* Main */
 void startgame();
