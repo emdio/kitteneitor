@@ -932,41 +932,41 @@ int main()
             PrintBoard();
             continue;
         }
-        if (!strcmp (s, "testWhitePassedPawns"))
-        {
-            testWhitePassedPawns ();
-            continue;
-        }
-        if (!strcmp (s, "testBlackPassedPawns"))
-        {
-            testBlackPassedPawns ();
-            continue;
-        }
-        if (!strcmp (s, "testWhiteDoubledPawns"))
-        {
-            testWhiteDoubledPawns ();
-            continue;
-        }
-        if (!strcmp (s, "testIsSqProtectedByAPawn"))
-        {
-             testIsSqProtectedByAPawn();
-            continue;
-        }
-        if (!strcmp (s, "testIsSqProtectedByAKnight"))
-        {
-             testIsSqProtectedByAKnight();
-            continue;
-        }
-        if (!strcmp (s, "testIsSqProtectedByABishop"))
-        {
-             testIsSqProtectedByABishop();
-            continue;
-        }
-        if (!strcmp (s, "testOpenCols"))
-        {
-             testOpenCols();
-            continue;
-        }
+//        if (!strcmp (s, "testWhitePassedPawns"))
+//        {
+//            testWhitePassedPawns ();
+//            continue;
+//        }
+//        if (!strcmp (s, "testBlackPassedPawns"))
+//        {
+//            testBlackPassedPawns ();
+//            continue;
+//        }
+//        if (!strcmp (s, "testWhiteDoubledPawns"))
+//        {
+//            testWhiteDoubledPawns ();
+//            continue;
+//        }
+//        if (!strcmp (s, "testIsSqProtectedByAPawn"))
+//        {
+//             testIsSqProtectedByAPawn();
+//            continue;
+//        }
+//        if (!strcmp (s, "testIsSqProtectedByAKnight"))
+//        {
+//             testIsSqProtectedByAKnight();
+//            continue;
+//        }
+//        if (!strcmp (s, "testIsSqProtectedByABishop"))
+//        {
+//             testIsSqProtectedByABishop();
+//            continue;
+//        }
+//        if (!strcmp (s, "testOpenCols"))
+//        {
+//             testOpenCols();
+//            continue;
+//        }
         if (!strcmp (s, "undo"))
         {
             TakeBack ();
