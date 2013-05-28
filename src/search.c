@@ -160,8 +160,8 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     movecnt = GenMoves (side, moveBuf);
 
     /* If we're in check maybe we want to search deeper */
-//    if (IsInCheck(side))
-//        ++depth;
+    if (depth < max_depth - 1 && IsInCheck(side))
+        ++depth;
 
     /* Once we have all the moves available, we loop through the posible
      * moves and apply an alpha-beta search */

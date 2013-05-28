@@ -21,51 +21,37 @@
 #define TRAPPED_ROOK_PENALTY           -70
 
 /* Arrays for scaling mobility values */
-int mob_rook[16] = {
+int mobRook[16] = {
     -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
 };
-int mob_knight[9] = {
+int mobKnight[9] = {
     -10, -4, 2, 8, 14, 18, 22, 24, 25
 };
-int mob_bishop[16] = {
+int mobBishop[16] = {
     -5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
 };
-int range_bishop[16] = {
+int rangeBishop[16] = {
     -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
 };
 
 /* For scaling passed pawns depending on the row */
-int passed_pawn_white[7] = {90, 75, 55, 25, 17, 10, 0};
-int passed_pawn_black[7] = {0, 10, 17, 25, 55, 75, 90};
+int passedPawnBonus[2][7] = {90, 75, 55, 25, 17, 10, 0};
 
 /* For storing pawns' ranks */
-int whitePawnsRanks[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-int blackPawnsRanks[10] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+int pawnsRanks[2][10];
 
 /* For scaling pawn number in fun factor */
-int num_pawns_funfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -15, -15};
+int numPawnsFunfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -15, -15};
 
 /* Kings' safety */
-int posWhiteKing = 0;
-int colWhiteKing = 0;
-int posBlackKing = 0;
-int colBlackKing = 0;
+int colKing[2] = 0;
 
 /* To count the material */
-int whitePawns = 0;
-int whiteKnights = 0;
-int whiteBishops = 0;
-int whiteRooks = 0;
-int whiteQueens = 0;
-int blackPawns = 0;
-int blackKnights = 0;
-int blackBishops = 0;
-int blackRooks = 0;
-int blackQueens = 0;
-
-/* Pawn's info */
-int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+int pawns[2] = 0;
+int knights[2] = 0;
+int bishops[2] = 0;
+int rooks[2] = 0;
+int queens[2] = 0;
 
 /* The evaluation function */
 int Eval(alpha, beta)
@@ -76,31 +62,26 @@ int Eval(alpha, beta)
     /* Set some values to 0 */
 
     /* Pawn's info */
-    for (i=0; i<8; ++i)
-    {
-        whitePawnsInfo[i] = 0;
-        blackPawnsInfo[i] = 0;
-    }
     for (i = 0; i < 10; ++i)
     {
-        whitePawnsRanks[i] = 0;
-        blackPawnsRanks[i] = 7;
+        pawnsRanks[WHITE][i] = 0;
+        pawnsRanks[BLACK][i] = 7;
     }
 
     /* The fun factor */
     int ff = 0;
 
     /* The vars for counting the material */
-    whitePawns = 0;
-    whiteKnights = 0;
-    whiteBishops = 0;
-    whiteRooks = 0;
-    whiteQueens = 0;
-    blackPawns = 0;
-    blackKnights = 0;
-    blackBishops = 0;
-    blackRooks = 0;
-    blackQueens = 0;
+    pawns[WHITE] = 0;
+    knights[WHITE] = 0;
+    bishops[WHITE] = 0;
+    rooks[WHITE] = 0;
+    queens[WHITE] = 0;
+    pawns[BLACK] = 0;
+    knights[BLACK] = 0;
+    bishops[BLACK] = 0;
+    rooks[BLACK] = 0;
+    queens[BLACK] = 0;
 
     count_evaluations++;
 
@@ -120,21 +101,21 @@ int Eval(alpha, beta)
             switch(piece[i])
             {
             case PAWN:
-                whitePawns++;
+                pawns[WHITE]++;
 //                whitePawnsInfo[(int)Col(i)] += 1<<Row(63 - i);
                 getWhitePawnRank(i);
                 break;
             case KNIGHT:
-                whiteKnights++;
+                knights[WHITE]++;
                 break;
             case BISHOP:
-                whiteBishops++;
+                bishops[WHITE]++;
                 break;
             case ROOK:
-                whiteRooks++;
+                rooks[WHITE]++;
                 break;
             case QUEEN:
-                whiteQueens++;
+                queens[WHITE]++;
                 break;
             case KING:
                 posWhiteKing = i;
@@ -147,21 +128,21 @@ int Eval(alpha, beta)
             switch(piece[i])
             {
             case PAWN:
-                blackPawns++;
+                pawns[BLACK]++;
 //                blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
                 getBlackPawnRank(i);
                 break;
             case KNIGHT:
-                blackKnights++;
+                knights[BLACK]++;
                 break;
             case BISHOP:
-                blackBishops++;
+                bishops[BLACK]++;
                 break;
             case ROOK:
-                blackRooks++;
+                rooks[BLACK]++;
                 break;
             case QUEEN:
-                blackQueens++;
+                queens[BLACK]++;
                 break;
             case KING:
                 posBlackKing = i;
@@ -171,36 +152,36 @@ int Eval(alpha, beta)
         }
     }
 
-    printf("\nBlack pawns: ");
-    for (i=0; i<10; ++i)
-    {
-        printf("%4d", blackPawnsRanks[i]);
-    }
-    puts("");
+//    printf("\nBlack pawns: ");
+//    for (i=0; i<10; ++i)
+//    {
+//        printf("%4d", blackPawnsRanks[i]);
+//    }
+//    puts("");
 
-    printf ("White pawns: ");
-    for (i=0; i<10; ++i)
-    {
-        printf("%4d", whitePawnsRanks[i]);
-    }
-    puts("");
+//    printf ("White pawns: ");
+//    for (i=0; i<10; ++i)
+//    {
+//        printf("%4d", whitePawnsRanks[i]);
+//    }
+//    puts("");
 
 
     /* After counting the material we update the score */
 //    score = piece_mat[WHITE] - piece_mat[BLACK];
-    score = (whitePawns - blackPawns) * value_piece[PAWN] +
-            (whiteKnights - blackKnights) * value_piece[KNIGHT] +
-            (whiteBishops - blackBishops) * value_piece[BISHOP] +
-            (whiteRooks - blackRooks) * value_piece[ROOK] +
-            (whiteQueens - blackQueens) * value_piece[QUEEN];
+    score = (pawns[WHITE] - pawns[BLACK]) * value_piece[PAWN] +
+            (knights[WHITE] - knights[BLACK]) * value_piece[KNIGHT] +
+            (bishops[WHITE] - bishops[BLACK]) * value_piece[BISHOP] +
+            (rooks[WHITE] - rooks[BLACK]) * value_piece[ROOK] +
+            (queens[WHITE] - queens[BLACK]) * value_piece[QUEEN];
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
 
     /* Anyone has the pair of bishops? */
-    if (whiteBishops==2 && blackBishops!=2)
+    if (bishops[WHITE] == 2 && bishops[BLACK] != 2)
         score += PAIR_BISHOPS;
-    else if (blackBishops==2 && whiteBishops!=2)
+    else if (bishops[WHITE] == 2 && bishops[BLACK] != 2)
         score -= PAIR_BISHOPS;
 
     /* Trying the lazy eval */
