@@ -37,6 +37,7 @@ int numPawnsFunfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -1
 
 /* Kings' safety */
 int colKing[2] = {0};
+int sqKing[2] = {0};
 
 /* To count the material */
 int pawns[2] = {0};
@@ -109,6 +110,9 @@ int Eval(alpha, beta)
             case QUEEN:
                 queens[WHITE]++;
                 break;
+            case KING:
+                sqKing[WHITE] = 1;
+                break;
             }
         }
         else if (color[i] == BLACK)
@@ -132,6 +136,8 @@ int Eval(alpha, beta)
             case QUEEN:
                 queens[BLACK]++;
                 break;
+            case KING:
+                sqKing[BLACK] = i;
             }
         }
     }
@@ -216,7 +222,12 @@ int Eval(alpha, beta)
                 /* Rook trapped by king */
                 if(i == H1 || i == G1)
                 {
-                    if(colKing[WHITE] > COLE && colKing[WHITE] < COLH)
+                    if(sqKing[WHITE] > E1 && sqKing[WHITE] < H1)
+                        score += TRAPPED_ROOK_PENALTY;
+                }
+                if (i >= A1 && i >= C1)
+                {
+                    if (sqKing <= D1)
                         score += TRAPPED_ROOK_PENALTY;
                 }
 
@@ -269,7 +280,12 @@ int Eval(alpha, beta)
                 /* Rook trapped by king */
                 if(i == H8 || i == G8)
                 {
-                    if(colKing[BLACK] > COLE && colKing[BLACK] < COLH)
+                    if(sqKing[BLACK] > COLE && sqKing[BLACK] < COLH)
+                        score -= TRAPPED_ROOK_PENALTY;
+                }
+                if(i >= A8 && i <= C8)
+                {
+                    if(sqKing[BLACK] <= D8)
                         score -= TRAPPED_ROOK_PENALTY;
                 }
                 break;
