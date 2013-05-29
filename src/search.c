@@ -80,7 +80,6 @@ MOVE ComputerThink(int m_depth)
 //            break;
 //        }
 
-
         /* After searching, print results in xboard mode
             depth eval time nodes PV*/
         {
@@ -155,6 +154,10 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
        pline->cmove = 0;
        return Quiescent(alpha, beta);
     }
+
+    //    /* If we're in check maybe we want to search deeper */
+        if (depth < max_depth - 2 && IsInCheck(side))
+            ++depth;
 
     /* Generate and count all moves for current position */
     movecnt = GenMoves (side, moveBuf);
