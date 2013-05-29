@@ -21,18 +21,10 @@
 #define TRAPPED_ROOK_PENALTY           -70
 
 /* Arrays for scaling mobility values */
-int mobRook[16] = {
-    -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
-};
-int mobKnight[9] = {
-    -10, -4, 2, 8, 14, 18, 22, 24, 25
-};
-int mobBishop[16] = {
-    -5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
-};
-int rangeBishop[16] = {
-    -6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20
-};
+int mobRook[16] = {-6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20};
+int mobKnight[9] = {-10, -4, 2, 8, 14, 18, 22, 24, 25};
+int mobBishop[16] = {-5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47};
+int rangeBishop[16] = {-6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20};
 
 /* For scaling passed pawns depending on the row */
 int passedPawnBonus[2][7] = {90, 75, 55, 25, 17, 10, 0};
@@ -224,7 +216,7 @@ int Eval(alpha, beta)
                 /* Rook trapped by king */
                 if(i == H1 || i == G1)
                 {
-                    if(colKing[WHITE] > E1 && colKing[BLACK] < H1)
+                    if(colKing[WHITE] > COLE && colKing[WHITE] < COLH)
                         score += TRAPPED_ROOK_PENALTY;
                 }
 
@@ -277,7 +269,7 @@ int Eval(alpha, beta)
                 /* Rook trapped by king */
                 if(i == H8 || i == G8)
                 {
-                    if(colKing[BLACK] > E8 && colKing[BLACK] < H8)
+                    if(colKing[BLACK] > COLE && colKing[BLACK] < COLH)
                         score -= TRAPPED_ROOK_PENALTY;
                 }
                 break;
