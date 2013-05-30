@@ -225,7 +225,7 @@ int Eval(alpha, beta)
                     if(sqKing[WHITE] > E1 && sqKing[WHITE] < H1)
                         score += TRAPPED_ROOK_PENALTY;
                 }
-                if (i >= A1 && i >= C1)
+                if (i >= A1 && i <= C1)
                 {
                     if (sqKing <= D1)
                         score += TRAPPED_ROOK_PENALTY;
