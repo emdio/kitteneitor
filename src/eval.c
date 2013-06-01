@@ -163,7 +163,7 @@ int Eval(alpha, beta)
     /* Anyone has the pair of bishops? */
     if (bishops[WHITE] == 2 && bishops[BLACK] != 2)
         score += PAIR_BISHOPS;
-    else if (bishops[WHITE] == 2 && bishops[BLACK] != 2)
+    else if (bishops[WHITE] != 2 && bishops[BLACK] == 2)
         score -= PAIR_BISHOPS;
 
     /* Trying the lazy eval */

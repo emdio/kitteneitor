@@ -40,6 +40,12 @@ int blackKingSafety();
 int isOppCastles();
 void getWhitePawnRank(int sq);
 void getBlackPawnRank(int sq);
+void testWhitePassedPawns();
+void testBlackPassedPawns();
+void testWhiteDoubledPawns();
+void testBlackDoubledPawns();
+void testOpenCols();
+
 
 /* Main */
 void startgame();
