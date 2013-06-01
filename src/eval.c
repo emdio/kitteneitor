@@ -83,12 +83,6 @@ int Eval(alpha, beta)
 
     for (i = 0; i < 64; ++i)
     {
-//        if (color[i] == EMPTY)
-//            continue;
-//        else
-//        {
-        /* Just counting the wood on the board */
-//            piece_mat[color[i]] += value_piece[piece[i]];
         if (color[i] == WHITE)
         {
             switch(piece[i])
@@ -157,11 +151,11 @@ int Eval(alpha, beta)
 
     /* After counting the material we update the score */
 //    score = piece_mat[WHITE] - piece_mat[BLACK];
-    score = (pawns[WHITE] - pawns[BLACK]) * value_piece[PAWN] +
-            (knights[WHITE] - knights[BLACK]) * value_piece[KNIGHT] +
-            (bishops[WHITE] - bishops[BLACK]) * value_piece[BISHOP] +
-            (rooks[WHITE] - rooks[BLACK]) * value_piece[ROOK] +
-            (queens[WHITE] - queens[BLACK]) * value_piece[QUEEN];
+    score = (pawns[WHITE]   - pawns[BLACK])   *  value_piece[PAWN] +
+            (knights[WHITE] - knights[BLACK]) *  value_piece[KNIGHT] +
+            (bishops[WHITE] - bishops[BLACK]) *  value_piece[BISHOP] +
+            (rooks[WHITE]   - rooks[BLACK])   *  value_piece[ROOK] +
+            (queens[WHITE]  - queens[BLACK])  *  value_piece[QUEEN];
 
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
@@ -184,9 +178,7 @@ int Eval(alpha, beta)
     /* Check all the squares searching for the pieces */
     for (i = 0; i < 64; i++)
     {
-        if (color[i] == EMPTY)
-            continue;
-        else if (color[i] == WHITE)
+        if (color[i] == WHITE)
         {
             /* Now we add to the evaluation the value of the
              * piece square tables */
@@ -228,7 +220,6 @@ int Eval(alpha, beta)
                     if (sqKing[WHITE] <= D1)
                         score += TRAPPED_ROOK_PENALTY;
                 }
-
                 break;
             case QUEEN:
                 score += pst_queen[i];
