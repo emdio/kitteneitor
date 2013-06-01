@@ -42,7 +42,6 @@ MOVE ComputerThink(int m_depth)
         /* Search now! */
         score = Search (-MATE, MATE, i, &m, &pline);
 
-
         /* If we've searched for a certain percentage of the avaialble time it
         doesn't make sense to start a new ply, so we call it a day */
 //        checkup(half_time);
@@ -73,12 +72,12 @@ MOVE ComputerThink(int m_depth)
         bestMove = m;
 
         /* If the score is too large we just stop thinking */
-//        if (abs(score) > MATE - 10)
-//        {
-//            printf("score = %d\n", score);
-//            fflush(stdout);
-//            break;
-//        }
+        if (abs(score) > MATE - 32)
+        {
+            printf("score = %d\n", score);
+            fflush(stdout);
+            break;
+        }
 
         /* After searching, print results in xboard mode
             depth eval time nodes PV*/
@@ -230,7 +229,6 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 
     if (fifty >= 100) /* 50 jugadas o mas */
         return 0;
-
 
     /* Finally we return alpha, the score value */
     return alpha;
