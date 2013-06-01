@@ -197,8 +197,8 @@ int Eval(alpha, beta)
             case PAWN:
 //                if (isDoubledPawnWhite(Col(i)))
 //                    score += DOUBLED_PAWN_MALUS;
-//                if (isPassedPawnWhite(i))
-//                    score += passedPawnBonus[WHITE][Row(i)];
+                if (isPassedPawnWhite(i))
+                    score += passedPawnBonus[WHITE][Row(i)];
                 if (endGame())
                     score += pst_pawn_endgame[i];
                 else
@@ -255,8 +255,8 @@ int Eval(alpha, beta)
             case PAWN:
 //                if (isDoubledPawnBlack(Col(i)))
 //                    score -= DOUBLED_PAWN_MALUS;
-//                if (isPassedPawnBlack(i))
-//                    score -= passedPawnBonus[BLACK][Row(i)];
+                if (isPassedPawnBlack(i))
+                    score -= passedPawnBonus[BLACK][Row(i)];
                 if (endGame())
                     score -= pst_pawn_endgame[flip[i]];
                 else
