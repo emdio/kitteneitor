@@ -110,7 +110,7 @@ int Eval(alpha, beta)
                 queens[WHITE]++;
                 break;
             case KING:
-                sqKing[WHITE] = 1;
+                sqKing[WHITE] = i;
                 break;
             }
         }
