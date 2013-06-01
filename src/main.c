@@ -942,11 +942,16 @@ int main()
             testBlackPassedPawns ();
             continue;
         }
-//        if (!strcmp (s, "testWhiteDoubledPawns"))
-//        {
-//            testWhiteDoubledPawns ();
-//            continue;
-//        }
+        if (!strcmp (s, "testWhiteDoubledPawns"))
+        {
+            testWhiteDoubledPawns ();
+            continue;
+        }
+        if (!strcmp (s, "testBlackDoubledPawns"))
+        {
+            testBlackDoubledPawns ();
+            continue;
+        }
 //        if (!strcmp (s, "testIsSqProtectedByAPawn"))
 //        {
 //             testIsSqProtectedByAPawn();
