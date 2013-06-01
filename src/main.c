@@ -967,11 +967,11 @@ int main()
 //             testIsSqProtectedByABishop();
 //            continue;
 //        }
-//        if (!strcmp (s, "testOpenCols"))
-//        {
-//             testOpenCols();
-//            continue;
-//        }
+        if (!strcmp (s, "testOpenCols"))
+        {
+             testOpenCols();
+            continue;
+        }
         if (!strcmp (s, "undo"))
         {
             TakeBack ();

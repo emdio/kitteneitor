@@ -193,7 +193,7 @@ int Eval(alpha, beta)
             switch (piece[i])
             {
             case PAWN:
-                if (isDoubledPawnWhite(Col(i)))
+                if (isDoubledPawnWhite(i))
                     score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
                     score += passedPawnBonus[WHITE][Row(i)];
@@ -251,7 +251,7 @@ int Eval(alpha, beta)
             switch (piece[i])
             {
             case PAWN:
-                if (isDoubledPawnBlack(Col(i)))
+                if (isDoubledPawnBlack(i))
                     score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
                     score -= passedPawnBonus[BLACK][Row(i)];
@@ -678,33 +678,33 @@ void testBlackDoubledPawns()
     }
 }
 
-//void testOpenCols()
-//{
-//    int i = 0, j=0;
+void testOpenCols()
+{
+    int i = 0, j=0;
 
-//    for (j = 0; j < 10; ++j)
-//    {
-//        pawns[WHITE]Ranks[j] = 0;
-//        pawns[BLACK]Ranks[j] = 7;
-//    }
+    for (j = 0; j < 10; ++j)
+    {
+        pawnsRanks[WHITE][j] = 0;
+        pawnsRanks[BLACK][j] = 7;
+    }
 
-//    for (i = 0; i < 64; i++)
-//    {
-//        if (piece[i] == PAWN)
-//        {
-//             for (j = 0; j < 64; ++j)
-//            {
-//                if (piece[j] == PAWN && color[j] == WHITE)
-//                    getWhitePawnRank(j);
-//                else if (piece[j] == PAWN && color[j] == BLACK)
-//                    getBlackPawnRank(j);
-//            }
-//        }
-//    }
+    for (i = 0; i < 64; i++)
+    {
+        if (piece[i] == PAWN)
+        {
+             for (j = 0; j < 64; ++j)
+            {
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+                else if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+            }
+        }
+    }
 
-//    for (i = 0; i < 64; i++)
-//    {
-//    if (isOnAnOpenCol(i))
-//        printf ("Open col in square %d, column %d\n", i, Col(i));
-//    }
-//}
+    for (i = 0; i < 64; i++)
+    {
+    if (isOnAnOpenCol(i))
+        printf ("Open col in square %d, column %d\n", i, Col(i));
+    }
+}
