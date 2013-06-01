@@ -398,7 +398,7 @@ inline int endGame()
 /* Returns 1 if sq is on an open col */
 inline int isOnAnOpenCol(int sq)
 {
-    return (pawnsRanks[Col(sq) + 1] == 0 && pawnsRanks[Col(sq) + 1] == 7);
+    return (pawnsRanks[WHITE][Col(sq) + 1] == 0 && pawnsRanks[BLACK][Col(sq) + 1] == 7);
 }
 
 /*
