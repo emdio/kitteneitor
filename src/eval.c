@@ -27,7 +27,7 @@ int mobBishop[16] = {-5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47
 int rangeBishop[16] = {-6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20};
 
 /* For scaling passed pawns depending on the row */
-int passedPawnBonus[2][7] = {90, 75, 55, 25, 17, 10, 0};
+int passedPawnBonus[2][7] = {{90, 75, 55, 25, 17, 10, 0}, {0, 10, 17, 25, 55, 75, 90}};
 
 /* For storing pawns' ranks */
 int pawnsRanks[2][10];
