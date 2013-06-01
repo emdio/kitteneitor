@@ -329,7 +329,9 @@ int Eval(alpha, beta)
     return -score;
 }
 
-
+/*
+ * Pawns info
+ */
 
 void getWhitePawnRank(sq)
 {
@@ -349,6 +351,30 @@ int tmpCol = Col(sq) + 1;
     }
 }
 
+/* Passed pawns */
+int isPassedPawnWhite(sq)
+{
+    int thisCol = Col(sq) + 1;
+    if (pawnsRanks[BLACK][thisCol] > Row(sq))
+    {
+        if (pawnsRanks[BLACK][thisCol - 1] >= Row(sq) &&
+            pawnsRanks[BLACK][thisCol + 1] >= Row(sq))
+            return 1;
+    }
+    return 0;
+}
+int isPassedPawnBlack(sq)
+{
+    int thisCol = Col(sq) + 1;
+    if (pawnsRanks[WHITE][thisCol] < Row(sq))
+    {
+        if (pawnsRanks[WHITE][thisCol - 1] <= Row(sq) &&
+            pawnsRanks[WHITE][thisCol + 1] <= Row(sq))
+            return 1;
+    }
+    return 0;
+}
+
 /* Are we in the endgame? */
 inline int endGame()
 {
@@ -359,11 +385,15 @@ inline int endGame()
     return 0;
 }
 
-/* Returns 0 if sq is on an open col */
+/* Returns 1 if sq is on an open col */
 inline int isOnAnOpenCol(int sq)
 {
     return (pawnsRanks[Col(sq) + 1] == 0 && pawnsRanks[Col(sq) + 1] == 7);
 }
+
+/*
+ * MOBILITY
+ */
 
 /* Mobility of the bishop: number of empty squares a bishop can reach
  * from its actual position */
@@ -495,78 +525,78 @@ int NoMaterial()
 //    return funfa;
 //}
 
-///*
-//       TESTS FUNCTIONS
-//*/
-//void testWhitePassedPawns()
-//{
-//    int i = 0, j=0;
+/*
+ * TESTS FUNCTIONS
+ */
+void testWhitePassedPawns()
+{
+    int i = 0, j=0;
 
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == WHITE)
-//        {
-//            for (j=0; j<8; ++j)
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == WHITE)
+        {
+            for (j=0; j<10; ++j)
+            {
+                pawnsRanks[WHITE][j] = 0;
+                pawnsRanks[BLACK][j] = 7;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+            }
+//            for (j=0; j<8; j++)
 //            {
-//                pawns[WHITE]Info[j] = 0;
-//                pawns[BLACK]Info[j] = 0;
+//                printf("pawns[WHITE]Info col %d: %d\n", j+1, pawns[WHITE]Info[j]);
 //            }
-//            for (j=0; j<64; j++)
+//            puts("-----------------------");
+//            for (j=0; j<8; j++)
 //            {
-//                if (piece[j] == PAWN && color[j] == BLACK)
-//                    pawns[BLACK]Info[(int)Col(j)] += 1<<Row(j);
-//                if (piece[j] == PAWN && color[j] == WHITE)
-//                    pawns[WHITE]Info[(int)Col(j)] += 1<<Row(j);
+//                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
-////            for (j=0; j<8; j++)
-////            {
-////                printf("pawns[WHITE]Info col %d: %d\n", j+1, pawns[WHITE]Info[j]);
-////            }
-////            puts("-----------------------");
-////            for (j=0; j<8; j++)
-////            {
-////                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
-////            }
-//            if (isPassedPawnWhite(i))
-//                printf ("White passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
-//        }
-//    }
-//}
+            if (isPassedPawnWhite(i))
+                printf ("White passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+        }
+    }
+}
 
-//void testBlackPassedPawns()
-//{
-//    int i = 0, j=0;
+void testBlackPassedPawns()
+{
+    int i = 0, j=0;
 
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == BLACK)
-//        {
-//            for (j=0; j<8; ++j)
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == BLACK)
+        {
+            for (j=0; j<10; ++j)
+            {
+                pawnsRanks[WHITE][j] = 0;
+                pawnsRanks[BLACK][j] = 7;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+            }
+//            for (j=0; j<8; j++)
 //            {
-//                pawns[WHITE]Info[j] = 0;
-//                pawns[BLACK]Info[j] = 0;
+//                printf("pawns[WHITE]Info col %d: %d\n", j+1, pawns[WHITE]Info[j]);
 //            }
-//            for (j=0; j<64; j++)
+//            puts("-----------------------");
+//            for (j=0; j<8; j++)
 //            {
-//                if (piece[j] == PAWN && color[j] == BLACK)
-//                    pawns[BLACK]Info[(int)Col(j)] += 1<<Row(j);
-//                if (piece[j] == PAWN && color[j] == WHITE)
-//                    pawns[WHITE]Info[(int)Col(j)] += 1<<Row(j);
+//                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
-////            for (j=0; j<8; j++)
-////            {
-////                printf("pawns[WHITE]Info col %d: %d\n", j+1, pawns[WHITE]Info[j]);
-////            }
-////            puts("-----------------------");
-////            for (j=0; j<8; j++)
-////            {
-////                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
-////            }
-//            if (isPassedPawnBlack(i))
-//                printf ("Black passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
-//        }
-//    }
-//}
+            if (isPassedPawnBlack(i))
+                printf ("Black passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+        }
+    }
+}
 
 //void testWhiteDoubledPawns()
 //{

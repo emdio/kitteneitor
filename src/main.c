@@ -932,16 +932,16 @@ int main()
             PrintBoard();
             continue;
         }
-//        if (!strcmp (s, "testWhitePassedPawns"))
-//        {
-//            testWhitePassedPawns ();
-//            continue;
-//        }
-//        if (!strcmp (s, "testBlackPassedPawns"))
-//        {
-//            testBlackPassedPawns ();
-//            continue;
-//        }
+        if (!strcmp (s, "testWhitePassedPawns"))
+        {
+            testWhitePassedPawns ();
+            continue;
+        }
+        if (!strcmp (s, "testBlackPassedPawns"))
+        {
+            testBlackPassedPawns ();
+            continue;
+        }
 //        if (!strcmp (s, "testWhiteDoubledPawns"))
 //        {
 //            testWhiteDoubledPawns ();
