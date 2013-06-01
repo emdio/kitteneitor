@@ -352,11 +352,11 @@ int tmpCol = Col(sq) + 1;
 /* Passed pawns */
 int isPassedPawnWhite(sq)
 {
-    int thisCol = Col(sq) + 1;
-    if (pawnsRanks[BLACK][thisCol] > Row(sq))
+    int tmpCol = Col(sq) + 1;
+    if (pawnsRanks[BLACK][tmpCol] > Row(sq))
     {
-        if (pawnsRanks[BLACK][thisCol - 1] >= Row(sq) &&
-            pawnsRanks[BLACK][thisCol + 1] >= Row(sq))
+        if (pawnsRanks[BLACK][tmpCol - 1] >= Row(sq) &&
+            pawnsRanks[BLACK][tmpCol + 1] >= Row(sq))
             return 1;
     }
     return 0;
