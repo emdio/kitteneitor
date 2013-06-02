@@ -13,7 +13,8 @@
 #define	ROOK_OPEN_COL                   18
 #define PAIR_BISHOPS                    25
 #define ADV_TURN_TO_MOVE                10
-#define DOUBLED_PAWN_MALUS             -10
+#define DOUBLED_PAWN_MALUS             -20
+#define ISOLATED_PAWN_MALUS            -15
 #define DOUBLED_PAWN_CASTLE_MALUS      -25
 #define MISSING_PAWN_CASTLE_MALUS      -55
 #define HOLE_C3_C6_F3_F6               -30
@@ -189,6 +190,8 @@ int Eval(alpha, beta)
                     score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
                     score += passedPawnBonus[WHITE][Row(i)];
+                if (isIsolatedPawnWhite(i))
+                    score += ISOLATED_PAWN_MALUS;
                 if (endGame())
                     score += pst_pawn_endgame[i];
                 else
@@ -246,6 +249,8 @@ int Eval(alpha, beta)
                     score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
                     score -= passedPawnBonus[BLACK][Row(i)];
+                if (isIsolatedPawnBlack(i))
+                    score -= ISOLATED_PAWN_MALUS;
                 if (endGame())
                     score -= pst_pawn_endgame[flip[i]];
                 else
@@ -376,6 +381,21 @@ int isDoubledPawnBlack(sq)
     return (pawnsRanks[BLACK][tmpCol] < Row(sq));
 }
 
+/* Isolated pawns */
+int isIsolatedPawnWhite(sq)
+{
+    int tmpCol = Col(sq) + 1;
+    return (pawnsRanks[WHITE][tmpCol + 1] == 0 &&
+            pawnsRanks[WHITE][tmpCol - 1] == 0);
+}
+int isIsolatedPawnBlack(sq)
+{
+    int tmpCol = Col(sq) + 1;
+    return (pawnsRanks[BLACK][tmpCol + 1] == 7 &&
+            pawnsRanks[BLACK][tmpCol - 1] == 7);
+}
+
+
 /* Are we in the endgame? */
 inline int endGame()
 {
@@ -412,6 +432,8 @@ int BishopMobility(int sq)
     for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
         mob++;
 
+    //if (mob > 16) printf("bishop mob too large: %d", mob);
+
     return mob;
 }
 
@@ -429,6 +451,8 @@ int BishopRange(int sq)
         range++;
     for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] != PAWN); l+=9)
         range++;
+
+    //if (range > 16) printf("bishop range too large: %d", range);
 
     return range;
 }
@@ -457,6 +481,8 @@ int KnightMobility(int sq)
     if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
     l = sq + 17;
     if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
+
+    //if (mob > 8) printf("knight mob too large: %d", mob);
 
     return mob;
 }
@@ -665,6 +691,76 @@ void testBlackDoubledPawns()
 //            }
             if (isDoubledPawnBlack(i))
                 printf ("Black doubled pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+        }
+    }
+}
+
+void testIsIsolatedPawnWhite()
+{
+    int i = 0, j=0;
+
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == WHITE)
+        {
+            for (j=0; j<10; ++j)
+            {
+                pawnsRanks[WHITE][j] = 0;
+                pawnsRanks[BLACK][j] = 7;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+            }
+//            for (j=0; j<8; j++)
+//            {
+//                printf("pawns[WHITE]Info col %d: %d\n", j+1, pawns[WHITE]Info[j]);
+//            }
+//            puts("-----------------------");
+//            for (j=0; j<8; j++)
+//            {
+//                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
+//            }
+            if (isIsolatedPawnWhite(i))
+                printf ("White isolated pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+        }
+    }
+}
+
+void testIsIsolatedPawnBlack()
+{
+    int i = 0, j=0;
+
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == BLACK)
+        {
+            for (j=0; j<10; ++j)
+            {
+                pawnsRanks[WHITE][j] = 0;
+                pawnsRanks[BLACK][j] = 7;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+            }
+//            for (j=0; j<8; j++)
+//            {
+//                printf("pawns[WHITE]Info col %d: %d\n", j+1, pawns[WHITE]Info[j]);
+//            }
+//            puts("-----------------------");
+//            for (j=0; j<8; j++)
+//            {
+//                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
+//            }
+            if (isIsolatedPawnBlack(i))
+                printf ("Black isolated pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
         }
     }
 }
