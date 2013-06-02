@@ -23,11 +23,11 @@
 /* Arrays for scaling mobility values */
 int mobRook[16] = {-6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20};
 int mobKnight[9] = {-10, -4, 2, 8, 14, 18, 22, 24, 25};
-int mobBishop[16] = {-5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 31, 35, 40, 42, 45, 47};
+int mobBishop[16] = {-5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 30, 32, 33, 35, 35, 35};
 int rangeBishop[16] = {-6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20};
 
 /* For scaling passed pawns depending on the row */
-int passedPawnBonus[2][7] = {{90, 75, 55, 25, 17, 10, 0}, {0, 10, 17, 25, 55, 75, 90}};
+int passedPawnBonus[2][7] = {{70, 65, 45, 25, 17, 10, 0}, {0, 10, 17, 25, 45, 65, 70}};
 
 /* For storing pawns' ranks */
 int pawnsRanks[2][10];
