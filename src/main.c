@@ -962,6 +962,11 @@ int main()
             testIsIsolatedPawnBlack ();
             continue;
         }
+        if (!strcmp (s, "showPawnsInfo"))
+        {
+            showPawnsInfo ();
+            continue;
+        }
 //        if (!strcmp (s, "testIsSqProtectedByAPawn"))
 //        {
 //             testIsSqProtectedByAPawn();

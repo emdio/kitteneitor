@@ -765,6 +765,42 @@ void testIsIsolatedPawnBlack()
     }
 }
 
+void showPawnsInfo()
+{
+    int i = 0, j=0;
+
+    for (i=0; i<64; i++)
+    {
+        if (piece[i] == PAWN && color[i] == BLACK)
+        {
+            for (j=0; j<10; ++j)
+            {
+                pawnsRanks[WHITE][j] = 0;
+                pawnsRanks[BLACK][j] = 7;
+            }
+            for (j=0; j<64; j++)
+            {
+                if (piece[j] == PAWN && color[j] == BLACK)
+                    getBlackPawnRank(j);
+                if (piece[j] == PAWN && color[j] == WHITE)
+                    getWhitePawnRank(j);
+            }
+        }
+    }
+
+    for (j=0; j<10; ++j)
+    {
+        printf ("%d ", pawnsRanks[1][j]);
+    }
+    puts("");
+    for (j=0; j<10; ++j)
+    {
+        printf ("%d ", pawnsRanks[0][j]);
+    }
+    puts("");
+
+}
+
 void testOpenCols()
 {
     int i = 0, j=0;
