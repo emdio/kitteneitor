@@ -37,6 +37,15 @@ int NoMaterial();
 int isOnAnOpenCol(int sq);
 int whiteKingSafety();
 int blackKingSafety();
+int isOppCastles();
+void getWhitePawnRank(int sq);
+void getBlackPawnRank(int sq);
+void testWhitePassedPawns();
+void testBlackPassedPawns();
+void testWhiteDoubledPawns();
+void testBlackDoubledPawns();
+void testOpenCols();
+
 
 /* Main */
 void startgame();
@@ -52,7 +61,9 @@ int Quiescent(int alpha, int beta);
 int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline);
 void checkup(clock_t stoping_time);
 int checkupHalfTime(int stoping_time);
+int reps();
 
 /* Utils */
 U64 perft(int depth);
 void PrintBoard();
+int get_ms();

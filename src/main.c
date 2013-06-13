@@ -947,19 +947,44 @@ int main()
             testWhiteDoubledPawns ();
             continue;
         }
-        if (!strcmp (s, "testIsSqProtectedByAPawn"))
+        if (!strcmp (s, "testBlackDoubledPawns"))
         {
-             testIsSqProtectedByAPawn();
+            testBlackDoubledPawns ();
             continue;
         }
-        if (!strcmp (s, "testIsSqProtectedByAKnight"))
+        if (!strcmp (s, "testIsIsolatedPawnWhite"))
         {
-             testIsSqProtectedByAKnight();
+            testIsIsolatedPawnWhite ();
             continue;
         }
-        if (!strcmp (s, "testIsSqProtectedByABishop"))
+        if (!strcmp (s, "testIsIsolatedPawnBlack"))
         {
-             testIsSqProtectedByABishop();
+            testIsIsolatedPawnBlack ();
+            continue;
+        }
+        if (!strcmp (s, "showPawnsInfo"))
+        {
+            showPawnsInfo ();
+            continue;
+        }
+//        if (!strcmp (s, "testIsSqProtectedByAPawn"))
+//        {
+//             testIsSqProtectedByAPawn();
+//            continue;
+//        }
+//        if (!strcmp (s, "testIsSqProtectedByAKnight"))
+//        {
+//             testIsSqProtectedByAKnight();
+//            continue;
+//        }
+//        if (!strcmp (s, "testIsSqProtectedByABishop"))
+//        {
+//             testIsSqProtectedByABishop();
+//            continue;
+//        }
+        if (!strcmp (s, "testOpenCols"))
+        {
+             testOpenCols();
             continue;
         }
         if (!strcmp (s, "undo"))
