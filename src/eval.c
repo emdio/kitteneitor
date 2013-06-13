@@ -53,7 +53,7 @@ int Eval(alpha, beta)
     /* A traditional counter */
     int i;
 
-    /* Set some values to 0 */
+    /* Setting some values to 0 */
 
     /* Pawn's info */
     for (i = 0; i < 10; ++i)
