@@ -314,7 +314,7 @@ int Eval(alpha, beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-                    score -= wKingShelter(i);
+                    score -= bKingShelter(i);
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
@@ -357,6 +357,8 @@ int wKingShelter(sq)
     shelter += 2 * wPawnShelter[pawnsRanks[WHITE][Col(sq)]][pawnsRanks[BLACK][Col(sq)]];
     shelter += wPawnShelter[pawnsRanks[WHITE][Col(sq) + 1]][pawnsRanks[BLACK][Col(sq) + 1]];
 
+    printf ("Wshelter = %d \n", shelter);
+
     return shelter;
 }
 int bKingShelter(sq)
@@ -373,6 +375,8 @@ int bKingShelter(sq)
     shelter += bPawnShelter[pawnsRanks[WHITE][Col(sq) - 1]][pawnsRanks[BLACK][Col(sq) - 1]];
     shelter += 2 * bPawnShelter[pawnsRanks[WHITE][Col(sq)]][pawnsRanks[BLACK][Col(sq)]];
     shelter += bPawnShelter[pawnsRanks[WHITE][Col(sq) + 1]][pawnsRanks[BLACK][Col(sq) + 1]];
+
+    printf ("Bshelter = %d \n", shelter);
 
     return shelter;
 }
