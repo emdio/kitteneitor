@@ -361,8 +361,10 @@ int wKingShelter(sq)
     }
 
     shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq) - 1]][pawnsRanks[WHITE][Col(sq) - 1]];
+    printf("pawnsRanks[BLACK][Col(sq) - 1], pawnsRanks[WHITE][Col(sq) - 1]] %d - %d\n", pawnsRanks[BLACK][Col(sq) - 1], pawnsRanks[WHITE][Col(sq) - 1]);
     printf ("Wshelter1 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq) - 1]][pawnsRanks[WHITE][Col(sq) - 1]]);
     shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]];
+     printf("pawnsRanks[BLACK][Col(sq)], pawnsRanks[WHITE][Col(sq)]] %d - %d\n", pawnsRanks[BLACK][Col(sq)], pawnsRanks[WHITE][Col(sq)]);
     printf ("Wshelter2 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]]);
     shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]];
     printf ("Wshelter3 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]]);
