@@ -39,6 +39,26 @@ int numPawnsFunfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -1
 /* Kings' safety */
 int colKing[2] = {0};
 int sqKing[2] = {0};
+/* Shleter pawns matrix */
+int wPawnShelter[7][7] = {
+                          {-8, -7, -6, -5, -5, -5, -4},
+                          {-7, -999, -5, -4, -3, -1, 0},
+                          {-6, -6, -999, -7, -5, -3, -2},
+                          {-5, -5, -6, -999, -6, -5, -4},
+                          {-5, -5, -8, -8, -999, -7, -6},
+                          {-5, -5, -10, -10, -10, -999, -8},
+                          {-5, -5, -12, -12, -12, -12, -999}
+                           };
+int bPawnShelter[7][7] = {
+                          {-8, -7, -6, -5, -5, -5, -5},
+                          {-7, -999, -6, -5, -5, -5, -5},
+                          {-6, -5, -999, -6, -8, -10, -12},
+                          {-5, -4, -7, -999, -8, -10, -12},
+                          {-5, -3, -5, -6, -999, -10, -12},
+                          {-5, -1, -3, -5, -7, -999, -12},
+                          {-4, 0, -2, -4, -6, -8, -999}
+                           };
+
 
 /* To count the material */
 int pawns[2] = {0};
@@ -168,12 +188,15 @@ int Eval(alpha, beta)
         score -= PAIR_BISHOPS;
 
     /* Trying the lazy eval */
-    int lazy = score;
-    if (side == BLACK) lazy = -lazy;
-    if ( ( lazy + 300 < alpha ) ||
-         ( lazy - 300 > beta  ) )
-    {
-        return lazy;
+    if (!endGame())
+        {
+        int lazy = score;
+        if (side == BLACK) lazy = -lazy;
+        if ( ( lazy + 300 < alpha ) ||
+             ( lazy - 300 > beta  ) )
+        {
+            return lazy;
+        }
     }
 
     /* Check all the squares searching for the pieces */
@@ -232,7 +255,7 @@ int Eval(alpha, beta)
                     score += pst_king_endgame[i];
                 else
                 {
-//                    score += whiteKingSafety();
+                    score += wKingShelter(i);
                     score += pst_king_midgame[i];
                 }
                 break;
@@ -291,7 +314,7 @@ int Eval(alpha, beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-//                    score += blackKingSafety();
+                    score += wKingShelter(i);
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
@@ -321,6 +344,37 @@ int Eval(alpha, beta)
     if (side == WHITE)
         return (score );
     return -score;
+}
+
+/*
+ *Kings safety
+*/
+int wKingShelter(sq)
+{
+    int shelter = 0;
+
+    shelter += wPawnShelter[pawnsRanks[WHITE][Col(sq) - 1]][pawnsRanks[BLACK][Col(sq) - 1]];
+    shelter += 2 * wPawnShelter[pawnsRanks[WHITE][Col(sq)]][pawnsRanks[BLACK][Col(sq)]];
+    shelter += wPawnShelter[pawnsRanks[WHITE][Col(sq) + 1]][pawnsRanks[BLACK][Col(sq) + 1]];
+
+    return shelter;
+}
+int bKingShelter(sq)
+{
+    int i;
+    int shelter = 0;
+
+    for (i=0; i<10; ++i)
+    {
+        if (pawnsRanks[BLACK][i] == 7)
+            pawnsRanks[BLACK][i] = 0;
+    }
+
+    shelter += bPawnShelter[pawnsRanks[WHITE][Col(sq) - 1]][pawnsRanks[BLACK][Col(sq) - 1]];
+    shelter += 2 * bPawnShelter[pawnsRanks[WHITE][Col(sq)]][pawnsRanks[BLACK][Col(sq)]];
+    shelter += bPawnShelter[pawnsRanks[WHITE][Col(sq) + 1]][pawnsRanks[BLACK][Col(sq) + 1]];
+
+    return shelter;
 }
 
 /*
