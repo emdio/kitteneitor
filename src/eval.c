@@ -314,7 +314,7 @@ int Eval(alpha, beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-                    score += wKingShelter(i);
+                    score -= wKingShelter(i);
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
