@@ -351,13 +351,22 @@ int Eval(alpha, beta)
 */
 int wKingShelter(sq)
 {
+    int i;
     int shelter = 0;
 
-    shelter += wPawnShelter[pawnsRanks[WHITE][Col(sq) - 1]][pawnsRanks[BLACK][Col(sq) - 1]];
-    shelter += 2 * wPawnShelter[pawnsRanks[WHITE][Col(sq)]][pawnsRanks[BLACK][Col(sq)]];
-    shelter += wPawnShelter[pawnsRanks[WHITE][Col(sq) + 1]][pawnsRanks[BLACK][Col(sq) + 1]];
+    for (i=0; i<10; ++i)
+    {
+        if (pawnsRanks[BLACK][i] == 7)
+            pawnsRanks[BLACK][i] = 0;
+    }
 
-    printf ("Wshelter = %d \n", shelter);
+    shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq) - 1]][pawnsRanks[WHITE][Col(sq) - 1]];
+    printf ("Wshelter1 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq) - 1]][pawnsRanks[WHITE][Col(sq) - 1]]);
+    shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]];
+    printf ("Wshelter2 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]]);
+    shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]];
+    printf ("Wshelter3 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]]);
+
 
     return shelter;
 }
@@ -372,9 +381,9 @@ int bKingShelter(sq)
             pawnsRanks[BLACK][i] = 0;
     }
 
-    shelter += bPawnShelter[pawnsRanks[WHITE][Col(sq) - 1]][pawnsRanks[BLACK][Col(sq) - 1]];
-    shelter += 2 * bPawnShelter[pawnsRanks[WHITE][Col(sq)]][pawnsRanks[BLACK][Col(sq)]];
-    shelter += bPawnShelter[pawnsRanks[WHITE][Col(sq) + 1]][pawnsRanks[BLACK][Col(sq) + 1]];
+    shelter += bPawnShelter[pawnsRanks[BLACK][Col(sq) - 1]][pawnsRanks[WHITE][Col(sq) - 1]];
+    shelter += bPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]];
+    shelter += bPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]];
 
     printf ("Bshelter = %d \n", shelter);
 
