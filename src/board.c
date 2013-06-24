@@ -1157,7 +1157,7 @@ int MakeMove(MOVE m)
     }
 
     /* Add the eps square when a pawn moves two squares */
-    if (m.type_of_move == MOVE_TYPE_PAWN_TWO)
+    if (typeOfMove == MOVE_TYPE_PAWN_TWO)
     {
         if (side == BLACK)
         {
@@ -1172,10 +1172,10 @@ int MakeMove(MOVE m)
     }
 
     /* Once the move is done we check either this is a promotion */
-    if (m.type_of_move >= MOVE_TYPE_PROMOTION_TO_QUEEN)
+    if (typeOfMove >= MOVE_TYPE_PROMOTION_TO_QUEEN)
     {
         /* In this case we put in the destiny sq the chosen piece */
-        switch (m.type_of_move)
+        switch (typeOfMove)
         {
         case MOVE_TYPE_PROMOTION_TO_QUEEN:
             piece[m.dest] = QUEEN;
@@ -1199,7 +1199,7 @@ int MakeMove(MOVE m)
         }
     }
 
-    if (m.type_of_move == MOVE_TYPE_CASTLE)
+    if (typeOfMove == MOVE_TYPE_CASTLE)
     {
         if (m.dest == G1)
         {
