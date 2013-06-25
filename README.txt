@@ -1,4 +1,4 @@
--Kitteneitor is a chess engine derived from secondchess https://github.com/pocopito/secondchess
+-Kitteneitor is a chess engine derived from secondchess https://github.com/emdio/secondchess
 -Unlike secondchess its aim is not to be pedagogical but just a fun project
 -Acknowledgments:
  -Pham Hong Nguyen, author of firstchess
