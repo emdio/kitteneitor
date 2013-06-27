@@ -255,7 +255,7 @@ int Eval(int alpha, int beta)
                     score += pst_king_endgame[i];
                 else
                 {
-                    score += wKingShelter(i);
+//                    score += wKingShelter(i);
                     score += pst_king_midgame[i];
                 }
                 break;
@@ -314,7 +314,7 @@ int Eval(int alpha, int beta)
                     score -= pst_king_endgame[flip[i]];
                 else
                 {
-                    score -= bKingShelter(i);
+//                    score -= bKingShelter(i);
                     score -= pst_king_midgame[flip[i]];
                 }
                 break;
