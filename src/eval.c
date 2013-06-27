@@ -68,7 +68,7 @@ int rooks[2] = {0};
 int queens[2] = {0};
 
 /* The evaluation function */
-int Eval(alpha, beta)
+int Eval(int alpha, int beta)
 {
     /* A traditional counter */
     int i;
@@ -212,7 +212,7 @@ int Eval(alpha, beta)
                 if (isDoubledPawnWhite(i))
                     score += DOUBLED_PAWN_MALUS;
                 if (isPassedPawnWhite(i))
-                    score += passedPawnBonus[WHITE][Row(i)];
+                    score += passedPawnBonus[WHITE][ROW(i)];
                 if (isIsolatedPawnWhite(i))
                     score += ISOLATED_PAWN_MALUS;
                 if (endGame())
@@ -271,7 +271,7 @@ int Eval(alpha, beta)
                 if (isDoubledPawnBlack(i))
                     score -= DOUBLED_PAWN_MALUS;
                 if (isPassedPawnBlack(i))
-                    score -= passedPawnBonus[BLACK][Row(i)];
+                    score -= passedPawnBonus[BLACK][ROW(i)];
                 if (isIsolatedPawnBlack(i))
                     score -= ISOLATED_PAWN_MALUS;
                 if (endGame())
@@ -349,7 +349,7 @@ int Eval(alpha, beta)
 /*
  *Kings safety
 */
-int wKingShelter(sq)
+int wKingShelter(int sq)
 {
     int i;
     int shelter = 0;
@@ -360,21 +360,21 @@ int wKingShelter(sq)
             pawnsRanks[BLACK][i] = 0;
     }
 
-    shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]];
-//    printf("pawnsRanks[BLACK][Col(sq)], pawnsRanks[WHITE][Col(sq)]] %d - %d\n", pawnsRanks[BLACK][Col(sq)], pawnsRanks[WHITE][Col(sq)]);
-//    printf ("Wshelter1 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]]);
+    shelter += wPawnShelter[pawnsRanks[BLACK][COL(sq)]][pawnsRanks[WHITE][COL(sq)]];
+//    printf("pawnsRanks[BLACK][COL(sq)], pawnsRanks[WHITE][COL(sq)]] %d - %d\n", pawnsRanks[BLACK][COL(sq)], pawnsRanks[WHITE][COL(sq)]);
+//    printf ("Wshelter1 = %d \n", wPawnShelter[pawnsRanks[BLACK][COL(sq)]][pawnsRanks[WHITE][COL(sq)]]);
 
-    shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]];
-//    printf("pawnsRanks[BLACK][Col(sq)+1], pawnsRanks[WHITE][Col(sq)]+1] %d - %d\n", pawnsRanks[BLACK][Col(sq)+1], pawnsRanks[WHITE][Col(sq)]+1);
-//    printf ("Wshelter2 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq)+1]][pawnsRanks[WHITE][Col(sq)+1]]);
+    shelter += wPawnShelter[pawnsRanks[BLACK][COL(sq) + 1]][pawnsRanks[WHITE][COL(sq) + 1]];
+//    printf("pawnsRanks[BLACK][COL(sq)+1], pawnsRanks[WHITE][COL(sq)]+1] %d - %d\n", pawnsRanks[BLACK][COL(sq)+1], pawnsRanks[WHITE][COL(sq)]+1);
+//    printf ("Wshelter2 = %d \n", wPawnShelter[pawnsRanks[BLACK][COL(sq)+1]][pawnsRanks[WHITE][COL(sq)+1]]);
 
-    shelter += wPawnShelter[pawnsRanks[BLACK][Col(sq) + 2]][pawnsRanks[WHITE][Col(sq) + 2]];
-//    printf ("Wshelter3 = %d \n", wPawnShelter[pawnsRanks[BLACK][Col(sq) + 2]][pawnsRanks[WHITE][Col(sq) + 2]]);
+    shelter += wPawnShelter[pawnsRanks[BLACK][COL(sq) + 2]][pawnsRanks[WHITE][COL(sq) + 2]];
+//    printf ("Wshelter3 = %d \n", wPawnShelter[pawnsRanks[BLACK][COL(sq) + 2]][pawnsRanks[WHITE][COL(sq) + 2]]);
 
 
     return shelter;
 }
-int bKingShelter(sq)
+int bKingShelter(int sq)
 {
     int i;
     int shelter = 0;
@@ -385,9 +385,9 @@ int bKingShelter(sq)
             pawnsRanks[BLACK][i] = 0;
     }
 
-    shelter += bPawnShelter[pawnsRanks[BLACK][Col(sq) - 1]][pawnsRanks[WHITE][Col(sq) - 1]];
-    shelter += bPawnShelter[pawnsRanks[BLACK][Col(sq)]][pawnsRanks[WHITE][Col(sq)]];
-    shelter += bPawnShelter[pawnsRanks[BLACK][Col(sq) + 1]][pawnsRanks[WHITE][Col(sq) + 1]];
+    shelter += bPawnShelter[pawnsRanks[BLACK][COL(sq) - 1]][pawnsRanks[WHITE][COL(sq) - 1]];
+    shelter += bPawnShelter[pawnsRanks[BLACK][COL(sq)]][pawnsRanks[WHITE][COL(sq)]];
+    shelter += bPawnShelter[pawnsRanks[BLACK][COL(sq) + 1]][pawnsRanks[WHITE][COL(sq) + 1]];
 
 //    printf ("Bshelter = %d \n", shelter);
 
@@ -398,77 +398,77 @@ int bKingShelter(sq)
  * Pawns info
  */
 
-void getWhitePawnRank(sq)
+void getWhitePawnRank(int sq)
 {
-int tmpCol = Col(sq) + 1;
-    if (Row(sq) > pawnsRanks[WHITE][tmpCol])
+int tmpCol = COL(sq) + 1;
+    if (ROW(sq) > pawnsRanks[WHITE][tmpCol])
     {
-        pawnsRanks[WHITE][tmpCol] = Row(sq);
+        pawnsRanks[WHITE][tmpCol] = ROW(sq);
     }
 }
 
-void getBlackPawnRank(sq)
+void getBlackPawnRank(int sq)
 {
-int tmpCol = Col(sq) + 1;
-    if (Row(sq) < pawnsRanks[BLACK][tmpCol])
+int tmpCol = COL(sq) + 1;
+    if (ROW(sq) < pawnsRanks[BLACK][tmpCol])
     {
-        pawnsRanks[BLACK][tmpCol] = Row(sq);
+        pawnsRanks[BLACK][tmpCol] = ROW(sq);
     }
 }
 
 /* Passed pawns */
-int isPassedPawnWhite(sq)
+int isPassedPawnWhite(int sq)
 {
-    int tmpCol = Col(sq) + 1;
-    if (pawnsRanks[BLACK][tmpCol] > Row(sq))
+    int tmpCol = COL(sq) + 1;
+    if (pawnsRanks[BLACK][tmpCol] > ROW(sq))
     {
-        if (pawnsRanks[BLACK][tmpCol - 1] >= Row(sq) &&
-            pawnsRanks[BLACK][tmpCol + 1] >= Row(sq))
+        if (pawnsRanks[BLACK][tmpCol - 1] >= ROW(sq) &&
+            pawnsRanks[BLACK][tmpCol + 1] >= ROW(sq))
             return 1;
     }
     return 0;
 }
-int isPassedPawnBlack(sq)
+int isPassedPawnBlack(int sq)
 {
-    int tmpCol = Col(sq) + 1;
-    if (pawnsRanks[WHITE][tmpCol] < Row(sq))
+    int tmpCol = COL(sq) + 1;
+    if (pawnsRanks[WHITE][tmpCol] < ROW(sq))
     {
-        if (pawnsRanks[WHITE][tmpCol - 1] <= Row(sq) &&
-            pawnsRanks[WHITE][tmpCol + 1] <= Row(sq))
+        if (pawnsRanks[WHITE][tmpCol - 1] <= ROW(sq) &&
+            pawnsRanks[WHITE][tmpCol + 1] <= ROW(sq))
             return 1;
     }
     return 0;
 }
 
 /* Doubled pawns */
-int isDoubledPawnWhite(sq)
+int isDoubledPawnWhite(int sq)
 {
-    int tmpCol = Col(sq) + 1;
-    return (pawnsRanks[WHITE][tmpCol] > Row(sq));
+    int tmpCol = COL(sq) + 1;
+    return (pawnsRanks[WHITE][tmpCol] > ROW(sq));
 }
-int isDoubledPawnBlack(sq)
+int isDoubledPawnBlack(int sq)
 {
-    int tmpCol = Col(sq) + 1;
-    return (pawnsRanks[BLACK][tmpCol] < Row(sq));
+    int tmpCol = COL(sq) + 1;
+    return (pawnsRanks[BLACK][tmpCol] < ROW(sq));
 }
 
 /* Isolated pawns */
-int isIsolatedPawnWhite(sq)
+int isIsolatedPawnWhite(int sq)
 {
-    int tmpCol = Col(sq) + 1;
+    int tmpCol = COL(sq) + 1;
     return (pawnsRanks[WHITE][tmpCol + 1] == 0 &&
             pawnsRanks[WHITE][tmpCol - 1] == 0);
 }
-int isIsolatedPawnBlack(sq)
+int isIsolatedPawnBlack(int sq)
 {
-    int tmpCol = Col(sq) + 1;
+    int tmpCol = COL(sq) + 1;
     return (pawnsRanks[BLACK][tmpCol + 1] == 7 &&
             pawnsRanks[BLACK][tmpCol - 1] == 7);
 }
 
 
 /* Are we in the endgame? */
-inline int endGame()
+int endGame()
 {
     if (queens[WHITE]==0 || queens[BLACK]==0)
         return 1;
@@ -480,7 +480,7 @@ inline int endGame()
 /* Returns 1 if sq is on an open col */
 inline int isOnAnOpenCol(int sq)
 {
-    return (pawnsRanks[WHITE][Col(sq) + 1] == 0 && pawnsRanks[BLACK][Col(sq) + 1] == 7);
+    return (pawnsRanks[WHITE][COL(sq) + 1] == 0 && pawnsRanks[BLACK][COL(sq) + 1] == 7);
 }
 
 /*
@@ -494,13 +494,13 @@ int BishopMobility(int sq)
     int l;
     int mob = 0;
 
-    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] == EMPTY); l-=9)
+    for (l = sq-9; ((l >= 0) && COL(l) < COL(sq) && piece[l] == EMPTY); l-=9)
         mob++;
-    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] == EMPTY); l-=7)
+    for (l = sq-7; ((l >= 0) && COL(l) > COL(sq) && piece[l] == EMPTY); l-=7)
         mob++;
-    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] == EMPTY); l+=7)
+    for (l = sq+7; ((l <= 63) && COL(l) < COL(sq) && piece[l] == EMPTY); l+=7)
         mob++;
-    for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] == EMPTY); l+=9)
+    for (l = sq+9; ((l <= 63) && COL(l) > COL(sq) && piece[l] == EMPTY); l+=9)
         mob++;
 
     //if (mob > 16) printf("bishop mob too large: %d", mob);
@@ -514,13 +514,13 @@ int BishopRange(int sq)
     int l;
     int range = 0;
 
-    for (l = sq-9; ((l >= 0) && Col(l) < Col(sq) && piece[l] != PAWN); l-=9)
+    for (l = sq-9; ((l >= 0) && COL(l) < COL(sq) && piece[l] != PAWN); l-=9)
         range++;
-    for (l = sq-7; ((l >= 0) && Col(l) > Col(sq) && piece[l] != PAWN); l-=7)
+    for (l = sq-7; ((l >= 0) && COL(l) > COL(sq) && piece[l] != PAWN); l-=7)
         range++;
-    for (l = sq+7; ((l <= 63) && Col(l) < Col(sq) && piece[l] != PAWN); l+=7)
+    for (l = sq+7; ((l <= 63) && COL(l) < COL(sq) && piece[l] != PAWN); l+=7)
         range++;
-    for (l = sq+9; ((l <= 63) && Col(l) > Col(sq) && piece[l] != PAWN); l+=9)
+    for (l = sq+9; ((l <= 63) && COL(l) > COL(sq) && piece[l] != PAWN); l+=9)
         range++;
 
     //if (range > 16) printf("bishop range too large: %d", range);
@@ -534,24 +534,24 @@ int KnightMobility(int sq)
     int mob = 0;
 
     l = sq - 17;
-    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
+    if (l >= 0 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
     l = sq - 15;
-    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
+    if (l >= 0 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
 
     l = sq - 10;
-    if (l >= 0 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
+    if (l >= 0 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
     l = sq - 6;
-    if (l >= 0 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
+    if (l >= 0 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
 
     l = sq + 6;
-    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
+    if (l <= 63 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
     l = sq + 10;
-    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
+    if (l <= 63 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
 
     l = sq + 15;
-    if (l <= 63 && Col(l) < Col(sq) && piece[l] == EMPTY) mob++;
+    if (l <= 63 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
     l = sq + 17;
-    if (l <= 63 && Col(l) > Col(sq) && piece[l] == EMPTY) mob++;
+    if (l <= 63 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
 
     //if (mob > 8) printf("knight mob too large: %d", mob);
 
@@ -565,11 +565,11 @@ int RookMobility(int sq)
 
     for (l = sq-8; ((l >= 0) && piece[l] == EMPTY); l-=8)
         mob++;
-    for (l = sq-1; ((Row(l) == Row(sq)) && piece[l] == EMPTY); l-=1)
+    for (l = sq-1; ((ROW(l) == ROW(sq)) && piece[l] == EMPTY); l-=1)
         mob++;
     for (l = sq+8; ((l <= 63) && piece[l] == EMPTY); l+=8)
         mob++;
-    for (l = sq+1; ((Row(l) == Row(sq)) && piece[l] == EMPTY); l+=1)
+    for (l = sq+1; ((ROW(l) == ROW(sq)) && piece[l] == EMPTY); l+=1)
         mob++;
 
     return mob;
@@ -656,7 +656,7 @@ void testWhitePassedPawns()
 //                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
             if (isPassedPawnWhite(i))
-                printf ("White passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("White passed pawn in %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
         }
     }
 }
@@ -691,7 +691,7 @@ void testBlackPassedPawns()
 //                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
             if (isPassedPawnBlack(i))
-                printf ("Black passed pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("Black passed pawn in %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
         }
     }
 }
@@ -726,7 +726,7 @@ void testWhiteDoubledPawns()
 //                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
             if (isDoubledPawnWhite(i))
-                printf ("White doubled pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("White doubled pawn in %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
         }
     }
 }
@@ -761,7 +761,7 @@ void testBlackDoubledPawns()
 //                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
             if (isDoubledPawnBlack(i))
-                printf ("Black doubled pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("Black doubled pawn in %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
         }
     }
 }
@@ -796,7 +796,7 @@ void testIsIsolatedPawnWhite()
 //                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
             if (isIsolatedPawnWhite(i))
-                printf ("White isolated pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("White isolated pawn in %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
         }
     }
 }
@@ -831,7 +831,7 @@ void testIsIsolatedPawnBlack()
 //                printf("pawns[BLACK]Info col %d: %d\n", j+1, pawns[BLACK]Info[j]);
 //            }
             if (isIsolatedPawnBlack(i))
-                printf ("Black isolated pawn in %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+                printf ("Black isolated pawn in %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
         }
     }
 }
@@ -899,6 +899,6 @@ void testOpenCols()
     for (i = 0; i < 64; i++)
     {
     if (isOnAnOpenCol(i))
-        printf ("Open col in square %d, column %d\n", i, Col(i));
+        printf ("Open col in square %d, column %d\n", i, COL(i));
     }
 }

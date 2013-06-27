@@ -1112,7 +1112,7 @@ int MakeMove(MOVE m)
     hist[hdp].cap = piece[m.dest];	/* store in history the piece of the dest square */
     hist[hdp].castle = castle;
     hist[hdp].fifty = fifty;
-    hist[hdp].hash = hash.key;       /* Guardamos la posicion actial en hashkey */
+    hist[hdp].hashhist = hash.key;       /* Guardamos la posicion actial en hashkey */
 
     piece[m.dest] = piece[m.from];	/* dest piece is the one in the original square */
     color[m.dest] = color[m.from];	/* The dest square color is the one of the origin piece */
@@ -1385,7 +1385,7 @@ void TakeBack()
     fifty = hist[hdp].fifty;
 
     /* Recuperamos la posicion anterior en zobrist key */
-    hash.key = hist[hdp].hash;
+    hash.key = hist[hdp].hashhist;
 }
 
 void testIsSqProtectedByAPawn()

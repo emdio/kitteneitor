@@ -12,14 +12,10 @@ int GenCaps(int current_side, MOVE * pBuf);
 int GenMoves(int current_side, MOVE * pBuf);
 int MakeMove(MOVE m);
 void TakeBack();
-inline int Col (int square);
-inline int Row (int square);
 inline int Opponent (int color);
 void MoveOrder(int from, int movecount, MOVE *moveBuf);
 int BadCapture(MOVE mcmov);
 inline int IsSqProtectedByAPawn(int sq, int side);
-
-//__forceinline int col(int);
 
 /* Eval */
 int Eval(int alpha, int beta);
@@ -28,6 +24,10 @@ inline int isDoubledPawnWhite(int sq);
 inline int isDoubledPawnBlack(int sq);
 int isPassedPawnWhite(int sq);
 int isPassedPawnBlack(int sq);
+int isIsolatedPawnWhite(int sq);
+int isIsolatedPawnBlack(int sq);
+int wKingShelter(int sq);
+int bKingShelter(int sq);
 int BishopMobility(int sq);
 int BishopRange(int sq);
 int RookMobility(int sq);
@@ -45,7 +45,13 @@ void testBlackPassedPawns();
 void testWhiteDoubledPawns();
 void testBlackDoubledPawns();
 void testOpenCols();
+int endGame();
 
+
+/* Tests */
+void testIsIsolatedPawnWhite();
+void testIsIsolatedPawnBlack();
+void showPawnsInfo();
 
 /* Main */
 void startgame();

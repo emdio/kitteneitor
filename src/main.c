@@ -3,6 +3,7 @@
 #include <time.h>
 #include <locale.h>
 #include <signal.h>
+#include <stdlib.h>
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
@@ -16,7 +17,7 @@ void startgame()
         color[i] = init_color[i];
     }
 
-    setDistToKing();
+//    setDistToKing();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -56,7 +57,7 @@ void test1()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    setDistToKing();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -96,7 +97,7 @@ void test2()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    setDistToKing();
 
     side = BLACK;
     computer_side = WHITE;	/* Human is white side */
@@ -136,7 +137,7 @@ void test3()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = BLACK;
     computer_side = WHITE;	/* Human is white side */
@@ -176,7 +177,7 @@ void test4()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -216,7 +217,7 @@ void test5()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -262,7 +263,7 @@ void test6()
             color[i] = color_test[i];
         }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -308,7 +309,7 @@ void test7()
             color[i] = color_test[i];
         }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = BLACK;
     computer_side = WHITE;	/* Human is white side */
@@ -354,7 +355,7 @@ void test8()
             color[i] = color_test[i];
         }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -400,7 +401,7 @@ void test9()
             color[i] = color_test[i];
         }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = BLACK;
     computer_side = WHITE;	/* Human is white side */
@@ -443,7 +444,7 @@ void test10()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    /*setDistToKing*/();
 
     side = BLACK;
     computer_side = WHITE;	/* Human is white side */
@@ -486,7 +487,7 @@ void test11()
         color[i] = color_test[i];
     }
 
-    setDistToKing();
+//    setDistToKing();
 
     side = WHITE;
     computer_side = BLACK;	/* Human is white side */
@@ -505,13 +506,13 @@ void test11()
 //    for (i=0; i<64; i++)
 //    {
 //        if (piece[i] == PAWN && color[i] == BLACK)
-//            blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+//            blackPawnsInfo[(int)COL(i)] += 1<<ROW(i);
 //    }
 
 //    for (i=0; i<64; i++)
 //    {
 //        if (piece[i] == PAWN && color[i] == WHITE)
-//            whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
+//            whitePawnsInfo[(int)COL(i)] += 1<<ROW(i);
 //    }
 
 //    for (i=0; i<8; i++)
@@ -536,13 +537,13 @@ void test11()
 //    for (i=0; i<64; i++)
 //    {
 //        if (piece[i] == PAWN && color[i] == BLACK)
-//            blackPawnsInfo[(int)Col(i)] += 1<<Row(i);
+//            blackPawnsInfo[(int)COL(i)] += 1<<ROW(i);
 //    }
 
 //    for (i=0; i<64; i++)
 //    {
 //        if (piece[i] == PAWN && color[i] == WHITE)
-//            whitePawnsInfo[(int)Col(i)] += 1<<Row(i);
+//            whitePawnsInfo[(int)COL(i)] += 1<<ROW(i);
 //    }
 //    for (i=0; i<8; i++)
 //        printf("whitePawnsInfo col %d: %d\n", i+1, whitePawnsInfo[i]);
@@ -553,7 +554,7 @@ void test11()
 //    for (i=0; i<64; i++)
 //    {
 //        if (piece[i] == PAWN && color[i] == BLACK && isPassedPawnBlack(i))
-//            printf ("Black passed pawn in %d square %d, 1<<Row(sq) is %d\n", i, 1<<Row(i));
+//            printf ("Black passed pawn in %d square %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
 //    }
 //}
 
@@ -603,9 +604,9 @@ void xboard()
             default:
                 c = ' ';
             }
-            printf ("move %c%d%c%d%c\n", 'a' + Col (theBest.from), 8
-                    - Row (theBest.from), 'a' + Col (theBest.dest), 8
-                    - Row (theBest.dest), c);
+            printf ("move %c%d%c%d%c\n", 'a' + COL(theBest.from), 8
+                    - ROW(theBest.from), 'a' + COL(theBest.dest), 8
+                    - ROW(theBest.dest), c);
 
             fflush(stdout);
 //            setbuf(stdout, NULL);
@@ -829,12 +830,12 @@ int main()
 
             /* Se manda el movimiento sin enter para verificar coronacion */
             printf("move %c%d%c%d",
-                   'a' + Col(theBest.from),
-                   8 - Row(theBest.from),
-                   'a' + Col(theBest.dest),
-                   8 - Row(theBest.dest));
+                   'a' + COL(theBest.from),
+                   8 - ROW(theBest.from),
+                   'a' + COL(theBest.dest),
+                   8 - ROW(theBest.dest));
             /* Verificar si es coronacion para poner la nueva pieza */
-            switch (bestMove.type_of_move)
+            switch (theBest.type_of_move)
             {
                case MOVE_TYPE_PROMOTION_TO_QUEEN:
                   printf("q\n");
@@ -1162,44 +1163,44 @@ int reps()
     int r = 1;
 
     for (i = hdp - fifty; i < hdp; i+=2)
-        if (hist[i].hash == hash.key)
+        if (hist[i].hashhist == hash.key)
             ++r;
     return r;
 }
 
 /* Initializes the table of distances between squares */
-void setDistToKing()
-{
-    int i, j;
+//void setDistToKing()
+//{
+//    int i, j;
 
-    int dist_bonus[64][64];
+//    int dist_bonus[64][64];
 
-    /* Basic distance table used to generate separate tables for pieces */
-    for (i = 0; i < 64; ++i)
-    {
-       for (j = 0; j < 64; ++j)
-       {
-          dist_bonus[i][j] = 14 - ( abs( Col(i) - Col(j) ) + abs( Row(i) - Row(j) ) );
-
-          qk_dist[i][j]  = dist_bonus[i][j] * 5;
-          rk_dist[i][j]  =  dist_bonus[i][j];
-          nk_dist[i][j]  =  dist_bonus[i][j] * 4;
-          bk_dist[i][j]  = dist_bonus[i][j] * 3;
-       }
-    }
+//    /* Basic distance table used to generate separate tables for pieces */
 //    for (i = 0; i < 64; ++i)
 //    {
 //       for (j = 0; j < 64; ++j)
 //       {
-//           printf (" %d-%d - %d\n", i, j, qk_dist[i][j]);
-//           printf (" %d-%d - %d\n", j, i, qk_dist[j][i]);
-//           printf (" %d-%d - %d\n", i, j, nk_dist[i][j]);
-//           printf (" %d-%d - %d\n", j, i, nk_dist[j][i]);
-//           puts("");
+//          dist_bonus[i][j] = 14 - ( abs( COL(i) - COL(j) ) + abs( ROW(i) - ROW(j) ) );
+
+//          qk_dist[i][j]  = dist_bonus[i][j] * 5;
+//          rk_dist[i][j]  =  dist_bonus[i][j];
+//          nk_dist[i][j]  =  dist_bonus[i][j] * 4;
+//          bk_dist[i][j]  = dist_bonus[i][j] * 3;
 //       }
 //    }
+////    for (i = 0; i < 64; ++i)
+////    {
+////       for (j = 0; j < 64; ++j)
+////       {
+////           printf (" %d-%d - %d\n", i, j, qk_dist[i][j]);
+////           printf (" %d-%d - %d\n", j, i, qk_dist[j][i]);
+////           printf (" %d-%d - %d\n", i, j, nk_dist[i][j]);
+////           printf (" %d-%d - %d\n", j, i, nk_dist[j][i]);
+////           puts("");
+////       }
+////    }
 
-}
+//}
 
 void fen(const char *s)
 {

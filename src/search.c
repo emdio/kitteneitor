@@ -72,7 +72,7 @@ MOVE ComputerThink(int m_depth)
         bestMove = m;
 
         /* If the score is too large we just stop thinking */
-        if (abs(score) > MATE - 32)
+        if (ABS(score) > MATE - 32)
         {
             printf("score = %d\n", score);
             fflush(stdout);
@@ -88,10 +88,10 @@ MOVE ComputerThink(int m_depth)
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
             {
-              printf(" %c%d%c%d", 'a' + Col(pline.argmove[j].from),
-                                   8 - Row(pline.argmove[j].from),
-                                  'a' + Col(pline.argmove[j].dest),
-                                   8 - Row(pline.argmove[j].dest));
+              printf(" %c%d%c%d", 'a' + COL(pline.argmove[j].from),
+                                   8 - ROW(pline.argmove[j].from),
+                                  'a' + COL(pline.argmove[j].dest),
+                                   8 - ROW(pline.argmove[j].dest));
               /* Checking either it's a promotion */
               switch (pline.argmove[j].type_of_move)
               {

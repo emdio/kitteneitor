@@ -18,7 +18,12 @@
 #define UP     -8
 #define DOWN    8
 
-char fenstring[256];
+#define ROW(x)			(x >> 3)
+#define COL(x)			(x & 7)
+
+#define ABS(a)	   (((a) < 0) ? -(a) : (a))
+
+//char fenstring[256];
 
 /* The values of the pieces */
 #define VALUE_PAWN 100
@@ -129,8 +134,8 @@ char fenstring[256];
 /* Contador para la regla de los 50 movimientos */
 extern int fifty;
 
-/* 64 bit integers */
-typedef unsigned long long U64;
+///* 64 bit integers */
+//typedef unsigned long long U64;
 
 /* Estructura para triple repeticion */
 typedef struct tag_REPET {
@@ -155,7 +160,7 @@ typedef struct {
     MOVE m;
     int castle;
     int cap;
-    int hash;
+    int hashhist;
     int fifty;
 } HISTO;
 
