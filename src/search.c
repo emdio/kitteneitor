@@ -5,6 +5,7 @@
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
+#include <inttypes.h>    // belka
 
 MOVE ComputerThink(int m_depth)
 {
@@ -83,7 +84,20 @@ MOVE ComputerThink(int m_depth)
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf (" %d  %2d %4d %8llu ", i, score, int_time, nodes);
+
+            /* belka
+    		That is because %llu doesn't work properly under Windows. 
+			I suggest using PRIu64 instead and you'll find it's portable to Linux 
+			as well.
+			You may want to try using the inttypes.h library that gives you types 
+			such as int32_t, int64_t, uint64_t etc. You can then use its macros such as: 
+			uint64_t x;
+			uint32_t y;
+			printf("x: %"PRId64", y: %"PRId32"\n", x, y);
+			*/
+            // In Linux it is %llu and in Windows it is %I64u
+            //printf (" %d  %2d %4d %8llu ", i, score, int_time, nodes);
+            printf (" %d  %2d %4d %8I64u ", i, score, int_time, nodes);
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
