@@ -7,6 +7,7 @@
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
+#include <inttypes.h>
 
 void startgame()
 {
@@ -1063,8 +1064,9 @@ int main()
             /* Stop timer */
             stop = clock ();
             t = (double) (stop - start) / CLOCKS_PER_SEC;
-            printf ("nodes = %'llu\n", count);
-            printf ("time = %'.2f s\n", t);
+//            printf ("nodes = %'llu\n", count);
+            printf ("nodes = %8"  PRId64 "\n", count); // Belka
+            printf ("time = %.2f s\n", t);
             continue;
         }
         if (!strcmp (s, "quit"))
