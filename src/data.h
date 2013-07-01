@@ -24,7 +24,6 @@ extern U64 count_MakeMove;
 extern U64 countquiesCalls;
 extern U64 countCapCalls;
 extern U64 countSearchCalls;
-extern U64 nodes;
 extern int value_piece[6];
 extern HISTO hist[6000];
 extern int piece[64];
