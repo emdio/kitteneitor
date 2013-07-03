@@ -497,6 +497,48 @@ void test11()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
+void test12()
+{
+    puts("A position where Kitt crashed ");
+
+    /* Piece in each square */
+    int piece_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK, EMPTY, EMPTY,
+        EMPTY, KNIGHT, ROOK, EMPTY, BISHOP, EMPTY, EMPTY, EMPTY,
+        PAWN, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, PAWN, EMPTY, PAWN, EMPTY, KING, PAWN, PAWN,
+        EMPTY, PAWN, EMPTY, PAWN, PAWN, PAWN, EMPTY, EMPTY,
+        PAWN, KNIGHT, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN,
+        EMPTY, ROOK, BISHOP, EMPTY, ROOK, EMPTY, KING, EMPTY};
+    /* Color of each square */
+    int color_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY,
+        EMPTY, BLACK, BLACK, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
+        BLACK, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, BLACK, EMPTY, WHITE, EMPTY, BLACK, BLACK, BLACK,
+        EMPTY, WHITE, EMPTY, WHITE, BLACK, BLACK, EMPTY, EMPTY,
+        WHITE, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, BLACK, WHITE, EMPTY, WHITE,
+        EMPTY, WHITE, WHITE, EMPTY, WHITE, EMPTY, WHITE, EMPTY};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+//    setDistToKing();
+
+    side = BLACK;
+    computer_side = WHITE;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
+
 //void testWhitePassedPawns()
 //{
 //    int i = 0;
@@ -930,6 +972,12 @@ int main()
         if (!strcmp (s, "test11"))
         {
             test11 ();
+            PrintBoard();
+            continue;
+        }
+        if (!strcmp (s, "test12"))
+        {
+            test12 ();
             PrintBoard();
             continue;
         }
