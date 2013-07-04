@@ -3,17 +3,6 @@
 #include "data.h"
 #include "protos.h"
 
-/* This is usually defined by a macro like #define Col(pos) (pos & 7) */
-inline int Col (int square)
-{
-    return square & 7;
-}
-
-/* This is usually defined by a macro like #define ROW(pos) (pos >> 3) */
-inline int Row (int square)
-{
-    return square >> 3;
-}
 
 /* Just returns the color of the opponent */
 inline int Opponent(int color)
@@ -21,7 +10,7 @@ inline int Opponent(int color)
     return (!(color));
 }
 
-/* Sign returns 1 fot White and -1 for Black */
+/* Sign returns 1 for White and -1 for Black */
 inline int Sign(int color)
 {
     return (1 - (color * 2));
@@ -44,8 +33,8 @@ inline int IsSqProtectedByAPawn(int sq, int side)
 {
     /* We need to check the columm because in col 1 and 8 sq can only be attacked
      * from one side */
-    int col = Col(sq);
-    int row = Row(sq);
+    int col = COL(sq);
+    int row = ROW(sq);
 
     if (side == WHITE)
     {
@@ -85,7 +74,7 @@ inline int IsSqProtectedByAPawn(int sq, int side)
 int IsSqProtectedByAKnight(int sq, int side)
 {
     int y;
-    int col = Col (sq);
+    int col = COL (sq);
     y = sq - 6;
     if (y >= 0 && col < 6 && piece[y] == KNIGHT && color[y] == side)
         return 1;
@@ -120,7 +109,7 @@ int IsSqProtectedByABishop(int sq, int side)
     /* Check diagonal lines for attacking of Queen, Bishop, King, Pawn */
     /* go right down */
     y = sq + 9;
-    if (y < 64 && Col (y) != 0)
+    if (y < 64 && COL (y) != 0)
     {
         if (color[y] == side)
         {
@@ -128,7 +117,7 @@ int IsSqProtectedByABishop(int sq, int side)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y += 9; y < 64 && Col (y) != 0; y += 9)
+            for (y += 9; y < 64 && COL (y) != 0; y += 9)
             {
                 if (piece[y] == BISHOP && color[y] == side)
                     return 1;
@@ -138,7 +127,7 @@ int IsSqProtectedByABishop(int sq, int side)
     }
     /* go left down */
     y = sq + 7;
-    if (y < 64 && Col (y) != 7)
+    if (y < 64 && COL (y) != 7)
     {
         if (color[y] == side)
         {
@@ -146,7 +135,7 @@ int IsSqProtectedByABishop(int sq, int side)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y += 7; y < 64 && Col (y) != 7; y += 7)
+            for (y += 7; y < 64 && COL (y) != 7; y += 7)
             {
                 if (piece[y] == BISHOP && color[y] == side)
                     return 1;
@@ -157,7 +146,7 @@ int IsSqProtectedByABishop(int sq, int side)
     }
     /* go left up */
     y = sq - 9;
-    if (y >= 0 && Col (y) != 7)
+    if (y >= 0 && COL (y) != 7)
     {
         if (color[y] == side)
         {
@@ -165,7 +154,7 @@ int IsSqProtectedByABishop(int sq, int side)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y -= 9; y >= 0 && Col (y) != 7; y -= 9)
+            for (y -= 9; y >= 0 && COL (y) != 7; y -= 9)
             {
                 if (piece[y] == BISHOP && color[y] == side)
                     return 1;
@@ -176,7 +165,7 @@ int IsSqProtectedByABishop(int sq, int side)
     }
     /* go right up */
     y = sq - 7;
-    if (y >= 0 && Col (y) != 0)
+    if (y >= 0 && COL (y) != 0)
     {
         if (color[y] == side)
         {
@@ -184,7 +173,7 @@ int IsSqProtectedByABishop(int sq, int side)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y -= 7; y >= 0 && Col (y) != 0; y -= 7)
+            for (y -= 7; y >= 0 && COL (y) != 0; y -= 7)
             {
                 if (piece[y] == BISHOP && color[y] == side)
                     return 1;
@@ -450,8 +439,8 @@ int GenMoves(int current_side, MOVE * pBuf)
             {
 
             case PAWN:
-                col = Col (i);
-                row = Row (i);
+                col = COL (i);
+                row = ROW (i);
                 if (current_side == BLACK)
                 {
                     if (color[i + 8] == EMPTY)
@@ -500,28 +489,28 @@ int GenMoves(int current_side, MOVE * pBuf)
             case QUEEN:		/* == BISHOP+ROOK */
 
             case BISHOP:
-                for (y = i - 9; y >= 0 && Col (y) != 7; y -= 9)
+                for (y = i - 9; y >= 0 && COL (y) != 7; y -= 9)
                 {   /* go left up */
                     if (color[y] != current_side)
                         Gen_PushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
-                for (y = i - 7; y >= 0 && Col (y) != 0; y -= 7)
+                for (y = i - 7; y >= 0 && COL (y) != 0; y -= 7)
                 {   /* go right up */
                     if (color[y] != current_side)
                         Gen_PushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
-                for (y = i + 9; y < 64 && Col (y) != 0; y += 9)
+                for (y = i + 9; y < 64 && COL (y) != 0; y += 9)
                 {   /* go right down */
                     if (color[y] != current_side)
                         Gen_PushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
-                for (y = i + 7; y < 64 && Col (y) != 7; y += 7)
+                for (y = i + 7; y < 64 && COL (y) != 7; y += 7)
                 {   /* go left down */
                     if (color[y] != current_side)
                         Gen_PushNormal (i, y, pBuf, &movecount);
@@ -533,7 +522,7 @@ int GenMoves(int current_side, MOVE * pBuf)
 
                 /* FALL THROUGH FOR QUEEN {I meant to do that!} ;-) */
             case ROOK:
-                col = Col (i);
+                col = COL (i);
                 for (k = i - col, y = i - 1; y >= k; y--)
                 {   /* go left */
                     if (color[y] != current_side)
@@ -565,7 +554,7 @@ int GenMoves(int current_side, MOVE * pBuf)
                 break;
 
             case KNIGHT:
-                col = Col (i);
+                col = COL (i);
                 y = i - 6;
                 if (y >= 0 && col < 6 && color[y] != current_side)
                     Gen_PushNormal (i, y, pBuf, &movecount);
@@ -595,7 +584,7 @@ int GenMoves(int current_side, MOVE * pBuf)
             case KING:
                 /* the column and rank checks are to make sure it is on the board */
                 /* The 'normal' moves */
-                col = Col (i);
+                col = COL (i);
                 if (col && color[i - 1] != current_side)
                     Gen_PushKing (i, i - 1, pBuf, &movecount);	/* left */
                 if (col < 7 && color[i + 1] != current_side)
@@ -710,8 +699,8 @@ int GenCaps(int current_side, MOVE * pBuf)
             {
 
             case PAWN:
-                col = Col (i);
-                row = Row (i);
+                col = COL (i);
+                row = ROW (i);
                 if (current_side == BLACK)
                 {
                     /* This isn't a capture, but it's necesary in order to
@@ -754,7 +743,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                 break;
 
             case KNIGHT:
-                col = Col (i);
+                col = COL (i);
                 y = i - 6;
                 if (y >= 0 && col < 6 && color[y] == xside)
                     Gen_PushNormal (i, y, pBuf, &capscount);
@@ -784,7 +773,7 @@ int GenCaps(int current_side, MOVE * pBuf)
             case QUEEN:		/* == BISHOP+ROOK */
 
             case BISHOP:
-                for (y = i - 9; y >= 0 && Col (y) != 7; y -= 9)
+                for (y = i - 9; y >= 0 && COL (y) != 7; y -= 9)
                 {   /* go left up */
                     if (color[y] != EMPTY)
                     {
@@ -793,7 +782,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                         break;
                     }
                 }
-                for (y = i - 7; y >= 0 && Col (y) != 0; y -= 7)
+                for (y = i - 7; y >= 0 && COL (y) != 0; y -= 7)
                 {   /* go right up */
                     if (color[y] != EMPTY)
                     {
@@ -802,7 +791,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                         break;
                     }
                 }
-                for (y = i + 9; y < 64 && Col (y) != 0; y += 9)
+                for (y = i + 9; y < 64 && COL (y) != 0; y += 9)
                 {   /* go right down */
                     if (color[y] != EMPTY)
                     {
@@ -811,7 +800,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                         break;
                     }
                 }
-                for (y = i + 7; y < 64 && Col (y) != 7; y += 7)
+                for (y = i + 7; y < 64 && COL (y) != 7; y += 7)
                 {   /* go left down */
                     if (color[y] != EMPTY)
                     {
@@ -825,7 +814,7 @@ int GenCaps(int current_side, MOVE * pBuf)
 
                 /* FALL THROUGH FOR QUEEN {I meant to do that!} ;-) */
             case ROOK:
-                col = Col (i);
+                col = COL (i);
                 for (k = i - col, y = i - 1; y >= k; y--)
                 {   /* go left */
                     if (color[y] != EMPTY)
@@ -866,7 +855,7 @@ int GenCaps(int current_side, MOVE * pBuf)
 
             case KING:
                 /* the column and rank checks are to make sure it is on the board */
-                col = Col (i);
+                col = COL (i);
                 if (col && color[i - 1] == xside)
                     Gen_PushKing (i, i - 1, pBuf, &capscount);	/* left */
                 if (col < 7 && color[i + 1] == xside)
@@ -914,14 +903,14 @@ int IsAttacked(int current_side, int k)
 {
     int h;
     int y;
-    int row;			/* Row where the square is placed */
-    int col;			/* Col where the square is placed */
+    int row;			/* ROW where the square is placed */
+    int col;			/* COL where the square is placed */
     int xside;
     xside = Opponent(current_side);	/* opposite current_side, who may be attacking */
 
     /* Situation of the square */
-    row = Row (k);
-    col = Col (k);
+    row = ROW (k);
+    col = COL (k);
 
     /* Check Knight attack */
     if (col > 0 && row > 1 && color[k - 17] == xside && piece[k - 17] == KNIGHT)
@@ -1011,7 +1000,7 @@ int IsAttacked(int current_side, int k)
     /* Check diagonal lines for attacking of Queen, Bishop, King, Pawn */
     /* go right down */
     y = k + 9;
-    if (y < 64 && Col (y) != 0)
+    if (y < 64 && COL (y) != 0)
     {
         if (color[y] == xside)
         {
@@ -1021,7 +1010,7 @@ int IsAttacked(int current_side, int k)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y += 9; y < 64 && Col (y) != 0; y += 9)
+            for (y += 9; y < 64 && COL (y) != 0; y += 9)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
@@ -1032,7 +1021,7 @@ int IsAttacked(int current_side, int k)
     }
     /* go left down */
     y = k + 7;
-    if (y < 64 && Col (y) != 7)
+    if (y < 64 && COL (y) != 7)
     {
         if (color[y] == xside)
         {
@@ -1042,7 +1031,7 @@ int IsAttacked(int current_side, int k)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y += 7; y < 64 && Col (y) != 7; y += 7)
+            for (y += 7; y < 64 && COL (y) != 7; y += 7)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
@@ -1054,7 +1043,7 @@ int IsAttacked(int current_side, int k)
     }
     /* go left up */
     y = k - 9;
-    if (y >= 0 && Col (y) != 7)
+    if (y >= 0 && COL (y) != 7)
     {
         if (color[y] == xside)
         {
@@ -1064,7 +1053,7 @@ int IsAttacked(int current_side, int k)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y -= 9; y >= 0 && Col (y) != 7; y -= 9)
+            for (y -= 9; y >= 0 && COL (y) != 7; y -= 9)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
@@ -1076,7 +1065,7 @@ int IsAttacked(int current_side, int k)
     }
     /* go right up */
     y = k - 7;
-    if (y >= 0 && Col (y) != 0)
+    if (y >= 0 && COL (y) != 0)
     {
         if (color[y] == xside)
         {
@@ -1086,7 +1075,7 @@ int IsAttacked(int current_side, int k)
                 return 1;
         }
         if (piece[y] == EMPTY || piece[y] == EPS_SQ)
-            for (y -= 7; y >= 0 && Col (y) != 0; y -= 7)
+            for (y -= 7; y >= 0 && COL (y) != 0; y -= 7)
             {
                 if (color[y] == xside && (piece[y] == QUEEN || piece[y]
                                           == BISHOP))
