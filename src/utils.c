@@ -37,7 +37,8 @@ PrintBoard ()
                  && ((((unsigned) i) >> 3) % 2 != 0 && i % 2 != 0))
             printf ("   |");
         else if (piece[i] == EMPTY)
-            printf (" · |");
+            printf ("   |");
+
         else if (piece[i] == EPS_SQ)
             printf (" * |");
         else
@@ -50,8 +51,7 @@ PrintBoard ()
         if ((i & 7) == 7)
             printf ("\n");
     }
-    printf
-    ("   +---+---+---+---+---+---+---+---+\n     a   b   c   d   e   f   g   h\n");
+    printf ("   +---+---+---+---+---+---+---+---+\n     a   b   c   d   e   f   g   h\n");
 }
 
 
