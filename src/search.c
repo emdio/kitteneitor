@@ -14,7 +14,7 @@ MOVE ComputerThink(int m_depth)
     MOVE bestMove;
     LINE pline;
     int score, i, j;
-    double knps;
+//    double knps;
     memset(history, 0, sizeof(history));
 
     /* Time management */
@@ -60,9 +60,9 @@ MOVE ComputerThink(int m_depth)
         /* Stop timer */
         stop = clock ();
         t = (double) (stop - start) / CLOCKS_PER_SEC;
-        knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
-        double ratio_Qsearc_Capcalls = 0;
-        ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
+//        knps = ((double) (countquiesCalls + countSearchCalls) / t) / 1000.;
+//        double ratio_Qsearc_Capcalls = 0;
+//        ratio_Qsearc_Capcalls = (double) countCapCalls / (double) countquiesCalls;
 
         double decimal_score = ((double) score) / 100.;
         if (side == BLACK)
