@@ -540,66 +540,47 @@ void test12()
     hash_key_position(); /* hash de la posicion inicial */
 }
 
-//void testWhitePassedPawns()
-//{
-//    int i = 0;
-//    int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-//    int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+void test13()
+{
+    puts("To test squares protected by pawns");
 
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == BLACK)
-//            blackPawnsInfo[(int)COL(i)] += 1<<ROW(i);
-//    }
+    /* Piece in each square */
+    int piece_test[64] = {
+        KING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN,
+        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN,
+        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KING};
+    /* Color of each square */
+    int color_test[64] = {
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
+        WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE,
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE};
 
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == WHITE)
-//            whitePawnsInfo[(int)COL(i)] += 1<<ROW(i);
-//    }
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
 
-//    for (i=0; i<8; i++)
-//        printf("whitePawnsInfo col %d: %d\n", i+1, whitePawnsInfo[i]);
-//    puts("-----------------------");
-//    for (i=0; i<8; i++)
-//        printf("blackPawnsInfo col %d: %d\n", i+1, blackPawnsInfo[i]);
+//    setDistToKing();
 
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == WHITE && isPassedPawnWhite(i))
-//                printf ("White passed pawn in %d square\n", i);
-//    }
-//}
-
-//void testBlackPassedPawns()
-//{
-//    int i = 0;
-//    int whitePawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-//    int blackPawnsInfo[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == BLACK)
-//            blackPawnsInfo[(int)COL(i)] += 1<<ROW(i);
-//    }
-
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == WHITE)
-//            whitePawnsInfo[(int)COL(i)] += 1<<ROW(i);
-//    }
-//    for (i=0; i<8; i++)
-//        printf("whitePawnsInfo col %d: %d\n", i+1, whitePawnsInfo[i]);
-//    puts("-----------------------");
-//    for (i=0; i<8; i++)
-//        printf("blackPawnsInfo col %d: %d\n", i+1, blackPawnsInfo[i]);
-
-//    for (i=0; i<64; i++)
-//    {
-//        if (piece[i] == PAWN && color[i] == BLACK && isPassedPawnBlack(i))
-//            printf ("Black passed pawn in %d square %d, 1<<ROW(sq) is %d\n", i, 1<<ROW(i));
-//    }
-//}
+    side = WHITE;
+    computer_side = BLACK;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hash_key_position(); /* hash de la posicion inicial */
+}
 
 void xboard()
 {
@@ -717,7 +698,7 @@ void xboard()
             computer_side = side;
             continue;
         }
-        /* Tomado de TSCP recibimos del GUI el tiempo que nos queda */
+        /* Taken from TSCP: we receive from the GUI the time we have */
         if (!strcmp(command, "time"))
         {
             sscanf (line, "time %ld", &max_time);
@@ -984,6 +965,12 @@ int main()
             PrintBoard();
             continue;
         }
+        if (!strcmp (s, "test13"))
+        {
+            test13 ();
+            PrintBoard();
+            continue;
+        }
         if (!strcmp (s, "testWhitePassedPawns"))
         {
             testWhitePassedPawns ();
@@ -1019,11 +1006,11 @@ int main()
             showPawnsInfo ();
             continue;
         }
-//        if (!strcmp (s, "testIsSqProtectedByAPawn"))
-//        {
-//             testIsSqProtectedByAPawn();
-//            continue;
-//        }
+        if (!strcmp (s, "testIsSqProtectedByAPawn"))
+        {
+             testIsSqProtectedByAPawn();
+            continue;
+        }
 //        if (!strcmp (s, "testIsSqProtectedByAKnight"))
 //        {
 //             testIsSqProtectedByAKnight();

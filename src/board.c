@@ -185,8 +185,8 @@ int IsSqProtectedByABishop(int sq, int side)
     return 0;
 }
 
-/*esta función nos permite saber que algunos movimientos son malas capturas, basado en CPW
-sustituye de momento a SEE (static exchange evaluator)*/
+/* This function allows us to know wether a capture is bad, bsaed on CPW.
+For the moment it substitutes SEE (static exchange evaluator)*/
 int BadCapture(MOVE mcmov) {
 
     if (piece[mcmov.from] == PAWN)
@@ -227,11 +227,7 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
     move.dest = dest;
     move.type_of_move = type;
 
-    /* Now we assign the value to 'grade'
-        Lack: Check if a piece is being attacked by a weaker one: for
-    example if a knight is being attacked by a pawn, then moving the knight
-    probably would be the best move (or at least deserves a position close
-    to the top of the table)*/
+    /* Now we assign the value to 'grade' */
     move.grade = 0;
 
     /* Is it a promotion? */
@@ -252,12 +248,12 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
         /* Is it a capture? */
         if ( color[dest] != EMPTY )
         {
-            /*malas capturas por detrás*/
+            /* Bad captures get a bad grade */
             if (BadCapture(move) == 1)
             {
                 move.grade = -10000000 + value_piece[piece[dest]] - value_piece[piece[from]];
             }
-            /*ordenamos por MVV/LVA*/
+            /* Ordering by MVV/LVA */
             else
             {
                 /* These are "good" captures, but we aren't taking into account factors
@@ -338,7 +334,7 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                 }
             }
 
-            /* Are we placing a piece in a square deffended by a pawn? Sounds like a bad idea */
+            /* Are we placing a piece in a square defended by a pawn? Sounds like a bad idea */
             if  ( piece[from] != PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])) )
                 move.grade -= (value_piece[piece[from]]);
 
@@ -397,7 +393,7 @@ void Gen_PushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
     }
 }
 
-/* When a pawn moves two squares then appears the possibility of the en passant capture*/
+/* When a pawn moves two squares then appears the possibility of an en passant capture*/
 void Gen_PushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount)
 {
     Gen_Push (from, dest, MOVE_TYPE_PAWN_TWO, pBuf, pMCount);
@@ -582,7 +578,7 @@ int GenMoves(int current_side, MOVE * pBuf)
                 break;
 
             case KING:
-                /* the column and rank checks are to make sure it is on the board */
+                /* The column and rank checks are to make sure it is on the board */
                 /* The 'normal' moves */
                 col = COL (i);
                 if (col && color[i - 1] != current_side)
@@ -672,14 +668,13 @@ int GenMoves(int current_side, MOVE * pBuf)
                 break;
 //                default:
 //                printf("Piece type unknown, %d", piece[i]);
-                // assert(false);
             }
         }
     return movecount;
 }
 
 /* Gen all captures of current_side to move and push them to pBuf, return number of moves
- * It's necesary at least ir order to use quiescent in the search */
+ * It's necessary at least in order to use quiescent in the search */
 int GenCaps(int current_side, MOVE * pBuf)
 {
     int i;			/* Counter for the board squares */
@@ -687,7 +682,7 @@ int GenCaps(int current_side, MOVE * pBuf)
     int y;
     int row;
     int col;
-    int capscount;		/* Counter for the posible captures */
+    int capscount;		/* Counter for the possible captures */
     int xside;
     xside = Opponent(current_side);
     capscount = 0;
@@ -704,7 +699,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                 if (current_side == BLACK)
                 {
                     /* This isn't a capture, but it's necesary in order to
-                     * not oversee promotions */
+                     * not overlook promotions */
                     if (row > 7 && color[i + 8] == EMPTY)
                         /* Pawn advances one square.
                          * We use Gen_PushPawn because it can be a promotion */
@@ -727,7 +722,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                 {
                     if (row < 2 && color[i - 8] == EMPTY)
                         /* This isn't a capture, but it's necesary in order to
-                         * not oversee promotions */
+                         * not overlook promotions */
                         Gen_PushPawn (i, i - 8, pBuf, &capscount);
                     /* For captures */
                     if (col && color[i - 9] == BLACK)
@@ -882,7 +877,7 @@ int GenCaps(int current_side, MOVE * pBuf)
 }
 
 
-/* Check if current side is in check. Necesary in order to check legality of moves
+/* Check if current side is in check. Necessary in order to check legality of moves
  and check if castle is allowed */
 int IsInCheck(int current_side)
 {
@@ -897,7 +892,7 @@ int IsInCheck(int current_side)
     return IsAttacked (current_side, k);
 }
 
-/* Check and return 1 if square k is attacked by current_side, 0 otherwise. Necesary, vg, to check
+/* Check and return 1 if square k is attacked by current_side, 0 otherwise. Necessary, vg, to check
  * castle rules (if king goes from e1 to g1, f1 can't be attacked by an enemy piece) */
 int IsAttacked(int current_side, int k)
 {
@@ -1108,7 +1103,7 @@ int MakeMove(MOVE m)
     piece[m.from] = EMPTY;	/* The original square becomes empty */
     color[m.from] = EMPTY;	/* The original color becomes empty */
 
-    /* en pasant capture */
+    /* en passant capture */
     if (m.type_of_move == MOVE_TYPE_EPS)
     {
         if (side == WHITE)
@@ -1245,7 +1240,6 @@ int MakeMove(MOVE m)
     r = !IsInCheck (side);
 
     /* After making move, give turn to opponent */
-//    side = (WHITE + BLACK) - side;
     side = Opponent(side);
 
     /* Obtenemos la hash.key de la posicion actual */
@@ -1315,7 +1309,7 @@ void TakeBack()
         }
     }
 
-    /* Unmaking an en pasant capture */
+    /* Unmaking an en passant capture */
     if (hist[hdp].m.type_of_move == MOVE_TYPE_EPS)
     {
         if (side == WHITE)
@@ -1339,7 +1333,7 @@ void TakeBack()
     /* Undo Castle: return rook to its original square */
     if (hist[hdp].m.type_of_move == MOVE_TYPE_CASTLE)
     {
-        /* Take the tower to its poriginal place */
+        /* Take the rook to its original place */
         if (hist[hdp].m.dest == G1 && side == WHITE)
         {
             piece[H1] = ROOK;
@@ -1370,10 +1364,10 @@ void TakeBack()
         }
     }
 
-    /* Ponemos la cuenta de 50 movimientos que llevabamos. */
+    /* Recover the 50 moves count */
     fifty = hist[hdp].fifty;
 
-    /* Recuperamos la posicion anterior en zobrist key */
+    /* Recover the former position in zobrist key */
     hash.key = hist[hdp].hashhist;
 }
 
@@ -1385,7 +1379,7 @@ void testIsSqProtectedByAPawn()
         for (j = WHITE; j <= BLACK; j++)
         {
             if ( IsSqProtectedByAPawn(i, j) )
-                printf ("Pawn %d is protected by pawn of side %d \n", i, j);
+                printf ("Square %d is protected by pawn of side %d \n", i, j);
         }
     }
 }
