@@ -5,6 +5,7 @@
 #include "defs.h"
 #include "data.h"
 #include "protos.h"
+#include <inttypes.h>	// Belka
 
 MOVE ComputerThink(int m_depth)
 {
@@ -83,7 +84,7 @@ MOVE ComputerThink(int m_depth)
             depth eval time nodes PV*/
         {
             int int_time = (int)(t * 100);
-            printf (" %d  %2d %4d %8llu ", i, score, int_time, nodes);
+            printf (" %d  %2d %4d %8"  PRId64, i, score, int_time, nodes); // Belka
 
             /* Printing PV */
             for(j=0; j<pline.cmove; j++)
