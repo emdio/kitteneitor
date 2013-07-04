@@ -679,7 +679,7 @@ void xboard()
             computer_side = EMPTY;
             continue;
         }
-        /*si recibimos un resultado de un juego el motor debe parar*/
+        /* If we get a result the engine must stop */
         if (!strcmp(command, "result"))
         {
             computer_side = EMPTY;
@@ -721,7 +721,7 @@ void xboard()
         if (!strcmp(command, "time"))
         {
             sscanf (line, "time %ld", &max_time);
-            /*pasamos a milisegundos que es como trabajamos internamente*/
+            /* Convert to miliseconds */
             max_time *= 10;
             max_time /= 10;
             max_time -= 300;
@@ -845,15 +845,6 @@ int main()
     MOVE moveBuf[200];
     MOVE theBest;
     int movecnt;
-
-//    puts ("Kitteneitor, by Emilio Diaz");
-//    puts (" Help");
-//    puts (" d: display board");
-//    puts (" MOVE: make a move (e.g. b1c3, a7a8q, e1g1)");
-//    puts (" on: force computer to move");
-//    puts (" quit: exit");
-//    puts (" sd n: set engine depth to n plies");
-//    puts (" undo: take back last move");
 
     /* Belka */
     puts (" \n Kitteneitor version June 27th 2013 by Emilio Diaz \n =================================================\n\n");
@@ -1131,7 +1122,7 @@ int main()
         ply = 0;
         movecnt = GenMoves (side, moveBuf);
 
-        /* Loop through the moves to see if it's legal */
+        /* Loop through the moves to see wether it's legal */
         for (i = 0; i < movecnt; i++)
             if (moveBuf[i].from == from && moveBuf[i].dest == dest)
             {

@@ -83,7 +83,7 @@ int Eval(int alpha, int beta)
     }
 
     /* The fun factor */
-    int ff = 0;
+//    int ff = 0;
 
     /* The vars for counting the material */
     pawns[WHITE] = 0;
@@ -181,7 +181,7 @@ int Eval(int alpha, int beta)
     /* Is there enough material to keep on playing? */
     if (NoMaterial()) return 0;
 
-    /* Anyone has the pair of bishops? */
+    /* Does Anyone have the pair of bishops? */
     if (bishops[WHITE] == 2 && bishops[BLACK] != 2)
         score += PAIR_BISHOPS;
     else if (bishops[WHITE] != 2 && bishops[BLACK] == 2)
@@ -204,8 +204,7 @@ int Eval(int alpha, int beta)
     {
         if (color[i] == WHITE)
         {
-            /* Now we add to the evaluation the value of the
-             * piece square tables */
+            /* Now we add the value of the piece square tables to the evaluation  */
             switch (piece[i])
             {
             case PAWN:
@@ -324,7 +323,7 @@ int Eval(int alpha, int beta)
 
     /* Finally we return the score, taking into account the side to move
         We add an extra plus because in the same position the side to
-        move has some extra advantage*/
+        move has some extra advantage */
 
 //    ff = funFactor();
 
@@ -488,7 +487,7 @@ inline int isOnAnOpenCol(int sq)
  */
 
 /* Mobility of the bishop: number of empty squares a bishop can reach
- * from its actual position */
+ * from its current position */
 int BishopMobility(int sq)
 {
     int l;
@@ -508,7 +507,7 @@ int BishopMobility(int sq)
     return mob;
 }
 
-/* Range of the bishop: The squares till reach a pawn no matter its color */
+/* Range of the bishop: The squares untill reaching a pawn no matter its color */
 int BishopRange(int sq)
 {
     int l;
