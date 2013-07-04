@@ -43,7 +43,7 @@ MOVE ComputerThink(int m_depth)
         /* Search now! */
         score = Search (-MATE, MATE, i, &m, &pline);
 
-        /* If we've searched for a certain percentage of the avaialble time it
+        /* If we've searched for a certain percentage of the available time it
         doesn't make sense to start a new ply, so we call it a day */
 //        checkup(half_time);
 
@@ -119,8 +119,7 @@ MOVE ComputerThink(int m_depth)
 
 /*
  ****************************************************************************
- * Search function - a typical alphabeta + quiescent search, main search function *
- * Lack: no move ordering *
+ * Search function - a typical alpha-beta + quiescent search, main search function *
  ****************************************************************************
  */
 
@@ -132,7 +131,7 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     int havemove;		/* Either we have or not a legal move available */
     int movecnt;		/* The number of available moves */
 //    int score;
-    MOVE moveBuf[200];  /* List of movements */
+    MOVE moveBuf[200];  /* List of moves */
     MOVE tmpMove;
     LINE    line;
 
@@ -166,11 +165,11 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 //    if (depth < max_depth - 2 && IsInCheck(side))
 //        ++depth;
 
-    /* Once we have all the moves available, we loop through the posible
+    /* Once we have all the moves available, we loop through the possible
      * moves and apply an alpha-beta search */
     for (i = 0; i < movecnt; ++i)
     {
-        /* Here must be called OrderMove, so we have the moves are ordered before
+        /* Here must be called OrderMove, so the moves are ordered before
         picking one up from the list*/
         MoveOrder(i, movecnt, moveBuf);
 
@@ -191,7 +190,7 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
            that when we take the next move from moveBuf everything is in order */
         TakeBack ();
 
-        /* Once we have an evaluation, we use it in in an alpha-beta search */
+        /* Once we have an evaluation, we use it in an alpha-beta search */
         if (value > alpha)
         {
             /* This move is so good and caused a cutoff */
@@ -260,8 +259,7 @@ int Quiescent(int alpha, int beta)
         return 0;
 
     /* First we just try the evaluation function */
-    /* We generate the moves deppending either
-       we are in check or not */
+    /* We generate the moves deppending either we are in check or not */
     if (is_in_check)
     {
         movescnt = GenMoves(side, qMovesBuf);
