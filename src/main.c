@@ -457,7 +457,7 @@ void test10()
 
 void test11()
 {
-    puts("Just to check the validity of passed pawn dettection ");
+    puts("Just to check the validity of passed pawn detection ");
     puts("and the value of the rank bonus arrays.");
 
     /* Piece in each square */
@@ -542,7 +542,7 @@ void test12()
 
 void test13()
 {
-    puts("To test squares protected by pawns");
+    puts("Testing squares protected by pawns");
 
     /* Piece in each square */
     int piece_test[64] = {
@@ -625,7 +625,7 @@ void test99()	//Belka: McKenzie test position
 //    setDistToKing();
 
     side = WHITE;
-    computer_side = BLACK;	/* computer is white side */
+    computer_side = BLACK;	/* human is white side */
     hdp = 0;
     castle = 15;
     fifty = 0;
@@ -648,14 +648,14 @@ void xboard()
 //    hash_rnd_init();
     startgame ();
 
-    /* Waiting a command from the GUI */
+    /* Waiting for a command from GUI */
     for (;;)
     {
         fflush (stdout);
 //        setbuf(stdout, NULL);
         if (side == computer_side)
         {   /* computer's turn */
-            /* Find out the best move to react the current position */
+            /* Find out the best move to reply to the current position */
             theBest = ComputerThink (max_depth);
             if (theBest.type_of_move > 8)
                 printf ("type of move the best %d \n", theBest.type_of_move);
@@ -784,15 +784,15 @@ void xboard()
             continue;
         }
 
-        /* maybe the user entered a move? */
+        /* Maybe the user entered a move? */
 
-        /* is a move? */
+        /* Is that a move? */
         if (command[0] < 'a' || command[0] > 'h' ||
                 command[1] < '0' || command[1] > '9' ||
                 command[2] < 'a' || command[2] > 'h' ||
                 command[3] < '0' || command[3] > '9')
         {
-            printf("Error (unknown command): %s\n", command); /*no move, unknown command */
+            printf("Error (unknown command): %s\n", command); /* No move, unknown command */
             continue;
         }
 
@@ -910,7 +910,7 @@ int main()
                    8 - ROW(theBest.from),
                    'a' + COL(theBest.dest),
                    8 - ROW(theBest.dest));
-            /* Verificar si es coronacion para poner la nueva pieza */
+            /* Check wether it's a crown */
             switch (theBest.type_of_move)
             {
                case MOVE_TYPE_PROMOTION_TO_QUEEN:
@@ -926,7 +926,7 @@ int main()
                   printf("n\n");
                   break;
                default:
-                  printf("\n"); /* no es coronacion enviamos el move con enter */
+                  printf("\n");
             }   /* end switch */
 
             PrintBoard ();
@@ -936,7 +936,7 @@ int main()
 
         /* Get user input */
         printf ("k> ");
-        if (scanf ("%s", s) == EOF)	/* close program */
+        if (scanf ("%s", s) == EOF)	/* Shut down the program */
             return 0;
         if (!strcmp (s, "d"))
         {
@@ -1021,7 +1021,7 @@ int main()
             PrintBoard();
             continue;
         }
-        if (!strcmp (s, "test99"))
+        if (!strcmp (s, "test99")) //Belka: McKenzie test position
         {
             test99 ();
             PrintBoard();
@@ -1165,7 +1165,7 @@ int main()
         ply = 0;
         movecnt = GenMoves (side, moveBuf);
 
-        /* Loop through the moves to see wether it's legal */
+        /* Loop through the moves to see whether it's legal */
         for (i = 0; i < movecnt; i++)
             if (moveBuf[i].from == from && moveBuf[i].dest == dest)
             {
@@ -1391,4 +1391,4 @@ void fen(const char *s)
 //        case '8': EPS_SQ +=  0; break;
 //        default: z = 1; break;
 //        }
-    }
+}
