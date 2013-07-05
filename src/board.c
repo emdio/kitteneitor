@@ -57,16 +57,6 @@ inline int IsSqProtectedByAPawn(int sq, int side)
         }
     }
 
-
-//    if ( col == COLH && piece[sq + Behind(side) + 1] == PAWN &&  color[sq + Behind(side) + 1] == side )
-//        return 1;
-//    if ( col == COLA && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
-//        return 1;
-//    if ( col != COLA && col != COLH && piece[sq + Behind(side) - 1] == PAWN && color[sq + Behind(side) - 1] == side )
-//        return 1;
-//    if ( col != COLA && col != COLH && piece[sq + Behind(side) + 1] == PAWN && color[sq + Behind(side) + 1] == side )
-//        return 1;
-
     return 0;
 }
 
@@ -185,8 +175,8 @@ int IsSqProtectedByABishop(int sq, int side)
     return 0;
 }
 
-/* This function allows us to know wether a capture is bad, bsaed on CPW.
-For the moment it substitutes SEE (static exchange evaluator)*/
+/* This function allows us to know hwether a capture is bad, bsaed on CPW.
+For the moment it substitutes SEE (Static Exchange Evaluator)*/
 int BadCapture(MOVE mcmov) {
 
     if (piece[mcmov.from] == PAWN)
@@ -370,7 +360,6 @@ void Gen_PushNormal(int from, int dest, MOVE * pBuf, int *pMCount)
 }
 
 /* Especial cases for Pawn */
-
 /* Pawn can promote */
 void Gen_PushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
 {
@@ -453,7 +442,7 @@ int GenMoves(int current_side, MOVE * pBuf)
                     if (col < 7 && color[i + 9] == WHITE)
                         /* Pawn captures and can be a promotion */
                         Gen_PushPawn (i, i + 9, pBuf, &movecount);
-                    /* For en passant capture */
+                        /* For en passant capture */
                     if (col && piece[i + 7] == EPS_SQ)
                         /* Pawn captures and it can be a promotion */
                         Gen_PushPawn (i, i + 7, pBuf, &movecount);
@@ -870,7 +859,6 @@ int GenCaps(int current_side, MOVE * pBuf)
                 break;
 //                               default:
 //                               printf("Piece type unknown");
-                // assert(false);
             }
         }
     return capscount;
@@ -1093,17 +1081,17 @@ int MakeMove(MOVE m)
 //        printf ("type of move %d \n", typeOfMove);
 
     hist[hdp].m = m;
-    hist[hdp].cap = piece[m.dest];	/* store in history the piece of the dest square */
+    hist[hdp].cap = piece[m.dest];	/* Store in history the piece of the dest square */
     hist[hdp].castle = castle;
     hist[hdp].fifty = fifty;
-    hist[hdp].hashhist = hash.key;       /* Guardamos la posicion actial en hashkey */
+    hist[hdp].hashhist = hash.key;       /* Save tue current position in a hashkey */
 
     piece[m.dest] = piece[m.from];	/* dest piece is the one in the original square */
     color[m.dest] = color[m.from];	/* The dest square color is the one of the origin piece */
     piece[m.from] = EMPTY;	/* The original square becomes empty */
     color[m.from] = EMPTY;	/* The original color becomes empty */
 
-    /* en passant capture */
+    /* En passant capture */
     if (m.type_of_move == MOVE_TYPE_EPS)
     {
         if (side == WHITE)
@@ -1179,7 +1167,6 @@ int MakeMove(MOVE m)
 
         default:
             puts ("Impossible to get here...");
-//            assert(false);
         }
     }
 
@@ -1230,7 +1217,7 @@ int MakeMove(MOVE m)
     /* Update the castle rights */
     castle &= castle_mask[m.from] & castle_mask[m.dest];
 
-    /* Actualizamos la cuenta de la regla de 50 movimientos */
+    /* Update the counting for the 50 moves rule */
     if ((piece[m.dest] == PAWN) || (hist[hdp].cap != EMPTY))
        fifty = 0;
     else
@@ -1242,7 +1229,7 @@ int MakeMove(MOVE m)
     /* After making move, give turn to opponent */
     side = Opponent(side);
 
-    /* Obtenemos la hash.key de la posicion actual */
+    /* Get hash.key for the current position */
     hash_key_position();
 
     return r;
