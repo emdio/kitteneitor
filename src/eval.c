@@ -39,6 +39,7 @@ int numPawnsFunfac[16] = {0, 0, 0, 0, 0, 0, 0, 0, -5, -5, -10, -10, -12, -12, -1
 /* Kings' safety */
 int colKing[2] = {0};
 int sqKing[2] = {0};
+
 /* Shleter pawns matrix */
 int wPawnShelter[7][7] = {
                           {-8, -7, -6, -5, -5, -5, -4},
@@ -171,7 +172,6 @@ int Eval(int alpha, int beta)
 
 
     /* After counting the material we update the score */
-//    score = piece_mat[WHITE] - piece_mat[BLACK];
     score = (pawns[WHITE]   - pawns[BLACK])   *  value_piece[PAWN] +
             (knights[WHITE] - knights[BLACK]) *  value_piece[KNIGHT] +
             (bishops[WHITE] - bishops[BLACK]) *  value_piece[BISHOP] +
@@ -204,7 +204,6 @@ int Eval(int alpha, int beta)
     {
         if (color[i] == WHITE)
         {
-            /* Now we add the value of the piece square tables to the evaluation  */
             switch (piece[i])
             {
             case PAWN:
