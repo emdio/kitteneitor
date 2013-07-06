@@ -1,25 +1,25 @@
 /* Prototypes */
 
 /* Board */
-int IsAttacked(int current_side, int k);
-int IsInCheck(int current_side);
-void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount);
-void Gen_PushKing(int from, int dest, MOVE * pBuf, int *pMCount);
-void Gen_PushNormal(int from, int dest, MOVE * pBuf, int *pMCount);
-void Gen_PushPawn(int from, int dest, MOVE * pBuf, int *pMCount);
-void Gen_PushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount);
-int GenCaps(int current_side, MOVE * pBuf);
-int GenMoves(int current_side, MOVE * pBuf);
-int MakeMove(MOVE m);
-void TakeBack();
-inline int Opponent (int color);
-void MoveOrder(int from, int movecount, MOVE *moveBuf);
-int BadCapture(MOVE mcmov);
-inline int IsSqProtectedByAPawn(int sq, int side);
+int isAttacked(int current_side, int k);
+int isInCheck(int current_side);
+void genPush(int from, int dest, int type, MOVE * pBuf, int *pMCount);
+void genPushKing(int from, int dest, MOVE * pBuf, int *pMCount);
+void genPushNormal(int from, int dest, MOVE * pBuf, int *pMCount);
+void genPushPawn(int from, int dest, MOVE * pBuf, int *pMCount);
+void genPushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount);
+int genCaps(int current_side, MOVE * pBuf);
+int genMoves(int current_side, MOVE * pBuf);
+int makeMove(MOVE m);
+void takeBack();
+inline int opponent (int color);
+void moveOrder(int from, int movecount, MOVE *moveBuf);
+int badCapture(MOVE mcmov);
+inline int isSqProtectedByAPawn(int sq, int side);
 
 /* Eval */
-int Eval(int alpha, int beta);
-int endGame();
+int eval(int alpha, int beta);
+int isEndGame();
 inline int isDoubledPawnWhite(int sq);
 inline int isDoubledPawnBlack(int sq);
 int isPassedPawnWhite(int sq);
@@ -28,12 +28,12 @@ int isIsolatedPawnWhite(int sq);
 int isIsolatedPawnBlack(int sq);
 int wKingShelter(int sq);
 int bKingShelter(int sq);
-int BishopMobility(int sq);
-int BishopRange(int sq);
-int RookMobility(int sq);
-int KnightMobility(int sq);
+int bishopMobility(int sq);
+int bishopRange(int sq);
+int rookMobility(int sq);
+int knightMobility(int sq);
 int funFactor();
-int NoMaterial();
+int noMaterial();
 int isOnAnOpenCol(int sq);
 int whiteKingSafety();
 int blackKingSafety();
@@ -45,31 +45,30 @@ void testBlackPassedPawns();
 void testWhiteDoubledPawns();
 void testBlackDoubledPawns();
 void testOpenCols();
-int endGame();
-
 
 /* Tests */
 void testIsIsolatedPawnWhite();
 void testIsIsolatedPawnBlack();
 void showPawnsInfo();
+void testisSqProtectedByAPawn();
 
 /* Main */
 void startgame();
 void xboard();
-void hash_rnd_init();
-void hash_key_position();
+void hashRndInit();
+void hashKeyPosition();
 void setDistToKing();
 void fen(const char *s);
 
 /* Search */
 MOVE ComputerThink(int depth);
-int Quiescent(int alpha, int beta);
-int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline);
-void checkup(clock_t stoping_time);
-int checkupHalfTime(int stoping_time);
+int quiescent(int alpha, int beta);
+int search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline);
+void checkup(clock_t stopping_time);
+int checkupHalfTime(int stopping_time);
 int reps();
 
 /* Utils */
 U64 perft(int depth);
-void PrintBoard();
-int get_ms();
+void printBoard();
+int getMs();

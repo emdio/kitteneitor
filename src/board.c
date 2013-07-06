@@ -5,7 +5,7 @@
 
 
 /* Just returns the color of the opponent */
-inline int Opponent(int color)
+inline int opponent(int color)
 {
     return (!(color));
 }
@@ -28,8 +28,8 @@ inline int Behind(int color)
     return (Sign(color) * DOWN);
 }
 
-/* IsSqProtectedByAPawn returns 1 if sq is protected by a pawn of color side */
-inline int IsSqProtectedByAPawn(int sq, int side)
+/* isSqProtectedByAPawn returns 1 if sq is protected by a pawn of color side */
+inline int isSqProtectedByAPawn(int sq, int side)
 {
     /* We need to check the columm because in col 1 and 8 sq can only be attacked
      * from one side */
@@ -177,18 +177,18 @@ int IsSqProtectedByABishop(int sq, int side)
 
 /* This function allows us to know hwether a capture is bad, bsaed on CPW.
 For the moment it substitutes SEE (Static Exchange Evaluator)*/
-int BadCapture(MOVE mcmov) {
+int badCapture(MOVE mcmov) {
 
     if (piece[mcmov.from] == PAWN)
         return 0;
 
     /* Capturing equal or more material is never bad */
-    if (value_piece[piece[mcmov.dest]] > value_piece[piece[mcmov.from]] - 50)
+    if (valuePiece[piece[mcmov.dest]] > valuePiece[piece[mcmov.from]] - 50)
         return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
     know either it is protected by a pawn? */
-    if ( IsSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) )
+    if ( isSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) )
         return 1;
 
     /******************** **************************/
@@ -210,7 +210,7 @@ int BadCapture(MOVE mcmov) {
  * Move generator *
  ****************************************************************************
  */
-void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
+void genPush(int from, int dest, int type, MOVE * pBuf, int *pMCount)
 {
     MOVE move;
     move.from = from;
@@ -239,9 +239,9 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
         if ( color[dest] != EMPTY )
         {
             /* Bad captures get a bad grade */
-            if (BadCapture(move) == 1)
+            if (badCapture(move) == 1)
             {
-                move.grade = -10000000 + value_piece[piece[dest]] - value_piece[piece[from]];
+                move.grade = -10000000 + valuePiece[piece[dest]] - valuePiece[piece[from]];
             }
             /* Ordering by MVV/LVA */
             else
@@ -249,10 +249,10 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                 /* These are "good" captures, but we aren't taking into account factors
                  * such as if the captured piece is protected by a pawn: base on this
                  * kind of checkings we can give different levels of "goodness"? */
-                move.grade = 3000000 + value_piece[piece[dest]] - value_piece[piece[from]];
+                move.grade = 3000000 + valuePiece[piece[dest]] - valuePiece[piece[from]];
                 /* It isn't a bad capture, but if the captured piece is not protected
                  * by a pawn we give it an extra push */
-                if (!IsSqProtectedByAPawn(dest, Opponent(color[from])))
+                if (!isSqProtectedByAPawn(dest, opponent(color[from])))
                     move.grade += 1000;
             }
         }
@@ -268,28 +268,28 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                 switch (piece[from])
                 {
                 case PAWN:
-                    if (endGame())
-                        move.grade += pst_pawn_endgame[dest] - pst_pawn_endgame[from];
+                    if (isEndGame())
+                        move.grade += pstPawnEndgame[dest] - pstPawnEndgame[from];
                     else
-                        move.grade += pst_pawn_midgame[dest] - pst_pawn_midgame[from];
+                        move.grade += pstPawnMidgame[dest] - pstPawnMidgame[from];
                     break;
                 case KNIGHT:
-                    move.grade += mult*(pst_knight[dest] - pst_knight[from]);
+                    move.grade += mult*(pstKnight[dest] - pstKnight[from]);
                     break;
                 case BISHOP:
-                    move.grade += mult*(pst_bishop[dest] - pst_bishop[from]);
+                    move.grade += mult*(pstBishop[dest] - pstBishop[from]);
                     break;
                 case ROOK:
-                    move.grade += mult*(pst_rook[dest] - pst_rook[from]);
+                    move.grade += mult*(pstRook[dest] - pstRook[from]);
                     break;
                 case QUEEN:
-                    move.grade += mult*(pst_queen[dest] - pst_queen[from]);
+                    move.grade += mult*(pstQueen[dest] - pstQueen[from]);
                     break;
                 case KING:
-                    if (endGame())
-                        move.grade += mult*(pst_king_endgame[dest] - pst_king_endgame[from]);
+                    if (isEndGame())
+                        move.grade += mult*(pstKingEndgame[dest] - pstKingEndgame[from]);
                     else
-                        move.grade += mult*(pst_king_midgame[dest] - pst_king_midgame[from]);
+                        move.grade += mult*(pstKingMidgame[dest] - pstKingMidgame[from]);
                     break;
                 }
             }
@@ -298,50 +298,50 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                 switch (piece[from])
                 {
                 case PAWN:
-                    if (endGame())
-                        move.grade += pst_pawn_endgame[flip[dest]] - pst_pawn_endgame[flip[from]];
+                    if (isEndGame())
+                        move.grade += pstPawnEndgame[flip[dest]] - pstPawnEndgame[flip[from]];
                     else
-                        move.grade += pst_pawn_midgame[flip[dest]] - pst_pawn_midgame[flip[from]];
+                        move.grade += pstPawnMidgame[flip[dest]] - pstPawnMidgame[flip[from]];
                     break;
                 case KNIGHT:
-                    move.grade += mult*(pst_knight[flip[dest]] - pst_knight[flip[from]]);
+                    move.grade += mult*(pstKnight[flip[dest]] - pstKnight[flip[from]]);
                     break;
                 case BISHOP:
-                    move.grade += mult*(pst_bishop[flip[dest]] - pst_bishop[flip[from]]);
+                    move.grade += mult*(pstBishop[flip[dest]] - pstBishop[flip[from]]);
                     break;
                 case ROOK:
-                    move.grade += mult*(pst_rook[flip[dest]] - pst_rook[flip[from]]);
+                    move.grade += mult*(pstRook[flip[dest]] - pstRook[flip[from]]);
                     break;
                 case QUEEN:
-                    move.grade += mult*(pst_queen[flip[dest]] - pst_queen[flip[from]]);
+                    move.grade += mult*(pstQueen[flip[dest]] - pstQueen[flip[from]]);
                     break;
                 case KING:
-                    if (endGame())
-                        move.grade += mult*(pst_king_endgame[flip[dest]] - pst_king_endgame[flip[from]]);
+                    if (isEndGame())
+                        move.grade += mult*(pstKingEndgame[flip[dest]] - pstKingEndgame[flip[from]]);
                     else
-                        move.grade += mult*(pst_king_midgame[flip[dest]] - pst_king_midgame[flip[from]]);
+                        move.grade += mult*(pstKingMidgame[flip[dest]] - pstKingMidgame[flip[from]]);
                     break;
                 }
             }
 
             /* Are we placing a piece in a square defended by a pawn? Sounds like a bad idea */
-            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(dest, Opponent(color[from])) )
-                move.grade -= (value_piece[piece[from]]);
+            if  ( piece[from] != PAWN && isSqProtectedByAPawn(dest, opponent(color[from])) )
+                move.grade -= (valuePiece[piece[from]]);
 
             /* Is a piece being attacked by a pawn? Then we probably should move it */
-            if  ( piece[from] != PAWN && IsSqProtectedByAPawn(from, Opponent(color[from])) )
-                move.grade += 100*(value_piece[piece[from]]);
+            if  ( piece[from] != PAWN && isSqProtectedByAPawn(from, opponent(color[from])) )
+                move.grade += 100*(valuePiece[piece[from]]);
 
             else if  ( piece[from] == QUEEN || piece[from] == ROOK)
             {
-                if (IsSqProtectedByABishop(from, Opponent(color[from])))
-                    move.grade += (value_piece[piece[from]]);
-                else if (IsSqProtectedByAKnight(from, Opponent(color[from])) )
-                    move.grade += (value_piece[piece[from]]);
-                else if  ( IsSqProtectedByABishop(dest, Opponent(color[from])) )
-                    move.grade -= (value_piece[piece[from]]);
-                else if  (IsSqProtectedByAKnight(dest, Opponent(color[from])) )
-                    move.grade -= (value_piece[piece[from]]);
+                if (IsSqProtectedByABishop(from, opponent(color[from])))
+                    move.grade += (valuePiece[piece[from]]);
+                else if (IsSqProtectedByAKnight(from, opponent(color[from])) )
+                    move.grade += (valuePiece[piece[from]]);
+                else if  ( IsSqProtectedByABishop(dest, opponent(color[from])) )
+                    move.grade -= (valuePiece[piece[from]]);
+                else if  (IsSqProtectedByAKnight(dest, opponent(color[from])) )
+                    move.grade -= (valuePiece[piece[from]]);
             }
 
             /* Finally we use the history */
@@ -354,60 +354,60 @@ void Gen_Push(int from, int dest, int type, MOVE * pBuf, int *pMCount)
     *pMCount = *pMCount + 1;
 }
 
-void Gen_PushNormal(int from, int dest, MOVE * pBuf, int *pMCount)
+void genPushNormal(int from, int dest, MOVE * pBuf, int *pMCount)
 {
-    Gen_Push (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
+    genPush (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
 }
 
 /* Especial cases for Pawn */
 /* Pawn can promote */
-void Gen_PushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
+void genPushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
 {
     if (piece[dest] == EPS_SQ)
     {
-        Gen_Push (from, dest, MOVE_TYPE_EPS, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_EPS, pBuf, pMCount);
     }
     /* The 7 and 56 are to limit pawns to the 2nd through 7th ranks, which
      * means this isn't a promotion, i.e., a normal pawn move */
     else if (dest > 7 && dest < 56)
     {
-        Gen_Push (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
     }
     else				/* otherwise it's a promotion */
     {
-        Gen_Push (from, dest, MOVE_TYPE_PROMOTION_TO_QUEEN, pBuf, pMCount);
-        Gen_Push (from, dest, MOVE_TYPE_PROMOTION_TO_ROOK, pBuf, pMCount);
-        Gen_Push (from, dest, MOVE_TYPE_PROMOTION_TO_BISHOP, pBuf, pMCount);
-        Gen_Push (from, dest, MOVE_TYPE_PROMOTION_TO_KNIGHT, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_PROMOTION_TO_QUEEN, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_PROMOTION_TO_ROOK, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_PROMOTION_TO_BISHOP, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_PROMOTION_TO_KNIGHT, pBuf, pMCount);
     }
 }
 
 /* When a pawn moves two squares then appears the possibility of an en passant capture*/
-void Gen_PushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount)
+void genPushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount)
 {
-    Gen_Push (from, dest, MOVE_TYPE_PAWN_TWO, pBuf, pMCount);
+    genPush (from, dest, MOVE_TYPE_PAWN_TWO, pBuf, pMCount);
 }
 
 /* Especial cases for King */
-void Gen_PushKing(int from, int dest, MOVE * pBuf, int *pMCount)
+void genPushKing(int from, int dest, MOVE * pBuf, int *pMCount)
 {
     /* Is it a castle? */
     if (from == E1 && (dest == G1 || dest == C1))	/* this is a white castle */
     {
-        Gen_Push (from, dest, MOVE_TYPE_CASTLE, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_CASTLE, pBuf, pMCount);
     }
     else if (from == E8 && (dest == G8 || dest == C8))	/* this is a black castle */
     {
-        Gen_Push (from, dest, MOVE_TYPE_CASTLE, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_CASTLE, pBuf, pMCount);
     }
     else				/* otherwise it's a normal king's move */
     {
-        Gen_Push (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
+        genPush (from, dest, MOVE_TYPE_NORMAL, pBuf, pMCount);
     }
 }
 
 /* Gen all moves of current_side to move and push them to pBuf, and return number of moves */
-int GenMoves(int current_side, MOVE * pBuf)
+int genMoves(int current_side, MOVE * pBuf)
 {
     int i;			/* Counter for the board squares */
     int k;			/* Counter for cols */
@@ -430,44 +430,44 @@ int GenMoves(int current_side, MOVE * pBuf)
                 {
                     if (color[i + 8] == EMPTY)
                         /* Pawn advances one square.
-                         * We use Gen_PushPawn because it can be a promotion */
-                        Gen_PushPawn (i, i + 8, pBuf, &movecount);
+                         * We use genPushPawn because it can be a promotion */
+                        genPushPawn (i, i + 8, pBuf, &movecount);
                     if (row == 1 && color[i + 8] == EMPTY
                             && color[i + 16] == EMPTY)
                         /* Pawn advances two squares */
-                        Gen_PushPawnTwo (i, i + 16, pBuf, &movecount);
+                        genPushPawnTwo (i, i + 16, pBuf, &movecount);
                     if (col && color[i + 7] == WHITE)
                         /* Pawn captures and it can be a promotion */
-                        Gen_PushPawn (i, i + 7, pBuf, &movecount);
+                        genPushPawn (i, i + 7, pBuf, &movecount);
                     if (col < 7 && color[i + 9] == WHITE)
                         /* Pawn captures and can be a promotion */
-                        Gen_PushPawn (i, i + 9, pBuf, &movecount);
+                        genPushPawn (i, i + 9, pBuf, &movecount);
                         /* For en passant capture */
                     if (col && piece[i + 7] == EPS_SQ)
                         /* Pawn captures and it can be a promotion */
-                        Gen_PushPawn (i, i + 7, pBuf, &movecount);
+                        genPushPawn (i, i + 7, pBuf, &movecount);
                     if (col < 7 && piece[i + 9] == EPS_SQ)
                         /* Pawn captures and can be a promotion */
-                        Gen_PushPawn (i, i + 9, pBuf, &movecount);
+                        genPushPawn (i, i + 9, pBuf, &movecount);
                 }
                 else
                 {
                     if (color[i - 8] == EMPTY)
-                        Gen_PushPawn (i, i - 8, pBuf, &movecount);
+                        genPushPawn (i, i - 8, pBuf, &movecount);
                     /* Pawn moves 2 squares */
                     if (row == 6 && color[i - 8] == EMPTY
                             && color[i - 16] == EMPTY)
-                        Gen_PushPawnTwo (i, i - 16, pBuf, &movecount);
+                        genPushPawnTwo (i, i - 16, pBuf, &movecount);
                     /* For captures */
                     if (col && color[i - 9] == BLACK)
-                        Gen_PushPawn (i, i - 9, pBuf, &movecount);
+                        genPushPawn (i, i - 9, pBuf, &movecount);
                     if (col < 7 && color[i - 7] == BLACK)
-                        Gen_PushPawn (i, i - 7, pBuf, &movecount);
+                        genPushPawn (i, i - 7, pBuf, &movecount);
                     /* For en passant capture */
                     if (col && piece[i - 9] == EPS_SQ)
-                        Gen_PushPawn (i, i - 9, pBuf, &movecount);
+                        genPushPawn (i, i - 9, pBuf, &movecount);
                     if (col < 7 && piece[i - 7] == EPS_SQ)
-                        Gen_PushPawn (i, i - 7, pBuf, &movecount);
+                        genPushPawn (i, i - 7, pBuf, &movecount);
                 }
                 break;
 
@@ -477,28 +477,28 @@ int GenMoves(int current_side, MOVE * pBuf)
                 for (y = i - 9; y >= 0 && COL (y) != 7; y -= 9)
                 {   /* go left up */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
                 for (y = i - 7; y >= 0 && COL (y) != 0; y -= 7)
                 {   /* go right up */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
                 for (y = i + 9; y < 64 && COL (y) != 0; y += 9)
                 {   /* go right down */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
                 for (y = i + 7; y < 64 && COL (y) != 7; y += 7)
                 {   /* go left down */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
@@ -511,28 +511,28 @@ int GenMoves(int current_side, MOVE * pBuf)
                 for (k = i - col, y = i - 1; y >= k; y--)
                 {   /* go left */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
                 for (k = i - col + 7, y = i + 1; y <= k; y++)
                 {   /* go right */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
                 for (y = i - 8; y >= 0; y -= 8)
                 {   /* go up */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
                 for (y = i + 8; y < 64; y += 8)
                 {   /* go down */
                     if (color[y] != current_side)
-                        Gen_PushNormal (i, y, pBuf, &movecount);
+                        genPushNormal (i, y, pBuf, &movecount);
                     if (color[y] != EMPTY)
                         break;
                 }
@@ -542,28 +542,28 @@ int GenMoves(int current_side, MOVE * pBuf)
                 col = COL (i);
                 y = i - 6;
                 if (y >= 0 && col < 6 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i - 10;
                 if (y >= 0 && col > 1 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i - 15;
                 if (y >= 0 && col < 7 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i - 17;
                 if (y >= 0 && col > 0 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i + 6;
                 if (y < 64 && col > 1 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i + 10;
                 if (y < 64 && col < 6 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i + 15;
                 if (y < 64 && col > 0 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 y = i + 17;
                 if (y < 64 && col < 7 && color[y] != current_side)
-                    Gen_PushNormal (i, y, pBuf, &movecount);
+                    genPushNormal (i, y, pBuf, &movecount);
                 break;
 
             case KING:
@@ -571,21 +571,21 @@ int GenMoves(int current_side, MOVE * pBuf)
                 /* The 'normal' moves */
                 col = COL (i);
                 if (col && color[i - 1] != current_side)
-                    Gen_PushKing (i, i - 1, pBuf, &movecount);	/* left */
+                    genPushKing (i, i - 1, pBuf, &movecount);	/* left */
                 if (col < 7 && color[i + 1] != current_side)
-                    Gen_PushKing (i, i + 1, pBuf, &movecount);	/* right */
+                    genPushKing (i, i + 1, pBuf, &movecount);	/* right */
                 if (i > 7 && color[i - 8] != current_side)
-                    Gen_PushKing (i, i - 8, pBuf, &movecount);	/* up */
+                    genPushKing (i, i - 8, pBuf, &movecount);	/* up */
                 if (i < 56 && color[i + 8] != current_side)
-                    Gen_PushKing (i, i + 8, pBuf, &movecount);	/* down */
+                    genPushKing (i, i + 8, pBuf, &movecount);	/* down */
                 if (col && i > 7 && color[i - 9] != current_side)
-                    Gen_PushKing (i, i - 9, pBuf, &movecount);	/* left up */
+                    genPushKing (i, i - 9, pBuf, &movecount);	/* left up */
                 if (col < 7 && i > 7 && color[i - 7] != current_side)
-                    Gen_PushKing (i, i - 7, pBuf, &movecount);	/* right up */
+                    genPushKing (i, i - 7, pBuf, &movecount);	/* right up */
                 if (col && i < 56 && color[i + 7] != current_side)
-                    Gen_PushKing (i, i + 7, pBuf, &movecount);	/* left down */
+                    genPushKing (i, i + 7, pBuf, &movecount);	/* left down */
                 if (col < 7 && i < 56 && color[i + 9] != current_side)
-                    Gen_PushKing (i, i + 9, pBuf, &movecount);	/* right down */
+                    genPushKing (i, i + 9, pBuf, &movecount);	/* right down */
 
                 /* The castle moves */
                 if (current_side == WHITE)
@@ -597,11 +597,11 @@ int GenMoves(int current_side, MOVE * pBuf)
                         if (col &&
                                 color[i + 1] == EMPTY &&
                                 color[i + 2] == EMPTY &&
-                                !IsInCheck (current_side) &&
-                                !IsAttacked (current_side, i + 1))
+                                !isInCheck (current_side) &&
+                                !isAttacked (current_side, i + 1))
                         {
                             /* The king goes 2 sq to the left */
-                            Gen_PushKing (i, i + 2, pBuf, &movecount);
+                            genPushKing (i, i + 2, pBuf, &movecount);
                         }
                     }
 
@@ -612,11 +612,11 @@ int GenMoves(int current_side, MOVE * pBuf)
                                 color[i - 1] == EMPTY &&
                                 color[i - 2] == EMPTY &&
                                 color[i - 3] == EMPTY &&
-                                !IsInCheck (current_side) &&
-                                !IsAttacked (current_side, i - 1))
+                                !isInCheck (current_side) &&
+                                !isAttacked (current_side, i - 1))
                         {
                             /* The king goes 2 sq to the left */
-                            Gen_PushKing (i, i - 2, pBuf, &movecount);
+                            genPushKing (i, i - 2, pBuf, &movecount);
                         }
                     }
                 }
@@ -630,11 +630,11 @@ int GenMoves(int current_side, MOVE * pBuf)
                                 color[i + 1] == EMPTY &&
                                 color[i + 2] == EMPTY &&
                                 piece[i + 3] == ROOK &&
-                                !IsInCheck (current_side) &&
-                                !IsAttacked (current_side, i + 1))
+                                !isInCheck (current_side) &&
+                                !isAttacked (current_side, i + 1))
                         {
                             /* The king goes 2 sq to the left */
-                            Gen_PushKing (i, i + 2, pBuf, &movecount);
+                            genPushKing (i, i + 2, pBuf, &movecount);
                         }
                     }
                     /* Can black long castle? */
@@ -645,11 +645,11 @@ int GenMoves(int current_side, MOVE * pBuf)
                                 color[i - 2] == EMPTY &&
                                 color[i - 3] == EMPTY &&
                                 piece[i - 4] == ROOK &&
-                                !IsInCheck (current_side) &&
-                                !IsAttacked (current_side, i - 1))
+                                !isInCheck (current_side) &&
+                                !isAttacked (current_side, i - 1))
                         {
                             /* The king goes 2 sq to the left */
-                            Gen_PushKing (i, i - 2, pBuf, &movecount);
+                            genPushKing (i, i - 2, pBuf, &movecount);
                         }
                     }
                 }
@@ -664,7 +664,7 @@ int GenMoves(int current_side, MOVE * pBuf)
 
 /* Gen all captures of current_side to move and push them to pBuf, return number of moves
  * It's necessary at least in order to use quiescent in the search */
-int GenCaps(int current_side, MOVE * pBuf)
+int genCaps(int current_side, MOVE * pBuf)
 {
     int i;			/* Counter for the board squares */
     int k;			/* Counter for cols */
@@ -673,7 +673,7 @@ int GenCaps(int current_side, MOVE * pBuf)
     int col;
     int capscount;		/* Counter for the possible captures */
     int xside;
-    xside = Opponent(current_side);
+    xside = opponent(current_side);
     capscount = 0;
 
     for (i = 0; i < 64; i++)	/* Scan all board */
@@ -691,38 +691,38 @@ int GenCaps(int current_side, MOVE * pBuf)
                      * not overlook promotions */
                     if (row > 7 && color[i + 8] == EMPTY)
                         /* Pawn advances one square.
-                         * We use Gen_PushPawn because it can be a promotion */
-                        Gen_PushPawn (i, i + 8, pBuf, &capscount);
+                         * We use genPushPawn because it can be a promotion */
+                        genPushPawn (i, i + 8, pBuf, &capscount);
                     if (col && color[i + 7] == WHITE)
                         /* Pawn captures and it can be a promotion */
-                        Gen_PushPawn (i, i + 7, pBuf, &capscount);
+                        genPushPawn (i, i + 7, pBuf, &capscount);
                     if (col < 7 && color[i + 9] == WHITE)
                         /* Pawn captures and can be a promotion */
-                        Gen_PushPawn (i, i + 9, pBuf, &capscount);
+                        genPushPawn (i, i + 9, pBuf, &capscount);
                     /* For en passant capture */
                     if (col && piece[i + 7] == EPS_SQ)
                         /* Pawn captures and it can be a promotion */
-                        Gen_PushPawn (i, i + 7, pBuf, &capscount);
+                        genPushPawn (i, i + 7, pBuf, &capscount);
                     if (col < 7 && piece[i + 9] == EPS_SQ)
                         /* Pawn captures and can be a promotion */
-                        Gen_PushPawn (i, i + 9, pBuf, &capscount);
+                        genPushPawn (i, i + 9, pBuf, &capscount);
                 }
                 else if (current_side == WHITE)
                 {
                     if (row < 2 && color[i - 8] == EMPTY)
                         /* This isn't a capture, but it's necesary in order to
                          * not overlook promotions */
-                        Gen_PushPawn (i, i - 8, pBuf, &capscount);
+                        genPushPawn (i, i - 8, pBuf, &capscount);
                     /* For captures */
                     if (col && color[i - 9] == BLACK)
-                        Gen_PushPawn (i, i - 9, pBuf, &capscount);
+                        genPushPawn (i, i - 9, pBuf, &capscount);
                     if (col < 7 && color[i - 7] == BLACK)
-                        Gen_PushPawn (i, i - 7, pBuf, &capscount);
+                        genPushPawn (i, i - 7, pBuf, &capscount);
                     /* For en passant capture */
                     if (col && piece[i - 9] == EPS_SQ)
-                        Gen_PushPawn (i, i - 9, pBuf, &capscount);
+                        genPushPawn (i, i - 9, pBuf, &capscount);
                     if (col < 7 && piece[i - 7] == EPS_SQ)
-                        Gen_PushPawn (i, i - 7, pBuf, &capscount);
+                        genPushPawn (i, i - 7, pBuf, &capscount);
                 }
                 break;
 
@@ -730,28 +730,28 @@ int GenCaps(int current_side, MOVE * pBuf)
                 col = COL (i);
                 y = i - 6;
                 if (y >= 0 && col < 6 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i - 10;
                 if (y >= 0 && col > 1 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i - 15;
                 if (y >= 0 && col < 7 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i - 17;
                 if (y >= 0 && col > 0 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i + 6;
                 if (y < 64 && col > 1 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i + 10;
                 if (y < 64 && col < 6 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i + 15;
                 if (y < 64 && col > 0 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 y = i + 17;
                 if (y < 64 && col < 7 && color[y] == xside)
-                    Gen_PushNormal (i, y, pBuf, &capscount);
+                    genPushNormal (i, y, pBuf, &capscount);
                 break;
 
             case QUEEN:		/* == BISHOP+ROOK */
@@ -762,7 +762,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -771,7 +771,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -780,7 +780,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -789,7 +789,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -804,7 +804,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -813,7 +813,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -822,7 +822,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -831,7 +831,7 @@ int GenCaps(int current_side, MOVE * pBuf)
                     if (color[y] != EMPTY)
                     {
                         if (color[y] != current_side)
-                            Gen_PushNormal (i, y, pBuf, &capscount);
+                            genPushNormal (i, y, pBuf, &capscount);
                         break;
                     }
                 }
@@ -841,21 +841,21 @@ int GenCaps(int current_side, MOVE * pBuf)
                 /* the column and rank checks are to make sure it is on the board */
                 col = COL (i);
                 if (col && color[i - 1] == xside)
-                    Gen_PushKing (i, i - 1, pBuf, &capscount);	/* left */
+                    genPushKing (i, i - 1, pBuf, &capscount);	/* left */
                 if (col < 7 && color[i + 1] == xside)
-                    Gen_PushKing (i, i + 1, pBuf, &capscount);	/* right */
+                    genPushKing (i, i + 1, pBuf, &capscount);	/* right */
                 if (i > 7 && color[i - 8] == xside)
-                    Gen_PushKing (i, i - 8, pBuf, &capscount);	/* up */
+                    genPushKing (i, i - 8, pBuf, &capscount);	/* up */
                 if (i < 56 && color[i + 8] == xside)
-                    Gen_PushKing (i, i + 8, pBuf, &capscount);	/* down */
+                    genPushKing (i, i + 8, pBuf, &capscount);	/* down */
                 if (col && i > 7 && color[i - 9] == xside)
-                    Gen_PushKing (i, i - 9, pBuf, &capscount);	/* left up */
+                    genPushKing (i, i - 9, pBuf, &capscount);	/* left up */
                 if (col < 7 && i > 7 && color[i - 7] == xside)
-                    Gen_PushKing (i, i - 7, pBuf, &capscount);	/* right up */
+                    genPushKing (i, i - 7, pBuf, &capscount);	/* right up */
                 if (col && i < 56 && color[i + 7] == xside)
-                    Gen_PushKing (i, i + 7, pBuf, &capscount);	/* left down */
+                    genPushKing (i, i + 7, pBuf, &capscount);	/* left down */
                 if (col < 7 && i < 56 && color[i + 9] == xside)
-                    Gen_PushKing (i, i + 9, pBuf, &capscount);	/* right down */
+                    genPushKing (i, i + 9, pBuf, &capscount);	/* right down */
                 break;
 //                               default:
 //                               printf("Piece type unknown");
@@ -867,7 +867,7 @@ int GenCaps(int current_side, MOVE * pBuf)
 
 /* Check if current side is in check. Necessary in order to check legality of moves
  and check if castle is allowed */
-int IsInCheck(int current_side)
+int isInCheck(int current_side)
 {
     int k;			/* The square where the king is placed */
 
@@ -876,20 +876,20 @@ int IsInCheck(int current_side)
         if ((piece[k] == KING) && color[k] == current_side)
             break;
 
-    /* Use IsAttacked in order to know if current_side is under check */
-    return IsAttacked (current_side, k);
+    /* Use isAttacked in order to know if current_side is under check */
+    return isAttacked (current_side, k);
 }
 
 /* Check and return 1 if square k is attacked by current_side, 0 otherwise. Necessary, vg, to check
  * castle rules (if king goes from e1 to g1, f1 can't be attacked by an enemy piece) */
-int IsAttacked(int current_side, int k)
+int isAttacked(int current_side, int k)
 {
     int h;
     int y;
     int row;			/* ROW where the square is placed */
     int col;			/* COL where the square is placed */
     int xside;
-    xside = Opponent(current_side);	/* opposite current_side, who may be attacking */
+    xside = opponent(current_side);	/* opposite current_side, who may be attacking */
 
     /* Situation of the square */
     row = ROW (k);
@@ -1070,11 +1070,11 @@ int IsAttacked(int current_side, int k)
     return 0;
 }
 
-int MakeMove(MOVE m)
+int makeMove(MOVE m)
 {
     int r;
 
-    count_MakeMove++;
+    countMakeMove++;
 
     int typeOfMove = m.type_of_move;
 //    if (typeOfMove > 8)
@@ -1215,7 +1215,7 @@ int MakeMove(MOVE m)
     hdp++;
 
     /* Update the castle rights */
-    castle &= castle_mask[m.from] & castle_mask[m.dest];
+    castle &= castleMask[m.from] & castleMask[m.dest];
 
     /* Update the counting for the 50 moves rule */
     if ((piece[m.dest] == PAWN) || (hist[hdp].cap != EMPTY))
@@ -1224,21 +1224,21 @@ int MakeMove(MOVE m)
        fifty++;
 
     /* Checking if after making the move we're in check */
-    r = !IsInCheck (side);
+    r = !isInCheck (side);
 
     /* After making move, give turn to opponent */
-    side = Opponent(side);
+    side = opponent(side);
 
     /* Get hash.key for the current position */
-    hash_key_position();
+    hashKeyPosition();
 
     return r;
 }
 
-/* Undo what MakeMove did */
-void TakeBack()
+/* Undo what makeMove did */
+void takeBack()
 {
-    side = Opponent(side);
+    side = opponent(side);
     hdp--;
     ply--;
 
@@ -1358,14 +1358,14 @@ void TakeBack()
     hash.key = hist[hdp].hashhist;
 }
 
-void testIsSqProtectedByAPawn()
+void testisSqProtectedByAPawn()
 {
     int i, j;
     for (i=0; i < 64; i++)
     {
         for (j = WHITE; j <= BLACK; j++)
         {
-            if ( IsSqProtectedByAPawn(i, j) )
+            if ( isSqProtectedByAPawn(i, j) )
                 printf ("Square %d is protected by pawn of side %d \n", i, j);
         }
     }

@@ -1,51 +1,49 @@
 /* Just a copy of data.c */
 #include <time.h>
 
-//MOVE bestMove;
-
 /* 64 bit integers */
 typedef unsigned long long U64;
 
-extern clock_t max_time;
-extern clock_t total_time;
-extern clock_t stop_time;
-extern clock_t half_time;
-extern int must_stop;
+extern clock_t maxTime;
+extern clock_t totalTime;
+extern clock_t stopTime;
+extern clock_t halfTime;
+extern int mustStop;
 
 extern int history[64][64];
 extern int castle;
-extern int castle_mask[64];
+extern int castleMask[64];
 extern int hdp;
 extern int ply;
 extern U64 nodes;
-extern U64 count_evaluations;
-extern int count_checks;
-extern U64 count_MakeMove;
+extern U64 countEvaluations;
+extern int countChecks;
+extern U64 countMakeMove;
 extern U64 countquiesCalls;
 extern U64 countCapCalls;
 extern U64 countSearchCalls;
-extern int value_piece[6];
+extern int valuePiece[6];
 extern HISTO hist[6000];
 extern int piece[64];
 extern int color[64];
-extern int init_color[64];
-extern int init_piece[64];
+extern int initColor[64];
+extern int initPiece[64];
 extern int side;
-extern int computer_side;
-extern int max_depth;
-extern int pst_pawn_midgame[64];
-extern int pst_pawn_endgame[64];
-extern int pst_knight[64];
-extern int pst_bishop[64];
-extern int pst_rook[64];
-extern int pst_queen[64];
-extern int pst_king_midgame[64];
-extern int pst_king_endgame[64];
+extern int computerSide;
+extern int maxDepth;
+extern int pstPawnMidgame[64];
+extern int pstPawnEndgame[64];
+extern int pstKnight[64];
+extern int pstBishop[64];
+extern int pstRook[64];
+extern int pstQueen[64];
+extern int pstKingMidgame[64];
+extern int pstKingEndgame[64];
 extern int flip[64];
 /* The king distance vars */
-extern int qk_dist[64][64];
-extern int rk_dist[64][64];
-extern int nk_dist[64][64];
-extern int bk_dist[64][64];
+extern int qkDist[64][64];
+extern int rkDist[64][64];
+extern int nkDist[64][64];
+extern int bkDist[64][64];
 /* Contador para la regla de los 50 movimientos */
 extern int fifty;

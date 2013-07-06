@@ -69,7 +69,7 @@ int rooks[2] = {0};
 int queens[2] = {0};
 
 /* The evaluation function */
-int Eval(int alpha, int beta)
+int eval(int alpha, int beta)
 {
     /* A traditional counter */
     int i;
@@ -98,7 +98,7 @@ int Eval(int alpha, int beta)
     rooks[BLACK] = 0;
     queens[BLACK] = 0;
 
-    count_evaluations++;
+    countEvaluations++;
 
     /* The score of the position */
     int score = 0;
@@ -172,14 +172,14 @@ int Eval(int alpha, int beta)
 
 
     /* After counting the material we update the score */
-    score = (pawns[WHITE]   - pawns[BLACK])   *  value_piece[PAWN] +
-            (knights[WHITE] - knights[BLACK]) *  value_piece[KNIGHT] +
-            (bishops[WHITE] - bishops[BLACK]) *  value_piece[BISHOP] +
-            (rooks[WHITE]   - rooks[BLACK])   *  value_piece[ROOK] +
-            (queens[WHITE]  - queens[BLACK])  *  value_piece[QUEEN];
+    score = (pawns[WHITE]   - pawns[BLACK])   *  valuePiece[PAWN] +
+            (knights[WHITE] - knights[BLACK]) *  valuePiece[KNIGHT] +
+            (bishops[WHITE] - bishops[BLACK]) *  valuePiece[BISHOP] +
+            (rooks[WHITE]   - rooks[BLACK])   *  valuePiece[ROOK] +
+            (queens[WHITE]  - queens[BLACK])  *  valuePiece[QUEEN];
 
     /* Is there enough material to keep on playing? */
-    if (NoMaterial()) return 0;
+    if (noMaterial()) return 0;
 
     /* Does Anyone have the pair of bishops? */
     if (bishops[WHITE] == 2 && bishops[BLACK] != 2)
@@ -188,7 +188,7 @@ int Eval(int alpha, int beta)
         score -= PAIR_BISHOPS;
 
     /* Trying the lazy eval */
-    if (!endGame())
+    if (!isEndGame())
         {
         int lazy = score;
         if (side == BLACK) lazy = -lazy;
@@ -213,23 +213,23 @@ int Eval(int alpha, int beta)
                     score += passedPawnBonus[WHITE][ROW(i)];
                 if (isIsolatedPawnWhite(i))
                     score += ISOLATED_PAWN_MALUS;
-                if (endGame())
-                    score += pst_pawn_endgame[i];
+                if (isEndGame())
+                    score += pstPawnEndgame[i];
                 else
-                    score += pst_pawn_midgame[i];
+                    score += pstPawnMidgame[i];
                 break;
             case KNIGHT:
-                score += pst_knight[i];
-                score += mobKnight[KnightMobility(i)];
+                score += pstKnight[i];
+                score += mobKnight[knightMobility(i)];
                 break;
             case BISHOP:
-                score += pst_bishop[i];
-                score += mobBishop[BishopMobility(i)];
-                score += rangeBishop[BishopRange(i)];
+                score += pstBishop[i];
+                score += mobBishop[bishopMobility(i)];
+                score += rangeBishop[bishopRange(i)];
                 break;
             case ROOK:
-                score += pst_rook[i];
-                score += mobRook[RookMobility(i)];
+                score += pstRook[i];
+                score += mobRook[rookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score += ROOK_OPEN_COL;
@@ -246,15 +246,15 @@ int Eval(int alpha, int beta)
                 }
                 break;
             case QUEEN:
-                score += pst_queen[i];
+                score += pstQueen[i];
                 break;
             case KING:
-                if (endGame())
-                    score += pst_king_endgame[i];
+                if (isEndGame())
+                    score += pstKingEndgame[i];
                 else
                 {
 //                    score += wKingShelter(i);
-                    score += pst_king_midgame[i];
+                    score += pstKingMidgame[i];
                 }
                 break;
             }
@@ -272,23 +272,23 @@ int Eval(int alpha, int beta)
                     score -= passedPawnBonus[BLACK][ROW(i)];
                 if (isIsolatedPawnBlack(i))
                     score -= ISOLATED_PAWN_MALUS;
-                if (endGame())
-                    score -= pst_pawn_endgame[flip[i]];
+                if (isEndGame())
+                    score -= pstPawnEndgame[flip[i]];
                 else
-                    score -= pst_pawn_midgame[flip[i]];
+                    score -= pstPawnMidgame[flip[i]];
                 break;
             case KNIGHT:
-                score -= pst_knight[flip[i]];
-                score -= mobKnight[KnightMobility(i)];
+                score -= pstKnight[flip[i]];
+                score -= mobKnight[knightMobility(i)];
                 break;
             case BISHOP:
-                score -= pst_bishop[flip[i]];
-                score -= mobBishop[BishopMobility(i)];
-                score -= rangeBishop[BishopRange(i)];
+                score -= pstBishop[flip[i]];
+                score -= mobBishop[bishopMobility(i)];
+                score -= rangeBishop[bishopRange(i)];
                 break;
             case ROOK:
-                score -= pst_rook[flip[i]];
-                score -= mobRook[RookMobility(i)];
+                score -= pstRook[flip[i]];
+                score -= mobRook[rookMobility(i)];
                 /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score -= ROOK_OPEN_COL;
@@ -305,15 +305,15 @@ int Eval(int alpha, int beta)
                 }
                 break;
             case QUEEN:
-                score -= pst_queen[flip[i]];
+                score -= pstQueen[flip[i]];
                 break;
             case KING:
-                if (endGame())
-                    score -= pst_king_endgame[flip[i]];
+                if (isEndGame())
+                    score -= pstKingEndgame[flip[i]];
                 else
                 {
 //                    score -= bKingShelter(i);
-                    score -= pst_king_midgame[flip[i]];
+                    score -= pstKingMidgame[flip[i]];
                 }
                 break;
             }
@@ -326,7 +326,7 @@ int Eval(int alpha, int beta)
 
 //    ff = funFactor();
 
-//    if (side == computer_side)
+//    if (side == computerSide)
 //    {
 //        if (side == WHITE)
 //            return (score + ff + ADV_TURN_TO_MOVE);
@@ -466,7 +466,7 @@ int isIsolatedPawnBlack(int sq)
 
 
 /* Are we in the endgame? */
-int endGame()
+int isEndGame()
 {
     if (queens[WHITE]==0 || queens[BLACK]==0)
         return 1;
@@ -487,7 +487,7 @@ inline int isOnAnOpenCol(int sq)
 
 /* Mobility of the bishop: number of empty squares a bishop can reach
  * from its current position */
-int BishopMobility(int sq)
+int bishopMobility(int sq)
 {
     int l;
     int mob = 0;
@@ -507,7 +507,7 @@ int BishopMobility(int sq)
 }
 
 /* Range of the bishop: The squares untill reaching a pawn no matter its color */
-int BishopRange(int sq)
+int bishopRange(int sq)
 {
     int l;
     int range = 0;
@@ -526,7 +526,7 @@ int BishopRange(int sq)
     return range;
 }
 
-int KnightMobility(int sq)
+int knightMobility(int sq)
 {
     int l;
     int mob = 0;
@@ -556,7 +556,7 @@ int KnightMobility(int sq)
     return mob;
 }
 
-int RookMobility(int sq)
+int rookMobility(int sq)
 {
     int l;
     int mob = 0;
@@ -574,7 +574,7 @@ int RookMobility(int sq)
 }
 
 /* Returns 1 if no enough material on the board */
-int NoMaterial()
+int noMaterial()
 {
     if (pawns[WHITE] == 0 && pawns[BLACK] == 0)
         if (rooks[WHITE] == 0 && rooks[BLACK] == 0)
@@ -599,7 +599,7 @@ int NoMaterial()
 //    int funfa = 0;
 
 //    /* If we aren't in the endgame we like opposite castles */
-//    if ( !endGame() && (abs(colWhiteKing - colBlackKing) > 4) )
+//    if ( !isEndGame() && (abs(colWhiteKing - colBlackKing) > 4) )
 //        funfa += 10;
 //    /* We like queens on the board */
 //    if (queens[WHITE] >= 1 || queens[BLACK] >= 1)

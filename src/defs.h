@@ -171,6 +171,5 @@ typedef struct tag_LINE
    MOVE argmove[50];
 } LINE;
 
-
 /* Triple repeticion */
 HASH hash;

@@ -16,7 +16,7 @@ struct timezone tz;
  */
 
 void
-PrintBoard ()
+printBoard ()
 {
     char pieceName[] = "PNBRQKpnbrqk";
     int i;
@@ -70,34 +70,34 @@ perft (int depth)
     MOVE moveBuf[200];		/* List of movements */
 
     /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
+    movecnt = genMoves (side, moveBuf);
 
     /* Once we have all the moves available, we loop through them */
     for (i = 0; i < movecnt; ++i)
     {
         /* Not a legal move? Then we unmake it and continue to the next one in the list */
-        if (!MakeMove (moveBuf[i]))
+        if (!makeMove (moveBuf[i]))
         {
-            TakeBack ();
+            takeBack ();
             continue;
         }
 
         /* Just in case we want to take count of checks */
 //        if (IsInCheck(side))
 //        {
-//            count_checks++;
+//            countChecks++;
 //        }
 
         /* This 'if' takes us to the deep of the position */
         nodes += perft (depth - 1);
-        TakeBack ();
+        takeBack ();
     }
 
     return nodes;
 }
 
-/*get_ms() nos indica la hora actual en milisegundos desde el 1 de enero de 1970*/
-int get_ms()
+/*getMs() nos indica la hora actual en milisegundos desde el 1 de enero de 1970*/
+int getMs()
 {
 	gettimeofday (&tv, &tz);
 	return(tv.tv_sec * 1000 + (tv.tv_usec / 1000));

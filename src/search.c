@@ -18,16 +18,16 @@ MOVE ComputerThink(int m_depth)
     memset(history, 0, sizeof(history));
 
     /* Time management */
-    int start_time = get_ms();
-    stop_time = start_time + max_time;
-    half_time = start_time + 0.5 * max_time;
+    int start_time = getMs();
+    stopTime = start_time + maxTime;
+    halfTime = start_time + 0.5 * maxTime;
 
     for (i = 1; i <= m_depth; ++i)
     {
         /* Reset some values before searching */
         ply = 0;
-        count_evaluations = 0;
-        count_MakeMove = 0;
+        countEvaluations = 0;
+        countMakeMove = 0;
         countquiesCalls = 0;
         countCapCalls = 0;
         countSearchCalls = 0;
@@ -41,18 +41,18 @@ MOVE ComputerThink(int m_depth)
         start = clock ();
 
         /* Search now! */
-        score = Search (-MATE, MATE, i, &m, &pline);
+        score = search (-MATE, MATE, i, &m, &pline);
 
         /* If we've searched for a certain percentage of the available time it
         doesn't make sense to start a new ply, so we call it a day */
-//        checkup(half_time);
+//        checkup(halfTime);
 
 
         /* Aqui debe ir el 'if' que hace un break si nos quedamos sin tiempo.
            Tomado de Darky */
-        if (must_stop)
+        if (mustStop)
         {
-            must_stop = 0;
+            mustStop = 0;
             fflush(stdout);
             break;
         }
@@ -123,7 +123,7 @@ MOVE ComputerThink(int m_depth)
  ****************************************************************************
  */
 
-int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
+int search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 {
     /* Vars deffinition */
     int i;
@@ -140,8 +140,8 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
-        checkup(stop_time);
-    if (must_stop)
+        checkup(stopTime);
+    if (mustStop)
         return 0;
 
     havemove = 0;		/* is there a move available? */
@@ -151,18 +151,18 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     if (depth == 0)
     {
        pline->cmove = 0;
-       return Quiescent(alpha, beta);
+       return quiescent(alpha, beta);
     }
 
     //    /* If we're in check maybe we want to search deeper */
-        if (depth < max_depth - 2 && IsInCheck(side))
+        if (depth < maxDepth - 2 && isInCheck(side))
             ++depth;
 
     /* Generate and count all moves for current position */
-    movecnt = GenMoves (side, moveBuf);
+    movecnt = genMoves (side, moveBuf);
 
 //    /* If we're in check maybe we want to search deeper */
-//    if (depth < max_depth - 2 && IsInCheck(side))
+//    if (depth < maxDepth - 2 && isInCheck(side))
 //        ++depth;
 
     /* Once we have all the moves available, we loop through the possible
@@ -171,24 +171,24 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     {
         /* Here must be called OrderMove, so the moves are ordered before
         picking one up from the list*/
-        MoveOrder(i, movecnt, moveBuf);
+        moveOrder(i, movecnt, moveBuf);
 
         /* If the current move isn't legal, we take it back
          * and take the next move in the list */
-        if (!MakeMove (moveBuf[i]))
+        if (!makeMove (moveBuf[i]))
         {
-            TakeBack ();
+            takeBack ();
             continue;
         }
 
         /* If we've reached this far, then we have a move available */
         havemove = 1;
 
-        value = -Search(-beta, -alpha, depth - 1, &tmpMove, &line);
+        value = -search(-beta, -alpha, depth - 1, &tmpMove, &line);
 
         /* We've evaluated the position, so we return to the previous position in such a way
            that when we take the next move from moveBuf everything is in order */
-        TakeBack ();
+        takeBack ();
 
         /* Once we have an evaluation, we use it in an alpha-beta search */
         if (value > alpha)
@@ -217,7 +217,7 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
      * then that's checkmate or stalemate */
     if (!havemove)
     {
-        if (IsInCheck (side))
+        if (isInCheck (side))
             return -MATE + ply;	/* add ply to find the longest path to lose or shortest path to win */
         else
             return 0;
@@ -234,7 +234,7 @@ int Search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     return alpha;
 }
 
-int Quiescent(int alpha, int beta)
+int quiescent(int alpha, int beta)
 {
     int i;
     int legal = 0;
@@ -247,12 +247,12 @@ int Quiescent(int alpha, int beta)
     countquiesCalls++;
     nodes++;
 
-    int is_in_check = IsInCheck(side);
+    int is_in_check = isInCheck(side);
 
     /* Do some housekeeping every 1024 nodes */
     if ((nodes & 1023) == 0)
-        checkup(stop_time);
-    if (must_stop)
+        checkup(stopTime);
+    if (mustStop)
         return 0;
 
     if (reps() >= 2)
@@ -262,12 +262,12 @@ int Quiescent(int alpha, int beta)
     /* We generate the moves deppending either we are in check or not */
     if (is_in_check)
     {
-        movescnt = GenMoves(side, qMovesBuf);
+        movescnt = genMoves(side, qMovesBuf);
         countCapCalls++;
     }
     else
     {
-        best = Eval(alpha, beta);
+        best = eval(alpha, beta);
         // --- stand pat cutoff?
 
         if (best > alpha)
@@ -277,7 +277,7 @@ int Quiescent(int alpha, int beta)
             alpha = best;
         }
 
-        movescnt = GenCaps (side, qMovesBuf);
+        movescnt = genCaps (side, qMovesBuf);
         countCapCalls++;
     }
 
@@ -288,26 +288,26 @@ int Quiescent(int alpha, int beta)
         if (!is_in_check && qMovesBuf[i].type_of_move < MOVE_TYPE_PROMOTION_TO_QUEEN)
         {
             /* if bad capture we are done */
-            if (BadCapture(qMovesBuf[i])) continue;
+            if (badCapture(qMovesBuf[i])) continue;
         }
 
-        MoveOrder(i, movescnt, qMovesBuf);
+        moveOrder(i, movescnt, qMovesBuf);
 
-        if (!MakeMove (qMovesBuf[i]))
+        if (!makeMove (qMovesBuf[i]))
         {
             /* If the current move isn't legal, we take it back
              * and take the next move in the list */
-            TakeBack ();
+            takeBack ();
             continue;
         }
 
         /* If we're here then tehre's at least one legal move */
         legal = 1;
 
-        score = -Quiescent (-beta, -alpha);
-        TakeBack ();
+        score = -quiescent (-beta, -alpha);
+        takeBack ();
 
-        if (must_stop)
+        if (mustStop)
             return 0;
 
         if (score >= beta)
@@ -323,7 +323,7 @@ int Quiescent(int alpha, int beta)
     return alpha;
 }
 
-void MoveOrder(int init, int movecounter, MOVE *orderMovesBuf)
+void moveOrder(int init, int movecounter, MOVE *orderMovesBuf)
 {
     int i = 0;
     int aux = 0;
@@ -350,12 +350,12 @@ void MoveOrder(int init, int movecounter, MOVE *orderMovesBuf)
 }
 
 /* checkup() is called once in a while during the search. */
-void checkup(clock_t stoping_time)
+void checkup(clock_t stopping_time)
 {
-    must_stop = 0;
-    if (get_ms() >= stoping_time)
+    mustStop = 0;
+    if (getMs() >= stopping_time)
     {
-        must_stop = 1;
+        mustStop = 1;
     }
 }
 

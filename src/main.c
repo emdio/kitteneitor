@@ -14,18 +14,18 @@ void startgame()
     int i;
     for (i = 0; i < 64; ++i)
     {
-        piece[i] = init_piece[i];
-        color[i] = init_color[i];
+        piece[i] = initPiece[i];
+        color[i] = initColor[i];
     }
 
 //    setDistToKing();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 15;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test1()
@@ -61,11 +61,11 @@ void test1()
 //    setDistToKing();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 15;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test2()
@@ -101,11 +101,11 @@ void test2()
 //    setDistToKing();
 
     side = BLACK;
-    computer_side = WHITE;	/* Human is black side */
+    computerSide = WHITE;	/* Human is black side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test3()
@@ -141,11 +141,11 @@ void test3()
 //    /*setDistToKing*/();
 
     side = BLACK;
-    computer_side = WHITE;	/* Human is black side */
+    computerSide = WHITE;	/* Human is black side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test4()
@@ -181,11 +181,11 @@ void test4()
 //    /*setDistToKing*/();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test5()
@@ -221,11 +221,11 @@ void test5()
 //    /*setDistToKing*/();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test6()
@@ -267,11 +267,11 @@ void test6()
 //    /*setDistToKing*/();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test7()
@@ -313,11 +313,11 @@ void test7()
 //    /*setDistToKing*/();
 
     side = BLACK;
-    computer_side = WHITE;	/* Human is black side */
+    computerSide = WHITE;	/* Human is black side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test8()
@@ -359,11 +359,11 @@ void test8()
 //    /*setDistToKing*/();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test9()
@@ -405,11 +405,11 @@ void test9()
 //    /*setDistToKing*/();
 
     side = BLACK;
-    computer_side = WHITE;	/* Human is black side */
+    computerSide = WHITE;	/* Human is black side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test10()
@@ -448,11 +448,11 @@ void test10()
 //    /*setDistToKing*/();
 
     side = BLACK;
-    computer_side = WHITE;	/* Human is black side */
+    computerSide = WHITE;	/* Human is black side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test11()
@@ -491,11 +491,11 @@ void test11()
 //    setDistToKing();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test12()
@@ -533,11 +533,11 @@ void test12()
 //    setDistToKing();
 
     side = BLACK;
-    computer_side = WHITE;	/* Human is black side */
+    computerSide = WHITE;	/* Human is black side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test13()
@@ -575,11 +575,11 @@ void test13()
 //    setDistToKing();
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
     hdp = 0;
     castle = 0;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void test99()	//Belka: McKenzie test position
@@ -625,11 +625,11 @@ void test99()	//Belka: McKenzie test position
 //    setDistToKing();
 
     side = WHITE;
-    computer_side = BLACK;	/* human is white side */
+    computerSide = BLACK;	/* human is white side */
     hdp = 0;
     castle = 15;
     fifty = 0;
-    hash_key_position(); /* hash of the initial position */
+    hashKeyPosition(); /* hash of the initial position */
 }
 
 void xboard()
@@ -644,21 +644,21 @@ void xboard()
     signal(SIGINT, SIG_IGN);
 
     printf ("\n");
-//    hash_key_position(); /* hash of the initial position */
-//    hash_rnd_init();
+//    hashKeyPosition(); /* hash of the initial position */
+//    hashRndInit();
     startgame ();
 
     /* Waiting for a command from GUI */
     for (;;)
     {
         fflush (stdout);
-        if (side == computer_side)
+        if (side == computerSide)
         {   /* Computer's turn */
             /* Find out the best move to reply to the current position */
-            theBest = ComputerThink (max_depth);
+            theBest = ComputerThink (maxDepth);
             if (theBest.type_of_move > 8)
                 printf ("type of move the best %d \n", theBest.type_of_move);
-            MakeMove (theBest);
+            makeMove (theBest);
             /* send move */
             switch (theBest.type_of_move)
             {
@@ -705,17 +705,17 @@ void xboard()
         }
         if (!strcmp (command, "force"))
         {
-            computer_side = EMPTY;
+            computerSide = EMPTY;
             continue;
         }
         /* If we get a result the engine must stop */
         if (!strcmp(command, "result"))
         {
-            computer_side = EMPTY;
+            computerSide = EMPTY;
             continue;
         }
         if (!strcmp(command, "?")) {
-            computer_side = EMPTY;
+            computerSide = EMPTY;
             continue;
         }
         if (!strcmp(command, ".")) {
@@ -727,39 +727,39 @@ void xboard()
         if (!strcmp (command, "white"))
         {
             side = WHITE;
-            computer_side = BLACK;
+            computerSide = BLACK;
             continue;
         }
         if (!strcmp (command, "black"))
         {
             side = BLACK;
-            computer_side = WHITE;
+            computerSide = WHITE;
             continue;
         }
         if (!strcmp (command, "sd"))
         {
-            sscanf (line, "sd %d", &max_depth);
+            sscanf (line, "sd %d", &maxDepth);
             continue;
         }
         if (!strcmp (command, "go"))
         {
-            computer_side = side;
+            computerSide = side;
             continue;
         }
         /* Taken from TSCP: we receive from the GUI the time we have */
         if (!strcmp(command, "time"))
         {
-            sscanf (line, "time %ld", &max_time);
+            sscanf (line, "time %ld", &maxTime);
             /* Convert to miliseconds */
-            max_time *= 10;
-            max_time /= 10;
-            max_time -= 300;
-            total_time = max_time;
+            maxTime *= 10;
+            maxTime /= 10;
+            maxTime -= 300;
+            totalTime = maxTime;
 
-//            if (total_time < 3000)
-//                max_depth = 6;
+//            if (totalTime < 3000)
+//                maxDepth = 6;
 //            else
-            max_depth = 32;
+            maxDepth = 32;
             continue;
         }
         if (!strcmp(command, "otim"))
@@ -770,15 +770,15 @@ void xboard()
         {
             if (hdp == 0)
                 continue;
-            TakeBack ();
+            takeBack ();
             continue;
         }
         if (!strcmp (command, "remove"))
         {
             if (hdp <= 1)
                 continue;
-            TakeBack ();
-            TakeBack ();
+            takeBack ();
+            takeBack ();
             continue;
         }
 
@@ -798,7 +798,7 @@ void xboard()
         dest = command[2] - 'a';
         dest += 8 * (8 - (command[3] - '0'));
         ply = 0;
-        movecnt = GenMoves (side, moveBuf);
+        movecnt = genMoves (side, moveBuf);
 
         /* Loop through the moves to see if it's legal */
         for (i = 0; i < movecnt; ++i) {
@@ -831,7 +831,7 @@ void xboard()
                 if (moveBuf[i].type_of_move > 8)
                     printf ("Type of move the best %d \n", moveBuf[i].type_of_move);
 
-                if (MakeMove (moveBuf[i]))
+                if (makeMove (moveBuf[i]))
                 {
                     goto goon;	/* Legal move */
                 }
@@ -866,10 +866,10 @@ int main()
     int dest;
     int i;
 
-    hash_rnd_init();
+    hashRndInit();
     startgame ();
 
-    max_depth = 6;		/* Max depth to search */
+    maxDepth = 6;		/* Max depth to search */
     MOVE moveBuf[200];
     MOVE theBest;
     int movecnt;
@@ -886,20 +886,20 @@ int main()
     /* Belka */
 
     side = WHITE;
-    computer_side = BLACK;	/* Human is white side */
+    computerSide = BLACK;	/* Human is white side */
 
     hdp = 0;			/* Current move order */
     for (;;)
     {
-        if (side == computer_side)
+        if (side == computerSide)
         {
             /* Computer's turn */
-            theBest = ComputerThink (max_depth);
+            theBest = ComputerThink (maxDepth);
 
             if (theBest.type_of_move > 8)
                 printf ("type of move the best %d \n", theBest.type_of_move);
 
-            MakeMove (theBest);
+            makeMove (theBest);
 
             /* Just the move without pawn crown */
             printf("move %c%d%c%d",
@@ -926,7 +926,7 @@ int main()
                   printf("\n");
             }   /* end switch */
 
-            PrintBoard ();
+            printBoard ();
             printf ("Castle rights: %d\n", castle);
             continue;
         }
@@ -937,91 +937,91 @@ int main()
             return 0;
         if (!strcmp (s, "d"))
         {
-            PrintBoard ();
+            printBoard ();
             continue;
         }
         if (!strcmp (s, "test1"))
         {
             test1 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test2"))
         {
             test2 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test3"))
         {
             test3 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test4"))
         {
             test4 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test5"))
         {
             test5 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test6"))
         {
             test6 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test7"))
         {
             test7 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test8"))
         {
             test8 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test9"))
         {
             test9 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test10"))
         {
             test10 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test11"))
         {
             test11 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test12"))
         {
             test12 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test13"))
         {
             test13 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "test99")) //Belka: McKenzie test position
         {
             test99 ();
-            PrintBoard();
+            printBoard();
             continue;
         }
         if (!strcmp (s, "testWhitePassedPawns"))
@@ -1059,9 +1059,9 @@ int main()
             showPawnsInfo ();
             continue;
         }
-        if (!strcmp (s, "testIsSqProtectedByAPawn"))
+        if (!strcmp (s, "testisSqProtectedByAPawn"))
         {
-             testIsSqProtectedByAPawn();
+             testisSqProtectedByAPawn();
             continue;
         }
 //        if (!strcmp (s, "testIsSqProtectedByAKnight"))
@@ -1081,9 +1081,9 @@ int main()
         }
         if (!strcmp (s, "undo"))
         {
-            TakeBack ();
-            PrintBoard ();
-            computer_side = (WHITE + BLACK) - computer_side;
+            takeBack ();
+            printBoard ();
+            computerSide = (WHITE + BLACK) - computerSide;
             continue;
         }
         if (!strcmp(s,"setboard"))
@@ -1101,18 +1101,18 @@ int main()
         }
         if (!strcmp (s, "on"))
         {
-            computer_side = side;
+            computerSide = side;
             continue;
         }
         if (!strcmp (s, "pass"))
         {
             side = (WHITE + BLACK) - side;
-            computer_side = (WHITE + BLACK) - side;
+            computerSide = (WHITE + BLACK) - side;
             continue;
         }
         if (!strcmp (s, "sd"))
         {
-            scanf ("%d", &max_depth);
+            scanf ("%d", &maxDepth);
             continue;
         }
 
@@ -1133,13 +1133,13 @@ int main()
 
         if (!strcmp (s, "perft"))
         {
-            scanf ("%d", &max_depth);
+            scanf ("%d", &maxDepth);
             clock_t start;
             clock_t stop;
             double t = 0.0;
             /* Start timer */
             start = clock ();
-            U64 count = perft (max_depth);
+            U64 count = perft (maxDepth);
             /* Stop timer */
             stop = clock ();
             t = (double) (stop - start) / CLOCKS_PER_SEC;
@@ -1160,7 +1160,7 @@ int main()
         dest = s[2] - 'a';
         dest += 8 * (8 - (s[3] - '0'));
         ply = 0;
-        movecnt = GenMoves (side, moveBuf);
+        movecnt = genMoves (side, moveBuf);
 
         /* Loop through the moves to see whether it's legal */
         for (i = 0; i < movecnt; i++)
@@ -1192,14 +1192,14 @@ int main()
                         moveBuf[i].type_of_move = MOVE_TYPE_PROMOTION_TO_QUEEN;
                     }
                 }
-                if (!MakeMove (moveBuf[i]))
+                if (!makeMove (moveBuf[i]))
                 {
-                    TakeBack ();
+                    takeBack ();
                     printf ("Illegal move.\n");
                 }
                 break;
             }
-        PrintBoard ();
+        printBoard ();
     }
 }
 
@@ -1218,7 +1218,7 @@ int random32()
 }
 
 /* Fill the vars with random numbers */
-void hash_rnd_init()
+void hashRndInit()
 {
     int i, j, k;
 
@@ -1233,7 +1233,7 @@ void hash_rnd_init()
 }
 
 /* Has of the initial position */
-void hash_key_position()
+void hashKeyPosition()
 {
     int i;
 
@@ -1273,20 +1273,20 @@ int reps()
 //       {
 //          dist_bonus[i][j] = 14 - ( abs( COL(i) - COL(j) ) + abs( ROW(i) - ROW(j) ) );
 
-//          qk_dist[i][j]  = dist_bonus[i][j] * 5;
-//          rk_dist[i][j]  =  dist_bonus[i][j];
-//          nk_dist[i][j]  =  dist_bonus[i][j] * 4;
-//          bk_dist[i][j]  = dist_bonus[i][j] * 3;
+//          qkDist[i][j]  = dist_bonus[i][j] * 5;
+//          rkDist[i][j]  =  dist_bonus[i][j];
+//          nkDist[i][j]  =  dist_bonus[i][j] * 4;
+//          bkDist[i][j]  = dist_bonus[i][j] * 3;
 //       }
 //    }
 ////    for (i = 0; i < 64; ++i)
 ////    {
 ////       for (j = 0; j < 64; ++j)
 ////       {
-////           printf (" %d-%d - %d\n", i, j, qk_dist[i][j]);
-////           printf (" %d-%d - %d\n", j, i, qk_dist[j][i]);
-////           printf (" %d-%d - %d\n", i, j, nk_dist[i][j]);
-////           printf (" %d-%d - %d\n", j, i, nk_dist[j][i]);
+////           printf (" %d-%d - %d\n", i, j, qkDist[i][j]);
+////           printf (" %d-%d - %d\n", j, i, qkDist[j][i]);
+////           printf (" %d-%d - %d\n", i, j, nkDist[i][j]);
+////           printf (" %d-%d - %d\n", j, i, nkDist[j][i]);
 ////           puts("");
 ////       }
 ////    }

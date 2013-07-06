@@ -5,8 +5,8 @@
 /* Contador para la regla de los 50 movimientos */
 int fifty;
 int side;			/* Side to move, value = BLACK or WHITE */
-int computer_side;
-int max_depth;			/* max depth to search */
+int computerSide;
+int maxDepth;			/* max depth to search */
 HISTO hist[6000];		/* Game length < 6000 */
 char fenstring[256];
 int history[64][64];
@@ -26,7 +26,7 @@ int castle = 15;		/* At start position all castle types ar available */
 
 /* The next mask is applied like this
  *
- * castle &= castle_mask[from] & castle_mask[dest]
+ * castle &= castleMask[from] & castleMask[dest]
  *
  * When from and dest are whatever pieces, then nothing happens, otherwise
  * the values are chosen in such a way that if vg the white king moves
@@ -38,7 +38,7 @@ int castle = 15;		/* At start position all castle types ar available */
  * and white's lost all its castle rights
  *
  * */
-int castle_mask[64] = {
+int castleMask[64] = {
     7, 15, 15, 15, 3, 15, 15, 11,
     15, 15, 15, 15, 15, 15, 15, 15,
     15, 15, 15, 15, 15, 15, 15, 15,
@@ -55,15 +55,15 @@ int hdp;			/* Current move order */
 /* For searching */
 U64 nodes;			/* Count all visited nodes when searching */
 int ply;			/* ply of search */
-U64 count_evaluations;
-int count_checks;
-U64 count_MakeMove;
+U64 countEvaluations;
+int countChecks;
+U64 countMakeMove;
 U64 countquiesCalls;
 U64 countCapCalls;
 U64 countSearchCalls;
 
 /* The values of the pieces in centipawns */
-int value_piece[6] =
+int valuePiece[6] =
 {   VALUE_PAWN, VALUE_KNIGHT, VALUE_BISHOP, VALUE_ROOK, VALUE_QUEEN,
     VALUE_KING
 };
@@ -72,14 +72,14 @@ int value_piece[6] =
 /* Board representation */
 int color[64];
 int piece[64];
-clock_t max_time = 9999999;
-clock_t stop_time;
-clock_t half_time;
-clock_t total_time;
-int must_stop;
+clock_t maxTime = 9999999;
+clock_t stopTime;
+clock_t halfTime;
+clock_t totalTime;
+int mustStop;
 
 /* Piece in each square */
-int init_piece[64] = {
+int initPiece[64] = {
     ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
     PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
     EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
@@ -91,7 +91,7 @@ int init_piece[64] = {
 };
 
 /* Color of each square */
-int init_color[64] = {
+int initColor[64] = {
     BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
     BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
     EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
@@ -134,7 +134,7 @@ int init_color[64] = {
  * be given an extra +15, whilst a knight in a1 will be penalized with -40.
  * This simple idea allows the engine to make more sensible moves */
 
-int pst_pawn_midgame[64] ={ 0,   0,   0,   0,   0,   0,   0,   0,
+int pstPawnMidgame[64] ={ 0,   0,   0,   0,   0,   0,   0,   0,
                             1,   5,   8,  11,  11,   8,   5,   1,
                             0,   2,   3,   9,   9,   3,   2,   0,
                            -1,   0,   2,   5,   5,   2,   0,  -1,
@@ -143,7 +143,7 @@ int pst_pawn_midgame[64] ={ 0,   0,   0,   0,   0,   0,   0,   0,
                            -4,  -4,  -4, -18, -18,  -4,  -4,  -4,
                             0,   0,   0,   0,   0,   0,   0,   0};
 
-int pst_pawn_endgame[64] = { 0,   0,   0,   0,   0,   0,   0,   0,
+int pstPawnEndgame[64] = { 0,   0,   0,   0,   0,   0,   0,   0,
                             19,  19,  19,  19,  19,  19,  19,  19,
                             14,  14,  14,  14,  14,  14,  14,  14,
                              4,   4,   4,   4,   4,   4,   4,   4,
@@ -154,7 +154,7 @@ int pst_pawn_endgame[64] = { 0,   0,   0,   0,   0,   0,   0,   0,
 
 
 
-int pst_knight[64] = {-70, -15, -15, -15, -15, -15, -15, -70,
+int pstKnight[64] = {-70, -15, -15, -15, -15, -15, -15, -70,
                       -20, 15, 15, 15, 15, 15, 15, -20,
                       -20, 15, 20, 25, 25, 20, 15, -20,
                       -20, 10, 22, 28, 28, 22, 10, -20,
@@ -163,7 +163,7 @@ int pst_knight[64] = {-70, -15, -15, -15, -15, -15, -15, -70,
                       -20, 10, 10, 15, 15, 10, 10, -20,
                       -30, -10, -14, -11, -11, -14, -10, -30} ;
 
-int pst_bishop[64] = {-8, 3, 3, 3, 3, 3, 3, -8,
+int pstBishop[64] = {-8, 3, 3, 3, 3, 3, 3, -8,
                        -8, 8, 3, 3, 3, 3, 8, -8,
                        -8, 3, 8, 3, 3, 8, 3, -8,
                        -8, 3, 3, 13, 13, 3, 3, -8,
@@ -172,7 +172,7 @@ int pst_bishop[64] = {-8, 3, 3, 3, 3, 3, 3, -8,
                        -8, 9, 3, 3, 3, 3, 9, -8,
                        -8, -18, -24, -17, -17, -24, -18, -8} ;
 
-int pst_rook[64] = {-1, -1, -1, -1, -1, -1, -1, -1,
+int pstRook[64] = {-1, -1, -1, -1, -1, -1, -1, -1,
                     9, 9, 9, 9, 9, 9, 9, 9,
                     -1, -1, -1, -1, -1, -1, -1, -1,
                     -1, -1, -1, -1, -1, -1, -1, -1,
@@ -181,7 +181,7 @@ int pst_rook[64] = {-1, -1, -1, -1, -1, -1, -1, -1,
                     -1, -1, -1, -1, -1, -1, -1, -1,
                     -1, -1, -1, 4, 4, -1, -1, -1} ;
 
-int pst_queen[64] = {-2, -2, -2, -2, -2, -2, -2, -2,
+int pstQueen[64] = {-2, -2, -2, -2, -2, -2, -2, -2,
                      -4, 5, 6, 6, 6, 6, 5, -4,
                      -6, 3, 6, 5, 5, 6, 3, -6,
                      -8, 2, 5, 10, 10, 5, 2, -8,
@@ -190,7 +190,7 @@ int pst_queen[64] = {-2, -2, -2, -2, -2, -2, -2, -2,
                      -8, 0, 1, 1, 1, 1, 0, -8,
                      -11, -4, -4, -4, -4, -4, -4, -11} ;
 
-int pst_king_midgame[64] = {11, 16, -15, -15, -15, -15, 16, 11,
+int pstKingMidgame[64] = {11, 16, -15, -15, -15, -15, 16, 11,
                             -25, -25, -25, -25, -25, -25, -25, -25,
                             -25, -25, -25, -25, -25, -25, -25, -25,
                             -25, -25, -25, -25, -25, -25, -25, -25,
@@ -199,7 +199,7 @@ int pst_king_midgame[64] = {11, 16, -15, -15, -15, -15, 16, 11,
                             -25, -25, -25, -25, -25, -25, -25, -25,
                             -25, -25, -25, -25, -25, -25, -25, -25} ;
 
-int pst_king_endgame[64] = {0, 10, 20, 30, 30, 20, 10, 0,
+int pstKingEndgame[64] = {0, 10, 20, 30, 30, 20, 10, 0,
                             10, 20, 30, 40, 40, 30, 20, 10,
                             20, 30, 40, 50, 50, 40, 30, 20,
                             30, 40, 50, 60, 60, 50, 40, 30,
