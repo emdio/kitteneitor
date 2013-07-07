@@ -4,8 +4,8 @@
 #include "protos.h"
 
 
-/* Just returns the color of the opponent */
-inline int opponent(int color)
+/* Just returns the opponent's color */
+inline int Opponent(int color)
 {
     return (!(color));
 }
@@ -175,7 +175,7 @@ int IsSqProtectedByABishop(int sq, int side)
     return 0;
 }
 
-/* This function allows us to know hwether a capture is bad, bsaed on CPW.
+/* This function allows us to know whether a capture is bad based on CPW.
 For the moment it substitutes SEE (Static Exchange Evaluator)*/
 int badCapture(MOVE mcmov) {
 
@@ -187,7 +187,7 @@ int badCapture(MOVE mcmov) {
         return 0;
 
     /* We're capturing a piece with less value than ours, so we want to
-    know either it is protected by a pawn? */
+    know whether it is protected by a pawn? */
     if ( isSqProtectedByAPawn(mcmov.dest, color[mcmov.dest]) )
         return 1;
 
@@ -201,7 +201,7 @@ int badCapture(MOVE mcmov) {
     if ( IsSqProtectedByABishop(mcmov.dest, color[mcmov.dest]) )
         return 1;
 
-    /* If we have reached this far then it isn't a bad capture */
+    /* If we have reached so far then it isn't a bad capture */
     return 0;
 }
 
@@ -262,7 +262,7 @@ void genPush(int from, int dest, int type, MOVE * pBuf, int *pMCount)
             /* Just to make tests with the difference */
             int mult = 1;
 
-            /* Are we moving to a better/worse piece square? */
+            /* Are we moving to a better/worse square of piece? */
             if (color[from] == WHITE)
             {
                 switch (piece[from])
@@ -324,11 +324,11 @@ void genPush(int from, int dest, int type, MOVE * pBuf, int *pMCount)
                 }
             }
 
-            /* Are we placing a piece in a square defended by a pawn? Sounds like a bad idea */
+            /* Are we placing a piece on a square defended by a pawn? Sounds like a bad idea */
             if  ( piece[from] != PAWN && isSqProtectedByAPawn(dest, opponent(color[from])) )
                 move.grade -= (valuePiece[piece[from]]);
 
-            /* Is a piece being attacked by a pawn? Then we probably should move it */
+            /* Is a piece attacked by a pawn? Then we probably should move it */
             if  ( piece[from] != PAWN && isSqProtectedByAPawn(from, opponent(color[from])) )
                 move.grade += 100*(valuePiece[piece[from]]);
 
@@ -382,7 +382,7 @@ void genPushPawn(int from, int dest, MOVE * pBuf, int *pMCount)
     }
 }
 
-/* When a pawn moves two squares then appears the possibility of an en passant capture*/
+/* When a pawn moves two squares ahead then the possibility of an en passant capture appears */
 void genPushPawnTwo(int from, int dest, MOVE * pBuf, int *pMCount)
 {
     genPush (from, dest, MOVE_TYPE_PAWN_TWO, pBuf, pMCount);
@@ -417,7 +417,7 @@ int genMoves(int current_side, MOVE * pBuf)
     int movecount;
     movecount = 0;
 
-    for (i = 0; i < 64; i++)	/* Scan all board */
+    for (i = 0; i < 64; i++)	/* Scan whole board */
         if (color[i] == current_side)
         {
             switch (piece[i])
@@ -671,12 +671,12 @@ int genCaps(int current_side, MOVE * pBuf)
     int y;
     int row;
     int col;
-    int capscount;		/* Counter for the possible captures */
+    int capscount;		/* Counter for possible captures */
     int xside;
     xside = opponent(current_side);
     capscount = 0;
 
-    for (i = 0; i < 64; i++)	/* Scan all board */
+    for (i = 0; i < 64; i++)	/* Scan whole board */
         if (color[i] == current_side)
         {
             switch (piece[i])
@@ -687,7 +687,7 @@ int genCaps(int current_side, MOVE * pBuf)
                 row = ROW (i);
                 if (current_side == BLACK)
                 {
-                    /* This isn't a capture, but it's necesary in order to
+                    /* This isn't a capture, but it's necessary in order to
                      * not overlook promotions */
                     if (row > 7 && color[i + 8] == EMPTY)
                         /* Pawn advances one square.
@@ -754,7 +754,7 @@ int genCaps(int current_side, MOVE * pBuf)
                     genPushNormal (i, y, pBuf, &capscount);
                 break;
 
-            case QUEEN:		/* == BISHOP+ROOK */
+            case QUEEN:		/* == BISHOP + ROOK */
 
             case BISHOP:
                 for (y = i - 9; y >= 0 && COL (y) != 7; y -= 9)
@@ -866,7 +866,7 @@ int genCaps(int current_side, MOVE * pBuf)
 
 
 /* Check if current side is in check. Necessary in order to check legality of moves
- and check if castle is allowed */
+   and check if castle is allowed */
 int isInCheck(int current_side)
 {
     int k;			/* The square where the king is placed */
@@ -881,7 +881,7 @@ int isInCheck(int current_side)
 }
 
 /* Check and return 1 if square k is attacked by current_side, 0 otherwise. Necessary, vg, to check
- * castle rules (if king goes from e1 to g1, f1 can't be attacked by an enemy piece) */
+ * castle rules (if king goes from e1 to g1, f1 may not be attacked by an enemy piece) */
 int isAttacked(int current_side, int k)
 {
     int h;
@@ -1106,7 +1106,7 @@ int makeMove(MOVE m)
         }
     }
 
-    /* Remove possible eps piece, remaining from former move */
+    /* Remove possible eps piece remaining from former move */
     if (hist[hdp - 1].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
         int i;
@@ -1146,7 +1146,7 @@ int makeMove(MOVE m)
     /* Once the move is done we check either this is a promotion */
     if (typeOfMove >= MOVE_TYPE_PROMOTION_TO_QUEEN)
     {
-        /* In this case we put in the destiny sq the chosen piece */
+        /* In this case we put in the destiny sq for the chosen piece */
         switch (typeOfMove)
         {
         case MOVE_TYPE_PROMOTION_TO_QUEEN:
@@ -1223,8 +1223,8 @@ int makeMove(MOVE m)
     else
        fifty++;
 
-    /* Checking if after making the move we're in check */
-    r = !isInCheck (side);
+    /* Checking if we're in check after moving */
+    r = !IsInCheck (side);
 
     /* After making move, give turn to opponent */
     side = opponent(side);
@@ -1266,7 +1266,7 @@ void takeBack()
         piece[hist[hdp].m.from] = PAWN;
     }
 
-    /* If pawn moved two squares in the former move, we have to restore
+    /* If pawn moved two squares in the former move we have to restore
      * the eps square */
     if (hist[hdp - 1].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
@@ -1281,7 +1281,7 @@ void takeBack()
     }
 
     /* To remove the eps square after unmaking a pawn
-     * moving two squares*/
+     * moving two squares */
     if (hist[hdp].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
         if (side == WHITE)
@@ -1351,7 +1351,7 @@ void takeBack()
         }
     }
 
-    /* Recover the 50 moves count */
+    /* Recover the 50 moves counting */
     fifty = hist[hdp].fifty;
 
     /* Recover the former position in zobrist key */

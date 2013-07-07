@@ -854,7 +854,7 @@ int main()
     char linea[256];
     char args[4][64];
 
-    /* It mainly calls ComputerThink(maxdepth) to the desired ply */
+    /* It mainly calls ComputerThink(maxdepth) to calculate to desired ply */
 
     char  fen_buf[256];  /* For fen support */
     char  *pointer;   /* For fen support */
@@ -875,7 +875,7 @@ int main()
     int movecnt;
 
     /* Belka */
-    puts (" \n Kitteneitor version June 27th 2013 by Emilio Diaz \n =================================================\n\n");
+    puts (" \n Kitteneitor version June 5th 2013 by Emilio Diaz \n =================================================\n\n");
     puts (" Help overview:");
     puts (" making a move: e.g. e2e4, c7c5, a7a8q, e1g1 etc.");
     puts (" d ............ displaying current board");
@@ -907,7 +907,7 @@ int main()
                    8 - ROW(theBest.from),
                    'a' + COL(theBest.dest),
                    8 - ROW(theBest.dest));
-            /* Check wether it's a crown */
+            /* Check whether it's a crown */
             switch (theBest.type_of_move)
             {
                case MOVE_TYPE_PROMOTION_TO_QUEEN:
