@@ -5,7 +5,7 @@
 
 
 /* Just returns the opponent's color */
-inline int Opponent(int color)
+inline int opponent(int color)
 {
     return (!(color));
 }
@@ -1224,7 +1224,7 @@ int makeMove(MOVE m)
        fifty++;
 
     /* Checking if we're in check after moving */
-    r = !IsInCheck (side);
+    r = !isInCheck (side);
 
     /* After making move, give turn to opponent */
     side = opponent(side);
