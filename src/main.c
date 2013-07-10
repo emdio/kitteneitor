@@ -582,6 +582,57 @@ void test13()
     hashKeyPosition(); /* hash of the initial position */
 }
 
+void test98()	//Belka: Albert Bertilsson's test position
+{
+    puts(" A worthy test position by Albert Bertilsson for a *true* move generator \n testing!");
+    puts(" 8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -  \n");
+    puts(" Running Perft the following nodes are true: ");
+    puts(" depth=1,  nodes=         14");
+    puts(" depth=2,  nodes=        191");
+    puts(" depth=3,  nodes=      2,812");
+    puts(" depth=4,  nodes=     43,238");
+    puts(" depth=5,  nodes=    674,624");
+    puts(" depth=6,  nodes= 11,030,083");
+    puts(" depth=7,  nodes=178,633,661 \n");
+
+    /* Piece in each square */
+    int piece_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+        KING, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK,
+        EMPTY, ROOK, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, KING,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+    /* Color of each square */
+    int color_test[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
+        WHITE, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
+        EMPTY, WHITE, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, BLACK,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, WHITE, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+//    setDistToKing();
+
+    side = WHITE;
+    computerSide = BLACK;	/* human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hashKeyPosition(); /* hash of the initial position */
+}
+
 void test99()	//Belka: McKenzie test position
 {
     puts(" The famous test position by Peter McKenzie for a *true* move generator testing!");
@@ -1015,6 +1066,12 @@ int main()
         if (!strcmp (s, "test13"))
         {
             test13 ();
+            printBoard();
+            continue;
+        }
+        if (!strcmp (s, "test98")) //Belka: Albert Bertilsson's test position
+        {
+            test98 ();
             printBoard();
             continue;
         }
