@@ -106,15 +106,13 @@ int getMs()
 void setBoard(char *string)
 {
     char c;
-    char epSq;
+    char epSq = 0;
     int i = 0;
     int sq = 0;
     int j = 0;
     int pieceType[] ={6,2,6,6,6,6,6,6,6,6,5,6,6,1,6,0,4,3,6,6,6,6,6,6,6,6};
 
     printf("Fen string: %s\n", string);
-//    printf("%s\n", string + strlen(string) - 5);
-//    printf("%s\n", string);
 
     /*Rellenamos la tabla de posiciones y colores*/
         while (sq < 64)
@@ -175,17 +173,26 @@ void setBoard(char *string)
         }
         printf("Castle = %d\n", castle);
 
+        if (c != '-')
+            c = string[i--];
+
         /* En passant square */
+        c = string[i++];
         if (c>='a' && c<='h')
         {
+            puts("ep square!");
             epSq = (c - 'a');
             c = string[i++];
             if (c>='1' && c<='8')
             {
                 epSq += 8*(7-(c - '1'));
                 printf("En passant square: %d\n", epSq);
+                piece[epSq] = EPS_SQ;
+                color[epSq] = EMPTY;
             }
-            piece[epSq] = EPS_SQ;
-            color[epSq] = EMPTY;
         }
+
+        hdp = 0;
+        fifty = 0;
+        hashKeyPosition(); /* hash of the initial position */
 }

@@ -595,7 +595,7 @@ void test98()	//Belka: Albert Bertilsson's test position
     puts(" depth=6,  nodes= 11,030,083");
     puts(" depth=7,  nodes=178,633,661 \n");
 
-    setBoard("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w -");
+    setBoard("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -");
 
     /* Piece in each square */
 //    int piece_test[64] = {
