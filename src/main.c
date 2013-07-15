@@ -595,40 +595,42 @@ void test98()	//Belka: Albert Bertilsson's test position
     puts(" depth=6,  nodes= 11,030,083");
     puts(" depth=7,  nodes=178,633,661 \n");
 
-    /* Piece in each square */
-    int piece_test[64] = {
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
-        KING, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK,
-        EMPTY, ROOK, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, KING,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
-    /* Color of each square */
-    int color_test[64] = {
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
-        WHITE, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
-        EMPTY, WHITE, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, BLACK,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, WHITE, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+    setBoard("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w -");
 
-    int i;
-    for (i = 0; i < 64; ++i)
-    {
-        piece[i] = piece_test[i];
-        color[i] = color_test[i];
-    }
+    /* Piece in each square */
+//    int piece_test[64] = {
+//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+//        EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+//        EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
+//        KING, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK,
+//        EMPTY, ROOK, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, KING,
+//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+//        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN, EMPTY,
+//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+//    /* Color of each square */
+//    int color_test[64] = {
+//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+//        EMPTY, EMPTY, BLACK, WHITE, EMPTY, EMPTY, EMPTY, EMPTY,
+//        EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
+//        WHITE, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
+//        EMPTY, WHITE, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, BLACK,
+//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+//        EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, WHITE, EMPTY,
+//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+
+//    int i;
+//    for (i = 0; i < 64; ++i)
+//    {
+//        piece[i] = piece_test[i];
+//        color[i] = color_test[i];
+//    }
 
 //    setDistToKing();
 
-    side = WHITE;
-    computerSide = BLACK;	/* human is white side */
+//    side = WHITE;
+//    computerSide = BLACK;	/* human is white side */
     hdp = 0;
-    castle = 0;
+//    castle = 0;
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
 }
@@ -686,6 +688,7 @@ void test99()	//Belka: McKenzie test position
 void xboard()
 {
     char line[256], command[256], c;
+    char args[4][64];
     int from, dest, i;
     MOVE moveBuf[200];
     MOVE theBest;
@@ -741,8 +744,14 @@ void xboard()
         if (line[0] == '\n')
             continue;
         sscanf (line, "%s", command);
+
         if (!strcmp (command, "xboard"))
         {
+            continue;
+        }
+        if (!strcmp (command, "d"))
+        {
+            printBoard ();
             continue;
         }
         if (!strcmp (command, "new"))
@@ -773,6 +782,17 @@ void xboard()
             continue;
         }
         if (!strcmp(command, "exit")) {
+            continue;
+        }
+        if (!strcmp(command,"setboard"))
+        {
+            strcpy(fenBuf, "");
+            sscanf(line, "setboard %s %s %s %s", args[0],args[1],args[2],args[3]);
+            strcat(fenBuf, args[0]);
+            strcat(fenBuf, args[1]);
+            strcat(fenBuf, args[2]);
+            strcat(fenBuf, args[3]);
+            setBoard(fenBuf);
             continue;
         }
         if (!strcmp (command, "white"))
@@ -901,17 +921,10 @@ goon:
 
 int main()
 {
-
-    char linea[256];
+    char line[256];
     char args[4][64];
 
     /* It mainly calls ComputerThink(maxdepth) to calculate to desired ply */
-
-    char  fen_buf[256];  /* For fen support */
-    char  *pointer;   /* For fen support */
-
-    setlocale (LC_ALL, "");
-
     char s[256];
     int from;
     int dest;
@@ -942,6 +955,7 @@ int main()
     hdp = 0;			/* Current move order */
     for (;;)
     {
+        fflush (stdout);
         if (side == computerSide)
         {
             /* Computer's turn */
@@ -979,13 +993,22 @@ int main()
 
             printBoard ();
             printf ("Castle rights: %d\n", castle);
+            fflush (stdout);
             continue;
         }
 
-        /* Get user input */
         printf ("k> ");
-        if (scanf ("%s", s) == EOF)	/* Shut down the program */
-            return 0;
+
+        /* Get user input */
+        if (!fgets (line, 256, stdin))
+            return;
+        if (line[0] == '\n')
+            continue;
+        sscanf (line, "%s", s);
+
+//        if (scanf ("%s", s) == EOF)	/* Shut down the program */
+//            return 0;
+
         if (!strcmp (s, "d"))
         {
             printBoard ();
@@ -1144,13 +1167,16 @@ int main()
             continue;
         }
         if (!strcmp(s,"setboard"))
-              {
-                strcpy(fen_buf, linea);
-                pointer = strstr(fen_buf, " ");
-                pointer++;
-                fen(pointer);
-                continue;
-              }
+        {
+            strcpy(fenBuf, "");
+            sscanf(line, "setboard %s %s %s %s", args[0],args[1],args[2],args[3]);
+            strcat(fenBuf, args[0]);
+            strcat(fenBuf, args[1]);
+            strcat(fenBuf, args[2]);
+            strcat(fenBuf, args[3]);
+            setBoard(fenBuf);
+            continue;
+        }
         if (!strcmp (s, "xboard"))
         {
             xboard ();
@@ -1169,7 +1195,7 @@ int main()
         }
         if (!strcmp (s, "sd"))
         {
-            scanf ("%d", &maxDepth);
+            sscanf (line, "sd %d", &maxDepth);
             continue;
         }
 
@@ -1190,7 +1216,7 @@ int main()
 
         if (!strcmp (s, "perft"))
         {
-            scanf ("%d", &maxDepth);
+            sscanf (line, "perft %d", &maxDepth);
             clock_t start;
             clock_t stop;
             double t = 0.0;

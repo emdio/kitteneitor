@@ -58,7 +58,7 @@ void xboard();
 void hashRndInit();
 void hashKeyPosition();
 void setDistToKing();
-void fen(const char *s);
+void setBoard(char *string);
 
 /* Search */
 MOVE ComputerThink(int depth);

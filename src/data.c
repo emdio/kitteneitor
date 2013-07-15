@@ -8,7 +8,7 @@ int side;			/* Side to move, value = BLACK or WHITE */
 int computerSide;
 int maxDepth;			/* max depth to search */
 HISTO hist[6000];		/* Game length < 6000 */
-char fenstring[256];
+char fenBuf[256];
 int history[64][64];
 
 /* For castle rights we use a bitfield, like in TSCP

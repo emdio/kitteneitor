@@ -9,7 +9,7 @@ extern clock_t totalTime;
 extern clock_t stopTime;
 extern clock_t halfTime;
 extern int mustStop;
-
+extern char fenBuf[256];
 extern int history[64][64];
 extern int castle;
 extern int castleMask[64];
