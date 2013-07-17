@@ -646,8 +646,11 @@ void test99()	//Belka: McKenzie test position
     puts(" depth=4,  nodes=    4,085,603");
     puts(" depth=5,  nodes=  193,690,690");
     puts(" depth=6,  nodes=8,031,647,685");
+    
+    setBoard("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -");
+    
 
-    /* Piece in each square */
+    // Piece in each square 
     int piece_test[64] = {
         ROOK, EMPTY, EMPTY, EMPTY, KING, EMPTY, EMPTY, ROOK,
         PAWN, EMPTY, PAWN, PAWN, QUEEN, PAWN, BISHOP, EMPTY,
@@ -657,7 +660,7 @@ void test99()	//Belka: McKenzie test position
         EMPTY, EMPTY, KNIGHT, EMPTY, EMPTY, QUEEN, EMPTY, PAWN,
         PAWN, PAWN, PAWN, BISHOP, BISHOP, PAWN, PAWN, PAWN,
         ROOK, EMPTY, EMPTY, EMPTY, KING, EMPTY, EMPTY, ROOK};
-    /* Color of each square */
+    // Color of each square 
     int color_test[64] = {
         BLACK, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, BLACK,
         BLACK, EMPTY, BLACK, BLACK, BLACK, BLACK, BLACK, EMPTY,
@@ -678,9 +681,10 @@ void test99()	//Belka: McKenzie test position
 //    setDistToKing();
 
     side = WHITE;
-    computerSide = BLACK;	/* human is white side */
+    computerSide = BLACK;	// human is white side 
+    */
     hdp = 0;
-    castle = 15;
+    //castle = 15;
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
 }
