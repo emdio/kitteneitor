@@ -28,7 +28,8 @@ int mobBishop[16] = {-5, -2, 0, 3, 6, 10, 14, 20, 24, 28, 30, 32, 33, 35, 35, 35
 int rangeBishop[16] = {-6, -3, 0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19, 20};
 
 /* For scaling passed pawns depending on the row */
-int passedPawnBonus[2][7] = {{70, 65, 45, 25, 17, 10, 0}, {0, 10, 17, 25, 45, 65, 70}};
+int passedPawnBonus[2][7] = {{0, 70, 65, 45, 25, 17, 10}, {0, 10, 17, 25, 45, 65, 70}};
+//int passedPawnBonus[2][8] = {{0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}};
 
 /* For storing pawns' ranks */
 int pawnsRanks[2][10];
@@ -540,28 +541,28 @@ int bishopRange(int sq)
 
 int knightMobility(int sq)
 {
-    int l;
+    int dest;
     int mob = 0;
 
-    l = sq - 17;
-    if (l >= 0 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
-    l = sq - 15;
-    if (l >= 0 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
+    dest = sq - 17;
+    if (dest >= 0 && COL(dest) < COL(sq) && piece[dest] == EMPTY) mob++;
+    dest = sq - 15;
+    if (dest >= 0 && COL(dest) > COL(sq) && piece[dest] == EMPTY) mob++;
 
-    l = sq - 10;
-    if (l >= 0 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
-    l = sq - 6;
-    if (l >= 0 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
+    dest = sq - 10;
+    if (dest >= 0 && COL(dest) < COL(sq) && piece[dest] == EMPTY) mob++;
+    dest = sq - 6;
+    if (dest >= 0 && COL(dest) > COL(sq) && piece[dest] == EMPTY) mob++;
 
-    l = sq + 6;
-    if (l <= 63 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
-    l = sq + 10;
-    if (l <= 63 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
+    dest = sq + 6;
+    if (dest <= 63 && COL(dest) < COL(sq) && piece[dest] == EMPTY) mob++;
+    dest = sq + 10;
+    if (dest <= 63 && COL(dest) > COL(sq) && piece[dest] == EMPTY) mob++;
 
-    l = sq + 15;
-    if (l <= 63 && COL(l) < COL(sq) && piece[l] == EMPTY) mob++;
-    l = sq + 17;
-    if (l <= 63 && COL(l) > COL(sq) && piece[l] == EMPTY) mob++;
+    dest = sq + 15;
+    if (dest <= 63 && COL(dest) < COL(sq) && piece[dest] == EMPTY) mob++;
+    dest = sq + 17;
+    if (dest <= 63 && COL(dest) > COL(sq) && piece[dest] == EMPTY) mob++;
 
     //if (mob > 8) printf("knight mob too large: %d", mob);
 

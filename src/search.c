@@ -154,16 +154,12 @@ int search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
        return quiescent(alpha, beta);
     }
 
-    //    /* If we're in check maybe we want to search deeper */
-        if (depth < maxDepth - 2 && isInCheck(side))
-            ++depth;
+    /* If we're in check maybe we want to search deeper */
+    if (isInCheck(side))
+        ++depth;
 
     /* Generate and count all moves for current position */
     movecnt = genMoves (side, moveBuf);
-
-//    /* If we're in check maybe we want to search deeper */
-//    if (depth < maxDepth - 2 && isInCheck(side))
-//        ++depth;
 
     /* Once we have all the moves available, we loop through the possible
      * moves and apply an alpha-beta search */
