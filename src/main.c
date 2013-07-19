@@ -745,6 +745,14 @@ void xboard()
             continue;
         sscanf (line, "%s", command);
 
+        //++++++ Belka - enhanced WinBoard protocol conformity ++++++
+        if (!strcmp(command, "protover")) {
+           printf("feature done=0\n");
+           printf("feature myname=\"Kitteneitor July 17th 2013\" time=1 colors=1 ics=0 name=0 rating=0 variants=normal \nanalyze=0 ping=0 setboard=1 playother=0 san=0 usermove=0 draw=0 sigint=0 sigterm=0 reuse=0 random=0 pause=0\n");
+           fprintf(stdout, "feature done=1\n\n");
+           continue;
+        }
+
         if (!strcmp (command, "xboard"))
         {
             continue;
