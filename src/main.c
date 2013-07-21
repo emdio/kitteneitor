@@ -582,11 +582,11 @@ void test13()
     hashKeyPosition(); /* hash of the initial position */
 }
 
-void testMoveGen()	//Belka: Albert Bertilsson's test position
+void testMoveGen()
 {
     puts("Some hard positions for the moves generator.");
     puts("");
-    puts(" A worthy test position by Albert Bertilsson for a *true* move generator \n testing!");
+    puts(" A worthy test position by Albert Bertilsson for a *true* move generator \n testing!");//Belka: Albert Bertilsson's test position
     puts(" 8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -  \n");
     puts(" Running Perft the following nodes are true: ");
     puts(" depth=1,  nodes=         14");
@@ -608,7 +608,7 @@ void testMoveGen()	//Belka: Albert Bertilsson's test position
         printf("Perft %d: %d\n", i, perft(i));
 
     puts("");
-    puts(" The famous test position by Peter McKenzie for a *true* move generator testing!");
+    puts(" The famous test position by Peter McKenzie for a *true* move generator testing!");//Belka: Albert Bertilsson's test position
     puts(" r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -  \n");
     puts(" Running Perft the following nodes are true: ");
     puts(" depth=1,  nodes=           48");
