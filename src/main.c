@@ -597,40 +597,7 @@ void test98()	//Belka: Albert Bertilsson's test position
 
     setBoard("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -");
 
-    /* Piece in each square */
-//    int piece_test[64] = {
-//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-//        EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-//        EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY, EMPTY, EMPTY,
-//        KING, PAWN, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK,
-//        EMPTY, ROOK, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, KING,
-//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-//        EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN, EMPTY,
-//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
-//    /* Color of each square */
-//    int color_test[64] = {
-//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-//        EMPTY, EMPTY, BLACK, WHITE, EMPTY, EMPTY, EMPTY, EMPTY,
-//        EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY,
-//        WHITE, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK,
-//        EMPTY, WHITE, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, BLACK,
-//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-//        EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, WHITE, EMPTY,
-//        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
-
-//    int i;
-//    for (i = 0; i < 64; ++i)
-//    {
-//        piece[i] = piece_test[i];
-//        color[i] = color_test[i];
-//    }
-
-//    setDistToKing();
-
-//    side = WHITE;
-//    computerSide = BLACK;	/* human is white side */
     hdp = 0;
-//    castle = 0;
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
 }
@@ -684,6 +651,26 @@ void test99()	//Belka: McKenzie test position
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
 }
+
+void test100()	//Belka: McKenzie test position
+{
+    puts(" The famous test position by Peter McKenzie for a *true* move generator testing!");
+    puts(" r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -  \n");
+    puts(" Running Perft the following nodes are true: ");
+    puts(" depth=1,  nodes=           48");
+    puts(" depth=2,  nodes=        2,039");
+    puts(" depth=3,  nodes=       97,862");
+    puts(" depth=4,  nodes=    4,085,603");
+    puts(" depth=5,  nodes=  193,690,690");
+    puts(" depth=6,  nodes=8,031,647,685");
+
+    setBoard("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2RwKQkq-");
+
+    hdp = 0;
+    fifty = 0;
+    hashKeyPosition(); /* hash of the initial position */
+}
+
 
 void xboard()
 {
@@ -1101,6 +1088,12 @@ int main()
         if (!strcmp (s, "test99")) //Belka: McKenzie test position
         {
             test99 ();
+            printBoard();
+            continue;
+        }
+        if (!strcmp (s, "test100")) //Belka: McKenzie test position
+        {
+            test100 ();
             printBoard();
             continue;
         }

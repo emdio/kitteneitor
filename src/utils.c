@@ -114,7 +114,7 @@ void setBoard(char *string)
 
     printf("Fen string: %s\n", string);
 
-    /*Rellenamos la tabla de posiciones y colores*/
+    /* Fill up the arrays of color and piece */
         while (sq < 64)
         {
             c = string[i++];
@@ -173,7 +173,7 @@ void setBoard(char *string)
         }
         printf("Castle = %d\n", castle);
 
-        if (c != '-')
+        if (c != '-' && c != ' ')
             c = string[i--];
 
         /* En passant square */

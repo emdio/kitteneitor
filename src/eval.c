@@ -231,7 +231,6 @@ int eval(int alpha, int beta)
             case ROOK:
                 score += pstRook[i];
                 score += mobRook[rookMobility(i)];
-                /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score += ROOK_OPEN_COL;
                 /* Rook trapped by king */
@@ -290,7 +289,6 @@ int eval(int alpha, int beta)
             case ROOK:
                 score -= pstRook[flip[i]];
                 score -= mobRook[rookMobility(i)];
-                /* Is it on an open col? */
                 if (isOnAnOpenCol(i))
                     score -= ROOK_OPEN_COL;
                 /* Rook trapped by king */
