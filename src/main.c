@@ -582,8 +582,10 @@ void test13()
     hashKeyPosition(); /* hash of the initial position */
 }
 
-void test98()	//Belka: Albert Bertilsson's test position
+void testMoveGen()	//Belka: Albert Bertilsson's test position
 {
+    puts("Some hard positions for the moves generator.");
+    puts("");
     puts(" A worthy test position by Albert Bertilsson for a *true* move generator \n testing!");
     puts(" 8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -  \n");
     puts(" Running Perft the following nodes are true: ");
@@ -600,10 +602,12 @@ void test98()	//Belka: Albert Bertilsson's test position
     hdp = 0;
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
-}
 
-void test99()	//Belka: McKenzie test position
-{
+    int i;
+    for (i=1; i<6; ++i)
+        printf("Perft %d: %d\n", i, perft(i));
+
+    puts("");
     puts(" The famous test position by Peter McKenzie for a *true* move generator testing!");
     puts(" r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -  \n");
     puts(" Running Perft the following nodes are true: ");
@@ -619,6 +623,9 @@ void test99()	//Belka: McKenzie test position
     hdp = 0;
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
+
+    for (i=1; i<5; ++i)
+        printf("Perft %d: %d\n", i, perft(i));
 }
 
 
@@ -1029,15 +1036,9 @@ int main()
             printBoard();
             continue;
         }
-        if (!strcmp (s, "test98")) //Belka: Albert Bertilsson's test position
+        if (!strcmp (s, "testMoveGen")) //Belka: McKenzie test position
         {
-            test98 ();
-            printBoard();
-            continue;
-        }
-        if (!strcmp (s, "test99")) //Belka: McKenzie test position
-        {
-            test99 ();
+            testMoveGen();
             printBoard();
             continue;
         }
