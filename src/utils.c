@@ -173,7 +173,7 @@ void setBoard(char *string)
         }
         printf("Castle = %d\n", castle);
 
-        if (c != '-' && c != ' ')
+        if (c != '-')
             c = string[i--];
 
         /* En passant square */

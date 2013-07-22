@@ -628,6 +628,18 @@ void testMoveGen()
         printf("Perft %d: %d\n", i, perft(i));
 }
 
+void testEvalSym()
+{
+    setBoard("2rr3k/pp3pp1/1nnqbN1p/3pN3/2pP4/2P3Q1/PPB4P/R4RK1w--");
+    ComputerThink(1);
+    setBoard("r4rk1/ppb4p/2p3q1/2Pp4/3Pn3/1NNQBn1P/PP3PP1/2RR3Kb--");
+    ComputerThink(1);
+    setBoard("5rk1/1b3p1p/pp3p2/3n1N2/1P6/P1qB1PP1/3Q3P/4R1K1w--");
+    ComputerThink(1);
+    setBoard("4r1k1/3q3p/p1Qb1pp1/1p6/3N1n2/PP3P2/1B3P1P/5RK1b--");
+    ComputerThink(1);
+}
+
 
 void xboard()
 {
@@ -1040,6 +1052,11 @@ int main()
         {
             testMoveGen();
             printBoard();
+            continue;
+        }
+        if (!strcmp (s, "testEvalSym")) //Belka: McKenzie test position
+        {
+            testEvalSym();
             continue;
         }
         if (!strcmp (s, "testWhitePassedPawns"))
