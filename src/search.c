@@ -152,6 +152,7 @@ int search(int alpha, int beta, int depth, MOVE * pBestMove, LINE * pline)
     {
        pline->cmove = 0;
        return quiescent(alpha, beta);
+//       return eval(alpha, beta);      // Kept for testing purposes
     }
 
     /* If we're in check maybe we want to search deeper */

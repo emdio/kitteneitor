@@ -236,12 +236,12 @@ int eval(int alpha, int beta)
                 /* Rook trapped by king */
                 if(i == H1 || i == G1)
                 {
-                    if(sqKing[WHITE] > E1 && sqKing[WHITE] < H1)
+                    if(sqKing[WHITE] > COLE && sqKing[WHITE] < COLH)
                         score += TRAPPED_ROOK_PENALTY;
                 }
                 if (i >= A1 && i <= C1)
                 {
-                    if (sqKing[WHITE] <= D1)
+                    if (sqKing[WHITE] <= COLD)
                         score += TRAPPED_ROOK_PENALTY;
                 }
                 break;
@@ -297,7 +297,7 @@ int eval(int alpha, int beta)
                     if(sqKing[BLACK] > COLE && sqKing[BLACK] < COLH)
                         score -= TRAPPED_ROOK_PENALTY;
                 }
-                if(i >= A8 && i <= C8)
+                if(i >= A8 && i <= COLC)
                 {
                     if(sqKing[BLACK] <= D8)
                         score -= TRAPPED_ROOK_PENALTY;
