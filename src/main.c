@@ -618,7 +618,7 @@ void testMoveGen()
     puts(" depth=5,  nodes=  193,690,690");
     puts(" depth=6,  nodes=8,031,647,685");
 
-    setBoard("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2RwKQkq-");
+    setBoard("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R wKQkq -");
 
     hdp = 0;
     fifty = 0;

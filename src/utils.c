@@ -141,12 +141,18 @@ void setBoard(char *string)
             }
         }
 
+        if (c == ' ')
+            c = string[i++];
+
         /* Whose turn is it? */
         c = string[i++];
         if (c == 'w')		{ side = WHITE; }
         else if (c == 'b')	{ side = BLACK; }
 
         computerSide = EMPTY;
+
+        if (c == ' ')
+            c = string[i++];
 
         /* Set the castle rights */
         castle = 0;
@@ -173,8 +179,8 @@ void setBoard(char *string)
         }
         printf("Castle = %d\n", castle);
 
-        if (c != '-')
-            c = string[i--];
+//        if (c != '-')
+//            c = string[i--];
 
         /* En passant square */
         c = string[i++];
