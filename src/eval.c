@@ -236,7 +236,7 @@ int eval(int alpha, int beta)
                 /* Rook trapped by king */
                 if(i == H1 || i == G1)
                 {
-                    if(COL(sqKing[WHITE]) > COLE && COL(sqKing[WHITE] < COLH))
+                    if(COL(sqKing[WHITE]) > COLE && COL(sqKing[WHITE]) < COLH)
                         score += TRAPPED_ROOK_PENALTY;
                 }
                 if (i >= A1 && i <= C1)
