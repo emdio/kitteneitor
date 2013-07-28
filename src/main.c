@@ -704,8 +704,6 @@ void testEvalSym()
     ComputerThink(depth);
     setBoard("6k1/p1p3pp/3p2q1/2pP4/2Pb1P2/3b1BP1/PP2r2P/R1BQ3Kb--");
     ComputerThink(depth);
-
-    printf ("Nodes: %d\n", nodes);
 }
 
 
