@@ -706,6 +706,48 @@ void testEvalSym()
     ComputerThink(depth);
 }
 
+void countNodes()
+{
+    puts("Evals a series of positions and count the number of nodes.");
+    puts("The idea is to make a check when changes in the sear are made (vg move ordering)");
+
+    int depth = 6;
+    int allNodes = 0;
+
+    setBoard("1kr5/3n4/q3p2p/p2n2p1/PppB1P2/5BP1/1P2Q2P/3R2K1 w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1n5k/3q3p/pp1p2pB/5r2/1PP1Qp2/P6P/6P1/2R3K1 w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1n6/4bk1r/1p2rp2/pP2pN1p/K1P1N2P/8/P5R1/3R4 w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1nr5/1k5r/p3pqp1/3p4/1P1P1PP1/R4N2/3Q1PK1/R7 w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1q4k1/5p1p/p1rprnp1/3R4/N1P1P3/1P6/P5PP/3Q1R1K w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1qr1k2r/1p2bp2/pBn1p3/P2pPbpp/5P2/2P1QBPP/1P1N3R/R4K2 b k -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1r1b2k1/2r2ppp/p1qp4/3R1NPP/1pn1PQB1/8/PPP3R1/1K6 w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1r1r2k1/p3n2p/b1nqpbp1/2pp4/1p3PP1/2PP1N2/PPN3BP/R1BRQ2K w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("1r2n1rk/pP2q2p/P2p4/4pQ2/2P2p2/5B1P/3R1P1K/3R4 w - -");
+    ComputerThink(depth);
+    allNodes += nodes;
+    setBoard("r1bq1rk1/pp3pbp/3Pp1p1/2p5/4PP2/2P5/P2QB1PP/1RB1K2R b K -");
+    ComputerThink(depth);
+    allNodes += nodes;
+
+    printf ("Total nodes = %d\n", allNodes);
+}
+
 
 void xboard()
 {
@@ -1123,6 +1165,11 @@ int main()
         if (!strcmp (s, "testEvalSym")) //Belka: McKenzie test position
         {
             testEvalSym();
+            continue;
+        }
+        if (!strcmp (s, "countNodes"))
+        {
+            countNodes();
             continue;
         }
         if (!strcmp (s, "testWhitePassedPawns"))
