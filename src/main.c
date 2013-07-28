@@ -631,6 +631,7 @@ void testMoveGen()
 void testEvalSym()
 {
     int depth = 1;
+
     setBoard("2rr3k/pp3pp1/1nnqbN1p/3pN3/2pP4/2P3Q1/PPB4P/R4RK1w--");
     ComputerThink(depth);
     setBoard("r4rk1/ppb4p/2p3q1/2Pp4/3Pn3/1NNQBn1P/PP3PP1/2RR3Kb--");
@@ -703,6 +704,8 @@ void testEvalSym()
     ComputerThink(depth);
     setBoard("6k1/p1p3pp/3p2q1/2pP4/2Pb1P2/3b1BP1/PP2r2P/R1BQ3Kb--");
     ComputerThink(depth);
+
+    printf ("Nodes: %d\n", nodes);
 }
 
 
