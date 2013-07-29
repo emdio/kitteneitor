@@ -463,16 +463,7 @@ int isIsolatedPawnBlack(int sq)
             pawnsRanks[BLACK][tmpCol - 1] == 7);
 }
 
-
-/* Are we in the endgame? */
-//int isEndGame()
-//{
-//    if (queens[WHITE]==0 || queens[BLACK]==0)
-//        return 1;
-//    if (pawns[WHITE] + pawns[BLACK] < 8)
-//        return 1;
-//    return 0;
-//}
+/* Returns 1 if we're in the endgame, 0 otherwise */
 int isEndGame() {
     if (queens[WHITE]==0 && queens[BLACK]==0)
         return 1;
@@ -480,9 +471,7 @@ int isEndGame() {
         + bishops[BLACK] + rooks[WHITE] + rooks[BLACK]
         + queens[WHITE] + queens[BLACK]) < 4 )
         return 1;
-    /* if (pawns[WHITE] + pawns[BLACK] < 8)
-        return 1;
-    */
+
     return 0;
 }
 
