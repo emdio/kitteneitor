@@ -709,7 +709,7 @@ void testEvalSym()
 void countNodes()
 {
     puts("Evals a series of positions and count the number of nodes.");
-    puts("The idea is to make a check when changes in the sear are made (vg move ordering)");
+    puts("The idea is to make a check when changes in the search are made (vg move ordering)");
 
     int depth = 6;
     int allNodes = 0;
