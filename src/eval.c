@@ -465,8 +465,8 @@ int isIsolatedPawnBlack(int sq)
 
 /* Returns 1 if we're in the endgame, 0 otherwise */
 int isEndGame() {
-    if (queens[WHITE]==0 && queens[BLACK]==0)
-        return 1;
+//    if (queens[WHITE]==0 && queens[BLACK]==0)
+//        return 1;
     if((knights[WHITE] + knights[BLACK] + bishops[WHITE]
         + bishops[BLACK] + rooks[WHITE] + rooks[BLACK]
         + queens[WHITE] + queens[BLACK]) < 4 )

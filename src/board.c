@@ -1091,21 +1091,6 @@ int makeMove(MOVE m)
     piece[m.from] = EMPTY;	/* The original square becomes empty */
     color[m.from] = EMPTY;	/* The original color becomes empty */
 
-    /* En passant capture */
-    if (m.type_of_move == MOVE_TYPE_EPS)
-    {
-        if (side == WHITE)
-        {
-            piece[m.dest + 8] = EMPTY;
-            color[m.dest + 8] = EMPTY;
-        }
-        else
-        {
-            piece[m.dest - 8] = EMPTY;
-            color[m.dest - 8] = EMPTY;
-        }
-    }
-
     /* Remove possible eps piece remaining from former move */
     if (hist[hdp - 1].m.type_of_move == MOVE_TYPE_PAWN_TWO)
     {
@@ -1125,6 +1110,21 @@ int makeMove(MOVE m)
                 piece[i] = EMPTY;
                 break;
             }
+        }
+    }
+
+    /* En passant capture */
+    if (m.type_of_move == MOVE_TYPE_EPS)
+    {
+        if (side == WHITE)
+        {
+            piece[m.dest + 8] = EMPTY;
+            color[m.dest + 8] = EMPTY;
+        }
+        else
+        {
+            piece[m.dest - 8] = EMPTY;
+            color[m.dest - 8] = EMPTY;
         }
     }
 
