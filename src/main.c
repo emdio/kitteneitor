@@ -1065,7 +1065,7 @@ int main()
 
         /* Get user input */
         if (!fgets (line, 256, stdin))
-            return;
+            return 0;
         if (line[0] == '\n')
             continue;
         sscanf (line, "%s", s);
