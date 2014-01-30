@@ -1143,7 +1143,7 @@ int makeMove(MOVE m)
         }
     }
 
-    /* Once the move is done we check either this is a promotion */
+    /* Once the move is done we check whether this is a promotion */
     else if (typeOfMove >= MOVE_TYPE_PROMOTION_TO_QUEEN)
     {
         /* In this case we put in the destiny sq for the chosen piece */
