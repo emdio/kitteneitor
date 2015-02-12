@@ -156,20 +156,20 @@ void test4()
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, KING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        KING,  EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK, ROOK,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, KING};
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK,
+        EMPTY, BISHOP,BISHOP,EMPTY, EMPTY, EMPTY, ROOK, KING};
     /* Color of each square */
     int color_test[64] = {
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, WHITE,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE};
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE,
+        EMPTY, WHITE, WHITE, EMPTY, EMPTY, EMPTY, WHITE, WHITE};
 
     int i;
     for (i = 0; i < 64; ++i)
@@ -564,6 +564,47 @@ void test13()
         BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE,
         BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE,
         EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE};
+
+    int i;
+    for (i = 0; i < 64; ++i)
+    {
+        piece[i] = piece_test[i];
+        color[i] = color_test[i];
+    }
+
+//    setDistToKing();
+
+    side = WHITE;
+    computerSide = BLACK;	/* Human is white side */
+    hdp = 0;
+    castle = 0;
+    fifty = 0;
+    hashKeyPosition(); /* hash of the initial position */
+}
+
+void test14()
+{
+    puts("One position fom Lev Alburt 300 suite, provided by kimnamcham ");
+
+    int piece_test[64] = {
+		EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		EMPTY, PAWN, EMPTY, EMPTY, KING, PAWN, EMPTY, PAWN,
+		PAWN, EMPTY, EMPTY, EMPTY, PAWN, KNIGHT, EMPTY, EMPTY,
+		EMPTY, EMPTY, ROOK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		PAWN, EMPTY, KNIGHT, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		EMPTY, PAWN, PAWN, EMPTY, EMPTY, EMPTY, PAWN, PAWN,
+		EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, ROOK, KING, EMPTY };
+		
+	int color_test[64] = {
+		EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		EMPTY, BLACK, EMPTY, EMPTY, BLACK, BLACK, EMPTY, BLACK,
+		BLACK, EMPTY, EMPTY, EMPTY, BLACK, BLACK, EMPTY, EMPTY,
+		EMPTY, EMPTY, BLACK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		WHITE, EMPTY, WHITE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+		EMPTY, WHITE, WHITE, EMPTY, EMPTY, EMPTY, WHITE, WHITE,
+		EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, WHITE, EMPTY };
 
     int i;
     for (i = 0; i < 64; ++i)
@@ -1153,6 +1194,12 @@ int main()
         if (!strcmp (s, "test13"))
         {
             test13 ();
+            printBoard();
+            continue;
+        }
+        if (!strcmp (s, "test14"))
+        {
+            test14 ();
             printBoard();
             continue;
         }
