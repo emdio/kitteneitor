@@ -5,7 +5,7 @@
 
 
 /* Just returns the opponent's color */
-inline int opponent(int color)
+int opponent(int color)
 {
     return (!(color));
 }

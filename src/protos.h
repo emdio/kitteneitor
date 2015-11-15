@@ -12,16 +12,18 @@ int genCaps(int current_side, MOVE * pBuf);
 int genMoves(int current_side, MOVE * pBuf);
 int makeMove(MOVE m);
 void takeBack();
-inline int opponent (int color);
 void moveOrder(int from, int movecount, MOVE *moveBuf);
 int badCapture(MOVE mcmov);
-inline int isSqProtectedByAPawn(int sq, int side);
+int isSqProtectedByAPawn(int sq, int side);
+int Behind(int color);
+int Sign(int color);
+int opponent(int color);
 
 /* Eval */
 int eval(int alpha, int beta);
 int isEndGame();
-inline int isDoubledPawnWhite(int sq);
-inline int isDoubledPawnBlack(int sq);
+int isDoubledPawnWhite(int sq);
+int isDoubledPawnBlack(int sq);
 int isPassedPawnWhite(int sq);
 int isPassedPawnBlack(int sq);
 int isIsolatedPawnWhite(int sq);
