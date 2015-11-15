@@ -11,25 +11,25 @@ int opponent(int color)
 }
 
 /* Sign returns 1 for White and -1 for Black */
-inline int Sign(int color)
+int Sign(int color)
 {
     return (1 - (color * 2));
 }
 
 /* UP is -8, DOWN is +8: Ahead returns the 'forward' direction for color */
-inline int Ahead(int color)
+int Ahead(int color)
 {
     return (Sign(color) * UP);
 }
 
 /* Behind returns the 'backward' direction for color */
-inline int Behind(int color)
+nt Behind(int color)
 {
     return (Sign(color) * DOWN);
 }
 
 /* isSqProtectedByAPawn returns 1 if sq is protected by a pawn of color side */
-inline int isSqProtectedByAPawn(int sq, int side)
+int isSqProtectedByAPawn(int sq, int side)
 {
     /* We need to check the columm because in col 1 and 8 sq can only be attacked
      * from one side */

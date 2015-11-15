@@ -476,7 +476,7 @@ int isEndGame() {
 }
 
 /* Returns 1 if sq is on an open col */
-inline int isOnAnOpenCol(int sq)
+int isOnAnOpenCol(int sq)
 {
     return (pawnsRanks[WHITE][COL(sq) + 1] == 0 && pawnsRanks[BLACK][COL(sq) + 1] == 7);
 }
