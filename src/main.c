@@ -366,52 +366,6 @@ void test8()
     hashKeyPosition(); /* hash of the initial position */
 }
 
-void test9()
-{
-    puts ("A position where Kitt plays h5h4??");
-    puts ("8/5p2/8/2bk1p1p/2N1p3/pK2P1P1/P4P1P/8 b kq - 0 34");
-    /* Piece in each square */
-    int piece_test[64] =
-    {
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, BISHOP, KING, EMPTY, PAWN, EMPTY, PAWN,
-        EMPTY, EMPTY, KNIGHT, EMPTY, PAWN, EMPTY, EMPTY, EMPTY,
-        PAWN, KING, EMPTY, EMPTY, PAWN, EMPTY, PAWN, EMPTY,
-        PAWN, EMPTY, EMPTY, EMPTY, EMPTY, PAWN, EMPTY, PAWN,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
-    };
-    /* Color of each square */
-    int color_test[64] =
-    {
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLACK, EMPTY, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, BLACK, BLACK, EMPTY, BLACK, EMPTY, BLACK,
-        EMPTY, EMPTY, WHITE, EMPTY, BLACK, EMPTY, EMPTY, EMPTY,
-        BLACK, WHITE, EMPTY, EMPTY, WHITE, EMPTY, WHITE, EMPTY,
-        WHITE, EMPTY, EMPTY, EMPTY, EMPTY, WHITE, EMPTY, WHITE,
-        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
-    };
-
-    int i;
-    for (i = 0; i < 64; ++i)
-        {
-            piece[i] = piece_test[i];
-            color[i] = color_test[i];
-        }
-
-//    /*setDistToKing*/();
-
-    side = BLACK;
-    computerSide = WHITE;	/* Human is black side */
-    hdp = 0;
-    castle = 0;
-    fifty = 0;
-    hashKeyPosition(); /* hash of the initial position */
-}
-
 void test10()
 {
     puts("Just to check the validity of passed pawn dettection ");
@@ -645,7 +599,7 @@ void testMoveGen()
     hashKeyPosition(); /* hash of the initial position */
 
     int i;
-    for (i=1; i<6; ++i)
+    for (i=1; i<7; ++i)
         printf("Perft %d: %d\n", i, perft(i));
 
     puts("");
@@ -665,7 +619,7 @@ void testMoveGen()
     fifty = 0;
     hashKeyPosition(); /* hash of the initial position */
 
-    for (i=1; i<5; ++i)
+    for (i=1; i<7; ++i)
         printf("Perft %d: %d\n", i, perft(i));
 }
 
