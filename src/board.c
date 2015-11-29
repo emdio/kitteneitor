@@ -23,7 +23,7 @@ int Ahead(int color)
 }
 
 /* Behind returns the 'backward' direction for color */
-nt Behind(int color)
+int Behind(int color)
 {
     return (Sign(color) * DOWN);
 }
