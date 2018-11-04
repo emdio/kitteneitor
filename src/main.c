@@ -323,7 +323,7 @@ void test7()
 void test8()
 {
     puts ("A position where Kitt crashed");
-    puts ("q7/1p1P2p1/2p1R1Q1/5p2/1P1p4/6Pk/P6P/7K w - - 1 41");
+    puts ("q7/1p1P2p1/2p1R3/5p1k/1P1p4/6Q1/P5PP/7K w - - 1 41");
     /* Piece in each square */
     int piece_test[64] =
     {
@@ -1121,12 +1121,12 @@ int main()
             printBoard();
             continue;
         }
-        if (!strcmp (s, "test9"))
-        {
-            test9 ();
-            printBoard();
-            continue;
-        }
+//        if (!strcmp (s, "test9"))
+//        {
+//            test9 ();
+//            printBoard();
+//            continue;
+//        }
         if (!strcmp (s, "test10"))
         {
             test10 ();
