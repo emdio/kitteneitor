@@ -9,6 +9,8 @@
 #include "protos.h"
 #include <inttypes.h>
 
+HASH hash;
+
 void startgame()
 {
     int i;
