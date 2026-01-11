@@ -172,4 +172,4 @@ typedef struct tag_LINE
 } LINE;
 
 /* Triple repeticion */
-HASH hash;
+extern HASH hash;
